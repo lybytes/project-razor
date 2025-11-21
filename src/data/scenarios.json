@@ -1,0 +1,171 @@
+[
+  {
+    "id": "rr-001",
+    "mode": "rapid-reasoning",
+    "scenario": "A politician says: 'My opponent wants to defund the police. Do you really want criminals running wild in your streets?'",
+    "correctAnswer": "strawman",
+    "explanation": "This is a **Strawman Fallacy**. The politician is misrepresenting their opponent's position (likely police reform) as 'wanting criminals to run wild,' which is an exaggerated and distorted version that's easier to attack.",
+    "difficulty": "easy"
+  },
+  {
+    "id": "rr-002",
+    "mode": "rapid-reasoning",
+    "scenario": "In a debate about climate policy, someone argues: 'You can't trust Dr. Smith's research on climate change - she drives an SUV!'",
+    "correctAnswer": "ad hominem",
+    "explanation": "This is an **Ad Hominem** attack. Instead of addressing Dr. Smith's research or arguments, the speaker attacks her personal behavior, which is irrelevant to the validity of her scientific work.",
+    "difficulty": "easy"
+  },
+  {
+    "id": "rr-003",
+    "mode": "rapid-reasoning",
+    "scenario": "A social media post reads: 'Everyone I know is voting for this candidate. They're obviously going to win in a landslide.'",
+    "correctAnswer": "availability bias",
+    "explanation": "This demonstrates **Availability Bias** (also called the Availability Heuristic). The person is overestimating the likelihood of an outcome based solely on easily recalled examples from their immediate circle, ignoring broader data.",
+    "difficulty": "medium"
+  },
+  {
+    "id": "rr-004",
+    "mode": "rapid-reasoning",
+    "scenario": "A commenter writes: 'If we allow same-sex marriage, next people will want to marry their pets or inanimate objects!'",
+    "correctAnswer": "slippery slope",
+    "explanation": "This is a **Slippery Slope Fallacy**. The argument assumes that one action will inevitably lead to extreme consequences without providing evidence for why these steps would necessarily follow.",
+    "difficulty": "easy"
+  },
+  {
+    "id": "rr-005",
+    "mode": "rapid-reasoning",
+    "scenario": "After investing $5,000 in a failing business, an entrepreneur thinks: 'I've already put so much money into this. I can't quit now - I need to invest more to make it work.'",
+    "correctAnswer": "sunk cost",
+    "explanation": "This illustrates the **Sunk Cost Fallacy**. The entrepreneur is making decisions based on past investments (which cannot be recovered) rather than future prospects, leading to potentially poor decision-making.",
+    "difficulty": "medium"
+  },
+  {
+    "id": "rr-006",
+    "mode": "rapid-reasoning",
+    "scenario": "A news headline claims: '90% of dentists recommend this toothpaste!' The fine print reveals they surveyed only 10 dentists.",
+    "correctAnswer": "misleading statistics",
+    "explanation": "This uses **Misleading Statistics** through a small sample size. While technically true, presenting 9 out of 10 dentists as '90%' creates a false sense of scientific consensus when the sample is too small to be meaningful.",
+    "difficulty": "medium"
+  },
+  {
+    "id": "rr-007",
+    "mode": "rapid-reasoning",
+    "scenario": "During a discussion, someone rapidly states: 'The economy is failing because of immigration, trade deals, tech companies, the media, and young people not working hard enough. Refute any of those if you can.'",
+    "correctAnswer": "gish gallop",
+    "explanation": "This is **Gish Gallop**, a bad-faith tactic where someone overwhelms their opponent with many weak arguments in quick succession, making it impossible to address each one adequately.",
+    "difficulty": "hard"
+  },
+  {
+    "id": "rr-008",
+    "mode": "rapid-reasoning",
+    "scenario": "A person claims: 'You can't prove that psychic powers DON'T exist, therefore they must be real.'",
+    "correctAnswer": "appeal to ignorance",
+    "explanation": "This is an **Appeal to Ignorance** fallacy. The absence of evidence against something is not evidence for it. The burden of proof lies with the person making the claim.",
+    "difficulty": "easy"
+  },
+  {
+    "id": "rr-009",
+    "mode": "rapid-reasoning",
+    "scenario": "An investor sees their stock pick increase by 15% and thinks: 'I knew I was right about this company. I have great instincts!' The next week it drops 30%, and they think: 'This is just bad luck, the market is irrational.'",
+    "correctAnswer": "self-serving bias",
+    "explanation": "This demonstrates **Self-Serving Bias**. The investor attributes success to their skill but blames failure on external factors, protecting their ego but preventing learning.",
+    "difficulty": "medium"
+  },
+  {
+    "id": "rr-010",
+    "mode": "rapid-reasoning",
+    "scenario": "A person argues: 'Of course you support higher taxes - you're a socialist who hates success!'",
+    "correctAnswer": "ad hominem",
+    "explanation": "This is an **Ad Hominem** attack combined with a political label. Instead of addressing the tax policy argument, the speaker attacks the person's character and ideology.",
+    "difficulty": "easy"
+  },
+  {
+    "id": "ctc-001",
+    "mode": "crack-the-case",
+    "scenario": "In 2003, the United States invaded Iraq based largely on intelligence claiming Iraq possessed weapons of mass destruction (WMDs). Secretary of State Colin Powell presented evidence to the UN, including aluminum tubes allegedly used for nuclear weapons and mobile biological weapons labs. The evidence was later found to be largely inaccurate - no WMDs were found. However, decision-makers had shown strong **prior belief** that Iraq had WMDs and interpreted ambiguous intelligence through that lens. Intelligence analysts who questioned the evidence were marginalized. What cognitive bias and logical fallacy were at play?",
+    "correctAnswer": "confirmation bias",
+    "explanation": "The primary issue was **Confirmation Bias**. Decision-makers sought and interpreted evidence that confirmed their pre-existing belief that Iraq had WMDs, while dismissing or downplaying contradictory evidence. This was compounded by **Groupthink** (where dissenting voices were marginalized) and potentially **Appeal to Authority** (Colin Powell's reputation lent credibility to flawed intelligence).",
+    "difficulty": "hard"
+  },
+  {
+    "id": "ctc-002",
+    "mode": "crack-the-case",
+    "scenario": "During the 2008 financial crisis, many investors and institutions held onto mortgage-backed securities even as warning signs mounted. They reasoned: 'Housing prices have always gone up historically, and we've already invested billions. We can't pull out now.' Banks continued to buy these securities right up until the crash. What biases and fallacies contributed to this disaster?",
+    "correctAnswer": "sunk cost",
+    "explanation": "Multiple biases were at play: **Sunk Cost Fallacy** (continuing to invest because of past investments), **Normalcy Bias** (assuming trends will continue), **Recency Bias** (overweighting recent positive trends), and **Groupthink** (herd mentality among financial institutions).",
+    "difficulty": "hard"
+  },
+  {
+    "id": "ctc-003",
+    "mode": "crack-the-case",
+    "scenario": "A pharmaceutical company published multiple studies on their new drug. Positive studies were published in major journals, while studies showing negative or null results were never published or were published in obscure journals years later. Meta-analyses based only on published data showed the drug was highly effective. What's the problem here?",
+    "correctAnswer": "publication bias",
+    "explanation": "This is **Publication Bias** (also called the File Drawer Problem). By selectively publishing positive results and suppressing negative ones, the company created a distorted view of the drug's effectiveness. This is also a form of **Cherry Picking** data.",
+    "difficulty": "medium"
+  },
+  {
+    "id": "sw-001",
+    "mode": "social-warzone",
+    "post": {
+      "author": "@TruthSeeker2024",
+      "content": "Just asking questions here: Isn't it suspicious that all these celebrities support the same political candidate? Makes you wonder what they're hiding... 🤔",
+      "likes": 2847,
+      "retweets": 892
+    },
+    "correctAnswer": "jaqing off",
+    "explanation": "This is **JAQing Off** (Just Asking Questions), a bad-faith tactic. The poster makes an insinuation (that celebrities are hiding something sinister) while maintaining plausible deniability by framing it as 'just asking questions.'",
+    "difficulty": "medium"
+  },
+  {
+    "id": "sw-002",
+    "mode": "social-warzone",
+    "post": {
+      "author": "@RealPatriot1776",
+      "content": "The media claims our economy is struggling. But what about China's economy? What about Europe? Why don't they talk about that? Double standard much?",
+      "likes": 5621,
+      "retweets": 1203
+    },
+    "correctAnswer": "whataboutism",
+    "explanation": "This is classic **Whataboutism**. Instead of addressing criticism of the domestic economy, the poster deflects by pointing to problems elsewhere. The issues are separate and one doesn't excuse the other.",
+    "difficulty": "easy"
+  },
+  {
+    "id": "sw-003",
+    "mode": "social-warzone",
+    "post": {
+      "author": "@ConcernedCitizen",
+      "content": "I support your cause, but I'm worried that protesting this aggressively might turn people away. Maybe a more moderate approach would be better for your movement?",
+      "likes": 891,
+      "retweets": 234
+    },
+    "correctAnswer": "concern trolling",
+    "explanation": "This appears to be **Concern Trolling** - expressing fake concern to undermine a movement or cause. The 'concerned' advice typically involves weakening the message or tactics, and often comes from someone who doesn't actually support the cause.",
+    "difficulty": "hard"
+  },
+  {
+    "id": "sw-004",
+    "mode": "social-warzone",
+    "post": {
+      "author": "@DebateMaster",
+      "content": "Socialism has failed everywhere: Venezuela, Cuba, USSR. Taxation is theft. Free markets always work. Government intervention destroys economies. Welfare creates dependency. Min wage kills jobs. Now refute ALL of these.",
+      "likes": 3412,
+      "retweets": 876
+    },
+    "correctAnswer": "gish gallop",
+    "explanation": "This is a textbook **Gish Gallop**. The poster throws out multiple claims rapid-fire (7 different assertions), making it impossible to adequately address each one. The goal is to overwhelm, not to have a genuine discussion.",
+    "difficulty": "easy"
+  },
+  {
+    "id": "sw-005",
+    "mode": "social-warzone",
+    "post": {
+      "author": "@ThinkDifferent",
+      "content": "BREAKING: New study shows 78% increase in side effects! But of course, Big Pharma won't tell you this. [links to obscure blog]",
+      "likes": 8923,
+      "retweets": 4521
+    },
+    "correctAnswer": "misleading statistics",
+    "explanation": "This uses **Misleading Statistics** and **Cherry Picking**. The '78% increase' sounds dramatic but lacks context: increase from what baseline? Over what timeframe? The source being an 'obscure blog' rather than peer-reviewed research is also a red flag.",
+    "difficulty": "medium"
+  }
+]
