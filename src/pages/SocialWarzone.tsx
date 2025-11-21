@@ -147,8 +147,20 @@ const SocialWarzone = () => {
                   Identify and refute the critical thinking pitfall before it spreads further.
                 </p>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Take a moment to think through the BFBA being used and how you'd counter it. When ready, reveal the answer below.
+                  What BFBA is being used here? How would you counter it?
                 </p>
+                <Input
+                  type="text"
+                  placeholder="Type your answer here..."
+                  value={userAnswer}
+                  onChange={(e) => setUserAnswer(e.target.value)}
+                  className="mb-4"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      setStep("answer");
+                    }
+                  }}
+                />
                 <Button 
                   onClick={() => setStep("answer")} 
                   className="w-full"
