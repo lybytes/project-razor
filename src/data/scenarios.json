@@ -106,6 +106,67 @@
   {
     "id": "sw-001",
     "mode": "social-warzone",
+    "context": {
+      "title": "The Spanish Age Verification Dilemma",
+      "source": "Euronews",
+      "articleTitle": "Spain to introduce age-verification for accessing porn this year",
+      "content": "Spanish authorities will be using digital wallets to verify a user's age online when they try to access porn or adult sites.\n\nBy this autumn, Spanish authorities will be using digital wallets to verify a user's age online when they access porn or adult sites.\n\nThe Cartera Digital Beta \"wallet\" will be a mobile app that stores an \"adult age credential\" issued by the Spanish government after analysing the user's ID card stored in the system.\n\nThe wallet generates 30 pairs of keys per month that can be used once to verify a person's identity, according to a technical document released this week.\n\nThe system will have double authentication \"to prevent minors from accessing through adult devices,\" according to Spain's Minister of Digital Transformation and Public Service."
+    },
+    "post": {
+      "author": "southass",
+      "platform": "Reddit",
+      "context": "This is a comment under a Reddit post summarising the contents of the article:",
+      "content": "Way before the internet we had a couple of pages in black and white with spicy content so if they think this will stop kids from finding what they want they are more stupid than what I thought.",
+      "likes": 6,
+      "retweets": 0
+    },
+    "correctAnswer": "Nirvana Fallacy",
+    "explanation": "<p><strong>The Nirvana Fallacy</strong> occurs when an idea is criticised because it is not perfect, ignoring that it is still an improvement over the current situation.</p><ul><li>The comment suggests that because children have always found ways to access adult content, any attempt to regulate or control access will be ineffective. It implies that since the proposed solution isn't foolproof, it's not worth implementing.</li><li>This reasoning is flawed because it ignores the potential benefits of making access more difficult, even if it can't be completely prevented.</li></ul><p>This fallacy can discourage the implementation of policies that could have positive impacts, leading to a defeatist attitude where only perfect solutions are pursued, and practical improvements are ignored.</p><p><strong>Counter:</strong> Acknowledge that while no system is perfect, measures can still reduce the problem significantly. Explain the importance of incremental improvements in reducing access to inappropriate content for minors.</p>",
+    "difficulty": "medium"
+  },
+  {
+    "id": "sw-002",
+    "mode": "social-warzone",
+    "context": {
+      "title": "Coffee and Longevity Study",
+      "source": "Health News Daily",
+      "articleTitle": "New research links coffee consumption to increased lifespan",
+      "content": "A comprehensive 10-year study involving 500,000 participants has found a correlation between moderate coffee consumption and increased longevity. The research, published in a peer-reviewed medical journal, shows that individuals who consume 2-3 cups of coffee daily have a 12% lower risk of premature death.\n\nThe study was funded by the Global Coffee Research Foundation, an organization supported by major coffee producers. Researchers controlled for various lifestyle factors including diet, exercise, and smoking habits."
+    },
+    "post": {
+      "author": "@HealthExpert",
+      "platform": "Twitter",
+      "content": "New study shows coffee drinkers live longer. But the study was funded by a major coffee company. Clearly we can't trust these results at all.",
+      "likes": 1800,
+      "retweets": 420
+    },
+    "correctAnswer": "Genetic Fallacy",
+    "explanation": "<p><strong>The Genetic Fallacy</strong> occurs when a claim is accepted or rejected based on its origin rather than its current meaning or context.</p><p>While funding source is worth noting for potential bias, automatically dismissing research solely because of who funded it commits the genetic fallacy. The study's methodology and data should be evaluated independently.</p><ul><li>The post rejects the study's findings entirely based on its funding source</li><li>It ignores that the research was peer-reviewed and controlled for multiple variables</li><li>It doesn't address the actual methodology or data quality</li></ul><p><strong>Counter:</strong> Evaluate the study's methodology, peer review status, and whether findings have been replicated independently. Note the funding source as a consideration, but don't use it as the sole reason to dismiss findings.</p>",
+    "difficulty": "medium"
+  },
+  {
+    "id": "sw-003",
+    "mode": "social-warzone",
+    "context": {
+      "title": "Education Bill Debate",
+      "source": "Political News",
+      "articleTitle": "Senate votes on controversial education reform bill",
+      "content": "The Senate today voted on Bill 2847, the Education Advancement Act, which proposes a $50 billion increase in federal education spending over the next five years. The bill passed 52-48, with Senator Johnson among those voting against it.\n\nSenator Johnson released a statement explaining his vote: 'While I strongly support increased investment in education, this bill's approach concentrates too much power at the federal level and reduces local control. I believe education decisions are best made by local communities, and I'm committed to supporting alternative proposals that achieve the same goals while respecting state autonomy.'"
+    },
+    "post": {
+      "author": "@PoliticalDebater",
+      "platform": "Twitter",
+      "content": "Senator Johnson voted against the education bill. He clearly doesn't care about our children's future and wants them to fail.",
+      "likes": 5600,
+      "retweets": 2100
+    },
+    "correctAnswer": "False Dilemma / Strawman",
+    "explanation": "<p>This post commits both a <strong>False Dilemma</strong> and <strong>Strawman Fallacy</strong>.</p><p><strong>False Dilemma:</strong> It presents only two options (support the bill = care about children, oppose the bill = want children to fail) while ignoring other possibilities like disagreeing with the bill's approach, budget concerns, or preferring alternative solutions.</p><p><strong>Strawman:</strong> It misrepresents the senator's position by attributing malicious intent (\"wants them to fail\") rather than addressing his actual stated reasons about federal versus local control.</p><ul><li>The senator explicitly stated support for education investment</li><li>His opposition was based on governance structure, not education value</li><li>The post ignores his openness to alternative approaches</li></ul><p><strong>Counter:</strong> Ask about the senator's stated reasons for voting against the bill and whether there are legitimate policy disagreements about implementation rather than goals.</p>",
+    "difficulty": "hard"
+  },
+  {
+    "id": "sw-004",
+    "mode": "social-warzone",
     "post": {
       "author": "@TruthSeeker2024",
       "content": "Just asking questions here: Isn't it suspicious that all these celebrities support the same political candidate? Makes you wonder what they're hiding... 🤔",
@@ -115,45 +176,6 @@
     "correctAnswer": "jaqing off",
     "explanation": "This is **JAQing Off** (Just Asking Questions), a bad-faith tactic. The poster makes an insinuation (that celebrities are hiding something sinister) while maintaining plausible deniability by framing it as 'just asking questions.'",
     "difficulty": "medium"
-  },
-  {
-    "id": "sw-002",
-    "mode": "social-warzone",
-    "post": {
-      "author": "@RealPatriot1776",
-      "content": "The media claims our economy is struggling. But what about China's economy? What about Europe? Why don't they talk about that? Double standard much?",
-      "likes": 5621,
-      "retweets": 1203
-    },
-    "correctAnswer": "whataboutism",
-    "explanation": "This is classic **Whataboutism**. Instead of addressing criticism of the domestic economy, the poster deflects by pointing to problems elsewhere. The issues are separate and one doesn't excuse the other.",
-    "difficulty": "easy"
-  },
-  {
-    "id": "sw-003",
-    "mode": "social-warzone",
-    "post": {
-      "author": "@ConcernedCitizen",
-      "content": "I support your cause, but I'm worried that protesting this aggressively might turn people away. Maybe a more moderate approach would be better for your movement?",
-      "likes": 891,
-      "retweets": 234
-    },
-    "correctAnswer": "concern trolling",
-    "explanation": "This appears to be **Concern Trolling** - expressing fake concern to undermine a movement or cause. The 'concerned' advice typically involves weakening the message or tactics, and often comes from someone who doesn't actually support the cause.",
-    "difficulty": "hard"
-  },
-  {
-    "id": "sw-004",
-    "mode": "social-warzone",
-    "post": {
-      "author": "@DebateMaster",
-      "content": "Socialism has failed everywhere: Venezuela, Cuba, USSR. Taxation is theft. Free markets always work. Government intervention destroys economies. Welfare creates dependency. Min wage kills jobs. Now refute ALL of these.",
-      "likes": 3412,
-      "retweets": 876
-    },
-    "correctAnswer": "gish gallop",
-    "explanation": "This is a textbook **Gish Gallop**. The poster throws out multiple claims rapid-fire (7 different assertions), making it impossible to adequately address each one. The goal is to overwhelm, not to have a genuine discussion.",
-    "difficulty": "easy"
   },
   {
     "id": "sw-005",
