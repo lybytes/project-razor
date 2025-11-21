@@ -95,44 +95,44 @@ const RapidReasoning = () => {
               </div>
             ) : (
               <div className="space-y-6">
-                <div className={`p-4 rounded-lg border-2 ${
+                <div className={`p-6 rounded-lg border-2 ${
                   isCorrect 
                     ? 'bg-green-950/20 border-green-600' 
                     : 'bg-red-950/20 border-red-600'
                 }`}>
-                  <p className={`font-bold text-lg ${
+                  <p className={`font-bold text-xl mb-2 ${
                     isCorrect ? 'text-green-400' : 'text-red-400'
                   }`}>
                     {isCorrect ? '✓ Well done, that is correct!' : '✗ That\'s not quite right.'}
                   </p>
                 </div>
 
-                <div className="prose prose-invert max-w-none">
-                  <h3 className="text-xl font-semibold text-foreground mb-3">
+                <div className="bg-muted/20 rounded-lg p-6">
+                  <h3 className="text-xl font-semibold text-foreground mb-4">
                     Explanation
                   </h3>
                   <div 
-                    className="text-muted-foreground leading-relaxed"
+                    className="text-muted-foreground leading-relaxed prose prose-invert max-w-none"
                     dangerouslySetInnerHTML={{ __html: currentScenario.explanation }}
                   />
                 </div>
 
-                <div className="flex gap-3 pt-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4">
                   {currentIndex < rapidScenarios.length - 1 ? (
-                    <Button onClick={handleNext} className="flex-1">
+                    <Button onClick={handleNext} className="w-full">
                       Continue Playing <ArrowRight className="ml-2 w-4 h-4" />
                     </Button>
                   ) : (
-                    <Button onClick={handleReset} className="flex-1">
+                    <Button onClick={handleReset} className="w-full">
                       <RotateCcw className="mr-2 w-4 h-4" /> Start Over
                     </Button>
                   )}
-                  <Link to="/train" className="flex-1">
+                  <Link to="/train" className="w-full">
                     <Button variant="outline" className="w-full">
                       Other Training
                     </Button>
                   </Link>
-                  <Link to="/learn" className="flex-1">
+                  <Link to="/learn" className="w-full">
                     <Button variant="outline" className="w-full">
                       Study
                     </Button>
