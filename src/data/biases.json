@@ -1,0 +1,462 @@
+[
+  {
+    "name": "Confirmation Bias",
+    "category": "Cognitive Bias",
+    "slug": "confirmation-bias",
+    "explanation": "The tendency to search for, interpret, favor, and recall information that confirms one's preexisting beliefs or hypotheses. People tend to unconsciously ignore or devalue information that contradicts their beliefs.",
+    "examples": [
+      "A person who believes in astrology only remembers horoscope predictions that came true and forgets the many that didn't.",
+      "A political partisan only reads news sources that align with their views and dismisses contradictory evidence as 'fake news.'",
+      "A manager who believes an employee is lazy notices only their mistakes and overlooks their achievements."
+    ],
+    "refutation": [
+      "Actively seek out contradictory evidence",
+      "Ask: 'What would it take to prove this belief wrong?'",
+      "Consult diverse sources and perspectives",
+      "Use blind testing or peer review to reduce personal bias"
+    ],
+    "avoidance": [
+      "Deliberately expose yourself to opposing viewpoints",
+      "Keep a record of predictions and outcomes to check accuracy",
+      "Practice intellectual humility - be willing to change your mind",
+      "Use structured decision-making processes that consider multiple scenarios"
+    ]
+  },
+  {
+    "name": "Anchoring Bias",
+    "category": "Cognitive Bias",
+    "slug": "anchoring-bias",
+    "explanation": "The tendency to rely too heavily on the first piece of information offered (the 'anchor') when making decisions. This initial information serves as a reference point that influences subsequent judgments.",
+    "examples": [
+      "A product originally priced at $1000 seems like a bargain at $500, even if it's only worth $300.",
+      "In salary negotiations, the first number mentioned often influences the final agreement.",
+      "Jury verdicts can be influenced by the initial damage amount suggested by lawyers."
+    ],
+    "refutation": [
+      "Ignore or delay looking at the anchor until you've formed your own estimate",
+      "Consider the anchor from multiple perspectives: high and low",
+      "Ask: 'What would I think if I hadn't heard this number first?'",
+      "Use independent valuation methods"
+    ],
+    "avoidance": [
+      "Set your own reference point before seeing others' suggestions",
+      "Make estimates from multiple starting points",
+      "Be aware when someone is trying to set an anchor (like in negotiations)",
+      "Use objective criteria rather than arbitrary starting points"
+    ]
+  },
+  {
+    "name": "Availability Heuristic",
+    "category": "Cognitive Bias",
+    "slug": "availability-heuristic",
+    "explanation": "Overestimating the likelihood of events based on their availability in memory. If something can be recalled easily, we assume it must be important or common, leading to distorted probability judgments.",
+    "examples": [
+      "After seeing news about plane crashes, people overestimate the danger of flying despite it being statistically very safe.",
+      "People fear shark attacks more than bee stings, even though bees kill far more people.",
+      "Recent dramatic events feel more probable than they actually are."
+    ],
+    "refutation": [
+      "Look up actual statistics rather than relying on memory",
+      "Ask: 'Is this memorable because it's common or because it's dramatic?'",
+      "Consider base rates and actual frequencies",
+      "Distinguish between vividness and frequency"
+    ],
+    "avoidance": [
+      "Rely on data and statistics rather than memorable examples",
+      "Be skeptical of your gut feelings about probability",
+      "Remember that rare dramatic events are reported more than common mundane ones",
+      "Keep track of actual frequencies, not just memorable instances"
+    ]
+  },
+  {
+    "name": "Dunning-Kruger Effect",
+    "category": "Cognitive Bias",
+    "slug": "dunning-kruger-effect",
+    "explanation": "A cognitive bias in which people with limited knowledge or competence in a domain overestimate their own ability. Conversely, experts tend to underestimate their relative competence.",
+    "examples": [
+      "A novice investor who made money in one bull market thinks they're a financial genius.",
+      "Someone who watched a few YouTube videos believes they understand a complex topic as well as experts.",
+      "A new driver feels overconfident about their abilities compared to experienced drivers who are more cautious."
+    ],
+    "refutation": [
+      "Seek feedback from actual experts in the field",
+      "Ask: 'What don't I know about this topic?'",
+      "Test your knowledge against objective standards",
+      "Compare your understanding with established experts"
+    ],
+    "avoidance": [
+      "Maintain intellectual humility, especially in unfamiliar domains",
+      "Seek out expert opinions and defer when appropriate",
+      "Recognize that initial learning can create false confidence",
+      "Use objective measures of competence rather than self-assessment"
+    ]
+  },
+  {
+    "name": "Bandwagon Effect",
+    "category": "Cognitive Bias",
+    "slug": "bandwagon-effect",
+    "explanation": "The tendency to do or believe things because many other people do. This is the psychological basis of mob mentality and herd behavior.",
+    "examples": [
+      "Buying a stock because everyone else is buying it, contributing to bubbles.",
+      "Adopting beliefs or behaviors simply because they're popular or trending.",
+      "Voting for a candidate who appears to be winning, reinforcing their lead."
+    ],
+    "refutation": [
+      "Ask: 'What evidence supports this, independent of its popularity?'",
+      "Remember that popular doesn't equal correct",
+      "Seek out contrarian or independent perspectives",
+      "Evaluate claims on their merits, not their popularity"
+    ],
+    "avoidance": [
+      "Think independently before considering others' opinions",
+      "Be willing to hold unpopular positions when evidence supports them",
+      "Question why something is popular rather than just following the crowd",
+      "Remember historical examples of popular but wrong beliefs"
+    ]
+  },
+  {
+    "name": "Sunk Cost Fallacy",
+    "category": "Cognitive Bias",
+    "slug": "sunk-cost-fallacy",
+    "explanation": "Continuing a behavior or endeavor as a result of previously invested resources (time, money, effort) even when continuation is not in your best interest. People feel compelled to justify past investments by continuing to invest.",
+    "examples": [
+      "Staying in a bad relationship because you've already invested years in it.",
+      "Continuing to watch a boring movie because you already paid for the ticket.",
+      "A business continuing a failing project because they've already spent millions on it."
+    ],
+    "refutation": [
+      "Focus on future costs and benefits, not past investments",
+      "Ask: 'Would I start this today knowing what I know now?'",
+      "Recognize that past investments are gone regardless of future decisions",
+      "Treat sunk costs as irrelevant to current decisions"
+    ],
+    "avoidance": [
+      "Make decisions based on current and future value, not past investments",
+      "Be willing to cut losses when appropriate",
+      "Separate emotional attachment from rational analysis",
+      "Use decision frameworks that exclude sunk costs"
+    ]
+  },
+  {
+    "name": "Hindsight Bias",
+    "category": "Cognitive Bias",
+    "slug": "hindsight-bias",
+    "explanation": "The tendency to see past events as having been more predictable than they actually were. After an outcome is known, people tend to believe they 'knew it all along.'",
+    "examples": [
+      "After a team wins a championship: 'I knew they would win all along.'",
+      "After a stock market crash: 'The signs were obvious - anyone could have seen it coming.'",
+      "After an accident: 'They should have known that would happen.'"
+    ],
+    "refutation": [
+      "Review what information was actually available before the event",
+      "Ask: 'Did I document this prediction before it happened?'",
+      "Consider alternative outcomes that seemed plausible at the time",
+      "Examine contemporaneous judgments and predictions"
+    ],
+    "avoidance": [
+      "Document predictions and reasoning before outcomes are known",
+      "Remember the uncertainty that existed before the event",
+      "Be humble about the difficulty of prediction",
+      "When analyzing past events, try to put yourself in the mindset of that time"
+    ]
+  },
+  {
+    "name": "Fundamental Attribution Error",
+    "category": "Cognitive Bias",
+    "slug": "fundamental-attribution-error",
+    "explanation": "The tendency to overemphasize personal characteristics and ignore situational factors when judging others' behavior, while doing the opposite for our own behavior.",
+    "examples": [
+      "When someone cuts you off in traffic, you think they're a jerk. When you cut someone off, it's because you were in a hurry.",
+      "If someone fails a test, you assume they're not smart. If you fail, it's because the test was unfair.",
+      "A colleague is late because they're irresponsible; you're late because traffic was terrible."
+    ],
+    "refutation": [
+      "Consider situational factors that might explain behavior",
+      "Ask: 'What circumstances might have led to this action?'",
+      "Apply the same standards to others that you apply to yourself",
+      "Look for contextual information before judging"
+    ],
+    "avoidance": [
+      "Give others the same benefit of the doubt you give yourself",
+      "Consider external circumstances before attributing behavior to character",
+      "Recognize that you have more information about your own situation than others'",
+      "Be slower to judge and quicker to seek understanding"
+    ]
+  },
+  {
+    "name": "Halo Effect",
+    "category": "Cognitive Bias",
+    "slug": "halo-effect",
+    "explanation": "The tendency for positive impressions of a person in one area to influence opinions in other areas. If someone is attractive or successful in one domain, we assume they're also competent in others.",
+    "examples": [
+      "Assuming an attractive person is also intelligent and kind.",
+      "Believing a successful business person must be wise about all topics.",
+      "Thinking a good public speaker necessarily has good ideas."
+    ],
+    "refutation": [
+      "Evaluate different qualities independently",
+      "Ask: 'What specific evidence supports this particular judgment?'",
+      "Separate appearance or past success from current competence",
+      "Look for direct evidence of skills in the relevant domain"
+    ],
+    "avoidance": [
+      "Assess different qualities separately",
+      "Don't let one positive attribute color your entire judgment",
+      "Look for evidence specific to the claim being made",
+      "Be aware that attractiveness and charisma can cloud judgment"
+    ]
+  },
+  {
+    "name": "In-Group Bias",
+    "category": "Cognitive Bias",
+    "slug": "in-group-bias",
+    "explanation": "The tendency to favor members of one's own group over those in other groups. This leads to preferential treatment and more positive evaluations of in-group members.",
+    "examples": [
+      "Sports fans excusing bad behavior by their team's players while condemning the same behavior in opponents.",
+      "People giving more charitable interpretations to members of their political party.",
+      "Hiring managers favoring candidates who went to the same university."
+    ],
+    "refutation": [
+      "Apply the same standards to all groups",
+      "Ask: 'Would I judge this differently if someone from my group did it?'",
+      "Seek diverse perspectives and challenge your assumptions",
+      "Use objective criteria that apply regardless of group membership"
+    ],
+    "avoidance": [
+      "Consciously extend fairness to out-group members",
+      "Use structured evaluation processes that minimize bias",
+      "Remind yourself that groups are made of individuals with varying qualities",
+      "Question whether you're being more lenient with your own group"
+    ]
+  },
+  {
+    "name": "Framing Effect",
+    "category": "Cognitive Bias",
+    "slug": "framing-effect",
+    "explanation": "Drawing different conclusions from the same information depending on how it's presented. The way information is framed can dramatically influence our decisions and judgments.",
+    "examples": [
+      "A medical treatment with '90% survival rate' sounds better than '10% mortality rate,' though they're identical.",
+      "'Ground beef is 90% lean' sounds healthier than '10% fat.'",
+      "'Save $5' feels different from 'Avoid losing $5' though the outcome is the same."
+    ],
+    "refutation": [
+      "Rephrase information in different ways to check for consistency",
+      "Ask: 'Would I decide differently if this were framed another way?'",
+      "Focus on objective facts rather than emotional framing",
+      "Consider both positive and negative framings before deciding"
+    ],
+    "avoidance": [
+      "Reframe information multiple ways before deciding",
+      "Focus on absolute facts and numbers rather than relative presentations",
+      "Be aware when someone is trying to frame information strategically",
+      "Question your gut reactions to framed information"
+    ]
+  },
+  {
+    "name": "Recency Bias",
+    "category": "Cognitive Bias",
+    "slug": "recency-bias",
+    "explanation": "Giving more weight to recent events while discounting older data. Recent information is more available in memory and thus seems more important or predictive.",
+    "examples": [
+      "Investors panic-selling after a market downturn, forgetting long-term trends.",
+      "Performance reviews overly influenced by recent work rather than the entire period.",
+      "Believing a trend will continue based only on recent data points."
+    ],
+    "refutation": [
+      "Examine longer-term patterns and historical data",
+      "Ask: 'Is this recent event representative of the larger pattern?'",
+      "Weight data points by their relevance, not just their timing",
+      "Look at the full dataset, not just recent information"
+    ],
+    "avoidance": [
+      "Maintain perspective on long-term trends",
+      "Keep records to reference older but still relevant data",
+      "Don't overreact to recent events without considering historical context",
+      "Use systematic analysis that includes all relevant time periods"
+    ]
+  },
+  {
+    "name": "Status Quo Bias",
+    "category": "Cognitive Bias",
+    "slug": "status-quo-bias",
+    "explanation": "The preference for the current state of affairs. People tend to stick with the default option or existing situation, even when better alternatives exist.",
+    "examples": [
+      "Staying with the same bank or insurance provider despite better offers elsewhere.",
+      "Resisting organizational change even when improvements are proposed.",
+      "Keeping default settings on devices because change feels like too much effort."
+    ],
+    "refutation": [
+      "Actively evaluate whether the status quo is truly optimal",
+      "Ask: 'Would I choose this if I were starting fresh today?'",
+      "Consider the costs of inaction, not just action",
+      "Force periodic reviews of default positions"
+    ],
+    "avoidance": [
+      "Regularly challenge whether current arrangements are still optimal",
+      "Be open to change when evidence supports it",
+      "Don't let comfort with familiarity override better options",
+      "Treat 'doing nothing' as an active choice that should be justified"
+    ]
+  },
+  {
+    "name": "Optimism Bias",
+    "category": "Cognitive Bias",
+    "slug": "optimism-bias",
+    "explanation": "The tendency to believe we're less likely to experience negative events compared to others. This leads to underestimating risks and overestimating positive outcomes.",
+    "examples": [
+      "Most drivers believe they're better than average, which is statistically impossible.",
+      "Entrepreneurs underestimating the chance their business will fail despite high failure rates.",
+      "People believing they won't get sick despite engaging in risky behaviors."
+    ],
+    "refutation": [
+      "Look at base rates and statistics, not just personal feelings",
+      "Ask: 'What makes me different from others who experienced negative outcomes?'",
+      "Seek out objective assessments of risks",
+      "Consider worst-case scenarios seriously"
+    ],
+    "avoidance": [
+      "Use statistical base rates as a starting point for personal risk assessment",
+      "Plan for negative scenarios, not just positive ones",
+      "Consult with pessimists or devil's advocates",
+      "Remember that most people overestimate their luck and ability"
+    ]
+  },
+  {
+    "name": "Self-Serving Bias",
+    "category": "Cognitive Bias",
+    "slug": "self-serving-bias",
+    "explanation": "The tendency to attribute successes to internal factors and failures to external factors. This protects self-esteem but distorts learning and self-assessment.",
+    "examples": [
+      "When you do well on a test, it's because you're smart. When you do poorly, the test was unfair.",
+      "Business success is due to your skill; business failure is due to the economy.",
+      "Winning a game is skill; losing is bad luck."
+    ],
+    "refutation": [
+      "Apply consistent attribution to both successes and failures",
+      "Ask: 'What role did I really play in this outcome?'",
+      "Seek external feedback on your actual contribution",
+      "Consider external factors in success as well as failure"
+    ],
+    "avoidance": [
+      "Give yourself credit and blame consistently",
+      "Acknowledge external factors in both positive and negative outcomes",
+      "Focus on learning rather than ego protection",
+      "Seek accurate self-assessment rather than flattering self-assessment"
+    ]
+  },
+  {
+    "name": "Stereotyping",
+    "category": "Cognitive Bias",
+    "slug": "stereotyping",
+    "explanation": "Applying generalized beliefs about a group to individual members. While categorization can be useful, stereotyping leads to inaccurate judgments by ignoring individual variation.",
+    "examples": [
+      "Assuming someone is good at math because of their ethnicity.",
+      "Believing someone is aggressive based on their gender.",
+      "Judging someone's work ethic based on their age."
+    ],
+    "refutation": [
+      "Treat individuals as individuals, not as representatives of groups",
+      "Ask: 'What specific evidence do I have about this particular person?'",
+      "Recognize the diversity within any group",
+      "Challenge automatic assumptions based on group membership"
+    ],
+    "avoidance": [
+      "Get to know individuals rather than relying on group characteristics",
+      "Remember that group averages tell you little about individuals",
+      "Challenge stereotypical thoughts when they arise",
+      "Focus on individual behavior and evidence"
+    ]
+  },
+  {
+    "name": "Overconfidence Bias",
+    "category": "Cognitive Bias",
+    "slug": "overconfidence-bias",
+    "explanation": "Excessive confidence in one's own answers, abilities, or predictions. People tend to be more confident than accurate, especially in their areas of expertise.",
+    "examples": [
+      "Experts being 80% confident about predictions that are only correct 60% of the time.",
+      "Traders convinced they can beat the market despite evidence to the contrary.",
+      "People being certain about facts they actually only vaguely remember."
+    ],
+    "refutation": [
+      "Track your predictions and accuracy over time",
+      "Ask: 'How often have I been this confident and still wrong?'",
+      "Seek calibration training to match confidence with accuracy",
+      "Be especially skeptical of high confidence levels"
+    ],
+    "avoidance": [
+      "Express uncertainty appropriately - use probability ranges",
+      "Keep records of predictions to calibrate confidence",
+      "Be humble about the limits of your knowledge",
+      "Distinguish between confidence and accuracy"
+    ]
+  },
+  {
+    "name": "Negativity Bias",
+    "category": "Cognitive Bias",
+    "slug": "negativity-bias",
+    "explanation": "The tendency to give more weight to negative information than positive information. Negative events, emotions, and information have a greater impact on psychological state than neutral or positive ones.",
+    "examples": [
+      "One criticism sticking in your mind while ten compliments are forgotten.",
+      "News media focusing on negative stories because they attract more attention.",
+      "A single bad experience with a product overshadowing many good experiences."
+    ],
+    "refutation": [
+      "Consciously balance negative information with positive",
+      "Ask: 'Am I giving appropriate weight to the positives?'",
+      "Keep track of positive and negative events to get perspective",
+      "Remember that negative information feels more important than it is"
+    ],
+    "avoidance": [
+      "Actively notice and record positive events",
+      "Give appropriate weight to positive information",
+      "Recognize when negativity is dominating your thinking",
+      "Seek balanced information sources"
+    ]
+  },
+  {
+    "name": "Planning Fallacy",
+    "category": "Cognitive Bias",
+    "slug": "planning-fallacy",
+    "explanation": "The tendency to underestimate the time, costs, and risks of future actions while overestimating the benefits. People routinely create overly optimistic plans.",
+    "examples": [
+      "Construction projects consistently running over budget and past deadlines.",
+      "Students starting assignments the night before despite past experience.",
+      "Believing you can complete many tasks in a day when past experience shows otherwise."
+    ],
+    "refutation": [
+      "Reference past similar projects for realistic timelines",
+      "Ask: 'How long did similar tasks take before?'",
+      "Build in buffers for unexpected problems",
+      "Use outside view (similar cases) rather than inside view (your specific plan)"
+    ],
+    "avoidance": [
+      "Learn from past planning failures",
+      "Add contingency time and resources to plans",
+      "Consult with others who have done similar projects",
+      "Use historical data rather than optimistic projections"
+    ]
+  },
+  {
+    "name": "Ikea Effect",
+    "category": "Cognitive Bias",
+    "slug": "ikea-effect",
+    "explanation": "The tendency to overvalue things we've created or assembled ourselves, regardless of the quality of the result. Labor leads to love, even when the labor produces something inferior.",
+    "examples": [
+      "Valuing furniture you assembled more than identical furniture someone else assembled.",
+      "Entrepreneurs overvaluing their own business ideas.",
+      "Home cooks thinking their meals are better than they objectively are."
+    ],
+    "refutation": [
+      "Seek objective evaluation from disinterested parties",
+      "Ask: 'Would I value this as much if someone else made it?'",
+      "Compare your creation to alternatives using objective criteria",
+      "Separate the satisfaction of creating from the quality of the result"
+    ],
+    "avoidance": [
+      "Get external evaluations of your work",
+      "Compare your creations objectively to alternatives",
+      "Enjoy the process without overvaluing the product",
+      "Be honest about quality versus emotional attachment"
+    ]
+  }
+]

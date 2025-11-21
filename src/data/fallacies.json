@@ -1,0 +1,443 @@
+[
+  {
+    "name": "Ad Hominem",
+    "category": "Logical Fallacy",
+    "slug": "ad-hominem",
+    "explanation": "Attacking the person making the argument rather than addressing the argument itself. This fallacy attempts to discredit an idea by attacking the character, motive, or other attribute of the person presenting it.",
+    "examples": [
+      "You can't trust John's opinion on climate change because he failed science in high school.",
+      "Of course she supports higher taxes - she's a wealthy liberal elite.",
+      "Don't listen to his argument about healthcare - he's just a young idealist who doesn't understand the real world."
+    ],
+    "refutation": [
+      "Point out that the argument's validity is independent of who makes it",
+      "Ask: 'Can we focus on the actual claims being made rather than the person?'",
+      "Redirect: 'Even if that's true about the person, does it address the evidence they presented?'"
+    ],
+    "avoidance": [
+      "Focus on evaluating arguments based on evidence and logic",
+      "Separate the messenger from the message",
+      "Consider the argument on its own merits regardless of source"
+    ]
+  },
+  {
+    "name": "Straw Man",
+    "category": "Logical Fallacy",
+    "slug": "straw-man",
+    "explanation": "Misrepresenting someone's argument to make it easier to attack. Instead of addressing the actual argument, you attack a distorted or simplified version of it.",
+    "examples": [
+      "Person A: 'We should have stricter regulations on firearms.' Person B: 'So you want to take away everyone's guns and leave us defenseless?'",
+      "Person A: 'We need better environmental protections.' Person B: 'So you want to shut down all factories and destroy the economy?'",
+      "Person A: 'I think we should invest more in public transportation.' Person B: 'You just hate cars and want to force everyone to take the bus.'"
+    ],
+    "refutation": [
+      "Clarify your actual position: 'That's not what I said. Let me restate my argument clearly.'",
+      "Point out the misrepresentation: 'You're attacking a position I don't hold.'",
+      "Ask them to address your real argument: 'Can you respond to what I actually proposed?'"
+    ],
+    "avoidance": [
+      "State your position clearly and specifically",
+      "Ensure you understand others' arguments before responding",
+      "Represent opposing views accurately"
+    ]
+  },
+  {
+    "name": "False Dichotomy",
+    "category": "Logical Fallacy",
+    "slug": "false-dichotomy",
+    "explanation": "Presenting only two options when more exist. This fallacy oversimplifies complex issues by suggesting there are only two possible positions or outcomes.",
+    "examples": [
+      "You're either with us or against us.",
+      "Either we cut all social programs or the country will go bankrupt.",
+      "You either support the police completely or you support criminals."
+    ],
+    "refutation": [
+      "Identify additional options: 'There are actually several other approaches we could consider.'",
+      "Challenge the binary framing: 'Why must it be one or the other?'",
+      "Present middle ground: 'What about positions that incorporate elements of both?'"
+    ],
+    "avoidance": [
+      "Look for spectrum of possibilities rather than binary choices",
+      "Consider nuanced positions and compromises",
+      "Avoid 'either/or' thinking when dealing with complex issues"
+    ]
+  },
+  {
+    "name": "Appeal to Authority",
+    "category": "Logical Fallacy",
+    "slug": "appeal-to-authority",
+    "explanation": "Assuming something is true because an authority figure says so, without examining the evidence. While expert opinion can be valuable, it's not automatically correct and should be supported by evidence.",
+    "examples": [
+      "This product must work - a famous celebrity endorses it.",
+      "My professor said this is true, so it must be.",
+      "The CEO believes this strategy will work, so we shouldn't question it."
+    ],
+    "refutation": [
+      "Ask for the underlying evidence: 'What evidence supports this claim?'",
+      "Question the authority's expertise in this specific area",
+      "Note: 'Even experts can be wrong or biased - what's the reasoning behind this?'"
+    ],
+    "avoidance": [
+      "Evaluate claims based on evidence, not just who makes them",
+      "Check if the authority has relevant expertise",
+      "Look for consensus among multiple experts"
+    ]
+  },
+  {
+    "name": "Slippery Slope",
+    "category": "Logical Fallacy",
+    "slug": "slippery-slope",
+    "explanation": "Arguing that a small first step will inevitably lead to a chain of related events resulting in a significant and usually negative effect, without providing evidence for this chain of causation.",
+    "examples": [
+      "If we allow same-sex marriage, next people will want to marry their pets.",
+      "If we raise the minimum wage by $1, eventually no one will have jobs.",
+      "If we let students use calculators, they'll never learn to do basic math and society will collapse."
+    ],
+    "refutation": [
+      "Challenge the causal chain: 'What evidence suggests one thing will lead to the other?'",
+      "Point out missing steps: 'You've jumped from A to Z without explaining B through Y.'",
+      "Ask for precedent: 'Has this progression happened elsewhere?'"
+    ],
+    "avoidance": [
+      "Provide evidence for each step in a causal chain",
+      "Distinguish between possible outcomes and probable outcomes",
+      "Avoid catastrophizing without justification"
+    ]
+  },
+  {
+    "name": "Hasty Generalization",
+    "category": "Logical Fallacy",
+    "slug": "hasty-generalization",
+    "explanation": "Drawing a broad conclusion from a small or unrepresentative sample. This fallacy occurs when someone makes a sweeping claim based on insufficient evidence.",
+    "examples": [
+      "I met two rude people from that city, so everyone there must be rude.",
+      "My friend got sick after getting vaccinated, so vaccines must be dangerous.",
+      "I tried learning guitar for a week and couldn't do it, so I have no musical ability."
+    ],
+    "refutation": [
+      "Question the sample size: 'How many instances have you actually observed?'",
+      "Point out unrepresentative samples: 'Is this example typical?'",
+      "Provide counter-examples: 'Here are cases that contradict that generalization.'"
+    ],
+    "avoidance": [
+      "Ensure your sample size is adequate",
+      "Check if your sample is representative",
+      "Avoid jumping to conclusions from anecdotal evidence"
+    ]
+  },
+  {
+    "name": "Red Herring",
+    "category": "Logical Fallacy",
+    "slug": "red-herring",
+    "explanation": "Introducing an irrelevant topic to divert attention from the original issue. This fallacy attempts to distract from the argument at hand by bringing up something tangentially related or completely unrelated.",
+    "examples": [
+      "Person A: 'The company's environmental record is poor.' Person B: 'But we donate millions to charity every year.'",
+      "Person A: 'We need to address income inequality.' Person B: 'What about all the jobs created by wealthy entrepreneurs?'",
+      "Person A: 'This policy has serious ethical issues.' Person B: 'Well, the previous administration did worse things.'"
+    ],
+    "refutation": [
+      "Refocus: 'That's an interesting point, but let's address the original issue first.'",
+      "Point out the diversion: 'How does that relate to what we were discussing?'",
+      "Acknowledge and return: 'We can discuss that separately, but right now we're talking about X.'"
+    ],
+    "avoidance": [
+      "Stay focused on the topic at hand",
+      "Address arguments directly without changing the subject",
+      "If bringing up a related point, explain the connection"
+    ]
+  },
+  {
+    "name": "Appeal to Emotion",
+    "category": "Logical Fallacy",
+    "slug": "appeal-to-emotion",
+    "explanation": "Manipulating emotions to win an argument rather than using valid reasoning. This fallacy attempts to replace logical argument with emotional appeals like fear, pity, or anger.",
+    "examples": [
+      "Think of the children! How can you oppose this policy?",
+      "If you don't support this law, you must hate America.",
+      "You wouldn't want your family to suffer, would you? That's why you should buy this insurance."
+    ],
+    "refutation": [
+      "Acknowledge the emotion: 'I understand this is an emotional issue, but what's the logical basis for this position?'",
+      "Request evidence: 'What data supports this claim?'",
+      "Separate emotion from logic: 'How we feel about something doesn't determine if it's true or effective.'"
+    ],
+    "avoidance": [
+      "Support arguments with evidence and reasoning",
+      "Acknowledge emotions without relying on them as proof",
+      "Distinguish between emotional appeal and logical argument"
+    ]
+  },
+  {
+    "name": "Tu Quoque (You Too)",
+    "category": "Logical Fallacy",
+    "slug": "tu-quoque",
+    "explanation": "Dismissing criticism by pointing out hypocrisy in the critic, without addressing the actual argument. This is a form of ad hominem that attempts to deflect by accusing the other person of the same fault.",
+    "examples": [
+      "Person A: 'You shouldn't smoke, it's unhealthy.' Person B: 'You eat junk food all the time, so don't tell me what to do.'",
+      "Person A: 'This company has poor labor practices.' Person B: 'You buy products from other companies with similar issues.'",
+      "Person A: 'We need to reduce carbon emissions.' Person B: 'You drive a car, so you're a hypocrite.'"
+    ],
+    "refutation": [
+      "Acknowledge but refocus: 'Even if I'm inconsistent, does that make the argument wrong?'",
+      "Separate the argument from the arguer: 'The validity of the claim doesn't depend on my behavior.'",
+      "Address it directly: 'You're right that I should also change, but that doesn't address whether the argument is sound.'"
+    ],
+    "avoidance": [
+      "Address arguments on their merits",
+      "Recognize that hypocrisy doesn't invalidate an argument",
+      "Focus on the issue, not the person"
+    ]
+  },
+  {
+    "name": "Circular Reasoning",
+    "category": "Logical Fallacy",
+    "slug": "circular-reasoning",
+    "explanation": "When the conclusion of an argument is used as a premise of that same argument. The reasoning goes in a circle without providing actual support for the conclusion.",
+    "examples": [
+      "The Bible is true because it says so in the Bible.",
+      "I'm trustworthy because I say I'm trustworthy.",
+      "This law is just because it's the law."
+    ],
+    "refutation": [
+      "Point out the circularity: 'You're assuming what you're trying to prove.'",
+      "Request independent evidence: 'Can you provide support that doesn't rely on the claim itself?'",
+      "Rephrase to expose it: 'So you're saying X is true because X is true?'"
+    ],
+    "avoidance": [
+      "Ensure your premises provide independent support for your conclusion",
+      "Check if you're assuming what you're trying to prove",
+      "Build arguments on foundational evidence"
+    ]
+  },
+  {
+    "name": "Appeal to Tradition",
+    "category": "Logical Fallacy",
+    "slug": "appeal-to-tradition",
+    "explanation": "Arguing that something is correct or better simply because it's traditional or has 'always been done this way.' This fallacy assumes that longevity or tradition equals validity.",
+    "examples": [
+      "We've always done it this way, so we shouldn't change.",
+      "Marriage has traditionally been between a man and a woman, so it should stay that way.",
+      "This medical practice has been used for centuries, so it must be effective."
+    ],
+    "refutation": [
+      "Challenge the logic: 'Just because something is traditional doesn't mean it's right or effective.'",
+      "Provide counter-examples: 'Many traditions have been harmful and were rightfully changed.'",
+      "Ask for current evidence: 'What makes this practice valuable today, regardless of its history?'"
+    ],
+    "avoidance": [
+      "Evaluate practices based on current evidence and merit",
+      "Recognize that traditions can be valuable but aren't automatically correct",
+      "Be open to changing ineffective or harmful practices"
+    ]
+  },
+  {
+    "name": "Bandwagon Fallacy",
+    "category": "Logical Fallacy",
+    "slug": "bandwagon-fallacy",
+    "explanation": "Assuming something is true or good because it's popular. This fallacy appeals to the desire to be part of the majority rather than evaluating the merit of the claim itself.",
+    "examples": [
+      "Everyone's buying this product, so it must be good.",
+      "Most people believe this, so it must be true.",
+      "All my friends are doing it, so I should too."
+    ],
+    "refutation": [
+      "Challenge the logic: 'Popularity doesn't equal correctness.'",
+      "Historical examples: 'Many popular beliefs throughout history have been wrong.'",
+      "Request evidence: 'What makes this true beyond its popularity?'"
+    ],
+    "avoidance": [
+      "Evaluate claims based on evidence, not popularity",
+      "Remember that truth isn't democratic",
+      "Be willing to hold unpopular but well-supported positions"
+    ]
+  },
+  {
+    "name": "False Cause",
+    "category": "Logical Fallacy",
+    "slug": "false-cause",
+    "explanation": "Assuming that because two things are correlated, one caused the other. This fallacy confuses correlation with causation.",
+    "examples": [
+      "Ice cream sales and drowning deaths both increase in summer, so ice cream causes drowning.",
+      "Countries with more firefighters have more fires, so firefighters cause fires.",
+      "I wore my lucky socks and won the game, so the socks caused the win."
+    ],
+    "refutation": [
+      "Distinguish correlation from causation: 'These things happen together, but that doesn't mean one causes the other.'",
+      "Identify alternative explanations: 'Could there be a third factor affecting both?'",
+      "Request causal mechanism: 'How exactly would A cause B?'"
+    ],
+    "avoidance": [
+      "Look for the mechanism connecting cause and effect",
+      "Consider alternative explanations for correlations",
+      "Be cautious about inferring causation from correlation"
+    ]
+  },
+  {
+    "name": "Genetic Fallacy",
+    "category": "Logical Fallacy",
+    "slug": "genetic-fallacy",
+    "explanation": "Judging something as good or bad based on its origin rather than its current meaning or context. This fallacy dismisses ideas based on their source or history.",
+    "examples": [
+      "That theory was developed by a pharmaceutical company, so it must be wrong.",
+      "This word has offensive origins, so we can't use it even in an educational context.",
+      "That idea comes from ancient superstition, so it has no value."
+    ],
+    "refutation": [
+      "Separate origin from validity: 'Where something comes from doesn't determine if it's true or useful now.'",
+      "Focus on current merit: 'Let's evaluate this based on its current application and evidence.'",
+      "Acknowledge evolution: 'Ideas and meanings can change over time.'"
+    ],
+    "avoidance": [
+      "Evaluate ideas based on their current merit",
+      "Recognize that good ideas can come from questionable sources",
+      "Don't dismiss something solely based on its origin"
+    ]
+  },
+  {
+    "name": "No True Scotsman",
+    "category": "Logical Fallacy",
+    "slug": "no-true-scotsman",
+    "explanation": "Modifying the definition of a category to exclude counterexamples. This fallacy protects a generalization by arbitrarily excluding cases that don't fit.",
+    "examples": [
+      "Person A: 'No Scotsman puts sugar on porridge.' Person B: 'I'm Scottish and I do.' Person A: 'Well, no *true* Scotsman does.'",
+      "Person A: 'Real Christians don't sin.' Person B: 'But this Christian person did.' Person A: 'Well, they're not a *real* Christian then.'",
+      "No true patriot would criticize their country."
+    ],
+    "refutation": [
+      "Point out the shifting definition: 'You're changing what counts as X to exclude counterexamples.'",
+      "Request clear criteria: 'What exactly defines a \"true\" member of this group?'",
+      "Challenge arbitrary exclusion: 'Why doesn't this example count?'"
+    ],
+    "avoidance": [
+      "Define categories clearly upfront",
+      "Accept that generalizations have exceptions",
+      "Don't arbitrarily exclude inconvenient examples"
+    ]
+  },
+  {
+    "name": "Loaded Question",
+    "category": "Logical Fallacy",
+    "slug": "loaded-question",
+    "explanation": "Asking a question that contains an assumption that may be false or disputed. The question is framed so that any direct answer appears to confirm the assumption.",
+    "examples": [
+      "Have you stopped beating your wife?",
+      "Why do you hate America?",
+      "How long have you been a liar?"
+    ],
+    "refutation": [
+      "Reject the premise: 'Your question assumes something that isn't true.'",
+      "Reframe: 'Let me address the assumption in your question first.'",
+      "Clarify: 'I won't answer until we establish whether the premise is accurate.'"
+    ],
+    "avoidance": [
+      "Don't embed controversial assumptions in questions",
+      "Ask neutral questions that don't presuppose disputed facts",
+      "Separate questions about assumptions from questions about conclusions"
+    ]
+  },
+  {
+    "name": "Middle Ground Fallacy",
+    "category": "Logical Fallacy",
+    "slug": "middle-ground-fallacy",
+    "explanation": "Assuming that a compromise between two positions must be correct. This fallacy suggests that the truth always lies in the middle, which isn't necessarily the case.",
+    "examples": [
+      "Some say vaccines are safe, others say they're deadly. The truth must be somewhere in the middle.",
+      "Person A says 2+2=4, Person B says 2+2=6. Let's compromise and say 2+2=5.",
+      "She says he hit her, he denies it. They must both be partially right."
+    ],
+    "refutation": [
+      "Challenge the assumption: 'Why would the middle position be correct?'",
+      "Provide examples: 'Some questions have right and wrong answers, not middle grounds.'",
+      "Demand evidence: 'Let's look at the evidence for each position rather than assuming compromise is best.'"
+    ],
+    "avoidance": [
+      "Evaluate positions based on evidence, not their relative extremity",
+      "Recognize that sometimes one side is simply correct",
+      "Don't assume moderation equals truth"
+    ]
+  },
+  {
+    "name": "Equivocation",
+    "category": "Logical Fallacy",
+    "slug": "equivocation",
+    "explanation": "Using the same word with different meanings in different parts of an argument. This fallacy exploits ambiguous language to make an argument seem valid when it isn't.",
+    "examples": [
+      "A feather is light. What is light cannot be dark. Therefore, a feather cannot be dark.",
+      "Evolution is just a theory. Theories are uncertain. Therefore, evolution is uncertain.",
+      "The sign said 'fine for parking here,' so I thought it was okay to park."
+    ],
+    "refutation": [
+      "Identify the shift: 'You're using this word with two different meanings.'",
+      "Define terms: 'Let's be clear about what we mean by this term.'",
+      "Rephrase with consistent definitions: 'If we use one consistent meaning, the argument falls apart.'"
+    ],
+    "avoidance": [
+      "Define key terms clearly",
+      "Use words consistently throughout an argument",
+      "Be aware of multiple meanings and specify which you intend"
+    ]
+  },
+  {
+    "name": "Burden of Proof Fallacy",
+    "category": "Logical Fallacy",
+    "slug": "burden-of-proof-fallacy",
+    "explanation": "Shifting the burden of proof to the person questioning a claim rather than the person making it. The person making a claim is responsible for supporting it, not those who question it.",
+    "examples": [
+      "Prove that God doesn't exist.",
+      "You can't prove this conspiracy theory isn't true, so it must be real.",
+      "Show me evidence that this supplement doesn't work."
+    ],
+    "refutation": [
+      "Redirect the burden: 'The burden of proof is on the person making the claim.'",
+      "Explain impossibility: 'Proving a negative is often impossible - that's why you must prove the positive.'",
+      "Cite the standard: 'In logic and law, claims require evidence from those making them.'"
+    ],
+    "avoidance": [
+      "Provide evidence for your own claims",
+      "Don't demand others disprove unsupported assertions",
+      "Accept that the burden of proof lies with the claimant"
+    ]
+  },
+  {
+    "name": "Appeal to Ignorance",
+    "category": "Logical Fallacy",
+    "slug": "appeal-to-ignorance",
+    "explanation": "Arguing that something must be true because it hasn't been proven false, or vice versa. This fallacy assumes that lack of evidence against something is evidence for it.",
+    "examples": [
+      "No one has proven aliens don't exist, so they must exist.",
+      "Science hasn't explained this phenomenon, so it must be supernatural.",
+      "We've never seen evidence of election fraud, so it definitely didn't happen."
+    ],
+    "refutation": [
+      "Clarify standards: 'Absence of evidence isn't evidence of absence (or presence).'",
+      "Redirect: 'What positive evidence supports this claim?'",
+      "Point out the gap: 'Not knowing something doesn't mean we can assume the opposite is true.'"
+    ],
+    "avoidance": [
+      "Distinguish between absence of evidence and evidence of absence",
+      "Seek positive evidence rather than relying on gaps in knowledge",
+      "Accept uncertainty when evidence is lacking"
+    ]
+  },
+  {
+    "name": "Texas Sharpshooter",
+    "category": "Logical Fallacy",
+    "slug": "texas-sharpshooter",
+    "explanation": "Cherry-picking data to fit a predetermined conclusion, then claiming to have found a pattern. Named after a shooter who shoots at a barn, then draws a target around the bullet holes.",
+    "examples": [
+      "Looking at all the times a prediction was correct while ignoring all the times it was wrong.",
+      "Finding similarities between two events and calling it a pattern while ignoring all their differences.",
+      "Highlighting data points that support your hypothesis while excluding those that don't."
+    ],
+    "refutation": [
+      "Request complete data: 'What about all the cases that don't fit this pattern?'",
+      "Challenge selection: 'How did you decide which data to include and exclude?'",
+      "Demand methodology: 'Was this pattern identified before or after looking at the data?'"
+    ],
+    "avoidance": [
+      "Examine all relevant data, not just data that supports your view",
+      "Establish patterns before collecting data, not after",
+      "Be transparent about what data you're including and excluding"
+    ]
+  }
+]
