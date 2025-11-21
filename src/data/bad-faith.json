@@ -1,0 +1,347 @@
+[
+  {
+    "name": "Gish Gallop",
+    "category": "Bad-Faith Argument",
+    "slug": "gish-gallop",
+    "explanation": "Overwhelming an opponent with a rapid series of many weak arguments in quick succession, making it impossible to adequately respond to each one in the time available. The goal is not to be right, but to appear to win through exhaustion.",
+    "examples": [
+      "In a debate, rattling off 20 different claims in 2 minutes, knowing your opponent can't possibly address all of them.",
+      "Social media threads where someone posts a dozen different articles and points, demanding you refute each one.",
+      "Listing every possible negative thing about a topic rapid-fire without giving time for response."
+    ],
+    "refutation": [
+      "Don't try to address every point - pick the strongest 2-3 and focus on those",
+      "Point out the tactic: 'You're presenting more arguments than can possibly be addressed. Let's focus on the key issue.'",
+      "Ask them to identify their single strongest argument",
+      "Request evidence for their claims one at a time"
+    ],
+    "avoidance": [
+      "Focus on quality over quantity in your arguments",
+      "Give others time to respond thoroughly",
+      "Present arguments that can withstand scrutiny individually",
+      "Engage substantively rather than overwhelming with volume"
+    ]
+  },
+  {
+    "name": "Moving the Goalposts",
+    "category": "Bad-Faith Argument",
+    "slug": "moving-the-goalposts",
+    "explanation": "Changing the criteria for evidence or proof after initial standards have been met. When their demands are satisfied, they simply ask for something else, making it impossible to ever meet their standards.",
+    "examples": [
+      "Skeptic: 'Show me one study.' You provide one. Skeptic: 'That's not enough, I need ten studies.' You provide ten. Skeptic: 'Those studies aren't from the right journals.'",
+      "Boss: 'Meet this sales target.' You meet it. Boss: 'I meant sustained over three months.' You do that. Boss: 'Now show me you can exceed it by 20%.'",
+      "Demanding increasingly specific or unrealistic evidence standards as each previous demand is met."
+    ],
+    "refutation": [
+      "Point out the tactic: 'You keep changing what counts as acceptable evidence.'",
+      "Establish clear criteria upfront: 'What specifically would convince you?'",
+      "Document the changing standards: 'You first asked for X, now you're asking for Y.'",
+      "Question their good faith: 'Are you genuinely seeking truth or just avoiding being wrong?'"
+    ],
+    "avoidance": [
+      "Establish clear, reasonable criteria before discussion begins",
+      "Be willing to change your mind when criteria are met",
+      "Don't arbitrarily raise standards when proven wrong",
+      "Engage honestly about what evidence you'd accept"
+    ]
+  },
+  {
+    "name": "Sealioning",
+    "category": "Bad-Faith Argument",
+    "slug": "sealioning",
+    "explanation": "Persistently requesting evidence or asking seemingly reasonable questions in bad faith, with the goal of exhausting and frustrating the other person rather than genuine inquiry. Often maintains a veneer of civility while being deliberately annoying.",
+    "examples": [
+      "Repeatedly asking 'Can you provide a source?' for common knowledge claims or every single statement.",
+      "Demanding detailed explanations of obvious points, then questioning every word of the explanation.",
+      "Following someone across multiple posts/threads asking the same questions in a faux-polite manner."
+    ],
+    "refutation": [
+      "Set boundaries: 'I've answered this. I won't engage further on this point.'",
+      "Recognize the pattern and disengage: 'You seem to be asking questions in bad faith.'",
+      "Turn it around: 'What's your actual position, rather than just questioning mine?'",
+      "Don't feel obligated to answer endless questions"
+    ],
+    "avoidance": [
+      "Ask questions genuinely, not as a harassment tactic",
+      "Accept reasonable answers without demanding excessive detail",
+      "State your own position rather than just interrogating others",
+      "Respect boundaries when someone indicates they're done answering"
+    ]
+  },
+  {
+    "name": "Whataboutism",
+    "category": "Bad-Faith Argument",
+    "slug": "whataboutism",
+    "explanation": "Responding to criticism or accusations by deflecting to someone else's perceived wrongdoing. Rather than addressing the issue raised, the person says 'what about...' to change the subject.",
+    "examples": [
+      "Person A: 'This politician is corrupt.' Person B: 'What about that other politician who did something similar?'",
+      "Person A: 'This company has poor labor practices.' Person B: 'What about all the other companies doing the same thing?'",
+      "Person A: 'Country X violated human rights.' Person B: 'What about what Country Y did?'"
+    ],
+    "refutation": [
+      "Acknowledge and redirect: 'That's a separate issue. Let's address this one first.'",
+      "Point out the deflection: 'You're changing the subject rather than addressing the point.'",
+      "Offer to discuss both: 'We can talk about both issues, but don't use one to excuse the other.'",
+      "Stay focused: 'The fact that others do wrong doesn't make this particular action right.'"
+    ],
+    "avoidance": [
+      "Address criticisms directly rather than deflecting",
+      "Recognize that others' wrongdoing doesn't excuse your own",
+      "Discuss issues on their own merits",
+      "Don't use comparison as a way to avoid accountability"
+    ]
+  },
+  {
+    "name": "False Equivalence",
+    "category": "Bad-Faith Argument",
+    "slug": "false-equivalence",
+    "explanation": "Treating two very different things as equivalent to create a false sense of balance or to diminish a serious issue. Often used to defend the indefensible by comparing it to something much less severe.",
+    "examples": [
+      "Comparing minor rule-bending to major fraud because 'both are rule-breaking.'",
+      "Equating peaceful protest with violent riots.",
+      "Treating a scientific consensus the same as fringe theories: 'both are just opinions.'"
+    ],
+    "refutation": [
+      "Highlight the differences: 'These situations are vastly different in scale and severity.'",
+      "Demand specificity: 'How are these actually equivalent?'",
+      "Use analogies: 'That's like saying a parking ticket is the same as armed robbery because both are crimes.'",
+      "Point out false balance: 'Not all positions deserve equal consideration.'"
+    ],
+    "avoidance": [
+      "Make genuine comparisons with similar scale and context",
+      "Acknowledge important differences between situations",
+      "Don't minimize serious issues by comparing them to trivial ones",
+      "Recognize when things are categorically different"
+    ]
+  },
+  {
+    "name": "Gaslighting",
+    "category": "Bad-Faith Argument",
+    "slug": "gaslighting",
+    "explanation": "Manipulating someone into questioning their own perception, memory, or sanity. The gaslighter denies reality, even when confronted with evidence, making the victim doubt themselves.",
+    "examples": [
+      "Denying saying something when there's clear evidence they said it: 'I never said that, you're misremembering.'",
+      "Claiming someone is 'too sensitive' or 'crazy' when they react reasonably to bad behavior.",
+      "Rewriting history and insisting their false version is what really happened."
+    ],
+    "refutation": [
+      "Keep records: save messages, take notes, document events",
+      "Trust your perception: 'I know what I saw/heard/experienced.'",
+      "Get outside validation: check with others who witnessed the events",
+      "Set firm boundaries: 'I'm not debating reality with you.'"
+    ],
+    "avoidance": [
+      "Own your mistakes rather than denying reality",
+      "Don't manipulate others into doubting their perception",
+      "Acknowledge truth even when inconvenient",
+      "Respect others' experiences and memories"
+    ]
+  },
+  {
+    "name": "JAQing Off (Just Asking Questions)",
+    "category": "Bad-Faith Argument",
+    "slug": "jaqing-off",
+    "explanation": "Making outrageous or inflammatory statements in the form of questions to maintain plausible deniability. The person spreads ideas without taking responsibility for them by framing them as 'just asking questions.'",
+    "examples": [
+      "'I'm just asking questions: Could vaccines be causing autism?' (implying they do without evidence)",
+      "'Just wondering: Isn't it suspicious that...' (insinuating conspiracy)",
+      "'I'm just curious: Do you think maybe...' (suggesting something false)"
+    ],
+    "refutation": [
+      "Demand their actual position: 'What do you actually believe, rather than what you're implying?'",
+      "Point out the insinuation: 'Your question implies X. Do you have evidence for that?'",
+      "Refuse to validate: 'That's not a good-faith question.'",
+      "Turn it around: 'Why are you asking that question? What's your point?'"
+    ],
+    "avoidance": [
+      "State your beliefs directly rather than hiding behind questions",
+      "Ask genuine questions without embedded accusations",
+      "Take responsibility for the implications of your questions",
+      "Don't use interrogatives to spread misinformation"
+    ]
+  },
+  {
+    "name": "Motte and Bailey",
+    "category": "Bad-Faith Argument",
+    "slug": "motte-and-bailey",
+    "explanation": "Making an outrageous claim (the bailey - hard to defend), then when challenged, retreating to a reasonable claim (the motte - easy to defend) while acting as if they're the same thing.",
+    "examples": [
+      "Bailey: 'All men are trash!' Challenged. Motte: 'I just mean patriarchy is harmful.' (as if they're equivalent)",
+      "Bailey: 'We need to abolish the police!' Challenged. Motte: 'I just mean we need police reform.' (vastly different claims)",
+      "Bailey: 'Capitalism is evil!' Challenged. Motte: 'I just think workers deserve fair wages.' (conflating extreme and moderate positions)"
+    ],
+    "refutation": [
+      "Point out the switch: 'You made claim A, but now you're defending claim B.'",
+      "Don't let them conflate: 'Those are two very different statements.'",
+      "Hold them to their original claim: 'Let's discuss what you actually said.'",
+      "Ask for clarification: 'Which position do you actually hold?'"
+    ],
+    "avoidance": [
+      "Be consistent in your claims",
+      "Don't make extreme statements then retreat to moderate defenses",
+      "Clarify your actual position upfront",
+      "Defend what you actually believe rather than switching positions"
+    ]
+  },
+  {
+    "name": "Strawmanning",
+    "category": "Bad-Faith Argument",
+    "slug": "strawmanning-tactic",
+    "explanation": "Deliberately misrepresenting someone's position to make it easier to attack. Unlike an honest misunderstanding, this is a calculated tactic to avoid engaging with the real argument.",
+    "examples": [
+      "Person A: 'We should reform policing.' Person B: 'So you want crime to run rampant?'",
+      "Person A: 'I support gun regulation.' Person B: 'Why do you want to repeal the Second Amendment?'",
+      "Person A: 'Healthcare should be more accessible.' Person B: 'So you want full communism?'"
+    ],
+    "refutation": [
+      "Correct immediately: 'That's not my position. Here's what I actually said.'",
+      "Ask them to restate: 'Can you repeat back what you think my position is?'",
+      "Point out the tactic: 'You're attacking a position I don't hold.'",
+      "Get them on record: 'Will you acknowledge my actual position?'"
+    ],
+    "avoidance": [
+      "Represent others' views accurately, even when you disagree",
+      "Ask for clarification if you're uncertain about someone's position",
+      "Steelman, don't strawman: engage with the strongest version of their argument",
+      "Show you understand their position before critiquing it"
+    ]
+  },
+  {
+    "name": "Ad Hominem Attacks",
+    "category": "Bad-Faith Argument",
+    "slug": "ad-hominem-attack",
+    "explanation": "Attacking the person rather than their argument, often to avoid engaging with the substance of what they're saying. This is done deliberately as a distraction or intimidation tactic.",
+    "examples": [
+      "Dismissing someone's argument because of their age: 'OK, Boomer' or 'You're too young to understand.'",
+      "Attacking appearance: 'Listen to this ugly person talk about relationships.'",
+      "Attacking identity: 'Of course you'd say that, you're a [demographic group].'"
+    ],
+    "refutation": [
+      "Redirect to substance: 'My personal characteristics don't affect the validity of my argument.'",
+      "Point out the tactic: 'You're attacking me rather than my position.'",
+      "Hold firm: 'Can you address what I actually said?'",
+      "Use it as evidence: 'The fact that you're resorting to personal attacks suggests you can't refute my point.'"
+    ],
+    "avoidance": [
+      "Engage with ideas, not identities",
+      "Address the argument, not the person",
+      "Recognize that anyone can make valid points regardless of who they are",
+      "Focus on logic and evidence, not personal characteristics"
+    ]
+  },
+  {
+    "name": "Concern Trolling",
+    "category": "Bad-Faith Argument",
+    "slug": "concern-trolling",
+    "explanation": "Pretending to be concerned about an issue or person while actually trying to undermine them. The 'concern' is fake and used as a weapon.",
+    "examples": [
+      "'I'm just worried that by protesting this way, you're hurting your own cause.' (actually opposing the cause)",
+      "'As someone who cares about your movement, I think you should moderate your message.' (trying to weaken the movement)",
+      "'I'm concerned that you're overreacting to this minor issue.' (dismissing legitimate concerns)"
+    ],
+    "refutation": [
+      "Question the premise: 'Are you actually concerned, or do you oppose what we're doing?'",
+      "Point out the pattern: 'Your \"concern\" always seems to involve us doing less.'",
+      "Ask for their actual position: 'What do you think we should do instead?'",
+      "Recognize the tactic: 'This sounds like concern trolling.'"
+    ],
+    "avoidance": [
+      "Express genuine concerns, not strategic ones",
+      "Don't disguise opposition as friendly advice",
+      "Be honest about your actual position",
+      "If you're genuinely concerned, offer constructive help"
+    ]
+  },
+  {
+    "name": "False Civility",
+    "category": "Bad-Faith Argument",
+    "slug": "false-civility",
+    "explanation": "Using politeness and 'civil discourse' as a weapon to dismiss legitimate anger or shut down necessary confrontation. Tone policing as a deflection tactic.",
+    "examples": [
+      "'Let's keep this civil' (when someone is rightfully angry about injustice)",
+      "'I won't engage with you if you're going to be emotional' (dismissing valid emotion)",
+      "'Your tone is too aggressive for me to take you seriously' (focusing on delivery to avoid substance)"
+    ],
+    "refutation": [
+      "Separate tone from content: 'My tone doesn't invalidate my argument.'",
+      "Point out the deflection: 'You're focusing on how I said it to avoid what I said.'",
+      "Acknowledge context: 'Sometimes anger is the appropriate response to injustice.'",
+      "Call out the tactic: 'You're using civility as a shield.'"
+    ],
+    "avoidance": [
+      "Don't use tone as an excuse to dismiss valid points",
+      "Recognize when passion or anger is justified",
+      "Engage with substance even when delivery is imperfect",
+      "Don't weaponize 'civility' to maintain unjust status quos"
+    ]
+  },
+  {
+    "name": "Kafka Trapping",
+    "category": "Bad-Faith Argument",
+    "slug": "kafka-trapping",
+    "explanation": "Structuring an accusation so that denial of the accusation confirms it. Creating a no-win situation where any defense proves guilt.",
+    "examples": [
+      "'The fact that you deny being racist proves you're racist because you don't recognize your privilege.'",
+      "'Only a guilty person would defend themselves that way.'",
+      "'Your refusal to admit you're biased shows how deep your bias goes.'"
+    ],
+    "refutation": [
+      "Point out the trap: 'You've set this up so that any response I give confirms your accusation.'",
+      "Refuse to play: 'I'm not going to engage with a rigged game.'",
+      "Demand specific evidence: 'What specifically did I do wrong, independent of my response?'",
+      "Call out the logic: 'By this logic, no one could ever be innocent.'"
+    ],
+    "avoidance": [
+      "Make accusations based on specific evidence, not catch-22s",
+      "Allow for the possibility that someone might be innocent",
+      "Don't set up no-win situations",
+      "Accept that denial isn't automatically proof of guilt"
+    ]
+  },
+  {
+    "name": "Playing the Victim",
+    "category": "Bad-Faith Argument",
+    "slug": "playing-the-victim",
+    "explanation": "Portraying oneself as the victim to gain sympathy, avoid accountability, or deflect from one's own bad behavior. Weaponizing victimhood to shut down criticism.",
+    "examples": [
+      "Person A: 'You hurt my feelings.' Person B: 'Why are you always attacking me? I'm the real victim here.'",
+      "When criticized for bad behavior: 'You're bullying me!' (making themselves the victim)",
+      "Powerful people claiming they're being 'canceled' when facing accountability for actions."
+    ],
+    "refutation": [
+      "Refocus on the actual issue: 'We're discussing your actions, not your feelings about being criticized.'",
+      "Point out the reversal: 'You're trying to make yourself the victim to avoid addressing what you did.'",
+      "Maintain boundaries: 'You being upset doesn't excuse your behavior.'",
+      "Distinguish criticism from victimization: 'Being held accountable isn't the same as being persecuted.'"
+    ],
+    "avoidance": [
+      "Accept criticism without playing victim",
+      "Take responsibility for your actions",
+      "Don't confuse accountability with persecution",
+      "Respect actual victims by not appropriating victimhood"
+    ]
+  },
+  {
+    "name": "Selective Outrage",
+    "category": "Bad-Faith Argument",
+    "slug": "selective-outrage",
+    "explanation": "Expressing outrage about issues only when it's politically or personally convenient, while ignoring identical issues in other contexts. Using outrage as a weapon rather than principle.",
+    "examples": [
+      "Being outraged about government spending only when the opposing party is in power.",
+      "Caring about 'free speech' only when people you agree with are affected.",
+      "Expressing concern about violence or corruption only when it serves your political goals."
+    ],
+    "refutation": [
+      "Point out the inconsistency: 'You didn't seem to care when this same thing happened before.'",
+      "Question sincerity: 'Is this principle or partisan?'",
+      "Ask about other cases: 'What about this similar situation? Are you equally outraged?'",
+      "Demand consistent standards: 'Will you apply this principle across the board?'"
+    ],
+    "avoidance": [
+      "Apply your principles consistently",
+      "Care about issues regardless of who's involved",
+      "Don't weaponize outrage for partisan gain",
+      "Develop genuine principles rather than situational outrage"
+    ]
+  }
+]
