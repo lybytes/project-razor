@@ -3,21 +3,42 @@
     "name": "Ad Hominem",
     "category": "Logical Fallacy",
     "slug": "ad-hominem",
-    "explanation": "Attacking the person making the argument rather than addressing the argument itself. This fallacy attempts to discredit an idea by attacking the character, motive, or other attribute of the person presenting it.",
+    "explanation": "The Ad Hominem logical fallacy occurs when someone attacks the character, motive, or attributes of the person making an argument rather than the argument itself. This fallacy diverts attention from the actual issue and focuses on discrediting the individual, thereby undermining the argument through irrelevant personal attacks.",
     "examples": [
-      "You can't trust John's opinion on climate change because he failed science in high school.",
-      "Of course she supports higher taxes - she's a wealthy liberal elite.",
-      "Don't listen to his argument about healthcare - he's just a young idealist who doesn't understand the real world."
+      {
+        "text": "During a debate about climate change, one person says, \"We should listen to scientists about global warming.\" The opponent responds, \"Why should we listen to you? You failed your science classes in school.\"",
+        "explanation": "In this example, the opponent attacks the individual's past academic performance instead of addressing the argument about listening to scientists."
+      },
+      {
+        "text": "During a debate on healthcare reform one debater says, \"We should not listen to your proposal because you are not a doctor.\"",
+        "explanation": "In this other example, the debater is attacking the individual's qualifications rather than addressing the substance of the healthcare proposal."
+      }
     ],
     "refutation": [
-      "Point out that the argument's validity is independent of who makes it",
-      "Ask: 'Can we focus on the actual claims being made rather than the person?'",
-      "Redirect: 'Even if that's true about the person, does it address the evidence they presented?'"
+      {
+        "title": "Identify the Fallacy",
+        "text": "Clearly point out that the argument is being sidetracked by personal attacks rather than addressing the main issue.",
+        "explanation": "For instance, in the last example you might say, \"Attacking my academic background doesn't address the scientific evidence regarding climate change.\""
+      },
+      {
+        "title": "Redirect to the Argument",
+        "text": "Steer the conversation back to the original argument. Ask the person to provide evidence or reasoning that directly relates to the topic.",
+        "explanation": "For example, \"Can you provide evidence that contradicts the scientific consensus on climate change?\""
+      },
+      {
+        "title": "Stay Calm and Composed",
+        "text": "Avoid retaliating with personal attacks, as this can escalate the situation and further distract from the main issue."
+      }
     ],
     "avoidance": [
-      "Focus on evaluating arguments based on evidence and logic",
-      "Separate the messenger from the message",
-      "Consider the argument on its own merits regardless of source"
+      {
+        "title": "Focus on the Argument",
+        "text": "Always concentrate on the argument's content rather than the individual presenting it. Evaluate the evidence, logic, and reasoning independently of the person's characteristics."
+      },
+      {
+        "title": "Practice Empathy and Respect",
+        "text": "Engage in discussions with respect and empathy. Acknowledge that everyone can contribute valuable perspectives, regardless of personal attributes."
+      }
     ]
   },
   {
