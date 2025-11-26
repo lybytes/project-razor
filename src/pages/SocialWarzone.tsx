@@ -153,41 +153,45 @@ const SocialWarzone = () => {
           )}
 
           {step === "answer" && (
-            <div className="bg-card border border-border rounded-lg overflow-hidden mb-6">
-              <div className="p-6 bg-muted/20">
-                {currentScenario.post.context && (
-                  <p className="text-muted-foreground mb-4 text-sm">{currentScenario.post.context}</p>
-                )}
+            <>
+              {!showResult && (
+                <div className="bg-card border border-border rounded-lg overflow-hidden mb-6">
+                  <div className="p-6 bg-muted/20">
+                    {currentScenario.post.context && (
+                      <p className="text-muted-foreground mb-4 text-sm">{currentScenario.post.context}</p>
+                    )}
 
-                <div className="flex items-start gap-3 mb-3">
-                  <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
-                    {currentScenario.post.author.substring(0, 1).toUpperCase()}
-                  </div>
-                  <div className="flex-1">
-                    <div className="font-semibold text-foreground">{currentScenario.post.author}</div>
-                    <div className="text-sm text-muted-foreground">15d</div>
-                  </div>
-                </div>
-
-                <p className="text-foreground leading-relaxed mb-4">{currentScenario.post.content}</p>
-
-                {currentScenario.post.likes > 0 && (
-                  <div className="flex gap-6 text-muted-foreground text-sm">
-                    <div className="flex items-center gap-2">
-                      <Heart className="w-4 h-4" />
-                      <span>{currentScenario.post.likes.toLocaleString()}</span>
+                    <div className="flex items-start gap-3 mb-3">
+                      <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
+                        {currentScenario.post.author.substring(0, 1).toUpperCase()}
+                      </div>
+                      <div className="flex-1">
+                        <div className="font-semibold text-foreground">{currentScenario.post.author}</div>
+                        <div className="text-sm text-muted-foreground">15d</div>
+                      </div>
                     </div>
-                    {currentScenario.post.retweets > 0 && (
-                      <div className="flex items-center gap-2">
-                        <Repeat2 className="w-4 h-4" />
-                        <span>{currentScenario.post.retweets.toLocaleString()}</span>
+
+                    <p className="text-foreground leading-relaxed mb-4">{currentScenario.post.content}</p>
+
+                    {currentScenario.post.likes > 0 && (
+                      <div className="flex gap-6 text-muted-foreground text-sm">
+                        <div className="flex items-center gap-2">
+                          <Heart className="w-4 h-4" />
+                          <span>{currentScenario.post.likes.toLocaleString()}</span>
+                        </div>
+                        {currentScenario.post.retweets > 0 && (
+                          <div className="flex items-center gap-2">
+                            <Repeat2 className="w-4 h-4" />
+                            <span>{currentScenario.post.retweets.toLocaleString()}</span>
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>
-                )}
-              </div>
+                </div>
+              )}
 
-              <div className="p-6">
+              <div className="bg-card border border-border rounded-lg p-6 mb-6">
                 {!showResult ? (
                   <div className="space-y-4">
                     <p className="text-sm text-muted-foreground mb-2">
@@ -206,7 +210,7 @@ const SocialWarzone = () => {
                   </div>
                 ) : (
                   <div className="space-y-6">
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                       {currentIndex < socialScenarios.length - 1 ? (
                         <Button onClick={handleNext} className="w-full" size="lg">
                           Continue Playing
@@ -230,7 +234,7 @@ const SocialWarzone = () => {
                   </div>
                 )}
               </div>
-            </div>
+            </>
           )}
 
           <div className="flex gap-2 justify-center">
