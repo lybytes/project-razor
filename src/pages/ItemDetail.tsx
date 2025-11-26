@@ -79,14 +79,29 @@ const ItemDetail = () => {
                 <h2 className="text-2xl font-bold text-foreground mb-4">
                   Examples
                 </h2>
-                <ul className="space-y-4">
-                  {item.examples.map((example, idx) => (
-                    <li key={idx} className="flex gap-3">
-                      <span className="text-primary font-bold flex-shrink-0">{idx + 1}.</span>
-                      <span className="text-muted-foreground">{example}</span>
-                    </li>
-                  ))}
-                </ul>
+                <div className="space-y-6">
+                  {item.examples.map((example, idx) => {
+                    const isObject = typeof example === 'object';
+                    const text = isObject ? example.text : example;
+                    const explanation = isObject ? example.explanation : null;
+                    
+                    return (
+                      <div key={idx}>
+                        <div className="bg-muted/50 border border-border rounded-lg p-4 mb-2">
+                          <div className="flex gap-3">
+                            <span className="text-primary font-bold flex-shrink-0">{idx + 1}.</span>
+                            <span className="text-foreground">{text}</span>
+                          </div>
+                        </div>
+                        {explanation && (
+                          <p className="text-muted-foreground ml-8 mt-2">
+                            {explanation}
+                          </p>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </section>
@@ -99,13 +114,26 @@ const ItemDetail = () => {
                 <h2 className="text-2xl font-bold text-foreground mb-4">
                   How to Refute It
                 </h2>
-                <ul className="space-y-3">
-                  {item.refutation.map((point, idx) => (
-                    <li key={idx} className="flex gap-3">
-                      <span className="text-primary">✓</span>
-                      <span className="text-muted-foreground">{point}</span>
-                    </li>
-                  ))}
+                <ul className="space-y-4">
+                  {item.refutation.map((point, idx) => {
+                    const isObject = typeof point === 'object';
+                    const title = isObject ? point.title : null;
+                    const text = isObject ? point.text : point;
+                    const explanation = isObject ? point.explanation : null;
+                    
+                    return (
+                      <li key={idx} className="flex gap-3">
+                        <span className="text-primary flex-shrink-0">•</span>
+                        <div className="flex-1">
+                          {title && <span className="font-bold text-foreground">{title}: </span>}
+                          <span className="text-muted-foreground">{text}</span>
+                          {explanation && (
+                            <p className="text-muted-foreground mt-1">{explanation}</p>
+                          )}
+                        </div>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             </div>
@@ -119,13 +147,26 @@ const ItemDetail = () => {
                 <h2 className="text-2xl font-bold text-foreground mb-4">
                   How to Avoid It
                 </h2>
-                <ul className="space-y-3">
-                  {item.avoidance.map((point, idx) => (
-                    <li key={idx} className="flex gap-3">
-                      <span className="text-primary">✓</span>
-                      <span className="text-muted-foreground">{point}</span>
-                    </li>
-                  ))}
+                <ul className="space-y-4">
+                  {item.avoidance.map((point, idx) => {
+                    const isObject = typeof point === 'object';
+                    const title = isObject ? point.title : null;
+                    const text = isObject ? point.text : point;
+                    const explanation = isObject ? point.explanation : null;
+                    
+                    return (
+                      <li key={idx} className="flex gap-3">
+                        <span className="text-primary flex-shrink-0">•</span>
+                        <div className="flex-1">
+                          {title && <span className="font-bold text-foreground">{title}: </span>}
+                          <span className="text-muted-foreground">{text}</span>
+                          {explanation && (
+                            <p className="text-muted-foreground mt-1">{explanation}</p>
+                          )}
+                        </div>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             </div>
