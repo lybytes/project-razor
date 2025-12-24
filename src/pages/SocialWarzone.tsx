@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -29,19 +29,11 @@ const SocialWarzone = () => {
   const [currentIndex, setCurrentIndex] = useState(() => 
     Math.floor(Math.random() * socialScenarios.length)
   );
-  const [step, setStep] = useState<"context" | "post" | "answer">("context");
   const [userAnswer, setUserAnswer] = useState("");
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
 
   const currentScenario = socialScenarios[currentIndex];
-
-  // Auto-advance to post step if there's no context
-  useEffect(() => {
-    if (step === "context" && !currentScenario.context) {
-      setStep("post");
-    }
-  }, [step, currentScenario]);
 
   const handleSubmit = () => {
     const answer = userAnswer.toLowerCase().trim();
@@ -67,7 +59,6 @@ const SocialWarzone = () => {
     // Get next random index
     const nextIndex = getRandomIndex();
     setCurrentIndex(nextIndex);
-    setStep("context");
     setUserAnswer("");
     setShowResult(false);
     setIsCorrect(false);
@@ -86,30 +77,27 @@ const SocialWarzone = () => {
             <h1 className="text-4xl font-bold text-foreground mb-2">Social Warzone</h1>
           </div>
 
-          {step === "context" && currentScenario.context && (
-            <div className="bg-card border border-border rounded-lg overflow-hidden mb-6">
-              <div className="p-8">
-                <h2 className="text-2xl font-bold text-foreground mb-2">{currentScenario.context.title}</h2>
-                <p className="text-sm text-muted-foreground mb-6">
-                  This is an excerpt from a recent {currentScenario.context.source} article titled
-                </p>
-                <p className="text-lg text-muted-foreground italic mb-6">"{currentScenario.context.articleTitle}"</p>
-
-                <div className="bg-card border border-border rounded-lg p-6 mb-6">
-                  <p className="text-foreground leading-relaxed whitespace-pre-line">
-                    {currentScenario.context.content}
-                  </p>
-                </div>
-
-                <Button onClick={() => setStep("post")} className="w-full" size="lg">
-                  Continue
-                </Button>
-              </div>
-            </div>
-          )}
-
-          {step === "post" && (
+          {!showResult && (
             <>
+              {/* Context section - shown together with post */}
+              {currentScenario.context && (
+                <div className="bg-card border border-border rounded-lg overflow-hidden mb-6">
+                  <div className="p-6">
+                    <h2 className="text-xl font-bold text-foreground mb-2">{currentScenario.context.title}</h2>
+                    <p className="text-sm text-muted-foreground mb-4">
+                      This is an excerpt from a recent {currentScenario.context.source} article titled "{currentScenario.context.articleTitle}"
+                    </p>
+
+                    <div className="bg-muted/20 border border-border rounded-lg p-4">
+                      <p className="text-foreground leading-relaxed whitespace-pre-line text-sm">
+                        {currentScenario.context.content}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Post section */}
               {currentScenario.post.context && (
                 <p className="text-muted-foreground mb-4 text-sm">{currentScenario.post.context}</p>
               )}
@@ -145,6 +133,7 @@ const SocialWarzone = () => {
                 </div>
               </div>
 
+              {/* Answer input */}
               <div className="bg-card border border-border rounded-lg p-6 mb-6">
                 <p className="text-primary font-semibold mb-3">
                   Identify and refute the critical thinking pitfall before it spreads further.
@@ -160,19 +149,18 @@ const SocialWarzone = () => {
                   className="mb-4"
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
-                      setStep("answer");
                       handleSubmit();
                     }
                   }}
                 />
-                <Button onClick={() => { setStep("answer"); handleSubmit(); }} className="w-full" size="lg">
+                <Button onClick={handleSubmit} className="w-full" size="lg">
                   Reveal Answer
                 </Button>
               </div>
             </>
           )}
 
-          {step === "answer" && showResult && (
+          {showResult && (
             <div className="space-y-6">
               {/* Feedback */}
               <div className={`p-6 rounded-lg border-2 ${
