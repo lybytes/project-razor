@@ -1,14 +1,34 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
 import scenarios from "@/data/scenarios.json";
-import { ArrowRight, RotateCcw, Heart, Repeat2 } from "lucide-react";
+import { Heart, Repeat2 } from "lucide-react";
 
 const SocialWarzone = () => {
   const socialScenarios = scenarios.filter((s) => s.mode === "social-warzone");
-  const [currentIndex, setCurrentIndex] = useState(0);
+  
+  // Track which scenarios have been seen to avoid immediate repeats
+  const [seenIndices, setSeenIndices] = useState<number[]>([]);
+  
+  // Get a random scenario index that hasn't been seen recently
+  const getRandomIndex = () => {
+    const availableIndices = socialScenarios
+      .map((_, idx) => idx)
+      .filter(idx => !seenIndices.includes(idx));
+    
+    // If all have been seen, reset and pick from all
+    if (availableIndices.length === 0) {
+      return Math.floor(Math.random() * socialScenarios.length);
+    }
+    
+    return availableIndices[Math.floor(Math.random() * availableIndices.length)];
+  };
+
+  const [currentIndex, setCurrentIndex] = useState(() => 
+    Math.floor(Math.random() * socialScenarios.length)
+  );
   const [step, setStep] = useState<"context" | "post" | "answer">("context");
   const [userAnswer, setUserAnswer] = useState("");
   const [showResult, setShowResult] = useState(false);
@@ -34,17 +54,19 @@ const SocialWarzone = () => {
   };
 
   const handleNext = () => {
-    if (currentIndex < socialScenarios.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-      setStep("context");
-      setUserAnswer("");
-      setShowResult(false);
-      setIsCorrect(false);
-    }
-  };
-
-  const handleReset = () => {
-    setCurrentIndex(0);
+    // Mark current as seen
+    setSeenIndices(prev => {
+      const updated = [...prev, currentIndex];
+      // Keep only last N to allow cycling back eventually
+      if (updated.length >= socialScenarios.length) {
+        return updated.slice(-Math.floor(socialScenarios.length / 2));
+      }
+      return updated;
+    });
+    
+    // Get next random index
+    const nextIndex = getRandomIndex();
+    setCurrentIndex(nextIndex);
     setStep("context");
     setUserAnswer("");
     setShowResult(false);
@@ -62,9 +84,6 @@ const SocialWarzone = () => {
               ← Back to Training
             </Link>
             <h1 className="text-4xl font-bold text-foreground mb-2">Social Warzone</h1>
-            <p className="text-muted-foreground">
-              Post {currentIndex + 1} of {socialScenarios.length}
-            </p>
           </div>
 
           {step === "context" && currentScenario.context && (
@@ -83,7 +102,7 @@ const SocialWarzone = () => {
                 </div>
 
                 <Button onClick={() => setStep("post")} className="w-full" size="lg">
-                  Continue <ArrowRight className="ml-2 w-4 h-4" />
+                  Continue
                 </Button>
               </div>
             </div>
@@ -142,111 +161,64 @@ const SocialWarzone = () => {
                   onKeyDown={(e) => {
                     if (e.key === "Enter") {
                       setStep("answer");
+                      handleSubmit();
                     }
                   }}
                 />
-                <Button onClick={() => setStep("answer")} className="w-full" size="lg">
+                <Button onClick={() => { setStep("answer"); handleSubmit(); }} className="w-full" size="lg">
                   Reveal Answer
                 </Button>
               </div>
             </>
           )}
 
-          {step === "answer" && (
-            <>
-              {!showResult && (
-                <div className="bg-card border border-border rounded-lg overflow-hidden mb-6">
-                  <div className="p-6 bg-muted/20">
-                    {currentScenario.post.context && (
-                      <p className="text-muted-foreground mb-4 text-sm">{currentScenario.post.context}</p>
-                    )}
-
-                    <div className="flex items-start gap-3 mb-3">
-                      <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
-                        {currentScenario.post.author.substring(0, 1).toUpperCase()}
-                      </div>
-                      <div className="flex-1">
-                        <div className="font-semibold text-foreground">{currentScenario.post.author}</div>
-                        <div className="text-sm text-muted-foreground">15d</div>
-                      </div>
-                    </div>
-
-                    <p className="text-foreground leading-relaxed mb-4">{currentScenario.post.content}</p>
-
-                    {currentScenario.post.likes > 0 && (
-                      <div className="flex gap-6 text-muted-foreground text-sm">
-                        <div className="flex items-center gap-2">
-                          <Heart className="w-4 h-4" />
-                          <span>{currentScenario.post.likes.toLocaleString()}</span>
-                        </div>
-                        {currentScenario.post.retweets > 0 && (
-                          <div className="flex items-center gap-2">
-                            <Repeat2 className="w-4 h-4" />
-                            <span>{currentScenario.post.retweets.toLocaleString()}</span>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              <div className="bg-card border border-border rounded-lg p-6 mb-6">
-                {!showResult ? (
-                  <div className="space-y-4">
-                    <p className="text-sm text-muted-foreground mb-2">
-                      <strong>Answer</strong>
-                    </p>
-                    <p className="text-foreground text-lg mb-4">
-                      1. The <strong>{currentScenario.correctAnswer}</strong>
-                    </p>
-                    <div
-                      className="text-muted-foreground leading-relaxed prose prose-invert max-w-none"
-                      dangerouslySetInnerHTML={{ __html: currentScenario.explanation }}
-                    />
-                    <Button onClick={() => setShowResult(true)} className="w-full mt-6" size="lg">
-                      Continue
-                    </Button>
-                  </div>
-                ) : (
-                  <div className="space-y-6">
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                      {currentIndex < socialScenarios.length - 1 ? (
-                        <Button onClick={handleNext} className="w-full" size="lg">
-                          Continue Playing
-                        </Button>
-                      ) : (
-                        <Button onClick={handleReset} className="w-full" size="lg">
-                          <RotateCcw className="mr-2 w-4 h-4" /> Start Over
-                        </Button>
-                      )}
-                      <Link to="/train" className="w-full">
-                        <Button variant="secondary" className="w-full" size="lg">
-                          Other Training
-                        </Button>
-                      </Link>
-                      <Link to="/learn" className="w-full">
-                        <Button variant="secondary" className="w-full" size="lg">
-                          Study
-                        </Button>
-                      </Link>
-                    </div>
-                  </div>
-                )}
+          {step === "answer" && showResult && (
+            <div className="space-y-6">
+              {/* Feedback */}
+              <div className={`p-6 rounded-lg border-2 ${
+                isCorrect 
+                  ? 'bg-green-950/20 border-green-600' 
+                  : 'bg-red-950/20 border-red-600'
+              }`}>
+                <p className={`font-bold text-xl ${
+                  isCorrect ? 'text-green-400' : 'text-red-400'
+                }`}>
+                  {isCorrect ? '✓ Well done, that is correct!' : '✗ That\'s not quite right.'}
+                </p>
               </div>
-            </>
-          )}
 
-          <div className="flex gap-2 justify-center">
-            {socialScenarios.map((_, idx) => (
-              <div
-                key={idx}
-                className={`h-2 w-2 rounded-full transition-all ${
-                  idx === currentIndex ? "bg-primary w-8" : idx < currentIndex ? "bg-primary/50" : "bg-muted"
-                }`}
-              />
-            ))}
-          </div>
+              {/* Answer and Explanation */}
+              <div className="bg-card border border-border rounded-lg p-6">
+                <p className="text-sm text-muted-foreground mb-2">
+                  <strong>Answer</strong>
+                </p>
+                <p className="text-foreground text-lg mb-4">
+                  The <strong>{currentScenario.correctAnswer}</strong>
+                </p>
+                <div
+                  className="text-muted-foreground leading-relaxed prose prose-invert max-w-none"
+                  dangerouslySetInnerHTML={{ __html: currentScenario.explanation }}
+                />
+              </div>
+
+              {/* Navigation buttons */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <Button onClick={handleNext} className="w-full" size="lg">
+                  Continue Playing
+                </Button>
+                <Link to="/train" className="w-full">
+                  <Button variant="secondary" className="w-full" size="lg">
+                    Other Training
+                  </Button>
+                </Link>
+                <Link to="/learn" className="w-full">
+                  <Button variant="secondary" className="w-full" size="lg">
+                    Study
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
       </main>
     </div>

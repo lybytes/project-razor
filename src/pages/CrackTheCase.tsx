@@ -4,11 +4,31 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Link } from "react-router-dom";
 import scenarios from "@/data/scenarios.json";
-import { ArrowRight, RotateCcw } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 const CrackTheCase = () => {
   const caseScenarios = scenarios.filter(s => s.mode === "crack-the-case");
-  const [currentIndex, setCurrentIndex] = useState(0);
+  
+  // Track which scenarios have been seen to avoid immediate repeats
+  const [seenIndices, setSeenIndices] = useState<number[]>([]);
+  
+  // Get a random scenario index that hasn't been seen recently
+  const getRandomIndex = () => {
+    const availableIndices = caseScenarios
+      .map((_, idx) => idx)
+      .filter(idx => !seenIndices.includes(idx));
+    
+    // If all have been seen, reset and pick from all
+    if (availableIndices.length === 0) {
+      return Math.floor(Math.random() * caseScenarios.length);
+    }
+    
+    return availableIndices[Math.floor(Math.random() * availableIndices.length)];
+  };
+
+  const [currentIndex, setCurrentIndex] = useState(() => 
+    Math.floor(Math.random() * caseScenarios.length)
+  );
   const [userAnswer, setUserAnswer] = useState("");
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
@@ -26,16 +46,19 @@ const CrackTheCase = () => {
   };
 
   const handleNext = () => {
-    if (currentIndex < caseScenarios.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-      setUserAnswer("");
-      setShowResult(false);
-      setIsCorrect(false);
-    }
-  };
-
-  const handleReset = () => {
-    setCurrentIndex(0);
+    // Mark current as seen
+    setSeenIndices(prev => {
+      const updated = [...prev, currentIndex];
+      // Keep only last N to allow cycling back eventually
+      if (updated.length >= caseScenarios.length) {
+        return updated.slice(-Math.floor(caseScenarios.length / 2));
+      }
+      return updated;
+    });
+    
+    // Get next random index
+    const nextIndex = getRandomIndex();
+    setCurrentIndex(nextIndex);
     setUserAnswer("");
     setShowResult(false);
     setIsCorrect(false);
@@ -54,9 +77,6 @@ const CrackTheCase = () => {
             <h1 className="text-4xl font-bold text-foreground mb-2">
               Crack the Case
             </h1>
-            <p className="text-muted-foreground">
-              Case {currentIndex + 1} of {caseScenarios.length}
-            </p>
           </div>
 
           <div className="bg-card border border-border rounded-lg p-8 mb-6">
@@ -117,15 +137,9 @@ const CrackTheCase = () => {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4">
-                  {currentIndex < caseScenarios.length - 1 ? (
-                    <Button onClick={handleNext} className="w-full">
-                      Next Case <ArrowRight className="ml-2 w-4 h-4" />
-                    </Button>
-                  ) : (
-                    <Button onClick={handleReset} className="w-full">
-                      <RotateCcw className="mr-2 w-4 h-4" /> Start Over
-                    </Button>
-                  )}
+                  <Button onClick={handleNext} className="w-full">
+                    Next Case <ArrowRight className="ml-2 w-4 h-4" />
+                  </Button>
                   <Link to="/train" className="w-full">
                     <Button variant="outline" className="w-full">
                       Other Training
@@ -139,21 +153,6 @@ const CrackTheCase = () => {
                 </div>
               </div>
             )}
-          </div>
-
-          <div className="flex gap-2 justify-center">
-            {caseScenarios.map((_, idx) => (
-              <div
-                key={idx}
-                className={`h-2 w-2 rounded-full transition-all ${
-                  idx === currentIndex 
-                    ? 'bg-primary w-8' 
-                    : idx < currentIndex 
-                    ? 'bg-primary/50' 
-                    : 'bg-muted'
-                }`}
-              />
-            ))}
           </div>
         </div>
       </main>

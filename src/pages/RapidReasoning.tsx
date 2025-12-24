@@ -4,11 +4,31 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
 import scenarios from "@/data/scenarios.json";
-import { ArrowRight, RotateCcw } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 const RapidReasoning = () => {
   const rapidScenarios = scenarios.filter(s => s.mode === "rapid-reasoning");
-  const [currentIndex, setCurrentIndex] = useState(0);
+  
+  // Track which scenarios have been seen to avoid immediate repeats
+  const [seenIndices, setSeenIndices] = useState<number[]>([]);
+  
+  // Get a random scenario index that hasn't been seen recently
+  const getRandomIndex = () => {
+    const availableIndices = rapidScenarios
+      .map((_, idx) => idx)
+      .filter(idx => !seenIndices.includes(idx));
+    
+    // If all have been seen, reset and pick from all
+    if (availableIndices.length === 0) {
+      return Math.floor(Math.random() * rapidScenarios.length);
+    }
+    
+    return availableIndices[Math.floor(Math.random() * availableIndices.length)];
+  };
+
+  const [currentIndex, setCurrentIndex] = useState(() => 
+    Math.floor(Math.random() * rapidScenarios.length)
+  );
   const [userAnswer, setUserAnswer] = useState("");
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
@@ -27,16 +47,19 @@ const RapidReasoning = () => {
   };
 
   const handleNext = () => {
-    if (currentIndex < rapidScenarios.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-      setUserAnswer("");
-      setShowResult(false);
-      setIsCorrect(false);
-    }
-  };
-
-  const handleReset = () => {
-    setCurrentIndex(0);
+    // Mark current as seen
+    setSeenIndices(prev => {
+      const updated = [...prev, currentIndex];
+      // Keep only last N to allow cycling back eventually
+      if (updated.length >= rapidScenarios.length) {
+        return updated.slice(-Math.floor(rapidScenarios.length / 2));
+      }
+      return updated;
+    });
+    
+    // Get next random index
+    const nextIndex = getRandomIndex();
+    setCurrentIndex(nextIndex);
     setUserAnswer("");
     setShowResult(false);
     setIsCorrect(false);
@@ -55,9 +78,6 @@ const RapidReasoning = () => {
             <h1 className="text-4xl font-bold text-foreground mb-2">
               Rapid Reasoning
             </h1>
-            <p className="text-muted-foreground">
-              Scenario {currentIndex + 1} of {rapidScenarios.length}
-            </p>
           </div>
 
           <div className="bg-card border border-border rounded-lg p-8 mb-6">
@@ -118,15 +138,9 @@ const RapidReasoning = () => {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4">
-                  {currentIndex < rapidScenarios.length - 1 ? (
-                    <Button onClick={handleNext} className="w-full">
-                      Continue Playing <ArrowRight className="ml-2 w-4 h-4" />
-                    </Button>
-                  ) : (
-                    <Button onClick={handleReset} className="w-full">
-                      <RotateCcw className="mr-2 w-4 h-4" /> Start Over
-                    </Button>
-                  )}
+                  <Button onClick={handleNext} className="w-full">
+                    Continue Playing <ArrowRight className="ml-2 w-4 h-4" />
+                  </Button>
                   <Link to="/train" className="w-full">
                     <Button variant="outline" className="w-full">
                       Other Training
@@ -140,21 +154,6 @@ const RapidReasoning = () => {
                 </div>
               </div>
             )}
-          </div>
-
-          <div className="flex gap-2 justify-center">
-            {rapidScenarios.map((_, idx) => (
-              <div
-                key={idx}
-                className={`h-2 w-2 rounded-full transition-all ${
-                  idx === currentIndex 
-                    ? 'bg-primary w-8' 
-                    : idx < currentIndex 
-                    ? 'bg-primary/50' 
-                    : 'bg-muted'
-                }`}
-              />
-            ))}
           </div>
         </div>
       </main>
