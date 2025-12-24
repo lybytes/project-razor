@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
 import scenarios from "@/data/scenarios.json";
 import { Heart, Repeat2 } from "lucide-react";
+import { formatBoldText } from "@/lib/formatText";
 
 const SocialWarzone = () => {
   const socialScenarios = scenarios.filter((s) => s.mode === "social-warzone");
@@ -183,10 +184,10 @@ const SocialWarzone = () => {
                 <p className="text-foreground text-lg mb-4">
                   The <strong>{currentScenario.correctAnswer}</strong>
                 </p>
-                <div
-                  className="text-muted-foreground leading-relaxed prose prose-invert max-w-none"
-                  dangerouslySetInnerHTML={{ __html: currentScenario.explanation }}
-                />
+              <div
+                className="text-foreground leading-relaxed prose prose-invert max-w-none"
+                dangerouslySetInnerHTML={{ __html: formatBoldText(currentScenario.explanation) }}
+              />
               </div>
 
               {/* Navigation buttons */}
