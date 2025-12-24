@@ -32,21 +32,31 @@ const Blog = () => {
       
       <main className="container mx-auto px-4 py-16">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-5xl font-bold text-foreground mb-4">
+          <h1 
+            className="text-5xl font-bold text-foreground mb-4 opacity-0 animate-fade-up"
+            style={{ animationDelay: "0ms" }}
+          >
             Blog
           </h1>
-          <p className="text-xl text-muted-foreground mb-12">
+          <p 
+            className="text-xl text-muted-foreground mb-12 opacity-0 animate-fade-up"
+            style={{ animationDelay: "100ms" }}
+          >
             Insights, case studies, and analysis on critical thinking and disinformation.
           </p>
 
           <div className="space-y-8">
             {posts.map((post, idx) => (
-              <article key={idx} className="bg-card border border-border rounded-lg p-8 hover:border-primary transition-colors">
+              <article 
+                key={idx} 
+                className="bg-card border border-border rounded-lg p-8 hover:border-primary transition-all duration-300 opacity-0 animate-fade-up hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/10 cursor-pointer"
+                style={{ animationDelay: `${200 + idx * 100}ms` }}
+              >
                 <div className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-semibold mb-4">
                   {post.category}
                 </div>
                 
-                <h2 className="text-3xl font-bold text-foreground mb-3">
+                <h2 className="text-3xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
                   {post.title}
                 </h2>
                 
@@ -68,7 +78,10 @@ const Blog = () => {
             ))}
           </div>
 
-          <div className="mt-12 text-center">
+          <div 
+            className="mt-12 text-center opacity-0 animate-fade-up"
+            style={{ animationDelay: "500ms" }}
+          >
             <p className="text-muted-foreground">
               More articles coming soon. Check back regularly for new content.
             </p>
