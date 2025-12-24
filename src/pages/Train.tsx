@@ -32,7 +32,7 @@ const Train = () => {
       <Navigation />
       
       <main className="container mx-auto px-4 py-16">
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 opacity-0 animate-fade-up" style={{ animationDelay: "0ms" }}>
           <h1 className="text-5xl font-bold text-foreground mb-4">
             Train Your Mind
           </h1>
@@ -42,16 +42,24 @@ const Train = () => {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {modes.map((mode) => (
+          {modes.map((mode, index) => (
             <Link
               key={mode.title}
               to={mode.link}
-              className="group relative overflow-hidden rounded-lg border border-border bg-card hover:border-primary transition-all duration-300"
+              className="group relative overflow-hidden rounded-lg border border-border bg-card hover:border-primary transition-all duration-300 opacity-0 animate-fade-up hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-1"
+              style={{ animationDelay: `${150 + index * 100}ms` }}
             >
               <div className={`absolute inset-0 bg-gradient-to-br ${mode.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
               
+              {/* Animated border glow on hover */}
+              <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary/20 via-primary/10 to-primary/20" />
+              </div>
+              
               <div className="relative p-8">
-                <mode.icon className="w-12 h-12 text-primary mb-4" />
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-300">
+                  <mode.icon className="w-6 h-6 text-primary" />
+                </div>
                 <h3 className="text-2xl font-bold text-foreground mb-3">
                   {mode.title}
                 </h3>
@@ -61,7 +69,7 @@ const Train = () => {
                 
                 <div className="mt-6 flex items-center text-primary font-semibold">
                   Start Training
-                  <span className="ml-2 transform group-hover:translate-x-1 transition-transform">→</span>
+                  <span className="ml-2 transform group-hover:translate-x-2 transition-transform duration-300">→</span>
                 </div>
               </div>
             </Link>
