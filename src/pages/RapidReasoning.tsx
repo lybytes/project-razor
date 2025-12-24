@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
 import scenarios from "@/data/scenarios.json";
 import { ArrowRight } from "lucide-react";
+import { formatBoldText } from "@/lib/formatText";
 
 const RapidReasoning = () => {
   const rapidScenarios = scenarios.filter(s => s.mode === "rapid-reasoning");
@@ -132,8 +133,8 @@ const RapidReasoning = () => {
                     Explanation
                   </h3>
                   <div 
-                    className="text-muted-foreground leading-relaxed prose prose-invert max-w-none"
-                    dangerouslySetInnerHTML={{ __html: currentScenario.explanation }}
+                    className="text-foreground leading-relaxed prose prose-invert max-w-none"
+                    dangerouslySetInnerHTML={{ __html: formatBoldText(currentScenario.explanation) }}
                   />
                 </div>
 

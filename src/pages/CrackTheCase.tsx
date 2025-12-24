@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Link } from "react-router-dom";
 import scenarios from "@/data/scenarios.json";
 import { ArrowRight } from "lucide-react";
+import { formatBoldText } from "@/lib/formatText";
 
 const CrackTheCase = () => {
   const caseScenarios = scenarios.filter(s => s.mode === "crack-the-case");
@@ -85,9 +86,10 @@ const CrackTheCase = () => {
                 Historical Case Study
               </h2>
               <div className="prose prose-invert max-w-none">
-                <p className="text-base text-foreground leading-relaxed whitespace-pre-line">
-                  {currentScenario.scenario}
-                </p>
+                <p 
+                  className="text-base text-foreground leading-relaxed whitespace-pre-line"
+                  dangerouslySetInnerHTML={{ __html: formatBoldText(currentScenario.scenario) }}
+                />
               </div>
             </div>
 
@@ -131,8 +133,8 @@ const CrackTheCase = () => {
                     Expert Analysis
                   </h3>
                   <div 
-                    className="text-muted-foreground leading-relaxed prose prose-invert max-w-none"
-                    dangerouslySetInnerHTML={{ __html: currentScenario.explanation }}
+                    className="text-foreground leading-relaxed prose prose-invert max-w-none"
+                    dangerouslySetInnerHTML={{ __html: formatBoldText(currentScenario.explanation) }}
                   />
                 </div>
 
