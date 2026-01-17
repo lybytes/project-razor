@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,12 +6,17 @@ import { Link } from "react-router-dom";
 import scenarios from "@/data/scenarios.json";
 import { ArrowRight } from "lucide-react";
 import { formatBoldText } from "@/lib/formatText";
+import { useStreak } from "@/hooks/useStreak";
+import { useAuth } from "@/hooks/useAuth";
 
 const RapidReasoning = () => {
   const rapidScenarios = scenarios.filter(s => s.mode === "rapid-reasoning");
+  const { recordActivity } = useStreak();
+  const { user } = useAuth();
   
   // Track which scenarios have been seen to avoid immediate repeats
   const [seenIndices, setSeenIndices] = useState<number[]>([]);
+  const [hasRecordedToday, setHasRecordedToday] = useState(false);
   
   // Get a random scenario index that hasn't been seen recently
   const getRandomIndex = () => {
@@ -36,7 +41,7 @@ const RapidReasoning = () => {
 
   const currentScenario = rapidScenarios[currentIndex];
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const answer = userAnswer.toLowerCase().trim();
     const correct = currentScenario.correctAnswer.toLowerCase();
     
@@ -45,6 +50,12 @@ const RapidReasoning = () => {
     
     setIsCorrect(matches);
     setShowResult(true);
+
+    // Record streak activity on first game completion of the day
+    if (user && !hasRecordedToday) {
+      await recordActivity("rapid-reasoning");
+      setHasRecordedToday(true);
+    }
   };
 
   const handleNext = () => {

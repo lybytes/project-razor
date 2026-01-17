@@ -6,12 +6,17 @@ import { Link } from "react-router-dom";
 import scenarios from "@/data/scenarios.json";
 import { Heart, Repeat2 } from "lucide-react";
 import { formatBoldText } from "@/lib/formatText";
+import { useStreak } from "@/hooks/useStreak";
+import { useAuth } from "@/hooks/useAuth";
 
 const SocialWarzone = () => {
   const socialScenarios = scenarios.filter((s) => s.mode === "social-warzone");
+  const { recordActivity } = useStreak();
+  const { user } = useAuth();
   
   // Track which scenarios have been seen to avoid immediate repeats
   const [seenIndices, setSeenIndices] = useState<number[]>([]);
+  const [hasRecordedToday, setHasRecordedToday] = useState(false);
   
   // Get a random scenario index that hasn't been seen recently
   const getRandomIndex = () => {
@@ -36,7 +41,7 @@ const SocialWarzone = () => {
 
   const currentScenario = socialScenarios[currentIndex];
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const answer = userAnswer.toLowerCase().trim();
     const correct = currentScenario.correctAnswer.toLowerCase();
 
@@ -44,6 +49,12 @@ const SocialWarzone = () => {
 
     setIsCorrect(matches);
     setShowResult(true);
+
+    // Record streak activity on first game completion of the day
+    if (user && !hasRecordedToday) {
+      await recordActivity("social-warzone");
+      setHasRecordedToday(true);
+    }
   };
 
   const handleNext = () => {
