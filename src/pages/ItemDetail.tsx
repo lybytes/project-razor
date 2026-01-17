@@ -13,6 +13,7 @@ const ItemDetail = () => {
   let item = null;
   let backLink = "";
   let categoryName = "";
+  let isBadFaith = false;
 
   if (type === "logical-fallacies") {
     item = fallacies.find(f => f.slug === slug);
@@ -26,6 +27,7 @@ const ItemDetail = () => {
     item = badFaith.find(bf => bf.slug === slug);
     backLink = "/learn/bad-faith-arguments";
     categoryName = "Bad-Faith Argument";
+    isBadFaith = true;
   }
 
   useEffect(() => {
@@ -61,10 +63,10 @@ const ItemDetail = () => {
             <div className="flex items-start gap-3 mb-4">
               <BookOpen className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
               <div>
-                <h2 className="text-2xl font-bold text-foreground mb-3">
+                <h2 className="text-lg font-normal text-foreground mb-3">
                   What is it?
                 </h2>
-                <p className="text-lg text-muted-foreground leading-relaxed">
+                <p className="text-base text-foreground leading-relaxed">
                   {item.explanation}
                 </p>
               </div>
@@ -76,7 +78,7 @@ const ItemDetail = () => {
             <div className="flex items-start gap-3 mb-4">
               <AlertCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
               <div className="flex-1">
-                <h2 className="text-2xl font-bold text-foreground mb-4">
+                <h2 className="text-lg font-normal text-foreground mb-4">
                   Examples
                 </h2>
                 <div className="space-y-6">
@@ -90,11 +92,11 @@ const ItemDetail = () => {
                         <div className="bg-muted/50 border border-border rounded-lg p-4 mb-2">
                           <div className="flex gap-3">
                             <span className="text-primary font-bold flex-shrink-0">{idx + 1}.</span>
-                            <span className="text-foreground">{text}</span>
+                            <span className="text-base text-foreground">{text}</span>
                           </div>
                         </div>
                         {explanation && (
-                          <p className="text-muted-foreground ml-8 mt-2">
+                          <p className="text-base text-foreground ml-8 mt-2">
                             {explanation}
                           </p>
                         )}
@@ -111,8 +113,8 @@ const ItemDetail = () => {
             <div className="flex items-start gap-3 mb-4">
               <Shield className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
               <div className="flex-1">
-                <h2 className="text-2xl font-bold text-foreground mb-4">
-                  How to Refute It
+                <h2 className="text-lg font-normal text-foreground mb-4">
+                  Refutation Strategy
                 </h2>
                 <ul className="space-y-4">
                   {item.refutation.map((point, idx) => {
@@ -126,9 +128,9 @@ const ItemDetail = () => {
                         <span className="text-primary flex-shrink-0">•</span>
                         <div className="flex-1">
                           {title && <span className="font-bold text-foreground">{title}: </span>}
-                          <span className="text-muted-foreground">{text}</span>
+                          <span className="text-base text-foreground">{text}</span>
                           {explanation && (
-                            <p className="text-muted-foreground mt-1">{explanation}</p>
+                            <p className="text-base text-foreground mt-1">{explanation}</p>
                           )}
                         </div>
                       </li>
@@ -139,38 +141,40 @@ const ItemDetail = () => {
             </div>
           </section>
 
-          {/* Avoidance */}
-          <section className="bg-card border border-border rounded-lg p-8">
-            <div className="flex items-start gap-3">
-              <Shield className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
-              <div className="flex-1">
-                <h2 className="text-2xl font-bold text-foreground mb-4">
-                  How to Avoid It
-                </h2>
-                <ul className="space-y-4">
-                  {item.avoidance.map((point, idx) => {
-                    const isObject = typeof point === 'object';
-                    const title = isObject ? point.title : null;
-                    const text = isObject ? point.text : point;
-                    const explanation = isObject ? point.explanation : null;
-                    
-                    return (
-                      <li key={idx} className="flex gap-3">
-                        <span className="text-primary flex-shrink-0">•</span>
-                        <div className="flex-1">
-                          {title && <span className="font-bold text-foreground">{title}: </span>}
-                          <span className="text-muted-foreground">{text}</span>
-                          {explanation && (
-                            <p className="text-muted-foreground mt-1">{explanation}</p>
-                          )}
-                        </div>
-                      </li>
-                    );
-                  })}
-                </ul>
+          {/* Avoidance - Only show for non-bad-faith items */}
+          {!isBadFaith && (
+            <section className="bg-card border border-border rounded-lg p-8">
+              <div className="flex items-start gap-3">
+                <Shield className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
+                <div className="flex-1">
+                  <h2 className="text-lg font-normal text-foreground mb-4">
+                    How to Avoid It
+                  </h2>
+                  <ul className="space-y-4">
+                    {item.avoidance.map((point, idx) => {
+                      const isObject = typeof point === 'object';
+                      const title = isObject ? point.title : null;
+                      const text = isObject ? point.text : point;
+                      const explanation = isObject ? point.explanation : null;
+                      
+                      return (
+                        <li key={idx} className="flex gap-3">
+                          <span className="text-primary flex-shrink-0">•</span>
+                          <div className="flex-1">
+                            {title && <span className="font-bold text-foreground">{title}: </span>}
+                            <span className="text-base text-foreground">{text}</span>
+                            {explanation && (
+                              <p className="text-base text-foreground mt-1">{explanation}</p>
+                            )}
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
+          )}
         </div>
       </main>
     </div>

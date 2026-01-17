@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Home, Brain, BookOpen, Info, FileText } from "lucide-react";
+import { Home, Brain, BookOpen, Info } from "lucide-react";
 
 export const Navigation = () => {
   return (
@@ -26,9 +26,6 @@ export const Navigation = () => {
             </Button>
             <Button variant="ghost" size="sm" asChild>
               <Link to="/about"><Info className="h-4 w-4 mr-2" />About</Link>
-            </Button>
-            <Button variant="ghost" size="sm" asChild>
-              <Link to="/blog"><FileText className="h-4 w-4 mr-2" />Blog</Link>
             </Button>
           </div>
         </div>

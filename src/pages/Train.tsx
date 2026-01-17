@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
-import { Brain, Search, MessageSquare } from "lucide-react";
+import { Brain, MessageSquare } from "lucide-react";
 
 const Train = () => {
   const modes = [
@@ -10,13 +10,6 @@ const Train = () => {
       icon: Brain,
       color: "from-purple-600 to-purple-800",
       link: "/train/rapid-reasoning"
-    },
-    {
-      title: "Crack the Case",
-      description: "Deep-dive into real-world historical cases. Analyze complex situations with multiple layers.",
-      icon: Search,
-      color: "from-violet-600 to-violet-800",
-      link: "/train/crack-the-case"
     },
     {
       title: "Social Warzone",
@@ -41,7 +34,7 @@ const Train = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {modes.map((mode, index) => (
             <Link
               key={mode.title}
