@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
-import { Brain, AlertTriangle, Shield } from "lucide-react";
+import { Brain, AlertTriangle, Shield, Search } from "lucide-react";
 
 const Learn = () => {
   const libraries = [
@@ -43,6 +43,20 @@ const Learn = () => {
             Explore comprehensive guides on logical fallacies, cognitive biases, and bad-faith arguments.
           </p>
         </div>
+
+        {/* Search Bar Link */}
+        <Link
+          to="/learn/search"
+          className="block max-w-2xl mx-auto mb-12 group opacity-0 animate-fade-up"
+          style={{ animationDelay: "100ms" }}
+        >
+          <div className="flex items-center gap-4 bg-card border border-border rounded-lg p-4 hover:border-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/10">
+            <Search className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+            <span className="text-muted-foreground group-hover:text-foreground transition-colors">
+              Search for ad hominem, confirmation bias, gaslighting...
+            </span>
+          </div>
+        </Link>
 
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {libraries.map((library, index) => (
