@@ -7,7 +7,6 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Train from "./pages/Train";
 import RapidReasoning from "./pages/RapidReasoning";
-import CrackTheCase from "./pages/CrackTheCase";
 import SocialWarzone from "./pages/SocialWarzone";
 import Learn from "./pages/Learn";
 import LearnFallacies from "./pages/LearnFallacies";
@@ -15,7 +14,6 @@ import LearnBiases from "./pages/LearnBiases";
 import LearnBadFaith from "./pages/LearnBadFaith";
 import ItemDetail from "./pages/ItemDetail";
 import About from "./pages/About";
-import Blog from "./pages/Blog";
 
 const queryClient = new QueryClient();
 
@@ -29,7 +27,6 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/train" element={<Train />} />
           <Route path="/train/rapid-reasoning" element={<RapidReasoning />} />
-          <Route path="/train/crack-the-case" element={<CrackTheCase />} />
           <Route path="/train/social-warzone" element={<SocialWarzone />} />
           <Route path="/learn" element={<Learn />} />
           <Route path="/learn/logical-fallacies" element={<LearnFallacies />} />
@@ -37,7 +34,6 @@ const App = () => (
           <Route path="/learn/bad-faith-arguments" element={<LearnBadFaith />} />
           <Route path="/learn/:type/:slug" element={<ItemDetail />} />
           <Route path="/about" element={<About />} />
-          <Route path="/blog" element={<Blog />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
