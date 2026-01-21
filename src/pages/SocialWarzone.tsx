@@ -118,7 +118,7 @@ const SocialWarzone = () => {
                 The following comment was made in response to a Reddit thread about the article:
               </p>
 
-              <div className="bg-card border border-border rounded-lg overflow-hidden mb-8">
+              <div className="bg-card border border-border rounded-lg overflow-hidden mb-6">
                 <div className="p-6 bg-muted/20">
                   <div className="flex items-start gap-3 mb-3">
                     <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
@@ -146,29 +146,29 @@ const SocialWarzone = () => {
                       )}
                     </div>
                   )}
-
-                  {/* Answer input integrated into post card */}
-                  <div className="mt-6 pt-6 border-t border-border">
-                    <p className="text-primary font-semibold mb-2">
-                      What BFBA is being used here?
-                    </p>
-                    <Input
-                      type="text"
-                      placeholder="Type your answer here..."
-                      value={userAnswer}
-                      onChange={(e) => setUserAnswer(e.target.value)}
-                      className="mb-4 bg-background"
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                          handleSubmit();
-                        }
-                      }}
-                    />
-                    <Button onClick={handleSubmit} className="w-full" size="lg">
-                      Reveal Answer
-                    </Button>
-                  </div>
                 </div>
+              </div>
+
+              {/* Answer input in separate styled box */}
+              <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-primary/20 rounded-xl p-6">
+                <p className="text-primary font-semibold mb-4 text-lg">
+                  What BFBA is being used here?
+                </p>
+                <Input
+                  type="text"
+                  placeholder="Type your answer here..."
+                  value={userAnswer}
+                  onChange={(e) => setUserAnswer(e.target.value)}
+                  className="mb-4 bg-background/80 border-border/50 focus:border-primary/50"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      handleSubmit();
+                    }
+                  }}
+                />
+                <Button onClick={handleSubmit} className="w-full bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity" size="lg">
+                  Reveal Answer
+                </Button>
               </div>
             </>
           )}
