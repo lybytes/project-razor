@@ -2,7 +2,7 @@ import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { Brain, BookOpen, Shield, Zap, Target, TrendingUp } from "lucide-react";
+import { Brain, BookOpen, Shield, Zap, TrendingUp } from "lucide-react";
 
 const Index = () => {
   return (
@@ -90,7 +90,7 @@ const Index = () => {
           >
             Interactive Training Modes
           </h2>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
             <Card 
               className="p-6 bg-card hover:bg-card/80 transition-all duration-300 opacity-0 animate-fade-up hover:-translate-y-1 hover:shadow-lg"
               style={{ animationDelay: "800ms" }}
@@ -108,20 +108,6 @@ const Index = () => {
             <Card 
               className="p-6 bg-card hover:bg-card/80 transition-all duration-300 opacity-0 animate-fade-up hover:-translate-y-1 hover:shadow-lg"
               style={{ animationDelay: "900ms" }}
-            >
-              <div className="w-12 h-12 rounded-lg bg-warning/10 flex items-center justify-center mb-4">
-                <Target className="h-6 w-6 text-warning" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Crack the Case</h3>
-              <p className="text-muted-foreground mb-4">Deep dive into real-world examples and historical cases</p>
-              <Button asChild className="w-full">
-                <Link to="/train/crack-the-case">Start</Link>
-              </Button>
-            </Card>
-
-            <Card 
-              className="p-6 bg-card hover:bg-card/80 transition-all duration-300 opacity-0 animate-fade-up hover:-translate-y-1 hover:shadow-lg"
-              style={{ animationDelay: "1000ms" }}
             >
               <div className="w-12 h-12 rounded-lg bg-success/10 flex items-center justify-center mb-4">
                 <TrendingUp className="h-6 w-6 text-success" />
