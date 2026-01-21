@@ -91,11 +91,15 @@ const SocialWarzone = () => {
 
           {!showResult && (
             <>
-              {/* Context section - shown together with post */}
+              {/* Case study title outside box */}
+              {currentScenario.context && (
+                <h2 className="text-2xl font-bold text-foreground mb-4">{currentScenario.context.title}</h2>
+              )}
+
+              {/* Context section */}
               {currentScenario.context && (
                 <div className="bg-card border border-border rounded-lg overflow-hidden mb-6">
                   <div className="p-6">
-                    <h2 className="text-xl font-bold text-foreground mb-2">{currentScenario.context.title}</h2>
                     <p className="text-sm text-muted-foreground mb-4">
                       This is an excerpt from a recent {currentScenario.context.source} article titled "{currentScenario.context.articleTitle}"
                     </p>
@@ -109,12 +113,12 @@ const SocialWarzone = () => {
                 </div>
               )}
 
-              {/* Post section */}
-              {currentScenario.post.context && (
-                <p className="text-muted-foreground mb-4 text-sm">{currentScenario.post.context}</p>
-              )}
+              {/* Post section with preface */}
+              <p className="text-muted-foreground mb-4 text-sm italic">
+                The following comment was made in response to a Reddit thread about the article:
+              </p>
 
-              <div className="bg-card border border-border rounded-lg overflow-hidden mb-6">
+              <div className="bg-card border border-border rounded-lg overflow-hidden mb-8">
                 <div className="p-6 bg-muted/20">
                   <div className="flex items-start gap-3 mb-3">
                     <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
@@ -142,32 +146,29 @@ const SocialWarzone = () => {
                       )}
                     </div>
                   )}
-                </div>
-              </div>
 
-              {/* Answer input */}
-              <div className="bg-card border border-border rounded-lg p-6 mb-6">
-                <p className="text-primary font-semibold mb-3">
-                  Identify and refute the critical thinking pitfall before it spreads further.
-                </p>
-                <p className="text-sm text-muted-foreground mb-4">
-                  What BFBA is being used here? How would you counter it?
-                </p>
-                <Input
-                  type="text"
-                  placeholder="Type your answer here..."
-                  value={userAnswer}
-                  onChange={(e) => setUserAnswer(e.target.value)}
-                  className="mb-4"
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      handleSubmit();
-                    }
-                  }}
-                />
-                <Button onClick={handleSubmit} className="w-full" size="lg">
-                  Reveal Answer
-                </Button>
+                  {/* Answer input integrated into post card */}
+                  <div className="mt-6 pt-6 border-t border-border">
+                    <p className="text-primary font-semibold mb-2">
+                      What BFBA is being used here?
+                    </p>
+                    <Input
+                      type="text"
+                      placeholder="Type your answer here..."
+                      value={userAnswer}
+                      onChange={(e) => setUserAnswer(e.target.value)}
+                      className="mb-4 bg-background"
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          handleSubmit();
+                        }
+                      }}
+                    />
+                    <Button onClick={handleSubmit} className="w-full" size="lg">
+                      Reveal Answer
+                    </Button>
+                  </div>
+                </div>
               </div>
             </>
           )}
