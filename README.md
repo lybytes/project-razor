@@ -1,8 +1,10 @@
-# Project Razor - Duolingo for Critical Thinking
+# Project Razor - Duolingo for Debate Skills and Critical Thinking
 
 ## AI has lost the war against disinformation - it's time for humans to fight back
 
 Project Razor is the Duolingo for critical thinking - we train people to refute fallacious arguments and bad-faith debate tactics through gamification and bringing in real-life scenarios.
+
+
 
 
 ## Tech Stack
