@@ -68,7 +68,7 @@ const CourseProgressSection = () => {
   );
 };
 
-
+const Account = () => {
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [streak, setStreak] = useState<Streak | null>(null);
