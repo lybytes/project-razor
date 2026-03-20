@@ -4,7 +4,10 @@ import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Flame, Calendar, Trophy, User, LogOut } from "lucide-react";
+import { Flame, Calendar, Trophy, User, LogOut, BookOpen, Zap } from "lucide-react";
+import { User as SupabaseUser } from "@supabase/supabase-js";
+import { Progress } from "@/components/ui/progress";
+import { useCourseProgress } from "@/contexts/CourseProgressContext";
 import { User as SupabaseUser } from "@supabase/supabase-js";
 
 interface Profile {
