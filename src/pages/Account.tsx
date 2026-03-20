@@ -245,6 +245,9 @@ const Account = () => {
               </div>
             </div>
           </div>
+
+          {/* Course Progress */}
+          <CourseProgressSection />
         </div>
       </main>
     </div>
