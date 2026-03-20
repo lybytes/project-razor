@@ -8,7 +8,6 @@ import { Flame, Calendar, Trophy, User, LogOut, BookOpen, Zap } from "lucide-rea
 import { User as SupabaseUser } from "@supabase/supabase-js";
 import { Progress } from "@/components/ui/progress";
 import { useCourseProgress } from "@/contexts/CourseProgressContext";
-import { User as SupabaseUser } from "@supabase/supabase-js";
 
 interface Profile {
   name: string;
