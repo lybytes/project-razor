@@ -42,7 +42,7 @@ export const Navigation = () => {
           
           <div className="flex items-center gap-1 bg-muted/30 rounded-full p-1.5">
             <NavItem to="/" icon={Home} label="Home" isActive={isActive("/")} />
-            <NavItem to="/train" icon={Brain} label="Train" isActive={isActive("/train")} />
+            <NavItem to="/train" icon={Brain} label="Course" isActive={isActive("/train")} />
             <NavItem to="/learn" icon={BookOpen} label="Learn" isActive={isActive("/learn")} />
             <NavItem to="/about" icon={Info} label="About" isActive={isActive("/about")} />
             {!loading && (

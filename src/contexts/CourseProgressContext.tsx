@@ -1,0 +1,135 @@
+import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+
+interface CourseProgress {
+  lessonComplete: Record<string, boolean>;
+  lessonStage: Record<string, number>; // tracks which stage user is on (0-3)
+  gauntletComplete: Record<string, boolean>;
+  gauntletScore: Record<string, number>;
+  xpTotal: number;
+  conceptsUnlocked: string[];
+  drillScores: Record<string, { correct: number; total: number }>;
+  warzoneScores: Record<string, { correct: number; total: number }>;
+}
+
+const DEFAULT_PROGRESS: CourseProgress = {
+  lessonComplete: {},
+  lessonStage: {},
+  gauntletComplete: {},
+  gauntletScore: {},
+  xpTotal: 0,
+  conceptsUnlocked: [],
+  drillScores: {},
+  warzoneScores: {},
+};
+
+interface CourseProgressContextType {
+  progress: CourseProgress;
+  completeLesson: (lessonId: string, concepts: string[]) => void;
+  setLessonStage: (lessonId: string, stage: number) => void;
+  completeGauntlet: (moduleId: string, score: number) => void;
+  saveDrillScore: (lessonId: string, correct: number, total: number) => void;
+  saveWarzoneScore: (lessonId: string, correct: number, total: number) => void;
+  addXP: (amount: number) => void;
+  isConceptUnlocked: (concept: string) => boolean;
+  getLessonsComplete: (moduleNum: number) => number;
+  resetProgress: () => void;
+}
+
+const CourseProgressContext = createContext<CourseProgressContextType | null>(null);
+
+const STORAGE_KEY = "project-razor-course-progress";
+
+export const CourseProgressProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [progress, setProgress] = useState<CourseProgress>(() => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      return stored ? { ...DEFAULT_PROGRESS, ...JSON.parse(stored) } : DEFAULT_PROGRESS;
+    } catch {
+      return DEFAULT_PROGRESS;
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+  }, [progress]);
+
+  const completeLesson = useCallback((lessonId: string, concepts: string[]) => {
+    setProgress(prev => ({
+      ...prev,
+      lessonComplete: { ...prev.lessonComplete, [lessonId]: true },
+      conceptsUnlocked: [...new Set([...prev.conceptsUnlocked, ...concepts])],
+      xpTotal: prev.xpTotal + 100,
+    }));
+  }, []);
+
+  const setLessonStage = useCallback((lessonId: string, stage: number) => {
+    setProgress(prev => ({
+      ...prev,
+      lessonStage: { ...prev.lessonStage, [lessonId]: stage },
+    }));
+  }, []);
+
+  const completeGauntlet = useCallback((moduleId: string, score: number) => {
+    setProgress(prev => ({
+      ...prev,
+      gauntletComplete: { ...prev.gauntletComplete, [moduleId]: true },
+      gauntletScore: { ...prev.gauntletScore, [moduleId]: score },
+      xpTotal: prev.xpTotal + 500,
+    }));
+  }, []);
+
+  const saveDrillScore = useCallback((lessonId: string, correct: number, total: number) => {
+    setProgress(prev => ({
+      ...prev,
+      drillScores: { ...prev.drillScores, [lessonId]: { correct, total } },
+    }));
+  }, []);
+
+  const saveWarzoneScore = useCallback((lessonId: string, correct: number, total: number) => {
+    setProgress(prev => ({
+      ...prev,
+      warzoneScores: { ...prev.warzoneScores, [lessonId]: { correct, total } },
+    }));
+  }, []);
+
+  const addXP = useCallback((amount: number) => {
+    setProgress(prev => ({ ...prev, xpTotal: prev.xpTotal + amount }));
+  }, []);
+
+  const isConceptUnlocked = useCallback((concept: string) => {
+    return progress.conceptsUnlocked.includes(concept);
+  }, [progress.conceptsUnlocked]);
+
+  const getLessonsComplete = useCallback((moduleNum: number) => {
+    const lessonIds = [`${moduleNum}-1`, `${moduleNum}-2`, `${moduleNum}-3`];
+    return lessonIds.filter(id => progress.lessonComplete[id]).length;
+  }, [progress.lessonComplete]);
+
+  const resetProgress = useCallback(() => {
+    setProgress(DEFAULT_PROGRESS);
+    localStorage.removeItem(STORAGE_KEY);
+  }, []);
+
+  return (
+    <CourseProgressContext.Provider value={{
+      progress,
+      completeLesson,
+      setLessonStage,
+      completeGauntlet,
+      saveDrillScore,
+      saveWarzoneScore,
+      addXP,
+      isConceptUnlocked,
+      getLessonsComplete,
+      resetProgress,
+    }}>
+      {children}
+    </CourseProgressContext.Provider>
+  );
+};
+
+export const useCourseProgress = () => {
+  const ctx = useContext(CourseProgressContext);
+  if (!ctx) throw new Error("useCourseProgress must be used within CourseProgressProvider");
+  return ctx;
+};
