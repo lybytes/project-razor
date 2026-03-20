@@ -4,7 +4,7 @@ import { Navigation } from "@/components/Navigation";
 import { useCourseProgress } from "@/contexts/CourseProgressContext";
 import { getLessonData, getNextLessonId, type ConceptCard, type DrillQuestion, type WarzonePost } from "@/data/courseData";
 import { Button } from "@/components/ui/button";
-import { Check, X, ChevronRight, BookOpen, Target, Swords, BarChart3 } from "lucide-react";
+import { Check, X, ChevronRight, BookOpen, Target, Swords, BarChart3, Trophy } from "lucide-react";
 
 const STAGES = ["Learn", "Drill", "Warzone", "Summary"];
 const STAGE_ICONS = [BookOpen, Target, Swords, BarChart3];
