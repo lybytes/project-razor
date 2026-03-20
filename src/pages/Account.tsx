@@ -26,7 +26,49 @@ interface ActivityLog {
   game_type: string;
 }
 
-const Account = () => {
+const CourseProgressSection = () => {
+  const { progress, getLessonsComplete } = useCourseProgress();
+  const module1Lessons = getLessonsComplete(1);
+  const module1Progress = (module1Lessons / 3) * 100;
+
+  return (
+    <div className="bg-card border border-border rounded-lg p-6 opacity-0 animate-fade-up mt-8" style={{ animationDelay: "300ms" }}>
+      <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
+        <BookOpen className="w-5 h-5 text-primary" />
+        Course Progress
+      </h2>
+
+      <div className="space-y-4">
+        <div>
+          <div className="flex justify-between text-sm mb-2">
+            <span className="text-muted-foreground">Module 1 — The Classics</span>
+            <span className="text-foreground font-medium">{module1Lessons}/3 lessons</span>
+          </div>
+          <Progress value={module1Progress} className="h-2" />
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 pt-2">
+          <div className="bg-background/50 rounded-lg p-4 border border-border/50">
+            <div className="flex items-center gap-2 mb-1">
+              <Zap className="w-4 h-4 text-primary" />
+              <span className="text-sm text-muted-foreground">Total XP</span>
+            </div>
+            <p className="text-2xl font-bold text-foreground">{progress.xpTotal}</p>
+          </div>
+          <div className="bg-background/50 rounded-lg p-4 border border-border/50">
+            <div className="flex items-center gap-2 mb-1">
+              <Trophy className="w-4 h-4 text-amber-400" />
+              <span className="text-sm text-muted-foreground">Concepts</span>
+            </div>
+            <p className="text-2xl font-bold text-foreground">{progress.conceptsUnlocked.length}<span className="text-sm font-normal text-muted-foreground">/25</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [streak, setStreak] = useState<Streak | null>(null);
