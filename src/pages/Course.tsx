@@ -59,25 +59,35 @@ const Course = () => {
                 className="opacity-0 animate-fade-up"
                 style={{ animationDelay: `${100 + i * 80}ms` }}
               >
-                <div
-                  className={`rounded-lg border transition-all duration-300 ${
-                    mod.locked
-                      ? "border-border/50 bg-card/50 opacity-60"
-                      : "border-border bg-card hover:border-primary/40"
-                  }`}
-                >
+                {mod.locked ? (
+                  <div className="rounded-lg border border-border/30 bg-card/30 p-6 relative overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 opacity-50" />
+                    <div className="relative flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-lg bg-muted/20 flex items-center justify-center shrink-0 border border-border/30">
+                        <Lock className="w-4 h-4 text-muted-foreground/50" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-3 flex-wrap">
+                          <h3 className="text-lg font-semibold text-muted-foreground/60">
+                            Module {mod.id} — {mod.title}
+                          </h3>
+                          <span className="text-[10px] uppercase tracking-widest font-medium text-primary/50 bg-primary/10 px-2.5 py-0.5 rounded-full border border-primary/20">
+                            Coming Soon
+                          </span>
+                        </div>
+                        <p className="text-sm text-muted-foreground/40 mt-0.5">{mod.description}</p>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                <div className="rounded-lg border transition-all duration-300 border-border bg-card hover:border-primary/40">
                   {/* Module Header */}
                   <button
-                    onClick={() => !mod.locked && setExpandedModule(isExpanded ? null : mod.id)}
-                    disabled={mod.locked}
+                    onClick={() => setExpandedModule(isExpanded ? null : mod.id)}
                     className="w-full p-6 flex items-center justify-between text-left"
                   >
                     <div className="flex items-center gap-4 flex-1 min-w-0">
-                      {mod.locked ? (
-                        <div className="w-10 h-10 rounded-lg bg-muted/30 flex items-center justify-center shrink-0">
-                          <Lock className="w-5 h-5 text-muted-foreground" />
-                        </div>
-                      ) : status === "complete" ? (
+                      {status === "complete" ? (
                         <div className="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center shrink-0">
                           <Check className="w-5 h-5 text-green-400" />
                         </div>
@@ -94,14 +104,12 @@ const Course = () => {
                       </div>
                     </div>
                     <div className="flex items-center gap-3 shrink-0 ml-4">
-                      {!mod.locked && mod.lessons.length > 0 && (
+                      {mod.lessons.length > 0 && (
                         <span className="text-xs text-muted-foreground">
                           {lessonsComplete}/{mod.lessons.length} lessons
                         </span>
                       )}
-                      {!mod.locked && (
-                        isExpanded ? <ChevronUp className="w-5 h-5 text-muted-foreground" /> : <ChevronDown className="w-5 h-5 text-muted-foreground" />
-                      )}
+                      {isExpanded ? <ChevronUp className="w-5 h-5 text-muted-foreground" /> : <ChevronDown className="w-5 h-5 text-muted-foreground" />}
                     </div>
                   </button>
 
