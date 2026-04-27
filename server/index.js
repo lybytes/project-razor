@@ -12,15 +12,20 @@ const PORT = process.env.PORT || 3001;
 // CORS
 const allowedOrigins = (process.env.CORS_ORIGIN || "http://localhost:8080")
   .split(",")
-  .map((o) => o.trim());
+  .map((o) => o.trim())
+  .filter(Boolean);
+
+console.log("Allowed CORS origins:", allowedOrigins);
 
 app.use(
   cors({
     origin(origin, callback) {
+      // Allow requests with no origin (e.g. curl, server-to-server)
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
-        callback(new Error("Not allowed by CORS"));
+        console.warn(`CORS blocked origin: ${origin}`);
+        callback(null, false);
       }
     },
     credentials: true,
