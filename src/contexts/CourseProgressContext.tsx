@@ -1,8 +1,11 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import { getProgress, completeLesson as apiCompleteLesson, type ProgressEntry } from "@/lib/api";
+import { getToken } from "@/lib/api";
+import { toast } from "sonner";
 
 interface CourseProgress {
   lessonComplete: Record<string, boolean>;
-  lessonStage: Record<string, number>; // tracks which stage user is on (0-3)
+  lessonStage: Record<string, number>;
   gauntletComplete: Record<string, boolean>;
   gauntletScore: Record<string, number>;
   xpTotal: number;
@@ -33,11 +36,17 @@ interface CourseProgressContextType {
   isConceptUnlocked: (concept: string) => boolean;
   getLessonsComplete: (moduleNum: number) => number;
   resetProgress: () => void;
+  loadFromServer: () => Promise<void>;
 }
 
 const CourseProgressContext = createContext<CourseProgressContextType | null>(null);
 
 const STORAGE_KEY = "project-razor-course-progress";
+
+function getModuleIdFromLesson(lessonId: string): number {
+  const parts = lessonId.split("-");
+  return parseInt(parts[0], 10) || 1;
+}
 
 export const CourseProgressProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [progress, setProgress] = useState<CourseProgress>(() => {
@@ -53,14 +62,60 @@ export const CourseProgressProvider: React.FC<{ children: React.ReactNode }> = (
     localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
   }, [progress]);
 
+  const loadFromServer = useCallback(async () => {
+    const token = getToken();
+    if (!token) return;
+
+    try {
+      const serverProgress = await getProgress();
+      const lessonComplete: Record<string, boolean> = {};
+      serverProgress.forEach((p: ProgressEntry) => {
+        lessonComplete[p.lesson_id] = true;
+      });
+
+      setProgress((prev) => ({
+        ...prev,
+        lessonComplete: { ...prev.lessonComplete, ...lessonComplete },
+      }));
+    } catch {
+      // Silently fail — offline or not logged in
+    }
+  }, []);
+
+  useEffect(() => {
+    loadFromServer();
+  }, [loadFromServer]);
+
   const completeLesson = useCallback((lessonId: string, concepts: string[]) => {
     setProgress(prev => ({
       ...prev,
       lessonComplete: { ...prev.lessonComplete, [lessonId]: true },
       conceptsUnlocked: [...new Set([...prev.conceptsUnlocked, ...concepts])],
-      xpTotal: prev.xpTotal + 100,
     }));
-  }, []);
+
+    const token = getToken();
+    if (token) {
+      const moduleId = getModuleIdFromLesson(lessonId);
+      const drillScore = progress.drillScores[lessonId];
+      const warzoneScore = progress.warzoneScores[lessonId];
+      const totalCorrect = (drillScore?.correct || 0) + (warzoneScore?.correct || 0);
+      const totalQuestions = (drillScore?.total || 0) + (warzoneScore?.total || 0);
+      const score = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
+
+      apiCompleteLesson(lessonId, moduleId, score)
+        .then((result) => {
+          setProgress(prev => ({ ...prev, xpTotal: prev.xpTotal + result.xp_gained }));
+          if (result.current_streak > 1) {
+            toast.success(`${result.current_streak} day streak!`);
+          }
+        })
+        .catch(() => {
+          // Silently fail — progress saved locally
+        });
+    } else {
+      setProgress(prev => ({ ...prev, xpTotal: prev.xpTotal + 50 }));
+    }
+  }, [progress.drillScores, progress.warzoneScores]);
 
   const setLessonStage = useCallback((lessonId: string, stage: number) => {
     setProgress(prev => ({
@@ -122,6 +177,7 @@ export const CourseProgressProvider: React.FC<{ children: React.ReactNode }> = (
       isConceptUnlocked,
       getLessonsComplete,
       resetProgress,
+      loadFromServer,
     }}>
       {children}
     </CourseProgressContext.Provider>

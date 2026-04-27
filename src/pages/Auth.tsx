@@ -4,16 +4,14 @@ import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { z } from "zod";
+import { useAuth } from "@/contexts/AuthContext";
 
 const signUpSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
   name: z.string().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
-  age: z.number().min(13, "You must be at least 13 years old").max(120, "Please enter a valid age").optional(),
-  role: z.string().max(50, "Role must be less than 50 characters").optional(),
 });
 
 const signInSchema = z.object({
@@ -27,38 +25,21 @@ const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [age, setAge] = useState("");
-  const [role, setRole] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const navigate = useNavigate();
+  const { user, login, signup } = useAuth();
 
   useEffect(() => {
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (session) {
-        navigate("/");
-      }
-    });
-
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        navigate("/");
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, [navigate]);
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrors({});
 
-    const result = signUpSchema.safeParse({
-      email,
-      password,
-      name,
-      age: age ? parseInt(age) : undefined,
-      role: role || undefined,
-    });
+    const result = signUpSchema.safeParse({ email, password, name });
 
     if (!result.success) {
       const newErrors: Record<string, string> = {};
@@ -71,47 +52,16 @@ const Auth = () => {
 
     setLoading(true);
 
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${window.location.origin}/`,
-      },
-    });
-
-    if (error) {
-      if (error.message.includes("already registered")) {
+    try {
+      await signup(email, password, name);
+      toast.success("Account created successfully!");
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Something went wrong";
+      if (message.includes("already registered")) {
         toast.error("This email is already registered. Please sign in instead.");
       } else {
-        toast.error(error.message);
+        toast.error(message);
       }
-      setLoading(false);
-      return;
-    }
-
-    if (data.user) {
-      // Create profile
-      const { error: profileError } = await supabase.from("profiles").insert({
-        user_id: data.user.id,
-        name,
-        age: age ? parseInt(age) : null,
-        role: role || null,
-      });
-
-      if (profileError) {
-        toast.error("Error creating profile. Please try again.");
-        setLoading(false);
-        return;
-      }
-
-      // Create streak record
-      await supabase.from("streaks").insert({
-        user_id: data.user.id,
-        current_streak: 0,
-        longest_streak: 0,
-      });
-
-      toast.success("Account created successfully!");
     }
 
     setLoading(false);
@@ -134,19 +84,16 @@ const Auth = () => {
 
     setLoading(true);
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (error) {
-      if (error.message.includes("Invalid login credentials")) {
+    try {
+      await login(email, password);
+      toast.success("Welcome back!");
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Something went wrong";
+      if (message.includes("Invalid")) {
         toast.error("Invalid email or password. Please try again.");
       } else {
-        toast.error(error.message);
+        toast.error(message);
       }
-    } else {
-      toast.success("Welcome back!");
     }
 
     setLoading(false);
@@ -198,44 +145,18 @@ const Auth = () => {
               </div>
 
               {isSignUp && (
-                <>
-                  <div>
-                    <Label htmlFor="name">Name</Label>
-                    <Input
-                      id="name"
-                      type="text"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="Your name"
-                      className={errors.name ? "border-red-500" : ""}
-                    />
-                    {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
-                  </div>
-
-                  <div>
-                    <Label htmlFor="age">Age (optional)</Label>
-                    <Input
-                      id="age"
-                      type="number"
-                      value={age}
-                      onChange={(e) => setAge(e.target.value)}
-                      placeholder="25"
-                      className={errors.age ? "border-red-500" : ""}
-                    />
-                    {errors.age && <p className="text-red-500 text-sm mt-1">{errors.age}</p>}
-                  </div>
-
-                  <div>
-                    <Label htmlFor="role">Role (optional)</Label>
-                    <Input
-                      id="role"
-                      type="text"
-                      value={role}
-                      onChange={(e) => setRole(e.target.value)}
-                      placeholder="Student, Teacher, Professional..."
-                    />
-                  </div>
-                </>
+                <div>
+                  <Label htmlFor="name">Display Name</Label>
+                  <Input
+                    id="name"
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Your name"
+                    className={errors.name ? "border-red-500" : ""}
+                  />
+                  {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
+                </div>
               )}
 
               <Button type="submit" className="w-full" disabled={loading}>

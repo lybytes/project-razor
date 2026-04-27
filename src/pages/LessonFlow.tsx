@@ -471,7 +471,7 @@ const SummaryView = ({ lesson, drillScore, warzoneScore, allLessonsComplete, nav
           {warzoneScore && (
             <p className="text-sm text-muted-foreground">Warzone: <span className="text-foreground font-medium">{warzoneScore.correct}/{warzoneScore.total}</span></p>
           )}
-          <p className="text-sm text-primary font-medium">+100 XP earned</p>
+          <p className="text-sm text-primary font-medium">+50 XP earned</p>
         </div>
       </div>
 
