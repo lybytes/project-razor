@@ -21,22 +21,17 @@ router.post("/complete", authenticate, async (req, res) => {
 
     await client.query("BEGIN");
 
-    // Check if lesson was already completed
-    const existing = await client.query(
-      "SELECT id FROM progress WHERE user_id = $1 AND lesson_id = $2",
-      [userId, lesson_id]
-    );
-    const isFirstCompletion = existing.rows.length === 0;
-
-    // Upsert progress (update score only if higher)
-    await client.query(
+    // Atomic upsert — xmax = 0 means INSERT (first completion), otherwise UPDATE
+    const upsertResult = await client.query(
       `INSERT INTO progress (user_id, lesson_id, module_id, score)
        VALUES ($1, $2, $3, $4)
        ON CONFLICT (user_id, lesson_id)
        DO UPDATE SET score = GREATEST(progress.score, EXCLUDED.score),
-                     completed_at = NOW()`,
+                     completed_at = NOW()
+       RETURNING (xmax = 0) AS is_first_completion`,
       [userId, lesson_id, module_id, score || 0]
     );
+    const isFirstCompletion = upsertResult.rows[0].is_first_completion;
 
     // Only grant XP on first completion
     const xpGain = isFirstCompletion
