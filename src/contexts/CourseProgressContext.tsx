@@ -104,7 +104,7 @@ export const CourseProgressProvider: React.FC<{ children: React.ReactNode }> = (
 
       apiCompleteLesson(lessonId, moduleId, score)
         .then((result) => {
-          setProgress(prev => ({ ...prev, xpTotal: result.total_xp }));
+          setProgress(prev => ({ ...prev, xpTotal: prev.xpTotal + result.xp_gained }));
           if (result.current_streak > 1) {
             toast.success(`${result.current_streak} day streak!`);
           }
@@ -113,7 +113,7 @@ export const CourseProgressProvider: React.FC<{ children: React.ReactNode }> = (
           // Silently fail — progress saved locally
         });
     } else {
-      setProgress(prev => ({ ...prev, xpTotal: prev.xpTotal + 100 }));
+      setProgress(prev => ({ ...prev, xpTotal: prev.xpTotal + 50 }));
     }
   }, [progress.drillScores, progress.warzoneScores]);
 
