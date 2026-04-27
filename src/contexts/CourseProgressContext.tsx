@@ -87,20 +87,23 @@ export const CourseProgressProvider: React.FC<{ children: React.ReactNode }> = (
   }, [loadFromServer]);
 
   const completeLesson = useCallback((lessonId: string, concepts: string[]) => {
+    const isFirstCompletion = !progress.lessonComplete[lessonId];
+
     setProgress(prev => ({
       ...prev,
       lessonComplete: { ...prev.lessonComplete, [lessonId]: true },
       conceptsUnlocked: [...new Set([...prev.conceptsUnlocked, ...concepts])],
     }));
 
+    const drillScore = progress.drillScores[lessonId];
+    const warzoneScore = progress.warzoneScores[lessonId];
+    const totalCorrect = (drillScore?.correct || 0) + (warzoneScore?.correct || 0);
+    const totalQuestions = (drillScore?.total || 0) + (warzoneScore?.total || 0);
+    const score = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
+
     const token = getToken();
     if (token) {
       const moduleId = getModuleIdFromLesson(lessonId);
-      const drillScore = progress.drillScores[lessonId];
-      const warzoneScore = progress.warzoneScores[lessonId];
-      const totalCorrect = (drillScore?.correct || 0) + (warzoneScore?.correct || 0);
-      const totalQuestions = (drillScore?.total || 0) + (warzoneScore?.total || 0);
-      const score = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
 
       apiCompleteLesson(lessonId, moduleId, score)
         .then((result) => {
@@ -112,10 +115,11 @@ export const CourseProgressProvider: React.FC<{ children: React.ReactNode }> = (
         .catch(() => {
           // Silently fail — progress saved locally
         });
-    } else {
-      setProgress(prev => ({ ...prev, xpTotal: prev.xpTotal + 50 }));
+    } else if (isFirstCompletion) {
+      const offlineXp = 50 + (score >= 80 ? 10 : 0);
+      setProgress(prev => ({ ...prev, xpTotal: prev.xpTotal + offlineXp }));
     }
-  }, [progress.drillScores, progress.warzoneScores]);
+  }, [progress.lessonComplete, progress.drillScores, progress.warzoneScores]);
 
   const setLessonStage = useCallback((lessonId: string, stage: number) => {
     setProgress(prev => ({

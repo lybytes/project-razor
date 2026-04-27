@@ -41,6 +41,7 @@ interface InnerProps {
 
 const LessonFlowInner = ({ lesson, navigate, progress, completeLesson, setLessonStage: setStageProgress, saveDrillScore, saveWarzoneScore }: InnerProps) => {
   const [stage, setStage] = useState(0);
+  const [wasAlreadyComplete] = useState(() => !!progress.lessonComplete[lesson.id]);
   const [learnCardIndex, setLearnCardIndex] = useState(0);
   const [drillIndex, setDrillIndex] = useState(0);
   const [drillCorrect, setDrillCorrect] = useState(0);
@@ -276,6 +277,7 @@ const LessonFlowInner = ({ lesson, navigate, progress, completeLesson, setLesson
             drillScore={progress.drillScores[lesson.id]}
             warzoneScore={progress.warzoneScores[lesson.id]}
             allLessonsComplete={["1-1", "1-2", "1-3"].every(id => progress.lessonComplete[id])}
+            wasAlreadyComplete={wasAlreadyComplete}
             navigate={navigate}
           />
         )}
@@ -438,11 +440,12 @@ const WarzoneView = ({ post, index, total, selectedOption, submitted, onSelect, 
 
 // ===== SUMMARY =====
 
-const SummaryView = ({ lesson, drillScore, warzoneScore, allLessonsComplete, navigate }: {
+const SummaryView = ({ lesson, drillScore, warzoneScore, allLessonsComplete, wasAlreadyComplete, navigate }: {
   lesson: NonNullable<ReturnType<typeof getLessonData>>;
   drillScore?: { correct: number; total: number };
   warzoneScore?: { correct: number; total: number };
   allLessonsComplete: boolean;
+  wasAlreadyComplete: boolean;
   navigate: ReturnType<typeof useNavigate>;
 }) => {
   const nextLessonId = getNextLessonId(lesson.id);
@@ -450,7 +453,7 @@ const SummaryView = ({ lesson, drillScore, warzoneScore, allLessonsComplete, nav
   const totalCorrect = (drillScore?.correct || 0) + (warzoneScore?.correct || 0);
   const totalQuestions = (drillScore?.total || 0) + (warzoneScore?.total || 0);
   const scorePercent = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
-  const xpEarned = 50 + (scorePercent >= 80 ? 10 : 0);
+  const xpEarned = wasAlreadyComplete ? 0 : 50 + (scorePercent >= 80 ? 10 : 0);
 
   return (
     <div className="animate-fade-up text-center py-8">
@@ -476,7 +479,9 @@ const SummaryView = ({ lesson, drillScore, warzoneScore, allLessonsComplete, nav
           {warzoneScore && (
             <p className="text-sm text-muted-foreground">Warzone: <span className="text-foreground font-medium">{warzoneScore.correct}/{warzoneScore.total}</span></p>
           )}
-          <p className="text-sm text-primary font-medium">+{xpEarned} XP earned</p>
+          {xpEarned > 0 && (
+            <p className="text-sm text-primary font-medium">+{xpEarned} XP earned</p>
+          )}
         </div>
       </div>
 
