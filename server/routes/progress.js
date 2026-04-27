@@ -66,10 +66,12 @@ router.post("/complete", authenticate, async (req, res) => {
           if (newStreak > newLongest) newLongest = newStreak;
         } else {
           newStreak = 1;
+          if (newStreak > newLongest) newLongest = newStreak;
         }
       }
     } else {
       newStreak = 1;
+      if (newStreak > newLongest) newLongest = newStreak;
     }
 
     // Update user stats
