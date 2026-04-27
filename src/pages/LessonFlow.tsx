@@ -447,6 +447,11 @@ const SummaryView = ({ lesson, drillScore, warzoneScore, allLessonsComplete, nav
 }) => {
   const nextLessonId = getNextLessonId(lesson.id);
 
+  const totalCorrect = (drillScore?.correct || 0) + (warzoneScore?.correct || 0);
+  const totalQuestions = (drillScore?.total || 0) + (warzoneScore?.total || 0);
+  const scorePercent = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
+  const xpEarned = 50 + (scorePercent >= 80 ? 10 : 0);
+
   return (
     <div className="animate-fade-up text-center py-8">
       <div className="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-6">
@@ -471,7 +476,7 @@ const SummaryView = ({ lesson, drillScore, warzoneScore, allLessonsComplete, nav
           {warzoneScore && (
             <p className="text-sm text-muted-foreground">Warzone: <span className="text-foreground font-medium">{warzoneScore.correct}/{warzoneScore.total}</span></p>
           )}
-          <p className="text-sm text-primary font-medium">+50 XP earned</p>
+          <p className="text-sm text-primary font-medium">+{xpEarned} XP earned</p>
         </div>
       </div>
 

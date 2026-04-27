@@ -21,6 +21,13 @@ router.post("/complete", authenticate, async (req, res) => {
 
     await client.query("BEGIN");
 
+    // Check if lesson was already completed
+    const existing = await client.query(
+      "SELECT id FROM progress WHERE user_id = $1 AND lesson_id = $2",
+      [userId, lesson_id]
+    );
+    const isFirstCompletion = existing.rows.length === 0;
+
     // Upsert progress (update score only if higher)
     await client.query(
       `INSERT INTO progress (user_id, lesson_id, module_id, score)
@@ -31,8 +38,10 @@ router.post("/complete", authenticate, async (req, res) => {
       [userId, lesson_id, module_id, score || 0]
     );
 
-    // Calculate XP for this completion
-    const xpGain = BASE_XP + (score >= BONUS_XP_THRESHOLD ? BONUS_XP : 0);
+    // Only grant XP on first completion
+    const xpGain = isFirstCompletion
+      ? BASE_XP + (score >= BONUS_XP_THRESHOLD ? BONUS_XP : 0)
+      : 0;
 
     // Streak logic
     const userResult = await client.query("SELECT * FROM users WHERE id = $1", [userId]);
