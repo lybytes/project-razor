@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CourseProgressProvider } from "@/contexts/CourseProgressContext";
+import { AuthProvider } from "@/contexts/AuthContext";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Course from "./pages/Course";
@@ -25,6 +26,7 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
+    <AuthProvider>
     <CourseProgressProvider>
       <TooltipProvider>
         <Toaster />
@@ -51,6 +53,7 @@ const App = () => (
         </BrowserRouter>
       </TooltipProvider>
     </CourseProgressProvider>
+    </AuthProvider>
   </QueryClientProvider>
 );
 
