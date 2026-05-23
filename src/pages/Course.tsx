@@ -100,7 +100,7 @@ const Course = () => {
                         <h3 className="text-lg font-semibold text-foreground">
                           Module {mod.id} — {mod.title}
                         </h3>
-                        <p className="text-sm text-muted-foreground">{mod.description}</p>
+                        <p className="text-sm text-muted-foreground/80">{mod.description}</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3 shrink-0 ml-4">
@@ -135,7 +135,7 @@ const Course = () => {
                                   </div>
                                 )}
                                 <div className="min-w-0">
-                                  <p className="text-sm font-medium text-foreground">{lesson.title}</p>
+                                  <p className="text-base font-medium text-foreground">{lesson.title}</p>
                                   <div className="flex flex-wrap gap-1.5 mt-1">
                                     {lesson.concepts.map(c => (
                                       <span key={c} className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary/80">{c}</span>

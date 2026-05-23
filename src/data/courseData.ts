@@ -8,6 +8,8 @@ export interface ConceptCard {
   spotIt: string[];
   counterIt: string[];
   counterExample: string;
+  realWorldExamples: string[];
+  refutationStrategies: string[];
 }
 
 export interface DrillQuestion {
@@ -70,6 +72,15 @@ const lesson1_1: LessonData = {
         "Redirect: restate the original argument clearly",
       ],
       counterExample: "That's about the person, not the argument. Can you tell me what's wrong with the evidence?",
+      realWorldExamples: [
+        "\"We should listen to scientists about global warming.\" — \"Why should we listen to you? You failed your science classes.\"",
+        "\"We should not listen to your healthcare proposal because you are not a doctor.\"",
+      ],
+      refutationStrategies: [
+        "Point out the fallacy: \"Attacking my background doesn't address the evidence.\"",
+        "Redirect to the argument: \"Can you provide evidence that contradicts the claim?\"",
+        "Stay calm — avoid retaliating with personal attacks.",
+      ],
     },
     {
       hook: "You're telling me to stop smoking? You smoked for 10 years!",
@@ -86,6 +97,15 @@ const lesson1_1: LessonData = {
         "Acknowledge, then redirect back",
       ],
       counterExample: "Whether I've done it before doesn't change whether it's harmful. Let's focus on the argument.",
+      realWorldExamples: [
+        "\"You shouldn't smoke.\" — \"You eat junk food all the time, so don't tell me what to do.\"",
+        "\"We need to reduce carbon emissions.\" — \"You drive a car, so you're a hypocrite.\"",
+      ],
+      refutationStrategies: [
+        "\"Even if I'm inconsistent, does that make the argument wrong?\"",
+        "\"The validity of the claim doesn't depend on my behaviour.\"",
+        "Address it: \"You're right I should change too, but that doesn't address whether the argument is sound.\"",
+      ],
     },
   ],
   drillQuestions: [
@@ -187,6 +207,15 @@ const lesson1_2: LessonData = {
         "Ask them to quote you directly",
       ],
       counterExample: "That's not what I said — my actual position is [restate clearly].",
+      realWorldExamples: [
+        "\"We should have stricter gun regulations.\" → \"So you want to take away everyone's guns?\"",
+        "\"We need better environmental protections.\" → \"So you want to shut down all factories?\"",
+      ],
+      refutationStrategies: [
+        "Clarify your actual position: \"Let me restate my argument clearly.\"",
+        "Point out the misrepresentation: \"You're attacking a position I don't hold.\"",
+        "\"Can you respond to what I actually proposed?\"",
+      ],
     },
     {
       hook: "We're discussing whether this company misled investors, but you keep bringing up their charity donations.",
@@ -203,6 +232,15 @@ const lesson1_2: LessonData = {
         "Name the redirect explicitly",
       ],
       counterExample: "That's an interesting point but it doesn't address the original issue. Can we stay on topic?",
+      realWorldExamples: [
+        "\"The company's environmental record is poor.\" — \"But we donate millions to charity every year.\"",
+        "\"This policy has serious ethical issues.\" — \"Well, the previous administration did worse things.\"",
+      ],
+      refutationStrategies: [
+        "Refocus: \"Let's address the original issue first.\"",
+        "Point out the diversion: \"How does that relate to what we were discussing?\"",
+        "\"We can discuss that separately, but right now we're talking about X.\"",
+      ],
     },
     {
       hook: "You're criticising our pollution levels? What about what China pumps out every year?",
@@ -219,6 +257,15 @@ const lesson1_2: LessonData = {
         "Acknowledge then refocus",
       ],
       counterExample: "Other wrongdoing is worth discussing separately. But does that change whether this specific action is harmful?",
+      realWorldExamples: [
+        "\"This politician is corrupt.\" — \"What about that other politician who did something similar?\"",
+        "\"Country X violated human rights.\" — \"What about what Country Y did?\"",
+      ],
+      refutationStrategies: [
+        "\"That's a separate issue. Let's address this one first.\"",
+        "\"You're changing the subject rather than addressing the point.\"",
+        "\"The fact that others do wrong doesn't make this particular action right.\"",
+      ],
     },
   ],
   drillQuestions: [
@@ -320,6 +367,15 @@ const lesson1_3: LessonData = {
         "Ask: \"Why are these the only two possibilities?\"",
       ],
       counterExample: "Those aren't the only two options. There's also [name alternatives].",
+      realWorldExamples: [
+        "\"You're either with us or against us.\"",
+        "\"Either we cut all social programs or the country will go bankrupt.\"",
+      ],
+      refutationStrategies: [
+        "Identify additional options: \"There are several other approaches we could consider.\"",
+        "Challenge the binary framing: \"Why must it be one or the other?\"",
+        "Present middle ground: \"What about positions that incorporate elements of both?\"",
+      ],
     },
     {
       hook: "If we let students redo one exam, soon they'll expect to redo everything and grades will mean nothing.",
@@ -336,6 +392,15 @@ const lesson1_3: LessonData = {
         "Ask for evidence that the chain actually occurs",
       ],
       counterExample: "What's the mechanism that makes each step inevitable? They'd each require separate decisions.",
+      realWorldExamples: [
+        "\"If we allow same-sex marriage, next people will want to marry animals.\"",
+        "\"If we raise the minimum wage, all small businesses will close, unemployment will skyrocket, and the economy will collapse.\"",
+      ],
+      refutationStrategies: [
+        "Ask for the causal mechanism: \"What evidence shows each step must follow?\"",
+        "Point out the assumptions: \"Each step would require separate decisions and approvals.\"",
+        "\"Can you show a real-world case where this chain reaction actually happened?\"",
+      ],
     },
   ],
   drillQuestions: [
