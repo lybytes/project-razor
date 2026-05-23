@@ -4,7 +4,7 @@ import { Navigation } from "@/components/Navigation";
 import { useCourseProgress } from "@/contexts/CourseProgressContext";
 import { getLessonData, getNextLessonId, type ConceptCard, type DrillQuestion, type WarzonePost } from "@/data/courseData";
 import { Button } from "@/components/ui/button";
-import { Check, X, ChevronRight, BookOpen, Target, Swords, BarChart3, Trophy } from "lucide-react";
+import { Check, X, ChevronRight, ChevronLeft, BookOpen, Target, Swords, BarChart3, Trophy } from "lucide-react";
 
 const STAGES = ["Learn", "Drill", "Warzone", "Summary"];
 const STAGE_ICONS = [BookOpen, Target, Swords, BarChart3];
@@ -50,11 +50,12 @@ const LessonFlowInner = ({ lesson, navigate, progress, completeLesson, setLesson
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
-  // Learn stage: 4 cards per concept, then transition
-  const totalLearnCards = lesson.conceptCards.length * 4 + 1; // +1 for transition
-  const currentConceptIndex = Math.floor(learnCardIndex / 4);
-  const currentCardType = learnCardIndex % 4;
-  const isTransitionCard = learnCardIndex >= lesson.conceptCards.length * 4;
+  // Learn stage: 6 cards per concept, then transition
+  const CARDS_PER_CONCEPT = 6;
+  const totalLearnCards = lesson.conceptCards.length * CARDS_PER_CONCEPT + 1;
+  const currentConceptIndex = Math.floor(learnCardIndex / CARDS_PER_CONCEPT);
+  const currentCardType = learnCardIndex % CARDS_PER_CONCEPT;
+  const isTransitionCard = learnCardIndex >= lesson.conceptCards.length * CARDS_PER_CONCEPT;
   const currentConcept = !isTransitionCard ? lesson.conceptCards[currentConceptIndex] : null;
 
   const advanceStage = useCallback((newStage: number) => {
@@ -69,21 +70,21 @@ const LessonFlowInner = ({ lesson, navigate, progress, completeLesson, setLesson
     setSubmitted(true);
     const isCorrect = selectedOption === lesson.drillQuestions[drillIndex].correctIndex;
     if (isCorrect) setDrillCorrect(prev => prev + 1);
+  };
 
-    setTimeout(() => {
-      if (drillIndex + 1 < lesson.drillQuestions.length) {
-        setDrillIndex(drillIndex + 1);
-        setSelectedOption(null);
-        setSubmitted(false);
-      } else {
-        const finalCorrect = isCorrect ? drillCorrect + 1 : drillCorrect;
-        saveDrillScore(lesson.id, finalCorrect, lesson.drillQuestions.length);
-        // show transition
-        setDrillIndex(-1); // sentinel for transition screen
-        setSelectedOption(null);
-        setSubmitted(false);
-      }
-    }, 1500);
+  const handleDrillNext = () => {
+    const isCorrect = selectedOption === lesson.drillQuestions[drillIndex].correctIndex;
+    if (drillIndex + 1 < lesson.drillQuestions.length) {
+      setDrillIndex(drillIndex + 1);
+      setSelectedOption(null);
+      setSubmitted(false);
+    } else {
+      const finalCorrect = isCorrect ? drillCorrect + 1 : drillCorrect;
+      saveDrillScore(lesson.id, finalCorrect, lesson.drillQuestions.length);
+      setDrillIndex(-1);
+      setSelectedOption(null);
+      setSubmitted(false);
+    }
   };
 
   const handleWarzoneSubmit = () => {
@@ -153,31 +154,31 @@ const LessonFlowInner = ({ lesson, navigate, progress, completeLesson, setLesson
               <div className="min-h-[400px] flex flex-col">
                 {currentCardType === 0 && (
                   <div className="flex-1 flex flex-col items-center justify-center text-center px-4">
-                    <p className="text-xl md:text-2xl text-foreground font-medium italic leading-relaxed max-w-lg">
+                    <p className="text-2xl md:text-3xl text-foreground font-medium italic leading-relaxed max-w-lg">
                       "{currentConcept.hook}"
                     </p>
-                    <p className="text-muted-foreground mt-8 text-sm">What's wrong with this argument?</p>
+                    <p className="text-muted-foreground mt-8 text-base">What's wrong with this argument?</p>
                   </div>
                 )}
 
                 {currentCardType === 1 && (
                   <div className="flex-1 flex flex-col items-center justify-center text-center px-4">
-                    <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-primary/15 text-primary mb-4">
+                    <span className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold bg-primary/15 text-primary mb-5">
                       {currentConcept.category}
                     </span>
-                    <h2 className="text-4xl font-bold text-foreground mb-4">{currentConcept.name}</h2>
-                    <p className="text-lg text-muted-foreground max-w-md">{currentConcept.definition}</p>
+                    <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-5">{currentConcept.name}</h2>
+                    <p className="text-lg md:text-xl text-foreground/80 max-w-md leading-relaxed">{currentConcept.definition}</p>
                   </div>
                 )}
 
                 {currentCardType === 2 && (
                   <div className="flex-1">
-                    <h3 className="text-xl font-semibold text-foreground mb-6">How to spot it</h3>
-                    <ul className="space-y-4">
+                    <h3 className="text-2xl font-bold text-foreground mb-6">How to spot it</h3>
+                    <ul className="space-y-5">
                       {currentConcept.spotIt.map((point, i) => (
-                        <li key={i} className="flex gap-3 text-foreground">
-                          <span className="text-primary mt-0.5">•</span>
-                          <span>{point}</span>
+                        <li key={i} className="flex gap-3">
+                          <span className="text-primary mt-0.5 text-lg">•</span>
+                          <span className="text-base text-foreground/90 leading-relaxed">{point}</span>
                         </li>
                       ))}
                     </ul>
@@ -186,25 +187,59 @@ const LessonFlowInner = ({ lesson, navigate, progress, completeLesson, setLesson
 
                 {currentCardType === 3 && (
                   <div className="flex-1">
-                    <h3 className="text-xl font-semibold text-foreground mb-6">How to counter it</h3>
-                    <ul className="space-y-4 mb-8">
+                    <h3 className="text-2xl font-bold text-foreground mb-6">How to counter it</h3>
+                    <ul className="space-y-5 mb-8">
                       {currentConcept.counterIt.map((point, i) => (
-                        <li key={i} className="flex gap-3 text-foreground">
-                          <span className="text-primary mt-0.5">•</span>
-                          <span>{point}</span>
+                        <li key={i} className="flex gap-3">
+                          <span className="text-primary mt-0.5 text-lg">•</span>
+                          <span className="text-base text-foreground/90 leading-relaxed">{point}</span>
                         </li>
                       ))}
                     </ul>
-                    <div className="border-l-2 border-primary/50 pl-4 py-2">
-                      <p className="text-foreground/80 italic">"{currentConcept.counterExample}"</p>
+                    <div className="border-l-2 border-primary/50 pl-4 py-3">
+                      <p className="text-base text-foreground/80 italic leading-relaxed">"{currentConcept.counterExample}"</p>
                     </div>
                   </div>
                 )}
 
+                {currentCardType === 4 && (
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-foreground mb-6">Real-world examples</h3>
+                    <div className="space-y-4">
+                      {currentConcept.realWorldExamples.map((example, i) => (
+                        <div key={i} className="rounded-lg bg-[hsl(240,6%,10%)] border border-border p-5">
+                          <p className="text-base text-foreground/90 leading-relaxed italic">"{example}"</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {currentCardType === 5 && (
+                  <div className="flex-1">
+                    <h3 className="text-2xl font-bold text-foreground mb-6">Refutation strategies</h3>
+                    <ul className="space-y-5">
+                      {currentConcept.refutationStrategies.map((strategy, i) => (
+                        <li key={i} className="flex gap-3">
+                          <span className="text-green-400 mt-0.5 text-base font-bold">{i + 1}.</span>
+                          <span className="text-base text-foreground/90 leading-relaxed">{strategy}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
                 <div className="mt-8 flex justify-between items-center">
-                  <span className="text-xs text-muted-foreground">
-                    {currentConceptIndex + 1}/{lesson.conceptCards.length} concepts
-                  </span>
+                  <div className="flex items-center gap-2">
+                    {learnCardIndex > 0 && (
+                      <Button variant="ghost" size="sm" onClick={() => setLearnCardIndex(learnCardIndex - 1)}>
+                        <ChevronLeft className="w-4 h-4 mr-1" /> Back
+                      </Button>
+                    )}
+                    <span className="text-xs text-muted-foreground">
+                      {currentConceptIndex + 1}/{lesson.conceptCards.length} concepts
+                    </span>
+                  </div>
                   <Button onClick={() => setLearnCardIndex(learnCardIndex + 1)}>
                     Continue <ChevronRight className="w-4 h-4 ml-1" />
                   </Button>
@@ -236,6 +271,7 @@ const LessonFlowInner = ({ lesson, navigate, progress, completeLesson, setLesson
                 submitted={submitted}
                 onSelect={setSelectedOption}
                 onSubmit={handleDrillSubmit}
+                onNext={handleDrillNext}
               />
             )}
           </div>
@@ -288,7 +324,7 @@ const LessonFlowInner = ({ lesson, navigate, progress, completeLesson, setLesson
 
 // ===== DRILL COMPONENT =====
 
-const DrillView = ({ question, index, total, selectedOption, submitted, onSelect, onSubmit }: {
+const DrillView = ({ question, index, total, selectedOption, submitted, onSelect, onSubmit, onNext }: {
   question: DrillQuestion;
   index: number;
   total: number;
@@ -296,15 +332,16 @@ const DrillView = ({ question, index, total, selectedOption, submitted, onSelect
   submitted: boolean;
   onSelect: (i: number) => void;
   onSubmit: () => void;
+  onNext: () => void;
 }) => (
   <div>
     <p className="text-sm text-muted-foreground mb-6">Question {index + 1} of {total}</p>
 
     <div className="rounded-lg bg-[hsl(240,6%,10%)] border border-border p-5 mb-6">
-      <p className="text-foreground font-mono text-sm leading-relaxed italic">"{question.scenario}"</p>
+      <p className="text-foreground font-mono text-base leading-relaxed italic">"{question.scenario}"</p>
     </div>
 
-    <p className="text-foreground font-semibold mb-4">What's happening in this argument?</p>
+    <p className="text-foreground text-lg font-semibold mb-4">What's happening in this argument?</p>
 
     <div className="space-y-3 mb-6">
       {question.options.map((opt, i) => {
@@ -331,8 +368,13 @@ const DrillView = ({ question, index, total, selectedOption, submitted, onSelect
     </div>
 
     {submitted && (
-      <div className="rounded-lg bg-muted/20 border border-border p-4 mb-4 animate-fade-up">
-        <p className="text-foreground text-sm">{question.feedback}</p>
+      <div className="space-y-4 mb-4 animate-fade-up">
+        <div className="rounded-lg bg-muted/20 border border-border p-4">
+          <p className="text-foreground text-base leading-relaxed">{question.feedback}</p>
+        </div>
+        <Button onClick={onNext} className="w-full">
+          Next <ChevronRight className="w-4 h-4 ml-1" />
+        </Button>
       </div>
     )}
 
@@ -363,7 +405,7 @@ const WarzoneView = ({ post, index, total, selectedOption, submitted, onSelect, 
 
     <div className="rounded-lg bg-[hsl(240,6%,12%)] border border-border/50 p-5 mb-4">
       <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2 font-medium">Context</p>
-      <p className="text-foreground/90 text-sm leading-relaxed">{post.context}</p>
+      <p className="text-foreground/90 text-base leading-relaxed">{post.context}</p>
     </div>
 
     <div className="rounded-lg bg-card border border-border p-5 mb-6">
@@ -376,10 +418,10 @@ const WarzoneView = ({ post, index, total, selectedOption, submitted, onSelect, 
           <p className="text-xs text-muted-foreground">{post.platform}</p>
         </div>
       </div>
-      <p className="text-foreground text-sm leading-relaxed italic">"{post.comment}"</p>
+      <p className="text-foreground text-base leading-relaxed italic">"{post.comment}"</p>
     </div>
 
-    <p className="text-foreground font-semibold mb-4">What BFBA is being used here?</p>
+    <p className="text-foreground text-lg font-semibold mb-4">What BFBA is being used here?</p>
 
     <div className="space-y-3 mb-6">
       {post.options.map((opt, i) => {
@@ -414,13 +456,13 @@ const WarzoneView = ({ post, index, total, selectedOption, submitted, onSelect, 
               {selectedOption === post.correctIndex ? "Correct!" : "Incorrect"} — {post.options[post.correctIndex]}
             </span>
           </div>
-          <p className="text-foreground text-sm">{post.explanation}</p>
+          <p className="text-foreground text-base leading-relaxed">{post.explanation}</p>
         </div>
 
         {post.counter && (
           <div className="border-l-2 border-primary/50 pl-4 py-2">
             <p className="text-xs text-primary/70 font-medium uppercase tracking-wider mb-1">Counter:</p>
-            <p className="text-foreground/80 italic text-sm">"{post.counter}"</p>
+            <p className="text-foreground/80 italic text-base leading-relaxed">"{post.counter}"</p>
           </div>
         )}
 

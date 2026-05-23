@@ -5,8 +5,10 @@ import pool from "../db.js";
 import { authenticate } from "../middleware/auth.js";
 
 const router = Router();
-const SALT_ROUNDS = 10;
+const SALT_ROUNDS = 12;
 const JWT_EXPIRY = "30d";
+const MIN_PASSWORD_LENGTH = 8;
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function signToken(userId) {
   return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: JWT_EXPIRY });
@@ -32,7 +34,19 @@ router.post("/signup", async (req, res) => {
       return res.status(400).json({ error: "Email and password are required" });
     }
 
-    const existing = await pool.query("SELECT id FROM users WHERE email = $1", [email]);
+    const normalizedEmail = email.trim().toLowerCase();
+
+    if (!EMAIL_REGEX.test(normalizedEmail)) {
+      return res.status(400).json({ error: "Please enter a valid email address" });
+    }
+
+    if (password.length < MIN_PASSWORD_LENGTH) {
+      return res.status(400).json({ error: `Password must be at least ${MIN_PASSWORD_LENGTH} characters` });
+    }
+
+    const trimmedName = display_name ? display_name.trim().slice(0, 100) : null;
+
+    const existing = await pool.query("SELECT id FROM users WHERE email = $1", [normalizedEmail]);
     if (existing.rows.length > 0) {
       return res.status(409).json({ error: "Email already registered" });
     }
@@ -43,7 +57,7 @@ router.post("/signup", async (req, res) => {
       `INSERT INTO users (email, display_name, password_hash)
        VALUES ($1, $2, $3)
        RETURNING *`,
-      [email, display_name || null, passwordHash]
+      [normalizedEmail, trimmedName, passwordHash]
     );
 
     const user = result.rows[0];
@@ -65,7 +79,9 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ error: "Email and password are required" });
     }
 
-    const result = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
+    const normalizedEmail = email.trim().toLowerCase();
+
+    const result = await pool.query("SELECT * FROM users WHERE email = $1", [normalizedEmail]);
     if (result.rows.length === 0) {
       return res.status(401).json({ error: "Invalid email or password" });
     }

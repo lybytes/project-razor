@@ -19,6 +19,20 @@ router.post("/complete", authenticate, async (req, res) => {
       return res.status(400).json({ error: "lesson_id and module_id are required" });
     }
 
+    if (typeof lesson_id !== "string" || lesson_id.length > 20) {
+      return res.status(400).json({ error: "Invalid lesson_id" });
+    }
+
+    const parsedModule = Number(module_id);
+    if (!Number.isInteger(parsedModule) || parsedModule < 1 || parsedModule > 10) {
+      return res.status(400).json({ error: "Invalid module_id" });
+    }
+
+    const parsedScore = score !== undefined ? Number(score) : 0;
+    if (!Number.isInteger(parsedScore) || parsedScore < 0 || parsedScore > 100) {
+      return res.status(400).json({ error: "Score must be between 0 and 100" });
+    }
+
     await client.query("BEGIN");
 
     // Atomic upsert — xmax = 0 means INSERT (first completion), otherwise UPDATE
@@ -29,13 +43,13 @@ router.post("/complete", authenticate, async (req, res) => {
        DO UPDATE SET score = GREATEST(progress.score, EXCLUDED.score),
                      completed_at = NOW()
        RETURNING (xmax = 0) AS is_first_completion`,
-      [userId, lesson_id, module_id, score || 0]
+      [userId, lesson_id, parsedModule, parsedScore]
     );
     const isFirstCompletion = upsertResult.rows[0].is_first_completion;
 
     // Only grant XP on first completion
     const xpGain = isFirstCompletion
-      ? BASE_XP + (score >= BONUS_XP_THRESHOLD ? BONUS_XP : 0)
+      ? BASE_XP + (parsedScore >= BONUS_XP_THRESHOLD ? BONUS_XP : 0)
       : 0;
 
     // Streak logic
