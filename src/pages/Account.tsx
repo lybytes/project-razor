@@ -70,63 +70,63 @@ const Account = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       
-      <main className="container mx-auto px-4 py-16">
+      <main className="container mx-auto px-4 py-8 sm:py-16">
         <div className="max-w-4xl mx-auto">
           {/* Profile Header */}
-          <div className="flex items-center justify-between mb-8 opacity-0 animate-fade-up">
-            <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center">
-                <User className="w-8 h-8 text-primary" />
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8 opacity-0 animate-fade-up">
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
+                <User className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
               </div>
-              <div>
-                <h1 className="text-3xl font-bold text-foreground">{stats.display_name || "User"}</h1>
-                <p className="text-muted-foreground">{stats.email}</p>
+              <div className="min-w-0">
+                <h1 className="text-2xl sm:text-3xl font-bold text-foreground truncate">{stats.display_name || "User"}</h1>
+                <p className="text-sm sm:text-base text-muted-foreground truncate">{stats.email}</p>
               </div>
             </div>
-            <Button variant="outline" onClick={handleSignOut}>
+            <Button variant="outline" onClick={handleSignOut} className="self-start sm:self-auto">
               <LogOut className="w-4 h-4 mr-2" />
               Sign Out
             </Button>
           </div>
 
           {/* Stats Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            <div className="bg-card border border-border rounded-lg p-6 opacity-0 animate-fade-up" style={{ animationDelay: "100ms" }}>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+            <div className="bg-card border border-border rounded-lg p-4 sm:p-6 opacity-0 animate-fade-up" style={{ animationDelay: "100ms" }}>
               <div className="flex items-center gap-3 mb-2">
-                <Flame className="w-6 h-6 text-orange-500" />
-                <span className="text-muted-foreground">Current Streak</span>
+                <Flame className="w-5 h-5 sm:w-6 sm:h-6 text-orange-500" />
+                <span className="text-sm sm:text-base text-muted-foreground">Current Streak</span>
               </div>
-              <p className="text-4xl font-bold text-foreground">
+              <p className="text-3xl sm:text-4xl font-bold text-foreground">
                 {stats.current_streak}
-                <span className="text-lg font-normal text-muted-foreground ml-2">days</span>
+                <span className="text-base sm:text-lg font-normal text-muted-foreground ml-2">days</span>
               </p>
             </div>
 
-            <div className="bg-card border border-border rounded-lg p-6 opacity-0 animate-fade-up" style={{ animationDelay: "150ms" }}>
+            <div className="bg-card border border-border rounded-lg p-4 sm:p-6 opacity-0 animate-fade-up" style={{ animationDelay: "150ms" }}>
               <div className="flex items-center gap-3 mb-2">
-                <Trophy className="w-6 h-6 text-yellow-500" />
-                <span className="text-muted-foreground">Longest Streak</span>
+                <Trophy className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-500" />
+                <span className="text-sm sm:text-base text-muted-foreground">Longest Streak</span>
               </div>
-              <p className="text-4xl font-bold text-foreground">
+              <p className="text-3xl sm:text-4xl font-bold text-foreground">
                 {stats.longest_streak}
-                <span className="text-lg font-normal text-muted-foreground ml-2">days</span>
+                <span className="text-base sm:text-lg font-normal text-muted-foreground ml-2">days</span>
               </p>
             </div>
 
-            <div className="bg-card border border-border rounded-lg p-6 opacity-0 animate-fade-up" style={{ animationDelay: "200ms" }}>
+            <div className="bg-card border border-border rounded-lg p-4 sm:p-6 opacity-0 animate-fade-up" style={{ animationDelay: "200ms" }}>
               <div className="flex items-center gap-3 mb-2">
-                <Calendar className="w-6 h-6 text-primary" />
-                <span className="text-muted-foreground">Lessons Completed</span>
+                <Calendar className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+                <span className="text-sm sm:text-base text-muted-foreground">Lessons Completed</span>
               </div>
-              <p className="text-4xl font-bold text-foreground">
+              <p className="text-3xl sm:text-4xl font-bold text-foreground">
                 {stats.lessons_completed}
-                <span className="text-lg font-normal text-muted-foreground ml-2">lessons</span>
+                <span className="text-base sm:text-lg font-normal text-muted-foreground ml-2">lessons</span>
               </p>
             </div>
           </div>
 
           {/* Course Progress */}
-          <div className="bg-card border border-border rounded-lg p-6 opacity-0 animate-fade-up" style={{ animationDelay: "300ms" }}>
+          <div className="bg-card border border-border rounded-lg p-4 sm:p-6 opacity-0 animate-fade-up" style={{ animationDelay: "300ms" }}>
             <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
               <BookOpen className="w-5 h-5 text-primary" />
               Course Progress
@@ -141,20 +141,20 @@ const Account = () => {
                 <Progress value={module1Progress} className="h-2" />
               </div>
 
-              <div className="grid grid-cols-2 gap-4 pt-2">
-                <div className="bg-background/50 rounded-lg p-4 border border-border/50">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 pt-2">
+                <div className="bg-background/50 rounded-lg p-3 sm:p-4 border border-border/50">
                   <div className="flex items-center gap-2 mb-1">
                     <Zap className="w-4 h-4 text-primary" />
                     <span className="text-sm text-muted-foreground">Total XP</span>
                   </div>
                   <p className="text-2xl font-bold text-foreground">{stats.total_xp}</p>
                 </div>
-                <div className="bg-background/50 rounded-lg p-4 border border-border/50">
+                <div className="bg-background/50 rounded-lg p-3 sm:p-4 border border-border/50">
                   <div className="flex items-center gap-2 mb-1">
                     <Trophy className="w-4 h-4 text-amber-400" />
                     <span className="text-sm text-muted-foreground">Lessons</span>
                   </div>
-                  <p className="text-2xl font-bold text-foreground">{stats.lessons_completed}</p>
+                  <p className="text-xl sm:text-2xl font-bold text-foreground">{stats.lessons_completed}</p>
                 </div>
               </div>
             </div>
