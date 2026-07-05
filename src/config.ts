@@ -1,2 +1,2 @@
-export const API_BASE_URL =
-  import.meta.env.VITE_API_URL || "http://localhost:3001";
+// No longer needed - using Supabase directly
+export const API_BASE_URL = "";

@@ -1,19 +1,22 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
-import {
-  getMe,
-  login as apiLogin,
-  signup as apiSignup,
-  logout as apiLogout,
-  getToken,
-  type UserData,
-} from "@/lib/api";
+import { supabase } from "@/integrations/supabase/client";
+import type { User } from "@supabase/supabase-js";
+
+interface UserData {
+  id: string;
+  email: string;
+  display_name: string | null;
+  current_streak: number;
+  longest_streak: number;
+  total_xp: number;
+}
 
 interface AuthContextType {
   user: UserData | null;
   loading: boolean;
   login: (email: string, password: string) => Promise<void>;
   signup: (email: string, password: string, displayName: string) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
 }
 
@@ -23,39 +26,100 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const refreshUser = useCallback(async () => {
-    try {
-      const userData = await getMe();
-      setUser(userData);
-    } catch {
-      setUser(null);
+  const fetchUserProfile = useCallback(async (authUser: User) => {
+    const { data, error } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("user_id", authUser.id)
+      .single();
+
+    if (error) {
+      console.error("Error fetching profile:", error);
+      return null;
     }
+
+    return {
+      id: authUser.id,
+      email: data.email,
+      display_name: data.display_name,
+      current_streak: data.current_streak,
+      longest_streak: data.longest_streak,
+      total_xp: data.total_xp,
+    } as UserData;
   }, []);
 
-  useEffect(() => {
-    const token = getToken();
-    if (token) {
-      refreshUser().finally(() => setLoading(false));
+  const refreshUser = useCallback(async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session?.user) {
+      const profile = await fetchUserProfile(session.user);
+      setUser(profile);
     } else {
-      setLoading(false);
+      setUser(null);
     }
-  }, [refreshUser]);
+  }, [fetchUserProfile]);
+
+  useEffect(() => {
+    // Check initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session?.user) {
+        fetchUserProfile(session.user).then((profile) => {
+          setUser(profile);
+          setLoading(false);
+        });
+      } else {
+        setLoading(false);
+      }
+    });
+
+    // Listen for auth changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      if (session?.user) {
+        const profile = await fetchUserProfile(session.user);
+        setUser(profile);
+      } else {
+        setUser(null);
+      }
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [fetchUserProfile]);
 
   const login = useCallback(async (email: string, password: string) => {
-    const { user: userData } = await apiLogin(email, password);
-    setUser(userData);
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (error) throw error;
   }, []);
 
   const signup = useCallback(
     async (email: string, password: string, displayName: string) => {
-      const { user: userData } = await apiSignup(email, password, displayName);
-      setUser(userData);
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            display_name: displayName,
+          },
+        },
+      });
+      if (error) throw error;
+
+      // Update profile with display name after signup
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        await supabase
+          .from("profiles")
+          .update({ display_name: displayName })
+          .eq("user_id", user.id);
+      }
     },
     []
   );
 
-  const logout = useCallback(() => {
-    apiLogout();
+  const logout = useCallback(async () => {
+    await supabase.auth.signOut();
     setUser(null);
   }, []);
 

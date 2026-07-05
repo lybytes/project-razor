@@ -14,86 +14,68 @@ export type Database = {
   }
   public: {
     Tables: {
-      activity_log: {
-        Row: {
-          activity_date: string
-          completed_at: string
-          game_type: string
-          id: string
-          user_id: string
-        }
-        Insert: {
-          activity_date?: string
-          completed_at?: string
-          game_type: string
-          id?: string
-          user_id: string
-        }
-        Update: {
-          activity_date?: string
-          completed_at?: string
-          game_type?: string
-          id?: string
-          user_id?: string
-        }
-        Relationships: []
-      }
       profiles: {
-        Row: {
-          age: number | null
-          created_at: string
-          id: string
-          name: string
-          role: string | null
-          updated_at: string
-          user_id: string
-        }
-        Insert: {
-          age?: number | null
-          created_at?: string
-          id?: string
-          name: string
-          role?: string | null
-          updated_at?: string
-          user_id: string
-        }
-        Update: {
-          age?: number | null
-          created_at?: string
-          id?: string
-          name?: string
-          role?: string | null
-          updated_at?: string
-          user_id?: string
-        }
-        Relationships: []
-      }
-      streaks: {
         Row: {
           created_at: string
           current_streak: number
+          display_name: string | null
+          email: string
           id: string
           last_activity_date: string | null
           longest_streak: number
+          total_xp: number
           updated_at: string
           user_id: string
         }
         Insert: {
           created_at?: string
           current_streak?: number
+          display_name?: string | null
+          email: string
           id?: string
           last_activity_date?: string | null
           longest_streak?: number
+          total_xp?: number
           updated_at?: string
           user_id: string
         }
         Update: {
           created_at?: string
           current_streak?: number
+          display_name?: string | null
+          email?: string
           id?: string
           last_activity_date?: string | null
           longest_streak?: number
+          total_xp?: number
           updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      progress: {
+        Row: {
+          completed_at: string
+          id: string
+          lesson_id: string
+          module_id: number
+          score: number | null
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string
+          id?: string
+          lesson_id: string
+          module_id: number
+          score?: number | null
+          user_id: string
+        }
+        Update: {
+          completed_at?: string
+          id?: string
+          lesson_id?: string
+          module_id?: number
+          score?: number | null
           user_id?: string
         }
         Relationships: []

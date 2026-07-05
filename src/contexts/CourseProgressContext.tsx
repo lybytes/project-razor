@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { getProgress, completeLesson as apiCompleteLesson, type ProgressEntry } from "@/lib/api";
-import { getToken } from "@/lib/api";
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 interface CourseProgress {
@@ -63,8 +63,8 @@ export const CourseProgressProvider: React.FC<{ children: React.ReactNode }> = (
   }, [progress]);
 
   const loadFromServer = useCallback(async () => {
-    const token = getToken();
-    if (!token) return;
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) return;
 
     try {
       const serverProgress = await getProgress();
@@ -86,7 +86,7 @@ export const CourseProgressProvider: React.FC<{ children: React.ReactNode }> = (
     loadFromServer();
   }, [loadFromServer]);
 
-  const completeLesson = useCallback((lessonId: string, concepts: string[]) => {
+  const completeLesson = useCallback(async (lessonId: string, concepts: string[]) => {
     const isFirstCompletion = !progress.lessonComplete[lessonId];
 
     setProgress(prev => ({
@@ -101,8 +101,8 @@ export const CourseProgressProvider: React.FC<{ children: React.ReactNode }> = (
     const totalQuestions = (drillScore?.total || 0) + (warzoneScore?.total || 0);
     const score = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
 
-    const token = getToken();
-    if (token) {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session) {
       const moduleId = getModuleIdFromLesson(lessonId);
 
       apiCompleteLesson(lessonId, moduleId, score)
