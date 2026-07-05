@@ -35,11 +35,11 @@ const Course = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
 
-      <main className="container mx-auto px-4 py-12 max-w-3xl">
+      <main className="container mx-auto px-4 py-6 sm:py-12 max-w-3xl">
         {/* Header */}
-        <div className="mb-12 opacity-0 animate-fade-up">
-          <h1 className="text-4xl font-bold text-foreground mb-2">Your Course</h1>
-          <p className="text-muted-foreground text-lg mb-6">Master critical thinking, one lesson at a time.</p>
+        <div className="mb-6 sm:mb-12 opacity-0 animate-fade-up">
+          <h1 className="text-2xl sm:text-4xl font-bold text-foreground mb-2">Your Course</h1>
+          <p className="text-muted-foreground text-base sm:text-lg mb-4 sm:mb-6">Master critical thinking, one lesson at a time.</p>
           <div className="flex items-center gap-4">
             <Progress value={progressPercent} className="h-3 flex-1" />
             <span className="text-sm text-muted-foreground whitespace-nowrap">{totalConcepts}/25 concepts</span>
@@ -60,7 +60,7 @@ const Course = () => {
                 style={{ animationDelay: `${100 + i * 80}ms` }}
               >
                 {mod.locked ? (
-                  <div className="rounded-lg border border-border/30 bg-card/30 p-6 relative overflow-hidden">
+                  <div className="rounded-lg border border-border/30 bg-card/30 p-4 sm:p-6 relative overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 opacity-50" />
                     <div className="relative flex items-center gap-4">
                       <div className="w-10 h-10 rounded-lg bg-muted/20 flex items-center justify-center shrink-0 border border-border/30">
@@ -84,7 +84,7 @@ const Course = () => {
                   {/* Module Header */}
                   <button
                     onClick={() => setExpandedModule(isExpanded ? null : mod.id)}
-                    className="w-full p-6 flex items-center justify-between text-left"
+                    className="w-full p-4 sm:p-6 flex items-center justify-between text-left"
                   >
                     <div className="flex items-center gap-4 flex-1 min-w-0">
                       {status === "complete" ? (
@@ -115,16 +115,16 @@ const Course = () => {
 
                   {/* Expanded Lesson List */}
                   {isExpanded && !mod.locked && (
-                    <div className="px-6 pb-6 border-t border-border/50">
+                    <div className="px-4 pb-4 sm:px-6 sm:pb-6 border-t border-border/50">
                       <div className="mt-4 space-y-3">
                         {mod.lessons.map((lesson, li) => {
                           const lStatus = getLessonStatus(lesson.id);
                           return (
                             <div
                               key={lesson.id}
-                              className="flex items-center justify-between p-4 rounded-lg bg-background/50 border border-border/50"
+                              className="flex items-center justify-between p-3 sm:p-4 rounded-lg bg-background/50 border border-border/50"
                             >
-                              <div className="flex items-center gap-3 min-w-0">
+                              <div className="flex items-center gap-2 sm:gap-3 min-w-0">
                                 {lStatus === "complete" ? (
                                   <div className="w-7 h-7 rounded-full bg-green-500/20 flex items-center justify-center shrink-0">
                                     <Check className="w-4 h-4 text-green-400" />
@@ -134,11 +134,11 @@ const Course = () => {
                                     <span className="text-xs text-muted-foreground font-medium">{mod.id}.{li + 1}</span>
                                   </div>
                                 )}
-                                <div className="min-w-0">
-                                  <p className="text-base font-medium text-foreground">{lesson.title}</p>
-                                  <div className="flex flex-wrap gap-1.5 mt-1">
+                                <div className="min-w-0 flex-1">
+                                  <p className="text-sm sm:text-base font-medium text-foreground">{lesson.title}</p>
+                                  <div className="flex flex-wrap gap-1 sm:gap-1.5 mt-1">
                                     {lesson.concepts.map(c => (
-                                      <span key={c} className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary/80">{c}</span>
+                                      <span key={c} className="text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded-full bg-primary/10 text-primary/80">{c}</span>
                                     ))}
                                   </div>
                                 </div>
@@ -194,20 +194,20 @@ const Course = () => {
         <div className="opacity-0 animate-fade-up" style={{ animationDelay: "600ms" }}>
           <h2 className="text-xl font-semibold text-foreground mb-4">Free Play</h2>
           <p className="text-sm text-muted-foreground mb-4">Practice with concepts you've already learned.</p>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4">
             <Link
               to="/train/social-warzone"
-              className={`p-5 rounded-lg border border-border bg-card hover:border-primary/40 transition-all duration-300 ${totalConcepts === 0 ? "opacity-50 pointer-events-none" : ""}`}
+              className={`p-4 sm:p-5 rounded-lg border border-border bg-card hover:border-primary/40 transition-all duration-300 ${totalConcepts === 0 ? "opacity-50 pointer-events-none" : ""}`}
             >
-              <MessageSquare className="w-6 h-6 text-primary mb-3" />
+              <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6 text-primary mb-2 sm:mb-3" />
               <h3 className="font-semibold text-foreground text-sm">Social Warzone</h3>
               <p className="text-xs text-muted-foreground mt-1">Apply skills to realistic posts</p>
             </Link>
             <Link
               to="/train/rapid-reasoning"
-              className={`p-5 rounded-lg border border-border bg-card hover:border-primary/40 transition-all duration-300 ${totalConcepts === 0 ? "opacity-50 pointer-events-none" : ""}`}
+              className={`p-4 sm:p-5 rounded-lg border border-border bg-card hover:border-primary/40 transition-all duration-300 ${totalConcepts === 0 ? "opacity-50 pointer-events-none" : ""}`}
             >
-              <Zap className="w-6 h-6 text-primary mb-3" />
+              <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-primary mb-2 sm:mb-3" />
               <h3 className="font-semibold text-foreground text-sm">Rapid Reasoning</h3>
               <p className="text-xs text-muted-foreground mt-1">Quick-fire identification drills</p>
             </Link>

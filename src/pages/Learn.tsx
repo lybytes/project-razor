@@ -34,12 +34,12 @@ const Learn = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       
-      <main className="container mx-auto px-4 py-16">
-        <div className="text-center mb-16 opacity-0 animate-fade-up" style={{ animationDelay: "0ms" }}>
-          <h1 className="text-5xl font-bold text-foreground mb-4">
+      <main className="container mx-auto px-4 py-8 sm:py-16">
+        <div className="text-center mb-8 sm:mb-16 opacity-0 animate-fade-up" style={{ animationDelay: "0ms" }}>
+          <h1 className="text-3xl sm:text-5xl font-bold text-foreground mb-3 sm:mb-4">
             Knowledge Library
           </h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base sm:text-xl text-muted-foreground max-w-2xl mx-auto">
             Explore comprehensive guides on logical fallacies, cognitive biases, and bad-faith arguments.
           </p>
         </div>
@@ -47,7 +47,7 @@ const Learn = () => {
         {/* Search Bar Link */}
         <Link
           to="/learn/search"
-          className="block max-w-2xl mx-auto mb-12 group opacity-0 animate-fade-up"
+          className="block max-w-2xl mx-auto mb-8 sm:mb-12 group opacity-0 animate-fade-up"
           style={{ animationDelay: "100ms" }}
         >
           <div className="flex items-center gap-4 bg-card border border-border rounded-lg p-4 hover:border-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/10">
@@ -58,7 +58,7 @@ const Learn = () => {
           </div>
         </Link>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8 max-w-6xl mx-auto">
           {libraries.map((library, index) => (
             <Link
               key={library.title}
@@ -73,12 +73,12 @@ const Learn = () => {
                 <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary/20 via-primary/10 to-primary/20" />
               </div>
               
-              <div className="relative p-8">
+              <div className="relative p-5 sm:p-8">
                 <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-300">
                   <library.icon className="w-6 h-6 text-primary" />
                 </div>
                 <div className="flex items-baseline gap-2 mb-3">
-                  <h3 className="text-2xl font-bold text-foreground">
+                  <h3 className="text-xl sm:text-2xl font-bold text-foreground">
                     {library.title}
                   </h3>
                   <span className="text-sm text-muted-foreground bg-muted/50 px-2 py-0.5 rounded-full">

@@ -10,7 +10,7 @@ import { useAuth } from "@/contexts/AuthContext";
 
 const signUpSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  password: z.string().min(8, "Password must be at least 8 characters"),
   name: z.string().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
 });
 
@@ -103,10 +103,10 @@ const Auth = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       
-      <main className="container mx-auto px-4 py-16">
+      <main className="container mx-auto px-4 py-8 sm:py-16">
         <div className="max-w-md mx-auto">
-          <div className="text-center mb-8 opacity-0 animate-fade-up">
-            <h1 className="text-4xl font-bold text-foreground mb-2">
+          <div className="text-center mb-6 sm:mb-8 opacity-0 animate-fade-up">
+            <h1 className="text-2xl sm:text-4xl font-bold text-foreground mb-2">
               {isSignUp ? "Create Account" : "Welcome Back"}
             </h1>
             <p className="text-muted-foreground">
@@ -116,7 +116,7 @@ const Auth = () => {
             </p>
           </div>
 
-          <div className="bg-card border border-border rounded-lg p-8 opacity-0 animate-fade-up" style={{ animationDelay: "100ms" }}>
+          <div className="bg-card border border-border rounded-lg p-5 sm:p-8 opacity-0 animate-fade-up" style={{ animationDelay: "100ms" }}>
             <form onSubmit={isSignUp ? handleSignUp : handleSignIn} className="space-y-4">
               <div>
                 <Label htmlFor="email">Email</Label>
