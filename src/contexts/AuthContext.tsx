@@ -31,20 +31,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       .from("profiles")
       .select("*")
       .eq("user_id", authUser.id)
-      .single();
+      .maybeSingle();
 
     if (error) {
       console.error("Error fetching profile:", error);
       return null;
     }
 
+    const profile = data || (await supabase
+      .from("profiles")
+      .insert({
+        user_id: authUser.id,
+        email: authUser.email || "",
+        display_name: typeof authUser.user_metadata?.display_name === "string" ? authUser.user_metadata.display_name : null,
+      })
+      .select("*")
+      .single()).data;
+
+    if (!profile) return null;
+
     return {
       id: authUser.id,
-      email: data.email,
-      display_name: data.display_name,
-      current_streak: data.current_streak,
-      longest_streak: data.longest_streak,
-      total_xp: data.total_xp,
+      email: profile.email,
+      display_name: profile.display_name,
+      current_streak: profile.current_streak,
+      longest_streak: profile.longest_streak,
+      total_xp: profile.total_xp,
     } as UserData;
   }, []);
 

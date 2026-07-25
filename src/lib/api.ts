@@ -19,16 +19,44 @@ const BASE_XP = 50;
 const BONUS_XP_THRESHOLD = 80;
 const BONUS_XP = 10;
 
+async function ensureUserProfile() {
+  const { data: { user }, error: userError } = await supabase.auth.getUser();
+  if (userError) throw userError;
+  if (!user) throw new Error("Not authenticated");
+
+  const { data: profile, error } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("user_id", user.id)
+    .maybeSingle();
+
+  if (error) throw error;
+  if (profile) return { user, profile };
+
+  const { data: createdProfile, error: createError } = await supabase
+    .from("profiles")
+    .insert({
+      user_id: user.id,
+      email: user.email || "",
+      display_name: typeof user.user_metadata?.display_name === "string" ? user.user_metadata.display_name : null,
+    })
+    .select("*")
+    .single();
+
+  if (createError) throw createError;
+
+  return { user, profile: createdProfile };
+}
+
 export async function completeLesson(
   lesson_id: string,
   module_id: number,
   score: number
 ): Promise<CompleteResponse> {
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) throw new Error("Not authenticated");
-
   const { data: { session } } = await supabase.auth.getSession();
   if (!session) throw new Error("No session");
+
+  const { user } = await ensureUserProfile();
 
   // Get current progress to check if first completion
   const { data: existingProgress } = await supabase
@@ -60,14 +88,7 @@ export async function completeLesson(
     ? BASE_XP + (score >= BONUS_XP_THRESHOLD ? BONUS_XP : 0)
     : 0;
 
-  // Get current user profile
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("user_id", user.id)
-    .single();
-
-  if (!profile) throw new Error("Profile not found");
+  const { profile } = await ensureUserProfile();
 
   // Streak logic
   const today = new Date();
@@ -149,16 +170,7 @@ export interface UserStats {
 }
 
 export async function getUserStats(): Promise<UserStats> {
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) throw new Error("Not authenticated");
-
-  const { data: profile, error: profileError } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("user_id", user.id)
-    .single();
-
-  if (profileError) throw profileError;
+  const { user, profile } = await ensureUserProfile();
 
   const { count, error: countError } = await supabase
     .from("progress")
