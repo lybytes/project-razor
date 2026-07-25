@@ -12,6 +12,31 @@ CREATE TABLE IF NOT EXISTS public.profiles (
   updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );
 
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS email TEXT;
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS display_name TEXT;
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS current_streak INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS longest_streak INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS last_activity_date DATE;
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS total_xp INTEGER NOT NULL DEFAULT 0;
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now();
+ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now();
+
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1 FROM information_schema.columns
+    WHERE table_schema = 'public' AND table_name = 'profiles' AND column_name = 'name'
+  ) THEN
+    ALTER TABLE public.profiles ALTER COLUMN name DROP NOT NULL;
+    UPDATE public.profiles SET display_name = COALESCE(display_name, name);
+  END IF;
+END $$;
+
+UPDATE public.profiles AS p
+SET email = COALESCE(p.email, u.email)
+FROM auth.users AS u
+WHERE p.user_id = u.id;
+
 -- Create progress table for lesson completion tracking
 CREATE TABLE IF NOT EXISTS public.progress (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,

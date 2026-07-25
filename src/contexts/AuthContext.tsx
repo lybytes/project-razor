@@ -52,11 +52,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     return {
       id: authUser.id,
-      email: profile.email,
+      email: profile.email || authUser.email || "",
       display_name: profile.display_name,
-      current_streak: profile.current_streak,
-      longest_streak: profile.longest_streak,
-      total_xp: profile.total_xp,
+      current_streak: profile.current_streak ?? 0,
+      longest_streak: profile.longest_streak ?? 0,
+      total_xp: profile.total_xp ?? 0,
     } as UserData;
   }, []);
 

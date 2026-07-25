@@ -95,8 +95,8 @@ export async function completeLesson(
   today.setUTCHours(0, 0, 0, 0);
   const todayStr = today.toISOString().split("T")[0];
 
-  let newStreak = profile.current_streak;
-  let newLongest = profile.longest_streak;
+  let newStreak = profile.current_streak ?? 0;
+  let newLongest = profile.longest_streak ?? 0;
 
   if (profile.last_activity_date) {
     const lastDate = new Date(profile.last_activity_date);
@@ -111,7 +111,7 @@ export async function completeLesson(
       const yesterdayStr = yesterday.toISOString().split("T")[0];
 
       if (lastStr === yesterdayStr) {
-        newStreak = profile.current_streak + 1;
+        newStreak = (profile.current_streak ?? 0) + 1;
         if (newStreak > newLongest) newLongest = newStreak;
       } else {
         newStreak = 1;
@@ -127,7 +127,7 @@ export async function completeLesson(
   const { error: updateError } = await supabase
     .from("profiles")
     .update({
-      total_xp: profile.total_xp + xpGain,
+      total_xp: (profile.total_xp ?? 0) + xpGain,
       current_streak: newStreak,
       longest_streak: newLongest,
       last_activity_date: todayStr,
@@ -139,7 +139,7 @@ export async function completeLesson(
   return {
     current_streak: newStreak,
     longest_streak: newLongest,
-    total_xp: profile.total_xp + xpGain,
+    total_xp: (profile.total_xp ?? 0) + xpGain,
     xp_gained: xpGain,
   };
 }
@@ -180,12 +180,12 @@ export async function getUserStats(): Promise<UserStats> {
   if (countError) throw countError;
 
   return {
-    current_streak: profile.current_streak,
-    longest_streak: profile.longest_streak,
-    total_xp: profile.total_xp,
+    current_streak: profile.current_streak ?? 0,
+    longest_streak: profile.longest_streak ?? 0,
+    total_xp: profile.total_xp ?? 0,
     lessons_completed: count || 0,
     display_name: profile.display_name,
-    email: profile.email,
+    email: profile.email || user.email || "",
   };
 }
 
