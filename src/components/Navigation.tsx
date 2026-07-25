@@ -7,14 +7,14 @@ const NavItem = ({ to, icon: Icon, label, isActive }: { to: string; icon: React.
   <Link 
     to={to} 
     className={cn(
-      "flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300",
+      "flex items-center gap-2 px-2.5 py-2 sm:px-4 rounded-full text-sm font-medium transition-all duration-300",
       isActive 
         ? "bg-primary/15 text-primary" 
         : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
     )}
   >
     <Icon className="h-4 w-4" />
-    <span>{label}</span>
+    <span className="hidden sm:inline">{label}</span>
   </Link>
 );
 
@@ -35,12 +35,12 @@ export const Navigation = () => {
             <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-shadow duration-300">
               <span className="text-lg font-bold text-primary-foreground">R</span>
             </div>
-            <span className="text-lg font-semibold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text">
+            <span className="text-lg font-semibold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text hidden sm:inline">
               Project Razor
             </span>
           </Link>
           
-          <div className="flex items-center gap-1 bg-muted/30 rounded-full p-1.5">
+          <div className="flex items-center gap-0.5 sm:gap-1 bg-muted/30 rounded-full p-1 sm:p-1.5">
             <NavItem to="/" icon={Home} label="Home" isActive={isActive("/")} />
             <NavItem to="/train" icon={Brain} label="Course" isActive={isActive("/train")} />
             <NavItem to="/learn" icon={BookOpen} label="Learn" isActive={isActive("/learn")} />
@@ -51,10 +51,10 @@ export const Navigation = () => {
               ) : (
                 <Link 
                   to="/auth" 
-                  className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-300 ml-1"
+                  className="flex items-center gap-2 px-2.5 py-2 sm:px-4 rounded-full text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-300 ml-1"
                 >
                   <LogIn className="h-4 w-4" />
-                  <span>Sign In</span>
+                  <span className="hidden sm:inline">Sign In</span>
                 </Link>
               )
             )}

@@ -11,7 +11,7 @@ const Index = () => {
 
       <main>
         {/* SECTION 1 — Hero */}
-        <section className="container mx-auto px-4 pt-24 pb-20 text-center">
+        <section className="container mx-auto px-4 pt-12 pb-10 sm:pt-24 sm:pb-20 text-center">
           <div
             className="inline-block mb-8 px-5 py-1.5 border border-border rounded-full text-sm text-muted-foreground opacity-0 animate-fade-up"
             style={{ animationDelay: "0ms" }}
@@ -52,14 +52,14 @@ const Index = () => {
         </section>
 
         {/* SECTION 2 — Problem Statement */}
-        <section className="container mx-auto px-4 py-20">
+        <section className="container mx-auto px-4 py-10 sm:py-20">
           <h2
-            className="text-2xl md:text-3xl font-bold mb-10 text-center opacity-0 animate-fade-up"
+            className="text-2xl md:text-3xl font-bold mb-6 sm:mb-10 text-center opacity-0 animate-fade-up"
             style={{ animationDelay: "400ms" }}
           >
             Why this matters
           </h2>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
             {[
               {
                 icon: "📱",
@@ -91,14 +91,14 @@ const Index = () => {
         </section>
 
         {/* SECTION 3 — How It Works */}
-        <section className="container mx-auto px-4 py-20">
+        <section className="container mx-auto px-4 py-10 sm:py-20">
           <h2
-            className="text-2xl md:text-3xl font-bold mb-14 text-center opacity-0 animate-fade-up"
+            className="text-2xl md:text-3xl font-bold mb-8 sm:mb-14 text-center opacity-0 animate-fade-up"
             style={{ animationDelay: "800ms" }}
           >
             How Project Razor works
           </h2>
-          <div className="grid md:grid-cols-3 gap-10 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-10 max-w-4xl mx-auto">
             {[
               {
                 num: "01",
@@ -132,14 +132,14 @@ const Index = () => {
         </section>
 
         {/* SECTION 4 — What You'll Learn */}
-        <section className="container mx-auto px-4 py-20">
+        <section className="container mx-auto px-4 py-10 sm:py-20">
           <h2
-            className="text-2xl md:text-3xl font-bold mb-10 text-center opacity-0 animate-fade-up"
+            className="text-2xl md:text-3xl font-bold mb-6 sm:mb-10 text-center opacity-0 animate-fade-up"
             style={{ animationDelay: "1200ms" }}
           >
             What you'll learn to detect
           </h2>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
             {[
               {
                 icon: "⚠️",
@@ -184,7 +184,7 @@ const Index = () => {
 
         {/* SECTION 5 — Motivational Banner */}
         <section
-          className="py-20 mt-10 opacity-0 animate-fade-up"
+          className="py-10 sm:py-20 mt-6 sm:mt-10 opacity-0 animate-fade-up"
           style={{
             animationDelay: "1600ms",
             background: "linear-gradient(135deg, hsl(270 60% 8%), hsl(280 50% 6%))",
