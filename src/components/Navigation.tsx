@@ -19,7 +19,7 @@ const NavItem = ({ to, icon: Icon, label, isActive }: { to: string; icon: React.
 );
 
 export const Navigation = () => {
-  const { user, loading } = useAuth();
+  const { hasSession, loading } = useAuth();
   const location = useLocation();
   
   const isActive = (path: string) => {
@@ -46,7 +46,7 @@ export const Navigation = () => {
             <NavItem to="/learn" icon={BookOpen} label="Learn" isActive={isActive("/learn")} />
             <NavItem to="/about" icon={Info} label="About" isActive={isActive("/about")} />
             {!loading && (
-              user ? (
+              hasSession ? (
                 <NavItem to="/account" icon={User} label="Account" isActive={isActive("/account")} />
               ) : (
                 <Link 

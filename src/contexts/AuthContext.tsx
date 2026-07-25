@@ -14,6 +14,7 @@ interface UserData {
 interface AuthContextType {
   user: UserData | null;
   loading: boolean;
+  hasSession: boolean;
   login: (email: string, password: string) => Promise<void>;
   signup: (email: string, password: string, displayName: string) => Promise<void>;
   logout: () => Promise<void>;
@@ -25,6 +26,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [hasSession, setHasSession] = useState(false);
 
   const fetchUserProfile = useCallback(async (authUser: User) => {
     const { data, error } = await supabase
@@ -62,6 +64,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const refreshUser = useCallback(async () => {
     const { data: { session } } = await supabase.auth.getSession();
+    setHasSession(!!session?.user);
     if (session?.user) {
       const profile = await fetchUserProfile(session.user);
       setUser(profile);
@@ -73,18 +76,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     // Check initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
+      setHasSession(!!session?.user);
       if (session?.user) {
         fetchUserProfile(session.user).then((profile) => {
           setUser(profile);
           setLoading(false);
         });
       } else {
+        setUser(null);
         setLoading(false);
       }
     });
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      setHasSession(!!session?.user);
       if (session?.user) {
         const profile = await fetchUserProfile(session.user);
         setUser(profile);
@@ -132,11 +138,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = useCallback(async () => {
     await supabase.auth.signOut();
+    setHasSession(false);
     setUser(null);
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, signup, logout, refreshUser }}>
+    <AuthContext.Provider value={{ user, loading, hasSession, login, signup, logout, refreshUser }}>
       {children}
     </AuthContext.Provider>
   );

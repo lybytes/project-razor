@@ -9,26 +9,28 @@ import { useAuth } from "@/contexts/AuthContext";
 import { getUserStats, getProgress, type UserStats, type ProgressEntry } from "@/lib/api";
 
 const Account = () => {
-  const { user, loading: authLoading, logout } = useAuth();
+  const { hasSession, loading: authLoading, logout } = useAuth();
   const [stats, setStats] = useState<UserStats | null>(null);
   const [completedLessons, setCompletedLessons] = useState<ProgressEntry[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!authLoading && !user) {
+    if (!authLoading && !hasSession) {
       navigate("/auth");
     }
-  }, [user, authLoading, navigate]);
+  }, [hasSession, authLoading, navigate]);
 
   useEffect(() => {
-    if (user) {
+    if (hasSession) {
       fetchData();
     }
-  }, [user]);
+  }, [hasSession]);
 
   const fetchData = async () => {
     setLoading(true);
+    setError(null);
     try {
       const [statsData, progressData] = await Promise.all([
         getUserStats(),
@@ -36,7 +38,9 @@ const Account = () => {
       ]);
       setStats(statsData);
       setCompletedLessons(progressData);
-    } catch {
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to load account data";
+      setError(message);
       toast.error("Failed to load account data");
     }
     setLoading(false);
@@ -61,7 +65,22 @@ const Account = () => {
     );
   }
 
-  if (!user || !stats) return null;
+  if (!hasSession) return null;
+
+  if (error || !stats) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Navigation />
+        <main className="container mx-auto px-4 py-16">
+          <div className="max-w-xl mx-auto bg-card border border-border rounded-lg p-6 text-center">
+            <h1 className="text-2xl font-bold text-foreground mb-2">Account unavailable</h1>
+            <p className="text-muted-foreground mb-4">{error || "We couldn't load your account data."}</p>
+            <Button onClick={fetchData}>Try Again</Button>
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   const module1Lessons = completedLessons.filter((p) => p.module_id === 1).length;
   const module1Progress = (module1Lessons / 3) * 100;
