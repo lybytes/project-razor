@@ -1,347 +1,626 @@
 [
   {
     "name": "Gish Gallop",
-    "category": "Bad-Faith Argument",
     "slug": "gish-gallop",
-    "explanation": "Overwhelming an opponent with a rapid series of many weak arguments in quick succession, making it impossible to adequately respond to each one in the time available. The goal is not to be right, but to appear to win through exhaustion.",
+    "category": "Bad-Faith Tactic",
+    "aka": [
+      "Firehose of Falsehood",
+      "Argument by Volume"
+    ],
+    "hook": "Well, actually, if you consider these fifteen points I'm about to list in ninety seconds…",
+    "oneLiner": "Burying an opponent in a flood of weak claims faster than any can be answered.",
+    "deepDive": "The Gish gallop wins by volume, not validity. The tactic is to fire off so many claims, questions, and half-truths in quick succession that the opponent can't possibly rebut them all in the time available — and any point left unanswered is then declared 'unchallenged' and therefore true. It exploits an asymmetry: it takes seconds to assert a falsehood and minutes to properly debunk one. Individually most of the claims are weak, but the sheer quantity creates an impression of an overwhelming case. It thrives in live debate and fast-moving comment threads. The key is to refuse the frame: you don't have to answer everything to win. Pick the strongest or most load-bearing claim, dismantle it thoroughly, and name the tactic openly.",
+    "howToSpot": [
+      "A rapid barrage of many separate claims, too many to address at once",
+      "Quantity is doing the persuading, not the quality of any single point",
+      "Unanswered points get retroactively claimed as 'wins'"
+    ],
     "examples": [
-      "In a debate, rattling off 20 different claims in 2 minutes, knowing your opponent can't possibly address all of them.",
-      "Social media threads where someone posts a dozen different articles and points, demanding you refute each one.",
-      "Listing every possible negative thing about a topic rapid-fire without giving time for response."
+      {
+        "text": "In a debate, one side rattles off twelve dubious statistics in two minutes and demands the other refute every one.",
+        "explanation": "There's no time to debunk twelve claims, so most go unchallenged and are then treated as conceded."
+      },
+      {
+        "text": "A comment reply lists twenty 'questions' the moment you make a single point.",
+        "explanation": "The volume is designed to overwhelm, not to genuinely inquire — answering one just triggers ten more."
+      },
+      {
+        "text": "A thread drops a wall of links and claims, insisting you've 'lost' if you don't respond to all of them.",
+        "explanation": "The tactic converts your inability to reply to everything into a false victory."
+      }
     ],
     "refutation": [
-      "Don't try to address every point - pick the strongest 2-3 and focus on those",
-      "Point out the tactic: 'You're presenting more arguments than can possibly be addressed. Let's focus on the key issue.'",
-      "Ask them to identify their single strongest argument",
-      "Request evidence for their claims one at a time"
-    ],
-    "avoidance": [
-      "Focus on quality over quantity in your arguments",
-      "Give others time to respond thoroughly",
-      "Present arguments that can withstand scrutiny individually",
-      "Engage substantively rather than overwhelming with volume"
+      {
+        "title": "Refuse the frame",
+        "text": "Make clear you don't have to answer everything to be right.",
+        "comeback": "I'm not going to chase twenty points at once. Let's take the strongest one properly."
+      },
+      {
+        "title": "Pick one and go deep",
+        "text": "Choose the most load-bearing claim and dismantle it fully.",
+        "comeback": "Let's start with your central claim. Here's exactly why it doesn't hold — one thing at a time."
+      },
+      {
+        "title": "Name the tactic",
+        "text": "Point out the volume-over-substance strategy directly.",
+        "comeback": "Flooding the conversation with claims isn't an argument. Slow down and defend one."
+      }
     ]
   },
   {
     "name": "Moving the Goalposts",
-    "category": "Bad-Faith Argument",
     "slug": "moving-the-goalposts",
-    "explanation": "Changing the criteria for evidence or proof after initial standards have been met. When their demands are satisfied, they simply ask for something else, making it impossible to ever meet their standards.",
+    "category": "Bad-Faith Tactic",
+    "aka": [
+      "Shifting Criteria",
+      "Raising the Bar"
+    ],
+    "hook": "Okay, you gave me one study — but one study means nothing. Show me ten. …Fine, but were they peer-reviewed in the last year?",
+    "oneLiner": "Changing the standard of evidence the moment it's met, so it can never be satisfied.",
+    "deepDive": "Moving the goalposts is a way of never having to concede. Someone sets a condition ('show me evidence and I'll believe it'), and the moment you meet it, they raise the bar — the evidence suddenly isn't recent enough, or numerous enough, or from the right source. The demand keeps retreating just out of reach, so no amount of evidence is ever sufficient. It creates the illusion of open-mindedness while guaranteeing the person never has to change their view. The tell is a standard that shifts *after* it's been met, rather than being defined upfront. The counter is to lock the criteria in place before providing evidence, and when the goalposts move, to name it and hold them to the original bar.",
+    "howToSpot": [
+      "A demand for evidence is met, then immediately replaced with a harder one",
+      "The standard keeps rising precisely as you keep satisfying it",
+      "No amount of evidence is ever treated as enough"
+    ],
     "examples": [
-      "Skeptic: 'Show me one study.' You provide one. Skeptic: 'That's not enough, I need ten studies.' You provide ten. Skeptic: 'Those studies aren't from the right journals.'",
-      "Boss: 'Meet this sales target.' You meet it. Boss: 'I meant sustained over three months.' You do that. Boss: 'Now show me you can exceed it by 20%.'",
-      "Demanding increasingly specific or unrealistic evidence standards as each previous demand is met."
+      {
+        "text": "\"Show me one expert who agrees.\" — You do. — \"One doesn't count, show me the consensus.\"",
+        "explanation": "The bar jumps from 'one expert' to 'consensus' the instant the first bar is cleared."
+      },
+      {
+        "text": "\"If it ships by Friday I'll be impressed.\" — It ships Thursday. — \"Well, is it bug-free though?\"",
+        "explanation": "The success condition is redefined after it's met so the person never has to acknowledge it."
+      },
+      {
+        "text": "\"Prove it works in theory.\" — Done. — \"Theory's easy, prove it in practice.\" — Done. — \"At scale, though?\"",
+        "explanation": "Each cleared standard is swapped for a tougher one, indefinitely."
+      }
     ],
     "refutation": [
-      "Point out the tactic: 'You keep changing what counts as acceptable evidence.'",
-      "Establish clear criteria upfront: 'What specifically would convince you?'",
-      "Document the changing standards: 'You first asked for X, now you're asking for Y.'",
-      "Question their good faith: 'Are you genuinely seeking truth or just avoiding being wrong?'"
-    ],
-    "avoidance": [
-      "Establish clear, reasonable criteria before discussion begins",
-      "Be willing to change your mind when criteria are met",
-      "Don't arbitrarily raise standards when proven wrong",
-      "Engage honestly about what evidence you'd accept"
+      {
+        "title": "Lock the criteria first",
+        "text": "Get agreement on what would count as enough before providing it.",
+        "comeback": "Before I dig up more, tell me exactly what would change your mind — and let's hold to that."
+      },
+      {
+        "title": "Name the shift",
+        "text": "Point out the standard just moved.",
+        "comeback": "That's a new requirement. I met the one you actually set — has your view changed?"
+      },
+      {
+        "title": "Hold the original bar",
+        "text": "Refuse to chase the retreating standard.",
+        "comeback": "I answered the question you asked. I'm not going to keep clearing a bar that keeps moving."
+      }
     ]
   },
   {
     "name": "Sealioning",
-    "category": "Bad-Faith Argument",
     "slug": "sealioning",
-    "explanation": "Persistently requesting evidence or asking seemingly reasonable questions in bad faith, with the goal of exhausting and frustrating the other person rather than genuine inquiry. Often maintains a veneer of civility while being deliberately annoying.",
+    "category": "Bad-Faith Tactic",
+    "aka": [
+      "Fake Inquiry",
+      "Exhausting by Politeness"
+    ],
+    "hook": "Sorry to bother you again — could you just cite a source for that? And that? And define that term? Just curious!",
+    "oneLiner": "Feigning polite, endless requests for evidence to exhaust rather than to understand.",
+    "deepDive": "Sealioning disguises harassment as reasonable curiosity. The sealion asks for evidence, then definitions, then sources for the sources, always politely, never satisfied, never engaging in good faith with the answers given. The goal isn't understanding — it's to drain the other person's time and energy until they give up or lose their temper, at which point the sealion plays the reasonable party being treated unfairly. The politeness is the weapon: it makes any frustration look like the target is the aggressor. The tell is relentless, escalating demands that never lead anywhere, combined with performative civility and no genuine engagement with the responses. The counter is to answer once, notice the pattern, and then disengage without taking the bait of the fake reasonableness.",
+    "howToSpot": [
+      "Endless requests for sources, definitions, and clarification that never resolve",
+      "Exaggerated politeness paired with total refusal to engage the answers",
+      "The aim is clearly to exhaust you, not to learn anything"
+    ],
     "examples": [
-      "Repeatedly asking 'Can you provide a source?' for common knowledge claims or every single statement.",
-      "Demanding detailed explanations of obvious points, then questioning every word of the explanation.",
-      "Following someone across multiple posts/threads asking the same questions in a faux-polite manner."
+      {
+        "text": "After every answer, they reply 'Interesting — but could you provide a source for that too?' indefinitely.",
+        "explanation": "No answer is ever enough; the requests are designed to continue forever, not to reach understanding."
+      },
+      {
+        "text": "They join a conversation uninvited demanding you 'just explain' a widely-known point, repeatedly.",
+        "explanation": "The feigned ignorance and politeness mask an intent to bog you down."
+      },
+      {
+        "text": "Every source you give is met with 'and what's the source for that source?'",
+        "explanation": "The regress is bottomless by design — it's exhaustion dressed as diligence."
+      }
     ],
     "refutation": [
-      "Set boundaries: 'I've answered this. I won't engage further on this point.'",
-      "Recognize the pattern and disengage: 'You seem to be asking questions in bad faith.'",
-      "Turn it around: 'What's your actual position, rather than just questioning mine?'",
-      "Don't feel obligated to answer endless questions"
-    ],
-    "avoidance": [
-      "Ask questions genuinely, not as a harassment tactic",
-      "Accept reasonable answers without demanding excessive detail",
-      "State your own position rather than just interrogating others",
-      "Respect boundaries when someone indicates they're done answering"
+      {
+        "title": "Answer once, then stop",
+        "text": "Give a single good-faith response and decline to continue.",
+        "comeback": "I've answered that. If you're genuinely curious, the information's there — I'm not doing this on loop."
+      },
+      {
+        "title": "Name the pattern",
+        "text": "Call out that the questions aren't in good faith.",
+        "comeback": "This isn't a real inquiry — you're not engaging with anything I say. I'm going to leave it here."
+      },
+      {
+        "title": "Set a boundary",
+        "text": "State that you're disengaging, calmly.",
+        "comeback": "I don't owe an endless stream of citations. We're done here."
+      }
     ]
   },
   {
     "name": "Whataboutism",
-    "category": "Bad-Faith Argument",
     "slug": "whataboutism",
-    "explanation": "Responding to criticism or accusations by deflecting to someone else's perceived wrongdoing. Rather than addressing the issue raised, the person says 'what about...' to change the subject.",
+    "category": "Bad-Faith Tactic",
+    "aka": [
+      "What About X",
+      "Deflection by Comparison"
+    ],
+    "hook": "You're criticising our record on this? What about what the other side did five years ago?",
+    "oneLiner": "Deflecting criticism by pointing at someone else's unrelated wrongdoing.",
+    "deepDive": "Whataboutism answers a criticism not by addressing it but by pointing to an entirely different alleged wrong — 'but what about them?' It's a deflection: it changes the subject from the issue at hand to someone else's conduct, implying that unless the critic is perfectly consistent, the original criticism doesn't count. But someone else's wrongdoing doesn't cancel out the wrongdoing being discussed; two things can both be bad. It's a close relative of tu quoque, but rather than targeting the speaker's own hypocrisy, it deflects to a third party or an unrelated event. It thrives in political argument because there's always some other grievance to point to. The counter is to acknowledge the deflection, decline to be dragged off-topic, and return the focus to the original issue.",
+    "howToSpot": [
+      "Criticism is met with 'but what about...' pointing to a different wrong",
+      "The original issue is never actually addressed",
+      "The move implies the critic must be flawless to have a point"
+    ],
     "examples": [
-      "Person A: 'This politician is corrupt.' Person B: 'What about that other politician who did something similar?'",
-      "Person A: 'This company has poor labor practices.' Person B: 'What about all the other companies doing the same thing?'",
-      "Person A: 'Country X violated human rights.' Person B: 'What about what Country Y did?'"
+      {
+        "text": "\"Your team missed the deadline.\" — \"What about the other team's project last quarter?\"",
+        "explanation": "Another team's failure doesn't address whether this deadline was missed."
+      },
+      {
+        "text": "\"This policy harms tenants.\" — \"What about all the harm the previous government did?\"",
+        "explanation": "Past harm elsewhere doesn't answer whether the current policy harms tenants now."
+      },
+      {
+        "text": "\"You broke the agreement.\" — \"Well, what about the time you were late to everything?\"",
+        "explanation": "An unrelated grievance is raised to avoid addressing the broken agreement."
+      }
     ],
     "refutation": [
-      "Acknowledge and redirect: 'That's a separate issue. Let's address this one first.'",
-      "Point out the deflection: 'You're changing the subject rather than addressing the point.'",
-      "Offer to discuss both: 'We can talk about both issues, but don't use one to excuse the other.'",
-      "Stay focused: 'The fact that others do wrong doesn't make this particular action right.'"
-    ],
-    "avoidance": [
-      "Address criticisms directly rather than deflecting",
-      "Recognize that others' wrongdoing doesn't excuse your own",
-      "Discuss issues on their own merits",
-      "Don't use comparison as a way to avoid accountability"
+      {
+        "title": "Acknowledge, then redirect",
+        "text": "Grant the other issue may matter, but hold the line.",
+        "comeback": "That may be worth discussing separately — but it doesn't answer the point I raised."
+      },
+      {
+        "title": "Reject 'both or neither'",
+        "text": "Point out that two things can both be true.",
+        "comeback": "Both can be problems. One doesn't cancel the other. Let's stay on this one."
+      },
+      {
+        "title": "Return to the topic",
+        "text": "Restate the original criticism plainly.",
+        "comeback": "I'm still asking about the specific issue here. Can we address that?"
+      }
     ]
   },
   {
     "name": "False Equivalence",
-    "category": "Bad-Faith Argument",
     "slug": "false-equivalence",
-    "explanation": "Treating two very different things as equivalent to create a false sense of balance or to diminish a serious issue. Often used to defend the indefensible by comparing it to something much less severe.",
+    "category": "Bad-Faith Tactic",
+    "aka": [
+      "Drawing a False Parallel",
+      "Both-Sidesing"
+    ],
+    "hook": "A parking ticket, a bank robbery — they're both breaking the law, so who are you to judge?",
+    "oneLiner": "Treating two things as morally or factually equal when the difference in scale or kind is huge.",
+    "deepDive": "False equivalence flattens an important difference by drawing a comparison between two things that share a surface feature but differ enormously in scale, severity, or kind. 'They both lied' can equate a white lie with a systematic fraud; 'both sides have extremists' can equate a fringe of one group with the core of another. The comparison feels fair because there's a real point of similarity — but the similarity is trivial next to the differences being ignored. It's often used to launder something serious by parking it next to something minor, or to manufacture a false balance. The tell is a comparison that collapses distinctions of degree or context. The counter is to grant the surface similarity and then spell out, concretely, the difference in magnitude or kind that the comparison erases.",
+    "howToSpot": [
+      "Two very different things are treated as equivalent on a shared surface feature",
+      "Differences in scale, severity, or context are ignored",
+      "The comparison serves to minimise something serious or inflate something minor"
+    ],
     "examples": [
-      "Comparing minor rule-bending to major fraud because 'both are rule-breaking.'",
-      "Equating peaceful protest with violent riots.",
-      "Treating a scientific consensus the same as fringe theories: 'both are just opinions.'"
+      {
+        "text": "\"Jaywalking and armed robbery are both crimes, so you can't lecture me about breaking rules.\"",
+        "explanation": "Both being 'crimes' ignores the vast difference in harm — the equivalence is only surface-deep."
+      },
+      {
+        "text": "\"Both candidates have been accused of things, so they're equally untrustworthy.\"",
+        "explanation": "Lumping a minor accusation with a serious one manufactures a balance that doesn't exist."
+      },
+      {
+        "text": "\"Skipping one meeting and abandoning the whole project are both 'not showing up.'\"",
+        "explanation": "The phrase hides an enormous difference in consequence and intent."
+      }
     ],
     "refutation": [
-      "Highlight the differences: 'These situations are vastly different in scale and severity.'",
-      "Demand specificity: 'How are these actually equivalent?'",
-      "Use analogies: 'That's like saying a parking ticket is the same as armed robbery because both are crimes.'",
-      "Point out false balance: 'Not all positions deserve equal consideration.'"
-    ],
-    "avoidance": [
-      "Make genuine comparisons with similar scale and context",
-      "Acknowledge important differences between situations",
-      "Don't minimize serious issues by comparing them to trivial ones",
-      "Recognize when things are categorically different"
+      {
+        "title": "Grant the surface, split the depth",
+        "text": "Accept the shared feature, then name the difference.",
+        "comeback": "Sure, technically both are X — but they differ enormously in scale. Here's how."
+      },
+      {
+        "title": "Quantify the gap",
+        "text": "Make the difference in magnitude concrete.",
+        "comeback": "One caused minor inconvenience, the other real harm. Treating them as equal erases that."
+      },
+      {
+        "title": "Reject the false balance",
+        "text": "Refuse to accept manufactured equivalence.",
+        "comeback": "These aren't comparable in the way you're implying, and lumping them together is the point."
+      }
     ]
   },
   {
     "name": "Gaslighting",
-    "category": "Bad-Faith Argument",
     "slug": "gaslighting",
-    "explanation": "Manipulating someone into questioning their own perception, memory, or sanity. The gaslighter denies reality, even when confronted with evidence, making the victim doubt themselves.",
+    "category": "Bad-Faith Tactic",
+    "aka": [
+      "Reality Denial",
+      "Perception Manipulation"
+    ],
+    "hook": "I never said that. You're remembering it wrong — you always twist things. Are you sure you're okay?",
+    "oneLiner": "Making someone doubt their own memory, perception, or sanity to gain control of the narrative.",
+    "deepDive": "Gaslighting attacks not the argument but the other person's confidence in their own grip on reality. Through flat denial ('that never happened'), rewriting events, and questioning the target's memory or stability, the gaslighter makes them second-guess what they clearly saw or heard — until they defer to the gaslighter's version by default. It's corrosive because it undermines the very tool you'd use to defend yourself: your own perception. In debate it looks like insisting you 'never said' something you demonstrably did, or that an event everyone witnessed didn't occur. It's a serious manipulation tactic, and at an interpersonal level a recognised form of emotional abuse. The counters are external: keep records, trust corroborated memory, name the behaviour, and — where it's a pattern in a relationship — seek outside support and perspective.",
+    "howToSpot": [
+      "Flat denial of things that clearly happened or were clearly said",
+      "Your memory, perception, or mental state is questioned instead of the facts",
+      "Over time you find yourself doubting what you plainly experienced"
+    ],
     "examples": [
-      "Denying saying something when there's clear evidence they said it: 'I never said that, you're misremembering.'",
-      "Claiming someone is 'too sensitive' or 'crazy' when they react reasonably to bad behavior.",
-      "Rewriting history and insisting their false version is what really happened."
+      {
+        "text": "\"I never promised that — you're imagining things, you always do this.\"",
+        "explanation": "A clear commitment is denied and the target's memory attacked, shifting doubt onto them."
+      },
+      {
+        "text": "\"That meeting went fine, everyone agreed. You're the only one who saw a problem — think about that.\"",
+        "explanation": "A shared reality is rewritten and the target isolated as the unreliable one."
+      },
+      {
+        "text": "\"I didn't raise my voice. You're being oversensitive and dramatic, as usual.\"",
+        "explanation": "The event is denied and reframed as the target's defect rather than the speaker's behaviour."
+      }
     ],
     "refutation": [
-      "Keep records: save messages, take notes, document events",
-      "Trust your perception: 'I know what I saw/heard/experienced.'",
-      "Get outside validation: check with others who witnessed the events",
-      "Set firm boundaries: 'I'm not debating reality with you.'"
-    ],
-    "avoidance": [
-      "Own your mistakes rather than denying reality",
-      "Don't manipulate others into doubting their perception",
-      "Acknowledge truth even when inconvenient",
-      "Respect others' experiences and memories"
+      {
+        "title": "Anchor to the record",
+        "text": "Rely on external evidence rather than argued memory.",
+        "comeback": "I've got it in writing. Let's look at what was actually said."
+      },
+      {
+        "title": "Name the behaviour",
+        "text": "Identify the pattern of denial explicitly.",
+        "comeback": "You're telling me something I clearly experienced didn't happen. That's not something I'll accept."
+      },
+      {
+        "title": "Seek outside perspective",
+        "text": "Corroborate with others and, if it's a pattern, get support.",
+        "comeback": "I trust what I saw, and others saw it too. I'm not going to argue about whether it was real."
+      }
     ]
   },
   {
     "name": "JAQing Off (Just Asking Questions)",
-    "category": "Bad-Faith Argument",
     "slug": "jaqing-off",
-    "explanation": "Making outrageous or inflammatory statements in the form of questions to maintain plausible deniability. The person spreads ideas without taking responsibility for them by framing them as 'just asking questions.'",
+    "category": "Bad-Faith Tactic",
+    "aka": [
+      "Just Asking Questions",
+      "Concern Disguised as Curiosity"
+    ],
+    "hook": "I'm not saying it's rigged — I'm just asking why nobody will explain these 'irregularities.' Just asking questions!",
+    "oneLiner": "Spreading insinuations by phrasing assertions as innocent questions.",
+    "deepDive": "JAQing off (from 'Just Asking Questions') smuggles a claim into a conversation without ever having to defend it, by framing the claim as a mere question. 'I'm just asking why X' plants the suggestion that X is true or suspicious, while giving the speaker deniability — they never *asserted* anything, so they can't be pinned down or asked for evidence. It's a favourite of conspiracy-spreading because it lets someone seed doubt while posing as an open-minded truth-seeker. The tell is a 'question' that clearly implies an answer, asked by someone who shows no genuine interest in the actual answer and just moves to the next insinuation. The counter is to make the hidden claim explicit and put the burden back where it belongs: if you're implying something, state it and defend it.",
+    "howToSpot": [
+      "'Questions' that clearly imply a claim without stating it",
+      "The asker isn't interested in answers, only in raising suspicion",
+      "Deniability: 'I'm just asking' shields them from having to provide evidence"
+    ],
     "examples": [
-      "'I'm just asking questions: Could vaccines be causing autism?' (implying they do without evidence)",
-      "'Just wondering: Isn't it suspicious that...' (insinuating conspiracy)",
-      "'I'm just curious: Do you think maybe...' (suggesting something false)"
+      {
+        "text": "\"I'm not saying she's corrupt — I'm just asking why she won't address these rumours.\"",
+        "explanation": "The 'question' plants the accusation while dodging any burden to prove it."
+      },
+      {
+        "text": "\"Just curious — why does the data always seem to favour their side? Just asking.\"",
+        "explanation": "An insinuation of manipulation is delivered as innocent curiosity, immune to challenge."
+      },
+      {
+        "text": "\"I don't have a position, I'm only asking whether the vaccine has been properly tested.\"",
+        "explanation": "The doubt is the point; the question form provides cover from having to make and defend a claim."
+      }
     ],
     "refutation": [
-      "Demand their actual position: 'What do you actually believe, rather than what you're implying?'",
-      "Point out the insinuation: 'Your question implies X. Do you have evidence for that?'",
-      "Refuse to validate: 'That's not a good-faith question.'",
-      "Turn it around: 'Why are you asking that question? What's your point?'"
-    ],
-    "avoidance": [
-      "State your beliefs directly rather than hiding behind questions",
-      "Ask genuine questions without embedded accusations",
-      "Take responsibility for the implications of your questions",
-      "Don't use interrogatives to spread misinformation"
+      {
+        "title": "Surface the hidden claim",
+        "text": "State plainly what the question is implying.",
+        "comeback": "It sounds like you're implying X. If so, say it directly and let's examine it."
+      },
+      {
+        "title": "Assign the burden",
+        "text": "Point out that an implied claim still needs evidence.",
+        "comeback": "If you're suggesting something, that's a claim — what's your evidence for it?"
+      },
+      {
+        "title": "Answer, then test sincerity",
+        "text": "Give a real answer and see if they engage.",
+        "comeback": "Here's the actual answer to your question. Does that resolve it, or were you not really asking?"
+      }
     ]
   },
   {
     "name": "Motte and Bailey",
-    "category": "Bad-Faith Argument",
     "slug": "motte-and-bailey",
-    "explanation": "Making an outrageous claim (the bailey - hard to defend), then when challenged, retreating to a reasonable claim (the motte - easy to defend) while acting as if they're the same thing.",
+    "category": "Bad-Faith Tactic",
+    "aka": [
+      "Bait and Switch Argument",
+      "Retreat to the Defensible"
+    ],
+    "hook": "Everyone knows this group is dangerous. — That's a huge claim. — Well, I just mean we should be a bit cautious, obviously.",
+    "oneLiner": "Advancing a bold claim, then retreating to a modest one when challenged — and back again.",
+    "deepDive": "The name comes from medieval castles: the 'bailey' is the desirable but hard-to-defend courtyard; the 'motte' is the fortified, easily-defended tower you retreat to under attack. The tactic advances a controversial, ambitious claim (the bailey) to win ground, but when challenged, retreats to a bland, obviously-true claim (the motte) — 'I only meant we should be cautious.' Once the challenge passes, they quietly return to the bold claim as if it were established. The two claims get treated as interchangeable, so defending the trivial one appears to vindicate the contentious one. The tell is a sudden shrink in the claim under pressure, followed by a return to the original once the pressure lifts. The counter is to pin down which claim is actually being made and refuse to let them switch.",
+    "howToSpot": [
+      "A bold claim shrinks to a trivial one exactly when it's challenged",
+      "Once the challenge passes, the bold claim quietly returns",
+      "The modest and the extreme versions are treated as the same claim"
+    ],
     "examples": [
-      "Bailey: 'All men are trash!' Challenged. Motte: 'I just mean patriarchy is harmful.' (as if they're equivalent)",
-      "Bailey: 'We need to abolish the police!' Challenged. Motte: 'I just mean we need police reform.' (vastly different claims)",
-      "Bailey: 'Capitalism is evil!' Challenged. Motte: 'I just think workers deserve fair wages.' (conflating extreme and moderate positions)"
+      {
+        "text": "\"Science is just another belief system.\" — Challenged — \"I only mean scientists are human and can err.\" — Later, back to the strong claim.",
+        "explanation": "The defensible 'scientists can err' is used to shield the far bolder 'science is just belief.'"
+      },
+      {
+        "text": "\"This company is evil.\" — Pushed — \"I just meant no company is perfect.\" — Then returns to 'evil.'",
+        "explanation": "The trivial claim absorbs the criticism, then the extreme one resurfaces unharmed."
+      },
+      {
+        "text": "\"We should defund it entirely.\" — Challenged — \"I'm only saying we should review the budget.\" — Later argues for full defunding again.",
+        "explanation": "'Review the budget' is the motte protecting the bailey of 'defund entirely.'"
+      }
     ],
     "refutation": [
-      "Point out the switch: 'You made claim A, but now you're defending claim B.'",
-      "Don't let them conflate: 'Those are two very different statements.'",
-      "Hold them to their original claim: 'Let's discuss what you actually said.'",
-      "Ask for clarification: 'Which position do you actually hold?'"
-    ],
-    "avoidance": [
-      "Be consistent in your claims",
-      "Don't make extreme statements then retreat to moderate defenses",
-      "Clarify your actual position upfront",
-      "Defend what you actually believe rather than switching positions"
-    ]
-  },
-  {
-    "name": "Strawmanning",
-    "category": "Bad-Faith Argument",
-    "slug": "strawmanning-tactic",
-    "explanation": "Deliberately misrepresenting someone's position to make it easier to attack. Unlike an honest misunderstanding, this is a calculated tactic to avoid engaging with the real argument.",
-    "examples": [
-      "Person A: 'We should reform policing.' Person B: 'So you want crime to run rampant?'",
-      "Person A: 'I support gun regulation.' Person B: 'Why do you want to repeal the Second Amendment?'",
-      "Person A: 'Healthcare should be more accessible.' Person B: 'So you want full communism?'"
-    ],
-    "refutation": [
-      "Correct immediately: 'That's not my position. Here's what I actually said.'",
-      "Ask them to restate: 'Can you repeat back what you think my position is?'",
-      "Point out the tactic: 'You're attacking a position I don't hold.'",
-      "Get them on record: 'Will you acknowledge my actual position?'"
-    ],
-    "avoidance": [
-      "Represent others' views accurately, even when you disagree",
-      "Ask for clarification if you're uncertain about someone's position",
-      "Steelman, don't strawman: engage with the strongest version of their argument",
-      "Show you understand their position before critiquing it"
-    ]
-  },
-  {
-    "name": "Ad Hominem Attacks",
-    "category": "Bad-Faith Argument",
-    "slug": "ad-hominem-attack",
-    "explanation": "Attacking the person rather than their argument, often to avoid engaging with the substance of what they're saying. This is done deliberately as a distraction or intimidation tactic.",
-    "examples": [
-      "Dismissing someone's argument because of their age: 'OK, Boomer' or 'You're too young to understand.'",
-      "Attacking appearance: 'Listen to this ugly person talk about relationships.'",
-      "Attacking identity: 'Of course you'd say that, you're a [demographic group].'"
-    ],
-    "refutation": [
-      "Redirect to substance: 'My personal characteristics don't affect the validity of my argument.'",
-      "Point out the tactic: 'You're attacking me rather than my position.'",
-      "Hold firm: 'Can you address what I actually said?'",
-      "Use it as evidence: 'The fact that you're resorting to personal attacks suggests you can't refute my point.'"
-    ],
-    "avoidance": [
-      "Engage with ideas, not identities",
-      "Address the argument, not the person",
-      "Recognize that anyone can make valid points regardless of who they are",
-      "Focus on logic and evidence, not personal characteristics"
+      {
+        "title": "Pin the claim",
+        "text": "Ask them to commit to which version they're defending.",
+        "comeback": "Which are you actually arguing — the strong version or the mild one? Pick one."
+      },
+      {
+        "title": "Block the retreat and return",
+        "text": "Note when they shrink, and when they swing back.",
+        "comeback": "You retreated to the mild claim when challenged, but now you're back to the strong one."
+      },
+      {
+        "title": "Separate the two",
+        "text": "Address each claim distinctly.",
+        "comeback": "The modest point is fine and I agree — but that's not the same as the bold claim, which I don't."
+      }
     ]
   },
   {
     "name": "Concern Trolling",
-    "category": "Bad-Faith Argument",
     "slug": "concern-trolling",
-    "explanation": "Pretending to be concerned about an issue or person while actually trying to undermine them. The 'concern' is fake and used as a weapon.",
+    "category": "Bad-Faith Tactic",
+    "aka": [
+      "Fake Concern",
+      "Wolf in Sheep's Clothing"
+    ],
+    "hook": "As someone who really supports your cause, I'm worried these tactics are hurting you. Just trying to help!",
+    "oneLiner": "Feigning support or worry to undermine a person or cause from the inside.",
+    "deepDive": "A concern troll poses as a friend, ally, or worried well-wisher while actually working to weaken the thing they claim to support. The 'concern' — that your strategy is backfiring, that you're alienating people, that you're your own worst enemy — is designed to sow doubt, lower morale, and steer you away from effective action, all under cover of helpfulness. Because it's framed as support, pushing back makes you look defensive or ungrateful. It's common in activism and online communities, where an opponent gains more traction by masquerading as a nervous ally than as an open adversary. The tell is 'advice' that consistently points toward doing less, disarming, or giving up, from someone whose actual sympathies are unclear. The counter is to judge the substance of the concern on its merits while staying alert to the pattern.",
+    "howToSpot": [
+      "Professed support paired with advice that always weakens your position",
+      "The 'concern' consistently nudges you toward doing less or giving up",
+      "Disagreeing is framed as you being defensive or ungrateful"
+    ],
     "examples": [
-      "'I'm just worried that by protesting this way, you're hurting your own cause.' (actually opposing the cause)",
-      "'As someone who cares about your movement, I think you should moderate your message.' (trying to weaken the movement)",
-      "'I'm concerned that you're overreacting to this minor issue.' (dismissing legitimate concerns)"
+      {
+        "text": "\"I'm on your side, but honestly this campaign is making you look bad — maybe tone it down?\"",
+        "explanation": "The 'help' pushes toward disarming, from someone whose real allegiance is unclear."
+      },
+      {
+        "text": "\"I want you to succeed, which is why I think you should stop pushing so hard.\"",
+        "explanation": "Framed as care, the advice reliably points toward reducing your effectiveness."
+      },
+      {
+        "text": "\"As a fan, I worry you're alienating people — you'd get further by staying quiet.\"",
+        "explanation": "Fake affiliation lends weight to counsel that would sideline you."
+      }
     ],
     "refutation": [
-      "Question the premise: 'Are you actually concerned, or do you oppose what we're doing?'",
-      "Point out the pattern: 'Your \"concern\" always seems to involve us doing less.'",
-      "Ask for their actual position: 'What do you think we should do instead?'",
-      "Recognize the tactic: 'This sounds like concern trolling.'"
-    ],
-    "avoidance": [
-      "Express genuine concerns, not strategic ones",
-      "Don't disguise opposition as friendly advice",
-      "Be honest about your actual position",
-      "If you're genuinely concerned, offer constructive help"
+      {
+        "title": "Judge the advice on merit",
+        "text": "Evaluate whether the concern is actually sound.",
+        "comeback": "I'll take the point on its merits — but 'do less' isn't obviously good advice here."
+      },
+      {
+        "title": "Ask for their stake",
+        "text": "Probe where they actually stand.",
+        "comeback": "Genuinely, where do you stand on this? Because the advice keeps pointing one direction."
+      },
+      {
+        "title": "Name the pattern",
+        "text": "Call out fake concern when it's persistent.",
+        "comeback": "Every suggestion you offer happens to weaken our position. I'm going to set the 'concern' aside."
+      }
     ]
   },
   {
     "name": "False Civility",
-    "category": "Bad-Faith Argument",
     "slug": "false-civility",
-    "explanation": "Using politeness and 'civil discourse' as a weapon to dismiss legitimate anger or shut down necessary confrontation. Tone policing as a deflection tactic.",
+    "category": "Bad-Faith Tactic",
+    "aka": [
+      "Tone Policing",
+      "Weaponised Politeness"
+    ],
+    "hook": "I'd take your point more seriously if you weren't so emotional about it. Let's keep this civil.",
+    "oneLiner": "Using politeness and 'tone' as a weapon to dismiss substance and control the conversation.",
+    "deepDive": "False civility weaponises the norms of politeness: instead of engaging with what someone says, it attacks how they said it. By demanding a calmer tone, 'civility,' or perfect composure — often from people who have legitimate reason to be frustrated — it shifts the conversation from the substance to the target's demeanour, and casts the person raising an issue as the real problem for being 'emotional' or 'aggressive.' Meanwhile the person policing tone gets to appear reasonable and above the fray. It's especially effective at silencing valid grievances, because any pushback can be reframed as further incivility. The tell is a focus on delivery rather than content, and a standard of composure applied selectively. The counter is to decline the tone debate and firmly return to the substance.",
+    "howToSpot": [
+      "The focus shifts to your tone or emotion instead of your point",
+      "Politeness or 'civility' is demanded as a precondition for engaging the substance",
+      "Legitimate frustration is reframed as the real problem"
+    ],
     "examples": [
-      "'Let's keep this civil' (when someone is rightfully angry about injustice)",
-      "'I won't engage with you if you're going to be emotional' (dismissing valid emotion)",
-      "'Your tone is too aggressive for me to take you seriously' (focusing on delivery to avoid substance)"
+      {
+        "text": "\"I can't discuss this while you're being so hostile — calm down and maybe I'll listen.\"",
+        "explanation": "Engagement is made conditional on tone, sidestepping the actual argument entirely."
+      },
+      {
+        "text": "\"There's no need to be emotional. Present it neutrally and then we'll see.\"",
+        "explanation": "The demand for composure shifts scrutiny from the claim to the claimant's manner."
+      },
+      {
+        "text": "\"If you really wanted to be taken seriously, you'd be more polite about it.\"",
+        "explanation": "Tone is used as a gatekeeping standard to avoid dealing with the substance."
+      }
     ],
     "refutation": [
-      "Separate tone from content: 'My tone doesn't invalidate my argument.'",
-      "Point out the deflection: 'You're focusing on how I said it to avoid what I said.'",
-      "Acknowledge context: 'Sometimes anger is the appropriate response to injustice.'",
-      "Call out the tactic: 'You're using civility as a shield.'"
-    ],
-    "avoidance": [
-      "Don't use tone as an excuse to dismiss valid points",
-      "Recognize when passion or anger is justified",
-      "Engage with substance even when delivery is imperfect",
-      "Don't weaponize 'civility' to maintain unjust status quos"
+      {
+        "title": "Decline the tone debate",
+        "text": "Refuse to let delivery replace substance.",
+        "comeback": "My tone isn't the issue — the argument is. Let's deal with what I actually said."
+      },
+      {
+        "title": "Separate manner from merit",
+        "text": "Grant you can be blunt and still be right.",
+        "comeback": "I can be frustrated and correct at the same time. Address the point, not the mood."
+      },
+      {
+        "title": "Name the deflection",
+        "text": "Call out tone-policing as avoidance.",
+        "comeback": "Focusing on how I said it, instead of what I said, is a way of not answering it."
+      }
     ]
   },
   {
     "name": "Kafka Trapping",
-    "category": "Bad-Faith Argument",
     "slug": "kafka-trapping",
-    "explanation": "Structuring an accusation so that denial of the accusation confirms it. Creating a no-win situation where any defense proves guilt.",
+    "category": "Bad-Faith Tactic",
+    "aka": [
+      "The Unfalsifiable Accusation",
+      "Denial-as-Proof"
+    ],
+    "hook": "Your denial only proves how deep the denial goes. An innocent person wouldn't be so defensive.",
+    "oneLiner": "Framing any denial of an accusation as further proof of guilt.",
+    "deepDive": "A Kafka trap (named after Kafka's 'The Trial,' where the accused can never learn the charge or clear his name) is an accusation constructed so that denying it counts as confirming it. 'You're in denial,' 'that's exactly what a guilty person would say,' 'your defensiveness proves it' — every possible response, including silence, is folded back into the case against you. It's unfalsifiable by design: there is no move that counts as innocence. It's coercive because it strips the accused of any way to defend themselves and pressures them to accept the charge just to escape the loop. The tell is that denial, agreement, and silence are all treated as evidence of guilt. The counter is to name the structure directly: an accusation that can't be disproven isn't evidence of anything, and the burden remains on the accuser.",
+    "howToSpot": [
+      "Denying the accusation is treated as proof of it",
+      "There is no response — including silence — that would count as innocence",
+      "The accusation is structured so it can never be disproven"
+    ],
     "examples": [
-      "'The fact that you deny being racist proves you're racist because you don't recognize your privilege.'",
-      "'Only a guilty person would defend themselves that way.'",
-      "'Your refusal to admit you're biased shows how deep your bias goes.'"
+      {
+        "text": "\"The fact that you're defending yourself so hard just shows I'm right.\"",
+        "explanation": "Self-defence is converted into evidence of guilt, leaving no valid way to respond."
+      },
+      {
+        "text": "\"Only someone hiding something would object to the question this strongly.\"",
+        "explanation": "Objecting is reframed as confirmation, so any pushback deepens the 'case.'"
+      },
+      {
+        "text": "\"Your calm is suspicious, and if you got upset that'd prove it too.\"",
+        "explanation": "Every emotional state is pre-assigned as evidence — the trap has no exit."
+      }
     ],
     "refutation": [
-      "Point out the trap: 'You've set this up so that any response I give confirms your accusation.'",
-      "Refuse to play: 'I'm not going to engage with a rigged game.'",
-      "Demand specific evidence: 'What specifically did I do wrong, independent of my response?'",
-      "Call out the logic: 'By this logic, no one could ever be innocent.'"
-    ],
-    "avoidance": [
-      "Make accusations based on specific evidence, not catch-22s",
-      "Allow for the possibility that someone might be innocent",
-      "Don't set up no-win situations",
-      "Accept that denial isn't automatically proof of guilt"
+      {
+        "title": "Expose the structure",
+        "text": "Point out that no answer could ever count as innocence.",
+        "comeback": "You've set this up so nothing I say could clear me. That's not an argument, it's a trap."
+      },
+      {
+        "title": "Demand falsifiability",
+        "text": "Ask what would count as disproof.",
+        "comeback": "What response would you accept as me not being guilty? If there's none, the accusation is empty."
+      },
+      {
+        "title": "Return the burden",
+        "text": "Insist the accuser provide actual evidence.",
+        "comeback": "My denial isn't evidence. If you're making the charge, show something that actually supports it."
+      }
     ]
   },
   {
     "name": "Playing the Victim",
-    "category": "Bad-Faith Argument",
     "slug": "playing-the-victim",
-    "explanation": "Portraying oneself as the victim to gain sympathy, avoid accountability, or deflect from one's own bad behavior. Weaponizing victimhood to shut down criticism.",
+    "category": "Bad-Faith Tactic",
+    "aka": [
+      "DARVO",
+      "Reversing the Roles"
+    ],
+    "hook": "I can't believe you're attacking me like this — after everything, you're the one making me feel awful.",
+    "oneLiner": "Recasting yourself as the wronged party to deflect accountability and gain sympathy.",
+    "deepDive": "Playing the victim flips the roles in a dispute: when confronted about their own behaviour, the person reframes themselves as the one being harmed, so the conversation shifts from their accountability to your alleged cruelty. It often follows the DARVO pattern — Deny, Attack, and Reverse Victim and Offender — where the actual wrongdoer ends up cast as the aggressor and the person raising a legitimate concern is put on the defensive. It works by hijacking sympathy: people instinctively rush to comfort someone in visible distress, and that instinct gets weaponised to shut down valid criticism. The tell is a sudden pivot to hurt feelings the moment accountability is raised, with the original issue left unaddressed. The counter is to acknowledge genuine feelings briefly while firmly declining to let them erase the original point.",
+    "howToSpot": [
+      "The moment they're held accountable, they become the injured party",
+      "Roles are reversed — the person raising the issue is cast as the aggressor",
+      "Sympathy is used to bury the original concern, which goes unaddressed"
+    ],
     "examples": [
-      "Person A: 'You hurt my feelings.' Person B: 'Why are you always attacking me? I'm the real victim here.'",
-      "When criticized for bad behavior: 'You're bullying me!' (making themselves the victim)",
-      "Powerful people claiming they're being 'canceled' when facing accountability for actions."
+      {
+        "text": "\"You raised a real problem with my work.\" — \"Wow, I try so hard and this is how you treat me?\"",
+        "explanation": "The critique is reframed as an attack, shifting focus to the speaker's hurt instead of the problem."
+      },
+      {
+        "text": "\"You didn't follow through on your commitment.\" — \"I'm always the bad guy, aren't I? Everyone blames me.\"",
+        "explanation": "Accountability is dodged by casting the self as a perpetual victim."
+      },
+      {
+        "text": "\"That comment was hurtful.\" — \"So now I'm the villain for having feelings? You're the one hurting me.\"",
+        "explanation": "Offender and offended are swapped so the original harm is never addressed."
+      }
     ],
     "refutation": [
-      "Refocus on the actual issue: 'We're discussing your actions, not your feelings about being criticized.'",
-      "Point out the reversal: 'You're trying to make yourself the victim to avoid addressing what you did.'",
-      "Maintain boundaries: 'You being upset doesn't excuse your behavior.'",
-      "Distinguish criticism from victimization: 'Being held accountable isn't the same as being persecuted.'"
-    ],
-    "avoidance": [
-      "Accept criticism without playing victim",
-      "Take responsibility for your actions",
-      "Don't confuse accountability with persecution",
-      "Respect actual victims by not appropriating victimhood"
+      {
+        "title": "Acknowledge, then hold the line",
+        "text": "Note real feelings without dropping the issue.",
+        "comeback": "I don't want to upset you — and the original concern still needs addressing."
+      },
+      {
+        "title": "Name the role-reversal",
+        "text": "Point out the roles have been flipped.",
+        "comeback": "We started with something you did, and now somehow I'm the problem. Let's go back."
+      },
+      {
+        "title": "Separate feelings from facts",
+        "text": "Distinguish being upset from being wronged.",
+        "comeback": "You can feel hurt and still be the one accountable here. Those are different things."
+      }
     ]
   },
   {
     "name": "Selective Outrage",
-    "category": "Bad-Faith Argument",
     "slug": "selective-outrage",
-    "explanation": "Expressing outrage about issues only when it's politically or personally convenient, while ignoring identical issues in other contexts. Using outrage as a weapon rather than principle.",
+    "category": "Bad-Faith Tactic",
+    "aka": [
+      "Manufactured Outrage",
+      "Inconsistent Standards"
+    ],
+    "hook": "This is an absolute scandal! …No, I had nothing to say when our own side did the exact same thing.",
+    "oneLiner": "Expressing intense outrage over an act only when the 'other side' does it.",
+    "deepDive": "Selective outrage applies a moral standard inconsistently — reacting with fury when an opponent does something, while staying silent or making excuses when an ally does the identical thing. It reveals that the outrage isn't really about the principle being invoked; the principle is a weapon of convenience, deployed against enemies and holstered for friends. It's persuasive because the outrage itself feels like moral seriousness, and the inconsistency is often invisible unless you line up the two cases side by side. It's endemic in partisan politics and tribal online discourse. The tell is a passionate stand on a principle from someone who ignored that same principle when it was inconvenient. The counter is to hold up the parallel case and ask whether the principle applies universally — if it doesn't, the outrage was never about the principle.",
+    "howToSpot": [
+      "Fierce outrage at one side's act, silence or excuses for the same act by the other",
+      "The 'principle' is only ever invoked against opponents",
+      "Lining up the two cases reveals a double standard"
+    ],
     "examples": [
-      "Being outraged about government spending only when the opposing party is in power.",
-      "Caring about 'free speech' only when people you agree with are affected.",
-      "Expressing concern about violence or corruption only when it serves your political goals."
+      {
+        "text": "\"This gaffe is disqualifying!\" — but the identical gaffe by their own candidate went unmentioned.",
+        "explanation": "The standard is applied only to the opponent, exposing the outrage as partisan, not principled."
+      },
+      {
+        "text": "\"Cronyism is a disgrace when they do it\" — while their own side's cronyism draws no comment.",
+        "explanation": "The principle is real only when it's convenient; the inconsistency reveals the motive."
+      },
+      {
+        "text": "\"Breaking the rules is unforgivable\" — said by someone who defended rule-breaking on their own team.",
+        "explanation": "The same act triggers fury or forgiveness depending purely on who did it."
+      }
     ],
     "refutation": [
-      "Point out the inconsistency: 'You didn't seem to care when this same thing happened before.'",
-      "Question sincerity: 'Is this principle or partisan?'",
-      "Ask about other cases: 'What about this similar situation? Are you equally outraged?'",
-      "Demand consistent standards: 'Will you apply this principle across the board?'"
-    ],
-    "avoidance": [
-      "Apply your principles consistently",
-      "Care about issues regardless of who's involved",
-      "Don't weaponize outrage for partisan gain",
-      "Develop genuine principles rather than situational outrage"
+      {
+        "title": "Line up the parallel",
+        "text": "Present the equivalent case they ignored.",
+        "comeback": "You were furious here — but silent when your own side did the same. What changed?"
+      },
+      {
+        "title": "Test the principle",
+        "text": "Ask whether the standard applies universally.",
+        "comeback": "If this is really about the principle, it should apply to everyone. Does it?"
+      },
+      {
+        "title": "Separate the act from the actor",
+        "text": "Judge the action on consistent terms.",
+        "comeback": "Either the act is wrong regardless of who does it, or the outrage isn't about the act."
+      }
     ]
   }
 ]

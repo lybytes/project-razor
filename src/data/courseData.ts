@@ -1,16 +1,15 @@
 // ===== LESSON CONTENT =====
+// Concept content lives in the library (fallacies.json + bad-faith.json) and is
+// resolved by slug — only course-specific material belongs in this file.
 
-export interface ConceptCard {
-  hook: string;
-  name: string;
-  definition: string;
-  category: string; // "Logical Fallacy" | "Bad-Faith Tactic"
-  spotIt: string[];
-  counterIt: string[];
-  counterExample: string;
-  realWorldExamples: string[];
-  refutationStrategies: string[];
-}
+import slugMap from "@/data/course-concept-slug-map.json";
+import { getConcept, type Concept } from "@/data/concepts";
+
+const slugFor = (conceptName: string): string => {
+  const slug = (slugMap as Record<string, string>)[conceptName];
+  if (!slug) throw new Error(`No library slug mapped for course concept "${conceptName}"`);
+  return slug;
+};
 
 export interface DrillQuestion {
   id: string;
@@ -37,7 +36,7 @@ export interface LessonData {
   id: string;
   title: string;
   concepts: string[];
-  conceptCards: ConceptCard[];
+  conceptSlugs: string[];
   drillQuestions: DrillQuestion[];
   warzonePosts: WarzonePost[];
 }
@@ -56,58 +55,7 @@ const lesson1_1: LessonData = {
   id: "1-1",
   title: "Attack the Person",
   concepts: ["Ad Hominem", "Tu Quoque"],
-  conceptCards: [
-    {
-      hook: "Why are we listening to Dr. Patel on climate policy? She got divorced twice — clearly can't make sound judgements.",
-      name: "Ad Hominem",
-      definition: "Attacking the person making an argument rather than the argument itself.",
-      category: "Logical Fallacy",
-      spotIt: [
-        "Personal attacks on character, background, or lifestyle",
-        "Irrelevant personal history brought up during a debate",
-        "The argument's content is never actually addressed",
-      ],
-      counterIt: [
-        "\"That's about the person, not the argument. Can you tell me what's wrong with the evidence?\"",
-        "Redirect: restate the original argument clearly",
-      ],
-      counterExample: "That's about the person, not the argument. Can you tell me what's wrong with the evidence?",
-      realWorldExamples: [
-        "\"We should listen to scientists about global warming.\" — \"Why should we listen to you? You failed your science classes.\"",
-        "\"We should not listen to your healthcare proposal because you are not a doctor.\"",
-      ],
-      refutationStrategies: [
-        "Point out the fallacy: \"Attacking my background doesn't address the evidence.\"",
-        "Redirect to the argument: \"Can you provide evidence that contradicts the claim?\"",
-        "Stay calm — avoid retaliating with personal attacks.",
-      ],
-    },
-    {
-      hook: "You're telling me to stop smoking? You smoked for 10 years!",
-      name: "Tu Quoque",
-      definition: "Deflecting criticism by pointing to the other person's own past behaviour or hypocrisy.",
-      category: "Logical Fallacy",
-      spotIt: [
-        "Response starts with \"But YOU...\" or \"What about when YOU...\"",
-        "The original argument is never addressed",
-        "Points to hypocrisy instead of engaging with the claim",
-      ],
-      counterIt: [
-        "\"Whether I've done it before doesn't change whether it's harmful. Let's focus on the argument.\"",
-        "Acknowledge, then redirect back",
-      ],
-      counterExample: "Whether I've done it before doesn't change whether it's harmful. Let's focus on the argument.",
-      realWorldExamples: [
-        "\"You shouldn't smoke.\" — \"You eat junk food all the time, so don't tell me what to do.\"",
-        "\"We need to reduce carbon emissions.\" — \"You drive a car, so you're a hypocrite.\"",
-      ],
-      refutationStrategies: [
-        "\"Even if I'm inconsistent, does that make the argument wrong?\"",
-        "\"The validity of the claim doesn't depend on my behaviour.\"",
-        "Address it: \"You're right I should change too, but that doesn't address whether the argument is sound.\"",
-      ],
-    },
-  ],
+  conceptSlugs: ["Ad Hominem", "Tu Quoque"].map(slugFor),
   drillQuestions: [
     {
       id: "d1-1",
@@ -191,83 +139,7 @@ const lesson1_2: LessonData = {
   id: "1-2",
   title: "Distort & Deflect",
   concepts: ["Strawman Fallacy", "Red Herring", "Whataboutism"],
-  conceptCards: [
-    {
-      hook: "My opponent says we should reform the police. So apparently he wants criminals running free in the streets.",
-      name: "Strawman Fallacy",
-      definition: "Misrepresenting someone's argument into an extreme version that's easier to attack.",
-      category: "Logical Fallacy",
-      spotIt: [
-        "The response attacks a position the person never actually stated",
-        "Extreme or absurd version of the original argument is presented",
-        "Words like \"so you're saying...\" followed by an exaggeration",
-      ],
-      counterIt: [
-        "\"That's not what I said — my actual position is [restate clearly].\"",
-        "Ask them to quote you directly",
-      ],
-      counterExample: "That's not what I said — my actual position is [restate clearly].",
-      realWorldExamples: [
-        "\"We should have stricter gun regulations.\" → \"So you want to take away everyone's guns?\"",
-        "\"We need better environmental protections.\" → \"So you want to shut down all factories?\"",
-      ],
-      refutationStrategies: [
-        "Clarify your actual position: \"Let me restate my argument clearly.\"",
-        "Point out the misrepresentation: \"You're attacking a position I don't hold.\"",
-        "\"Can you respond to what I actually proposed?\"",
-      ],
-    },
-    {
-      hook: "We're discussing whether this company misled investors, but you keep bringing up their charity donations.",
-      name: "Red Herring",
-      definition: "Introducing an irrelevant point to distract from the actual argument.",
-      category: "Logical Fallacy",
-      spotIt: [
-        "Topic suddenly shifts to something unrelated",
-        "The new point, while possibly true, has no bearing on the original question",
-        "Feels like a distraction",
-      ],
-      counterIt: [
-        "\"That's an interesting point but it doesn't address [original issue]. Can we stay on topic?\"",
-        "Name the redirect explicitly",
-      ],
-      counterExample: "That's an interesting point but it doesn't address the original issue. Can we stay on topic?",
-      realWorldExamples: [
-        "\"The company's environmental record is poor.\" — \"But we donate millions to charity every year.\"",
-        "\"This policy has serious ethical issues.\" — \"Well, the previous administration did worse things.\"",
-      ],
-      refutationStrategies: [
-        "Refocus: \"Let's address the original issue first.\"",
-        "Point out the diversion: \"How does that relate to what we were discussing?\"",
-        "\"We can discuss that separately, but right now we're talking about X.\"",
-      ],
-    },
-    {
-      hook: "You're criticising our pollution levels? What about what China pumps out every year?",
-      name: "Whataboutism",
-      definition: "Deflecting criticism by pointing to a different (often comparable) wrongdoing elsewhere.",
-      category: "Bad-Faith Tactic",
-      spotIt: [
-        "Response begins with \"What about...\" or \"But [other party] does it too\"",
-        "The original criticism is never addressed",
-        "Creates false equivalence between two separate situations",
-      ],
-      counterIt: [
-        "\"Other wrongdoing is worth discussing separately. But does that change whether this specific action is harmful?\"",
-        "Acknowledge then refocus",
-      ],
-      counterExample: "Other wrongdoing is worth discussing separately. But does that change whether this specific action is harmful?",
-      realWorldExamples: [
-        "\"This politician is corrupt.\" — \"What about that other politician who did something similar?\"",
-        "\"Country X violated human rights.\" — \"What about what Country Y did?\"",
-      ],
-      refutationStrategies: [
-        "\"That's a separate issue. Let's address this one first.\"",
-        "\"You're changing the subject rather than addressing the point.\"",
-        "\"The fact that others do wrong doesn't make this particular action right.\"",
-      ],
-    },
-  ],
+  conceptSlugs: ["Strawman Fallacy", "Red Herring", "Whataboutism"].map(slugFor),
   drillQuestions: [
     {
       id: "d2-1",
@@ -351,58 +223,7 @@ const lesson1_3: LessonData = {
   id: "1-3",
   title: "Force a False Choice",
   concepts: ["False Dilemma", "Slippery Slope"],
-  conceptCards: [
-    {
-      hook: "You either support this war or you hate your country. There's no middle ground.",
-      name: "False Dilemma",
-      definition: "Presenting only two options when in reality more exist.",
-      category: "Logical Fallacy",
-      spotIt: [
-        "\"Either... or...\" framing with extreme options",
-        "Middle ground or nuance is explicitly dismissed",
-        "A complex issue is collapsed into a binary choice",
-      ],
-      counterIt: [
-        "\"Those aren't the only two options. There's also [name alternatives].\"",
-        "Ask: \"Why are these the only two possibilities?\"",
-      ],
-      counterExample: "Those aren't the only two options. There's also [name alternatives].",
-      realWorldExamples: [
-        "\"You're either with us or against us.\"",
-        "\"Either we cut all social programs or the country will go bankrupt.\"",
-      ],
-      refutationStrategies: [
-        "Identify additional options: \"There are several other approaches we could consider.\"",
-        "Challenge the binary framing: \"Why must it be one or the other?\"",
-        "Present middle ground: \"What about positions that incorporate elements of both?\"",
-      ],
-    },
-    {
-      hook: "If we let students redo one exam, soon they'll expect to redo everything and grades will mean nothing.",
-      name: "Slippery Slope",
-      definition: "Claiming one step will inevitably lead to a chain of extreme consequences, without justification.",
-      category: "Logical Fallacy",
-      spotIt: [
-        "A moderate first step is connected to an extreme outcome",
-        "No evidence provided for why each step must follow",
-        "Uses fear of worst-case scenario to reject a reasonable proposal",
-      ],
-      counterIt: [
-        "\"What's the mechanism that makes each step inevitable? They'd each require separate decisions.\"",
-        "Ask for evidence that the chain actually occurs",
-      ],
-      counterExample: "What's the mechanism that makes each step inevitable? They'd each require separate decisions.",
-      realWorldExamples: [
-        "\"If we allow same-sex marriage, next people will want to marry animals.\"",
-        "\"If we raise the minimum wage, all small businesses will close, unemployment will skyrocket, and the economy will collapse.\"",
-      ],
-      refutationStrategies: [
-        "Ask for the causal mechanism: \"What evidence shows each step must follow?\"",
-        "Point out the assumptions: \"Each step would require separate decisions and approvals.\"",
-        "\"Can you show a real-world case where this chain reaction actually happened?\"",
-      ],
-    },
-  ],
+  conceptSlugs: ["False Dilemma", "Slippery Slope"].map(slugFor),
   drillQuestions: [
     {
       id: "d3-1",
@@ -640,6 +461,13 @@ export const getLessonData = (lessonId: string): LessonData | undefined => {
   }
   return undefined;
 };
+
+export const getLessonConcepts = (lesson: LessonData): Concept[] =>
+  lesson.conceptSlugs.map(slug => {
+    const concept = getConcept(slug);
+    if (!concept) throw new Error(`Concept "${slug}" not found in the library index`);
+    return concept;
+  });
 
 export const getNextLessonId = (currentId: string): string | null => {
   const map: Record<string, string> = { "1-1": "1-2", "1-2": "1-3" };

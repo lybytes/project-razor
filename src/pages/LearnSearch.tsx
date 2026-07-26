@@ -10,7 +10,8 @@ import badFaith from "@/data/bad-faith.json";
 interface SearchResult {
   name: string;
   slug: string;
-  explanation: string;
+  summary: string;
+  aka: string[];
   category: string;
   type: "fallacy" | "bias" | "bad-faith";
 }
@@ -20,15 +21,17 @@ const LearnSearch = () => {
 
   // Combine all data into searchable results
   const allItems: SearchResult[] = [
-    ...fallacies.map(f => ({ ...f, type: "fallacy" as const })),
-    ...biases.map(b => ({ ...b, type: "bias" as const })),
-    ...badFaith.map(bf => ({ ...bf, type: "bad-faith" as const })),
+    ...fallacies.map(f => ({ ...f, summary: f.oneLiner, type: "fallacy" as const })),
+    ...biases.map(b => ({ ...b, summary: b.explanation, aka: [], type: "bias" as const })),
+    ...badFaith.map(bf => ({ ...bf, summary: bf.oneLiner, type: "bad-faith" as const })),
   ];
 
-  const filtered = search.trim() 
-    ? allItems.filter(item => 
-        item.name.toLowerCase().includes(search.toLowerCase()) ||
-        item.explanation.toLowerCase().includes(search.toLowerCase())
+  const query = search.trim().toLowerCase();
+  const filtered = query
+    ? allItems.filter(item =>
+        item.name.toLowerCase().includes(query) ||
+        item.summary.toLowerCase().includes(query) ||
+        item.aka.some(a => a.toLowerCase().includes(query))
       )
     : [];
 
@@ -52,7 +55,7 @@ const LearnSearch = () => {
     switch (type) {
       case "fallacy": return "Logical Fallacy";
       case "bias": return "Cognitive Bias";
-      case "bad-faith": return "Bad-Faith Argument";
+      case "bad-faith": return "Bad-Faith Tactic";
     }
   };
 
@@ -123,7 +126,7 @@ const LearnSearch = () => {
                           </span>
                         </div>
                         <p className="text-muted-foreground line-clamp-2">
-                          {item.explanation}
+                          {item.summary}
                         </p>
                       </div>
                     </div>

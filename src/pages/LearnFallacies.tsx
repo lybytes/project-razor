@@ -10,7 +10,8 @@ const LearnFallacies = () => {
 
   const filtered = fallacies.filter(f => 
     f.name.toLowerCase().includes(search.toLowerCase()) ||
-    f.explanation.toLowerCase().includes(search.toLowerCase())
+    f.oneLiner.toLowerCase().includes(search.toLowerCase()) ||
+    f.aka.some(a => a.toLowerCase().includes(search.toLowerCase()))
   );
 
   return (
@@ -53,7 +54,7 @@ const LearnFallacies = () => {
                   {fallacy.name}
                 </h3>
                 <p className="text-muted-foreground line-clamp-2">
-                  {fallacy.explanation}
+                  {fallacy.oneLiner}
                 </p>
               </Link>
             ))}
