@@ -33,9 +33,15 @@ const Account = () => {
     setLoading(true);
     setError(null);
     try {
-      const [statsData, progressData] = await Promise.all([
-        getUserStats(),
-        getProgress(),
+      const timeout = new Promise<never>((_, reject) => {
+        window.setTimeout(() => reject(new Error("Account data request timed out")), 10000);
+      });
+      const [statsData, progressData] = await Promise.race([
+        Promise.all([
+          getUserStats(),
+          getProgress(),
+        ]),
+        timeout,
       ]);
       setStats(statsData);
       setCompletedLessons(progressData);

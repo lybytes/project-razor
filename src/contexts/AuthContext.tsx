@@ -28,6 +28,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
   const [hasSession, setHasSession] = useState(false);
 
+  const getFallbackUser = useCallback((authUser: User): UserData => ({
+    id: authUser.id,
+    email: authUser.email || "",
+    display_name: typeof authUser.user_metadata?.display_name === "string" ? authUser.user_metadata.display_name : null,
+    current_streak: 0,
+    longest_streak: 0,
+    total_xp: 0,
+  }), []);
+
   const fetchUserProfile = useCallback(async (authUser: User) => {
     const { data, error } = await supabase
       .from("profiles")
@@ -66,21 +75,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const { data: { session } } = await supabase.auth.getSession();
     setHasSession(!!session?.user);
     if (session?.user) {
+      setUser(getFallbackUser(session.user));
       const profile = await fetchUserProfile(session.user);
-      setUser(profile);
+      if (profile) setUser(profile);
     } else {
       setUser(null);
     }
-  }, [fetchUserProfile]);
+  }, [fetchUserProfile, getFallbackUser]);
 
   useEffect(() => {
     // Check initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setHasSession(!!session?.user);
       if (session?.user) {
+        setUser(getFallbackUser(session.user));
+        setLoading(false);
         fetchUserProfile(session.user).then((profile) => {
-          setUser(profile);
-          setLoading(false);
+          if (profile) setUser(profile);
         });
       } else {
         setUser(null);
@@ -89,19 +100,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setHasSession(!!session?.user);
       if (session?.user) {
-        const profile = await fetchUserProfile(session.user);
-        setUser(profile);
+        setUser(getFallbackUser(session.user));
+        setLoading(false);
+        setTimeout(() => {
+          fetchUserProfile(session.user).then((profile) => {
+            if (profile) setUser(profile);
+          });
+        }, 0);
       } else {
         setUser(null);
+        setLoading(false);
       }
-      setLoading(false);
     });
 
     return () => subscription.unsubscribe();
-  }, [fetchUserProfile]);
+  }, [fetchUserProfile, getFallbackUser]);
 
   const login = useCallback(async (email: string, password: string) => {
     const { error } = await supabase.auth.signInWithPassword({
