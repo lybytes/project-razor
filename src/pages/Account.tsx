@@ -18,6 +18,7 @@ const Account = () => {
 
   useEffect(() => {
     if (!authLoading && !hasSession) {
+      setLoading(false);
       navigate("/auth");
     }
   }, [hasSession, authLoading, navigate]);
@@ -52,7 +53,7 @@ const Account = () => {
     navigate("/");
   };
 
-  if (authLoading || loading) {
+  if (authLoading || (hasSession && loading)) {
     return (
       <div className="min-h-screen bg-background">
         <Navigation />

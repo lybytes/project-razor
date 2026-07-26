@@ -27,13 +27,13 @@ const Auth = () => {
   const [name, setName] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const navigate = useNavigate();
-  const { user, login, signup } = useAuth();
+  const { hasSession, login, signup } = useAuth();
 
   useEffect(() => {
-    if (user) {
-      navigate("/");
+    if (hasSession) {
+      navigate("/account");
     }
-  }, [user, navigate]);
+  }, [hasSession, navigate]);
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
