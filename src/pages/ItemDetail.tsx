@@ -4,6 +4,7 @@ import fallacies from "@/data/fallacies.json";
 import biases from "@/data/biases.json";
 import badFaith from "@/data/bad-faith.json";
 import type { Concept } from "@/data/concepts";
+import { ConceptExampleCard } from "@/components/ConceptExampleCard";
 import { ArrowLeft, BookOpen, Shield, AlertCircle, Search } from "lucide-react";
 import { useEffect } from "react";
 
@@ -76,7 +77,7 @@ const ItemDetail = () => {
             <div className="flex items-start gap-3 mb-4">
               <BookOpen className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
               <div>
-                <h2 className="text-lg font-normal text-foreground mb-3">
+                <h2 className="text-2xl font-bold text-foreground mb-4">
                   What is it?
                 </h2>
                 <p className="text-base text-foreground leading-relaxed">
@@ -91,13 +92,13 @@ const ItemDetail = () => {
             <div className="flex items-start gap-3 mb-4">
               <Search className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
               <div className="flex-1">
-                <h2 className="text-lg font-normal text-foreground mb-3">
+                <h2 className="text-2xl font-bold text-foreground mb-4">
                   In Depth
                 </h2>
                 <p className="text-base text-foreground leading-relaxed mb-6">
                   {item.deepDive}
                 </p>
-                <h3 className="text-base font-semibold text-foreground mb-3">
+                <h3 className="text-lg font-semibold text-foreground mb-3">
                   How to Spot It
                 </h3>
                 <ul className="space-y-3">
@@ -117,22 +118,12 @@ const ItemDetail = () => {
             <div className="flex items-start gap-3 mb-4">
               <AlertCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
               <div className="flex-1">
-                <h2 className="text-lg font-normal text-foreground mb-4">
+                <h2 className="text-2xl font-bold text-foreground mb-4">
                   Examples
                 </h2>
-                <div className="space-y-6">
+                <div className="space-y-4">
                   {item.examples.map((example, idx) => (
-                    <div key={idx}>
-                      <div className="bg-muted/50 border border-border rounded-lg p-4 mb-2">
-                        <div className="flex gap-3">
-                          <span className="text-primary font-bold flex-shrink-0">{idx + 1}.</span>
-                          <span className="text-base text-foreground">{example.text}</span>
-                        </div>
-                      </div>
-                      <p className="text-base text-foreground ml-8 mt-2">
-                        {example.explanation}
-                      </p>
-                    </div>
+                    <ConceptExampleCard key={idx} example={example} index={idx} conceptName={item.name} />
                   ))}
                 </div>
               </div>
@@ -144,7 +135,7 @@ const ItemDetail = () => {
             <div className="flex items-start gap-3 mb-4">
               <Shield className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
               <div className="flex-1">
-                <h2 className="text-lg font-normal text-foreground mb-4">
+                <h2 className="text-2xl font-bold text-foreground mb-4">
                   Refutation Strategy
                 </h2>
                 <ul className="space-y-6">
@@ -173,7 +164,7 @@ const ItemDetail = () => {
               <div className="flex items-start gap-3">
                 <Shield className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                 <div className="flex-1">
-                  <h2 className="text-lg font-normal text-foreground mb-4">
+                  <h2 className="text-2xl font-bold text-foreground mb-4">
                     How to Avoid It
                   </h2>
                   <ul className="space-y-4">
@@ -221,7 +212,7 @@ const BiasDetail = ({ bias, backLink, categoryName }: {
           <div className="flex items-start gap-3 mb-4">
             <BookOpen className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
             <div>
-              <h2 className="text-lg font-normal text-foreground mb-3">What is it?</h2>
+              <h2 className="text-2xl font-bold text-foreground mb-4">What is it?</h2>
               <p className="text-base text-foreground leading-relaxed">{bias.explanation}</p>
             </div>
           </div>
@@ -231,7 +222,7 @@ const BiasDetail = ({ bias, backLink, categoryName }: {
           <div className="flex items-start gap-3 mb-4">
             <AlertCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
             <div className="flex-1">
-              <h2 className="text-lg font-normal text-foreground mb-4">Examples</h2>
+              <h2 className="text-2xl font-bold text-foreground mb-4">Examples</h2>
               <div className="space-y-4">
                 {bias.examples.map((example, idx) => (
                   <div key={idx} className="bg-muted/50 border border-border rounded-lg p-4">
@@ -250,7 +241,7 @@ const BiasDetail = ({ bias, backLink, categoryName }: {
           <div className="flex items-start gap-3 mb-4">
             <Shield className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
             <div className="flex-1">
-              <h2 className="text-lg font-normal text-foreground mb-4">Refutation Strategy</h2>
+              <h2 className="text-2xl font-bold text-foreground mb-4">Refutation Strategy</h2>
               <ul className="space-y-4">
                 {bias.refutation.map((point, idx) => (
                   <li key={idx} className="flex gap-3">
@@ -267,7 +258,7 @@ const BiasDetail = ({ bias, backLink, categoryName }: {
           <div className="flex items-start gap-3">
             <Shield className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
             <div className="flex-1">
-              <h2 className="text-lg font-normal text-foreground mb-4">How to Avoid It</h2>
+              <h2 className="text-2xl font-bold text-foreground mb-4">How to Avoid It</h2>
               <ul className="space-y-4">
                 {bias.avoidance.map((point, idx) => (
                   <li key={idx} className="flex gap-3">

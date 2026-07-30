@@ -27,7 +27,7 @@ const Auth = () => {
   const [name, setName] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const navigate = useNavigate();
-  const { hasSession, login, signup } = useAuth();
+  const { hasSession, login, signup, requestPasswordReset } = useAuth();
 
   useEffect(() => {
     if (hasSession) {
@@ -64,6 +64,25 @@ const Auth = () => {
       }
     }
 
+    setLoading(false);
+  };
+
+  const handleForgotPassword = async () => {
+    setErrors({});
+
+    const result = z.string().email().safeParse(email);
+    if (!result.success) {
+      setErrors({ email: "Enter your email first, then tap Forgot password" });
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await requestPasswordReset(email);
+      toast.success("Reset link sent — check your inbox.");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Couldn't send the reset link");
+    }
     setLoading(false);
   };
 
@@ -142,6 +161,15 @@ const Auth = () => {
                   className={errors.password ? "border-red-500" : ""}
                 />
                 {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password}</p>}
+                {!isSignUp && (
+                  <button
+                    type="button"
+                    onClick={handleForgotPassword}
+                    className="text-primary hover:underline text-sm mt-2"
+                  >
+                    Forgot password?
+                  </button>
+                )}
               </div>
 
               {isSignUp && (

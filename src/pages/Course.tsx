@@ -6,9 +6,11 @@ import { modules } from "@/data/courseData";
 import { Progress } from "@/components/ui/progress";
 import { Lock, ChevronDown, ChevronUp, Check, Trophy, Brain, MessageSquare, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Course = () => {
-  const { progress, getLessonsComplete } = useCourseProgress();
+  const { progress, getLessonsComplete, isLessonUnlocked } = useCourseProgress();
+  const { hasSession } = useAuth();
   const [expandedModule, setExpandedModule] = useState<number | null>(1);
 
   const totalConcepts = progress.conceptsUnlocked.length;
@@ -119,19 +121,24 @@ const Course = () => {
                       <div className="mt-4 space-y-3">
                         {mod.lessons.map((lesson, li) => {
                           const lStatus = getLessonStatus(lesson.id);
+                          const unlocked = isLessonUnlocked(lesson.id, hasSession);
                           return (
                             <div
                               key={lesson.id}
-                              className="flex items-center justify-between p-3 sm:p-4 rounded-lg bg-background/50 border border-border/50"
+                              className={`flex items-center justify-between p-3 sm:p-4 rounded-lg bg-background/50 border border-border/50 ${unlocked ? "" : "opacity-60"}`}
                             >
                               <div className="flex items-center gap-2 sm:gap-3 min-w-0">
                                 {lStatus === "complete" ? (
                                   <div className="w-7 h-7 rounded-full bg-green-500/20 flex items-center justify-center shrink-0">
                                     <Check className="w-4 h-4 text-green-400" />
                                   </div>
-                                ) : (
+                                ) : unlocked ? (
                                   <div className="w-7 h-7 rounded-full bg-muted/30 flex items-center justify-center shrink-0">
                                     <span className="text-xs text-muted-foreground font-medium">{mod.id}.{li + 1}</span>
+                                  </div>
+                                ) : (
+                                  <div className="w-7 h-7 rounded-full bg-muted/30 flex items-center justify-center shrink-0">
+                                    <Lock className="w-3.5 h-3.5 text-muted-foreground" />
                                   </div>
                                 )}
                                 <div className="min-w-0 flex-1">
@@ -143,16 +150,22 @@ const Course = () => {
                                   </div>
                                 </div>
                               </div>
-                              <Button
-                                size="sm"
-                                variant={lStatus === "complete" ? "outline" : "default"}
-                                asChild
-                                className="shrink-0 ml-3"
-                              >
-                                <Link to={`/train/lesson/${lesson.id}`}>
-                                  {lStatus === "complete" ? "Review" : lStatus === "in-progress" ? "Continue" : "Start"}
-                                </Link>
-                              </Button>
+                              {unlocked ? (
+                                <Button
+                                  size="sm"
+                                  variant={lStatus === "complete" ? "outline" : "default"}
+                                  asChild
+                                  className="shrink-0 ml-3"
+                                >
+                                  <Link to={`/train/lesson/${lesson.id}`}>
+                                    {lStatus === "complete" ? "Review" : lStatus === "in-progress" ? "Continue" : "Start"}
+                                  </Link>
+                                </Button>
+                              ) : (
+                                <Button size="sm" variant="outline" disabled className="shrink-0 ml-3">
+                                  <Lock className="w-3.5 h-3.5 mr-1.5" /> Locked
+                                </Button>
+                              )}
                             </div>
                           );
                         })}

@@ -462,6 +462,10 @@ export const getLessonData = (lessonId: string): LessonData | undefined => {
   return undefined;
 };
 
+// Lessons unlock in this order; the first one is playable without an account.
+export const LESSON_ORDER = ["1-1", "1-2", "1-3"];
+export const FREE_LESSON_ID = LESSON_ORDER[0];
+
 export const getLessonConcepts = (lesson: LessonData): Concept[] =>
   lesson.conceptSlugs.map(slug => {
     const concept = getConcept(slug);
