@@ -1,9 +1,11 @@
 import { useState, useCallback } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate, Link, Navigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 import { Navigation } from "@/components/Navigation";
 import { useCourseProgress } from "@/contexts/CourseProgressContext";
 import { getLessonData, getLessonConcepts, getNextLessonId, type DrillQuestion, type WarzonePost } from "@/data/courseData";
 import { Button } from "@/components/ui/button";
+import { ConceptExampleCard } from "@/components/ConceptExampleCard";
 import { Check, X, ChevronRight, ChevronLeft, BookOpen, Target, Swords, BarChart3, Trophy } from "lucide-react";
 
 const STAGES = ["Learn", "Drill", "Warzone", "Summary"];
@@ -12,9 +14,15 @@ const STAGE_ICONS = [BookOpen, Target, Swords, BarChart3];
 const LessonFlow = () => {
   const { lessonId } = useParams<{ lessonId: string }>();
   const navigate = useNavigate();
-  const { progress, completeLesson, setLessonStage, saveDrillScore, saveWarzoneScore } = useCourseProgress();
+  const { progress, completeLesson, setLessonStage, saveDrillScore, saveWarzoneScore, isLessonUnlocked, getFurthestUnlockedLesson } = useCourseProgress();
+  const { hasSession } = useAuth();
 
   const lesson = getLessonData(lessonId || "");
+
+  if (lesson && !isLessonUnlocked(lesson.id, hasSession)) {
+    return <Navigate to={`/train/lesson/${getFurthestUnlockedLesson(hasSession)}`} replace />;
+  }
+
   if (!lesson) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -26,12 +34,13 @@ const LessonFlow = () => {
     );
   }
 
-  return <LessonFlowInner lesson={lesson} navigate={navigate} progress={progress} completeLesson={completeLesson} setLessonStage={setLessonStage} saveDrillScore={saveDrillScore} saveWarzoneScore={saveWarzoneScore} />;
+  return <LessonFlowInner lesson={lesson} navigate={navigate} hasSession={hasSession} progress={progress} completeLesson={completeLesson} setLessonStage={setLessonStage} saveDrillScore={saveDrillScore} saveWarzoneScore={saveWarzoneScore} />;
 };
 
 interface InnerProps {
   lesson: NonNullable<ReturnType<typeof getLessonData>>;
   navigate: ReturnType<typeof useNavigate>;
+  hasSession: boolean;
   progress: ReturnType<typeof useCourseProgress>["progress"];
   completeLesson: ReturnType<typeof useCourseProgress>["completeLesson"];
   setLessonStage: ReturnType<typeof useCourseProgress>["setLessonStage"];
@@ -39,7 +48,7 @@ interface InnerProps {
   saveWarzoneScore: ReturnType<typeof useCourseProgress>["saveWarzoneScore"];
 }
 
-const LessonFlowInner = ({ lesson, navigate, progress, completeLesson, setLessonStage: setStageProgress, saveDrillScore, saveWarzoneScore }: InnerProps) => {
+const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesson, setLessonStage: setStageProgress, saveDrillScore, saveWarzoneScore }: InnerProps) => {
   const [stage, setStage] = useState(0);
   const [wasAlreadyComplete] = useState(() => !!progress.lessonComplete[lesson.id]);
   const [learnCardIndex, setLearnCardIndex] = useState(0);
@@ -189,12 +198,9 @@ const LessonFlowInner = ({ lesson, navigate, progress, completeLesson, setLesson
                 {currentCardType === 3 && (
                   <div className="flex-1">
                     <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">Real-world examples</h3>
-                    <div className="space-y-3 sm:space-y-4">
+                    <div className="space-y-4">
                       {currentConcept.examples.map((example, i) => (
-                        <div key={i} className="rounded-lg bg-[hsl(240,6%,10%)] border border-border p-3 sm:p-5">
-                          <p className="text-base text-foreground/90 leading-relaxed italic">"{example.text}"</p>
-                          <p className="text-sm text-muted-foreground leading-relaxed mt-2">{example.explanation}</p>
-                        </div>
+                        <ConceptExampleCard key={i} example={example} index={i} conceptName={currentConcept.name} />
                       ))}
                     </div>
                   </div>
@@ -202,7 +208,7 @@ const LessonFlowInner = ({ lesson, navigate, progress, completeLesson, setLesson
 
                 {currentCardType === 4 && (
                   <div className="flex-1">
-                    <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">How to counter it</h3>
+                    <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">How to Refute</h3>
                     <ul className="space-y-5 sm:space-y-6">
                       {currentConcept.refutation.map((strategy, i) => (
                         <li key={i} className="flex gap-3">
@@ -303,6 +309,7 @@ const LessonFlowInner = ({ lesson, navigate, progress, completeLesson, setLesson
         {stage === 3 && (
           <SummaryView
             lesson={lesson}
+            hasSession={hasSession}
             drillScore={progress.drillScores[lesson.id]}
             warzoneScore={progress.warzoneScores[lesson.id]}
             allLessonsComplete={["1-1", "1-2", "1-3"].every(id => progress.lessonComplete[id])}
@@ -475,8 +482,9 @@ const WarzoneView = ({ post, index, total, selectedOption, submitted, onSelect, 
 
 // ===== SUMMARY =====
 
-const SummaryView = ({ lesson, drillScore, warzoneScore, allLessonsComplete, wasAlreadyComplete, navigate }: {
+const SummaryView = ({ lesson, hasSession, drillScore, warzoneScore, allLessonsComplete, wasAlreadyComplete, navigate }: {
   lesson: NonNullable<ReturnType<typeof getLessonData>>;
+  hasSession: boolean;
   drillScore?: { correct: number; total: number };
   warzoneScore?: { correct: number; total: number };
   allLessonsComplete: boolean;
@@ -520,6 +528,20 @@ const SummaryView = ({ lesson, drillScore, warzoneScore, allLessonsComplete, was
         </div>
       </div>
 
+      {!hasSession && nextLessonId && (
+        <div className="bg-primary/10 border border-primary/30 rounded-lg p-5 sm:p-6 mb-4 sm:mb-6 max-w-md mx-auto text-left">
+          <p className="text-foreground font-semibold mb-1">
+            You just spotted {lesson.concepts.length} manipulation technique{lesson.concepts.length > 1 ? "s" : ""} in the wild.
+          </p>
+          <p className="text-sm text-muted-foreground mb-4">
+            Create a free account to unlock the rest of Module 1 — your progress and XP from this lesson carry over.
+          </p>
+          <Button className="w-full" onClick={() => navigate("/auth")}>
+            Create free account <ChevronRight className="w-4 h-4 ml-1" />
+          </Button>
+        </div>
+      )}
+
       {allLessonsComplete && (
         <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 mb-6 max-w-md mx-auto">
           <Trophy className="w-6 h-6 text-amber-400 mx-auto mb-2" />
@@ -528,7 +550,7 @@ const SummaryView = ({ lesson, drillScore, warzoneScore, allLessonsComplete, was
       )}
 
       <div className="flex gap-3 justify-center">
-        {nextLessonId && (
+        {nextLessonId && hasSession && (
           <Button onClick={() => navigate(`/train/lesson/${nextLessonId}`)}>
             Next Lesson <ChevronRight className="w-4 h-4 ml-1" />
           </Button>

@@ -18,6 +18,8 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   signup: (email: string, password: string, displayName: string) => Promise<void>;
   logout: () => Promise<void>;
+  requestPasswordReset: (email: string) => Promise<void>;
+  updatePassword: (password: string) => Promise<void>;
   refreshUser: () => Promise<void>;
 }
 
@@ -152,6 +154,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     []
   );
 
+  const requestPasswordReset = useCallback(async (email: string) => {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    if (error) throw error;
+  }, []);
+
+  const updatePassword = useCallback(async (password: string) => {
+    const { error } = await supabase.auth.updateUser({ password });
+    if (error) throw error;
+  }, []);
+
   const logout = useCallback(async () => {
     await supabase.auth.signOut();
     setHasSession(false);
@@ -159,7 +173,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, hasSession, login, signup, logout, refreshUser }}>
+    <AuthContext.Provider value={{ user, loading, hasSession, login, signup, logout, requestPasswordReset, updatePassword, refreshUser }}>
       {children}
     </AuthContext.Provider>
   );
