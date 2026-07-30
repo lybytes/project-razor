@@ -10,7 +10,8 @@ const LearnBadFaith = () => {
 
   const filtered = badFaith.filter(bf => 
     bf.name.toLowerCase().includes(search.toLowerCase()) ||
-    bf.explanation.toLowerCase().includes(search.toLowerCase())
+    bf.oneLiner.toLowerCase().includes(search.toLowerCase()) ||
+    bf.aka.some(a => a.toLowerCase().includes(search.toLowerCase()))
   );
 
   return (
@@ -53,7 +54,7 @@ const LearnBadFaith = () => {
                   {tactic.name}
                 </h3>
                 <p className="text-muted-foreground line-clamp-2">
-                  {tactic.explanation}
+                  {tactic.oneLiner}
                 </p>
               </Link>
             ))}

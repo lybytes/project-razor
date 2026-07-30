@@ -1,464 +1,1116 @@
 [
   {
     "name": "Ad Hominem",
-    "category": "Logical Fallacy",
     "slug": "ad-hominem",
-    "explanation": "The Ad Hominem logical fallacy occurs when someone attacks the character, motive, or attributes of the person making an argument rather than the argument itself. This fallacy diverts attention from the actual issue and focuses on discrediting the individual, thereby undermining the argument through irrelevant personal attacks.",
+    "category": "Logical Fallacy",
+    "aka": [
+      "Ad Hominem Attack",
+      "Attacking the Person"
+    ],
+    "hook": "Why are we listening to Dr. Patel on climate policy? She got divorced twice — clearly can't make sound judgements.",
+    "oneLiner": "Attacking the person making an argument rather than the argument itself.",
+    "deepDive": "Ad hominem swaps the target of a debate from the claim to the claimant. Instead of showing that an argument is wrong, it tries to make the audience distrust the person, so the argument gets dismissed by association. It works because we intuitively treat 'who said it' as a shortcut for 'is it true' — but a claim's truth doesn't depend on the character, history, or motives of whoever raised it. The tell is a sudden pivot from the topic to the person: the moment biography, lifestyle, or past mistakes appear in place of evidence, the argument has been abandoned. Note the legitimate exception — challenging someone's credibility is fair when their reliability is *directly* the issue (a conflict of interest, a relevant track record). Ad hominem is when the personal fact is irrelevant to the claim.",
+    "howToSpot": [
+      "The reply targets the person's character, background, or lifestyle instead of their point",
+      "Irrelevant personal history is dragged in — divorces, old failures, appearance, group membership",
+      "The actual claim is never engaged with; 'winning' means discrediting the speaker"
+    ],
     "examples": [
       {
-        "text": "During a debate about climate change, one person says, \"We should listen to scientists about global warming.\" The opponent responds, \"Why should we listen to you? You failed your science classes in school.\"",
-        "explanation": "In this example, the opponent attacks the individual's past academic performance instead of addressing the argument about listening to scientists."
+        "text": "\"We should listen to scientists on global warming.\" — \"Why should we listen to you? You failed science in school.\"",
+        "explanation": "The speaker's past grades have no bearing on whether the scientific consensus is correct."
       },
       {
-        "text": "During a debate on healthcare reform one debater says, \"We should not listen to your proposal because you are not a doctor.\"",
-        "explanation": "In this other example, the debater is attacking the individual's qualifications rather than addressing the substance of the healthcare proposal."
+        "text": "\"Here's my proposal for healthcare reform.\" — \"We shouldn't listen to you, you're not even a doctor.\"",
+        "explanation": "Not being a doctor doesn't automatically make a policy proposal wrong — the proposal's merits are untouched."
+      },
+      {
+        "text": "\"This property tax could ease housing inequality.\" — \"Of course she'd say that, she's a career economist who's never built anything.\"",
+        "explanation": "Her biography is used to dismiss the policy without addressing whether the tax is actually well-designed."
       }
     ],
     "refutation": [
       {
-        "title": "Identify the Fallacy",
-        "text": "Clearly point out that the argument is being sidetracked by personal attacks rather than addressing the main issue.",
-        "explanation": "For instance, in the last example you might say, \"Attacking my academic background doesn't address the scientific evidence regarding climate change.\""
+        "title": "Name the move",
+        "text": "Point out that the attack is aimed at the person, not the point.",
+        "comeback": "That's about me, not the argument. What specifically is wrong with the evidence?"
       },
       {
-        "title": "Redirect to the Argument",
-        "text": "Steer the conversation back to the original argument. Ask the person to provide evidence or reasoning that directly relates to the topic.",
-        "explanation": "For example, \"Can you provide evidence that contradicts the scientific consensus on climate change?\""
+        "title": "Redirect to the claim",
+        "text": "Steer straight back to the original point and ask for a substantive response.",
+        "comeback": "Set my background aside — can you give me a reason the policy itself doesn't work?"
       },
       {
-        "title": "Stay Calm and Composed",
-        "text": "Avoid retaliating with personal attacks, as this can escalate the situation and further distract from the main issue."
+        "title": "Separate credibility from truth",
+        "text": "If they raise a relevant credibility concern, grant it but note it doesn't settle the claim.",
+        "comeback": "Even if you're right about me, that doesn't make the data false. Let's look at the data."
       }
     ],
     "avoidance": [
-      {
-        "title": "Focus on the Argument",
-        "text": "Always concentrate on the argument's content rather than the individual presenting it. Evaluate the evidence, logic, and reasoning independently of the person's characteristics."
-      },
-      {
-        "title": "Practice Empathy and Respect",
-        "text": "Engage in discussions with respect and empathy. Acknowledge that everyone can contribute valuable perspectives, regardless of personal attributes."
-      }
+      "Attack arguments, never people — critique the reasoning, not the reasoner",
+      "Before dismissing a source, ask whether the personal fact is actually relevant to the claim",
+      "Notice when you're tempted to bring up someone's history instead of their point"
     ]
   },
   {
     "name": "Straw Man",
-    "category": "Logical Fallacy",
     "slug": "straw-man",
-    "explanation": "Misrepresenting someone's argument to make it easier to attack. Instead of addressing the actual argument, you attack a distorted or simplified version of it.",
-    "examples": [
-      "Person A: 'We should have stricter regulations on firearms.' Person B: 'So you want to take away everyone's guns and leave us defenseless?'",
-      "Person A: 'We need better environmental protections.' Person B: 'So you want to shut down all factories and destroy the economy?'",
-      "Person A: 'I think we should invest more in public transportation.' Person B: 'You just hate cars and want to force everyone to take the bus.'"
-    ],
-    "refutation": [
-      "Clarify your actual position: 'That's not what I said. Let me restate my argument clearly.'",
-      "Point out the misrepresentation: 'You're attacking a position I don't hold.'",
-      "Ask them to address your real argument: 'Can you respond to what I actually proposed?'"
-    ],
-    "avoidance": [
-      "State your position clearly and specifically",
-      "Ensure you understand others' arguments before responding",
-      "Represent opposing views accurately"
-    ]
-  },
-  {
-    "name": "False Dichotomy",
     "category": "Logical Fallacy",
-    "slug": "false-dichotomy",
-    "explanation": "Presenting only two options when more exist. This fallacy oversimplifies complex issues by suggesting there are only two possible positions or outcomes.",
+    "aka": [
+      "Strawmanning",
+      "Strawman Fallacy"
+    ],
+    "hook": "So you want stricter gun laws? So you basically want to leave every family defenceless.",
+    "oneLiner": "Misrepresenting someone's argument to make it easier to attack.",
+    "deepDive": "A straw man replaces the opponent's real position with a distorted, exaggerated, or oversimplified version — the 'straw' figure — then knocks that down instead. It feels like a rebuttal, but nothing the person actually said has been addressed. It's persuasive because the caricature is usually easier to dislike than the real claim: 'sensible firearm regulation' becomes 'confiscating everyone's guns.' The pattern to watch for is a restatement that's more extreme, more absolute, or more sinister than the original — words like 'so you're saying', 'basically', or 'you just want' often introduce the swap. Note it can be deployed deliberately as a bad-faith tactic to bait an opponent, or committed accidentally by someone who genuinely misheard. Either way the fix is the same: refuse to defend a position you never held.",
+    "howToSpot": [
+      "Your position gets restated in a more extreme or absolute form than you meant",
+      "Phrases like 'so you're saying...', 'basically you want...', 'you just hate...' precede the distortion",
+      "They attack a version of your view you don't actually hold — and never quote what you said"
+    ],
     "examples": [
-      "You're either with us or against us.",
-      "Either we cut all social programs or the country will go bankrupt.",
-      "You either support the police completely or you support criminals."
+      {
+        "text": "\"We need stricter firearm regulations.\" — \"So you want to take everyone's guns and leave us defenceless?\"",
+        "explanation": "Regulation isn't confiscation; the reply attacks a position the speaker never took."
+      },
+      {
+        "text": "\"We should invest more in public transport.\" — \"You just hate cars and want to force everyone onto buses.\"",
+        "explanation": "Investing in one option isn't banning another — the real, moderate claim is swapped for an extreme one."
+      },
+      {
+        "text": "\"I think the essay needs a stronger conclusion.\" — \"Oh, so the whole thing is garbage to you?\"",
+        "explanation": "A targeted critique of one section is inflated into a sweeping condemnation of the whole."
+      }
     ],
     "refutation": [
-      "Identify additional options: 'There are actually several other approaches we could consider.'",
-      "Challenge the binary framing: 'Why must it be one or the other?'",
-      "Present middle ground: 'What about positions that incorporate elements of both?'"
+      {
+        "title": "Restate your actual position",
+        "text": "Calmly correct the distortion and put your real claim back on the table.",
+        "comeback": "That's not what I said. My actual point was narrower — let me restate it clearly."
+      },
+      {
+        "title": "Name the misrepresentation",
+        "text": "Point out that they're arguing against a version you don't hold.",
+        "comeback": "You're attacking a position I never took. Can you respond to what I actually argued?"
+      },
+      {
+        "title": "Ask them to engage the real claim",
+        "text": "Put the burden back on them to address your genuine point.",
+        "comeback": "Set the exaggerated version aside — what's your objection to the specific thing I proposed?"
+      }
     ],
     "avoidance": [
-      "Look for spectrum of possibilities rather than binary choices",
-      "Consider nuanced positions and compromises",
-      "Avoid 'either/or' thinking when dealing with complex issues"
-    ]
-  },
-  {
-    "name": "Appeal to Authority",
-    "category": "Logical Fallacy",
-    "slug": "appeal-to-authority",
-    "explanation": "Assuming something is true because an authority figure says so, without examining the evidence. While expert opinion can be valuable, it's not automatically correct and should be supported by evidence.",
-    "examples": [
-      "This product must work - a famous celebrity endorses it.",
-      "My professor said this is true, so it must be.",
-      "The CEO believes this strategy will work, so we shouldn't question it."
-    ],
-    "refutation": [
-      "Ask for the underlying evidence: 'What evidence supports this claim?'",
-      "Question the authority's expertise in this specific area",
-      "Note: 'Even experts can be wrong or biased - what's the reasoning behind this?'"
-    ],
-    "avoidance": [
-      "Evaluate claims based on evidence, not just who makes them",
-      "Check if the authority has relevant expertise",
-      "Look for consensus among multiple experts"
-    ]
-  },
-  {
-    "name": "Slippery Slope",
-    "category": "Logical Fallacy",
-    "slug": "slippery-slope",
-    "explanation": "Arguing that a small first step will inevitably lead to a chain of related events resulting in a significant and usually negative effect, without providing evidence for this chain of causation.",
-    "examples": [
-      "If we allow same-sex marriage, next people will want to marry their pets.",
-      "If we raise the minimum wage by $1, eventually no one will have jobs.",
-      "If we let students use calculators, they'll never learn to do basic math and society will collapse."
-    ],
-    "refutation": [
-      "Challenge the causal chain: 'What evidence suggests one thing will lead to the other?'",
-      "Point out missing steps: 'You've jumped from A to Z without explaining B through Y.'",
-      "Ask for precedent: 'Has this progression happened elsewhere?'"
-    ],
-    "avoidance": [
-      "Provide evidence for each step in a causal chain",
-      "Distinguish between possible outcomes and probable outcomes",
-      "Avoid catastrophizing without justification"
-    ]
-  },
-  {
-    "name": "Hasty Generalization",
-    "category": "Logical Fallacy",
-    "slug": "hasty-generalization",
-    "explanation": "Drawing a broad conclusion from a small or unrepresentative sample. This fallacy occurs when someone makes a sweeping claim based on insufficient evidence.",
-    "examples": [
-      "I met two rude people from that city, so everyone there must be rude.",
-      "My friend got sick after getting vaccinated, so vaccines must be dangerous.",
-      "I tried learning guitar for a week and couldn't do it, so I have no musical ability."
-    ],
-    "refutation": [
-      "Question the sample size: 'How many instances have you actually observed?'",
-      "Point out unrepresentative samples: 'Is this example typical?'",
-      "Provide counter-examples: 'Here are cases that contradict that generalization.'"
-    ],
-    "avoidance": [
-      "Ensure your sample size is adequate",
-      "Check if your sample is representative",
-      "Avoid jumping to conclusions from anecdotal evidence"
-    ]
-  },
-  {
-    "name": "Red Herring",
-    "category": "Logical Fallacy",
-    "slug": "red-herring",
-    "explanation": "Introducing an irrelevant topic to divert attention from the original issue. This fallacy attempts to distract from the argument at hand by bringing up something tangentially related or completely unrelated.",
-    "examples": [
-      "Person A: 'The company's environmental record is poor.' Person B: 'But we donate millions to charity every year.'",
-      "Person A: 'We need to address income inequality.' Person B: 'What about all the jobs created by wealthy entrepreneurs?'",
-      "Person A: 'This policy has serious ethical issues.' Person B: 'Well, the previous administration did worse things.'"
-    ],
-    "refutation": [
-      "Refocus: 'That's an interesting point, but let's address the original issue first.'",
-      "Point out the diversion: 'How does that relate to what we were discussing?'",
-      "Acknowledge and return: 'We can discuss that separately, but right now we're talking about X.'"
-    ],
-    "avoidance": [
-      "Stay focused on the topic at hand",
-      "Address arguments directly without changing the subject",
-      "If bringing up a related point, explain the connection"
-    ]
-  },
-  {
-    "name": "Appeal to Emotion",
-    "category": "Logical Fallacy",
-    "slug": "appeal-to-emotion",
-    "explanation": "Manipulating emotions to win an argument rather than using valid reasoning. This fallacy attempts to replace logical argument with emotional appeals like fear, pity, or anger.",
-    "examples": [
-      "Think of the children! How can you oppose this policy?",
-      "If you don't support this law, you must hate America.",
-      "You wouldn't want your family to suffer, would you? That's why you should buy this insurance."
-    ],
-    "refutation": [
-      "Acknowledge the emotion: 'I understand this is an emotional issue, but what's the logical basis for this position?'",
-      "Request evidence: 'What data supports this claim?'",
-      "Separate emotion from logic: 'How we feel about something doesn't determine if it's true or effective.'"
-    ],
-    "avoidance": [
-      "Support arguments with evidence and reasoning",
-      "Acknowledge emotions without relying on them as proof",
-      "Distinguish between emotional appeal and logical argument"
+      "Restate an opponent's view in a form they'd agree with before you critique it",
+      "Steelman: engage the strongest version of the argument, not the weakest",
+      "If you catch yourself adding 'basically' or 'so you're saying', check you're not distorting"
     ]
   },
   {
     "name": "Tu Quoque (You Too)",
-    "category": "Logical Fallacy",
     "slug": "tu-quoque",
-    "explanation": "Dismissing criticism by pointing out hypocrisy in the critic, without addressing the actual argument. This is a form of ad hominem that attempts to deflect by accusing the other person of the same fault.",
+    "category": "Logical Fallacy",
+    "aka": [
+      "Appeal to Hypocrisy",
+      "Whataboutism (personal form)"
+    ],
+    "hook": "You're telling me to stop smoking? You smoked for ten years!",
+    "oneLiner": "Deflecting criticism by pointing to the critic's own hypocrisy instead of answering it.",
+    "deepDive": "Tu quoque ('you too') dodges a claim by accusing the person making it of not living up to it. The hidden assumption is that a hypocrite's argument must be false — but a claim's truth is completely independent of whether the speaker practises what they preach. A chain smoker telling you smoking is dangerous is still right about the danger. It's a close cousin of whataboutism, but tu quoque specifically targets the *speaker's* consistency, whereas whataboutism deflects to an unrelated topic. Spot it by the structure: the response starts with 'but you...' or 'what about when you...' and never actually engages the point. The inconsistency might be a fair thing to raise separately — but it doesn't refute the argument.",
+    "howToSpot": [
+      "The reply opens with 'but you...' or 'what about when you did...'",
+      "It points at the critic's behaviour instead of the substance of the criticism",
+      "The original claim is left completely unaddressed"
+    ],
     "examples": [
-      "Person A: 'You shouldn't smoke, it's unhealthy.' Person B: 'You eat junk food all the time, so don't tell me what to do.'",
-      "Person A: 'This company has poor labor practices.' Person B: 'You buy products from other companies with similar issues.'",
-      "Person A: 'We need to reduce carbon emissions.' Person B: 'You drive a car, so you're a hypocrite.'"
+      {
+        "text": "\"You shouldn't eat so much junk food.\" — \"You had McDonald's twice last week, so don't lecture me.\"",
+        "explanation": "Whether the adviser is consistent has no bearing on whether the advice is correct."
+      },
+      {
+        "text": "\"We need to cut carbon emissions.\" — \"You drive a car every day — you're a hypocrite.\"",
+        "explanation": "The speaker's car use doesn't change the science on emissions; the claim stands or falls on its own."
+      },
+      {
+        "text": "\"You really should apologise to her.\" — \"You never apologise for anything!\"",
+        "explanation": "Even if true, the critic's own failings don't determine whether an apology is warranted here."
+      }
     ],
     "refutation": [
-      "Acknowledge but refocus: 'Even if I'm inconsistent, does that make the argument wrong?'",
-      "Separate the argument from the arguer: 'The validity of the claim doesn't depend on my behavior.'",
-      "Address it directly: 'You're right that I should also change, but that doesn't address whether the argument is sound.'"
+      {
+        "title": "Separate the messenger from the message",
+        "text": "Grant the inconsistency but point out it doesn't touch the claim.",
+        "comeback": "Even if I'm inconsistent, does that make what I said wrong?"
+      },
+      {
+        "title": "Redirect to the point",
+        "text": "Bring the conversation back to the actual argument.",
+        "comeback": "My behaviour is a separate issue. Let's focus on whether the point itself holds."
+      },
+      {
+        "title": "Concede and continue",
+        "text": "Acknowledge the hypocrisy openly, then refuse to let it end the discussion.",
+        "comeback": "You're right that I should change too — but that doesn't address whether the argument is sound."
+      }
     ],
     "avoidance": [
-      "Address arguments on their merits",
-      "Recognize that hypocrisy doesn't invalidate an argument",
-      "Focus on the issue, not the person"
+      "Judge an argument on its merits, not on the arguer's consistency",
+      "If you spot hypocrisy, raise it as a separate point rather than a rebuttal",
+      "Don't let 'but you do it too' stop you from engaging the actual claim"
+    ]
+  },
+  {
+    "name": "Red Herring",
+    "slug": "red-herring",
+    "category": "Logical Fallacy",
+    "aka": [
+      "Distraction",
+      "Diversion"
+    ],
+    "hook": "You're worried about the missed deadline? Do you know how stressful my week has been?",
+    "oneLiner": "Introducing an irrelevant topic to divert attention from the real issue.",
+    "deepDive": "A red herring drags a fresh, unrelated (but often emotionally engaging) subject across the trail so the original question gets lost. Unlike a straw man, it doesn't distort your argument — it simply changes the subject to something that feels connected but isn't. It works because the new topic is usually more vivid or more sympathetic, and audiences follow the movement. The tell is a shift that sounds like a response but doesn't actually bear on the point: the conversation ends up somewhere entirely different, and the original question is never answered. The fix is to notice the swap and refuse to chase it: acknowledge the new topic if you must, but anchor firmly back to what was actually asked.",
+    "howToSpot": [
+      "The reply changes the subject to something that only feels related",
+      "The new topic is often more emotional or dramatic than the original question",
+      "By the end, the original point has quietly gone unanswered"
+    ],
+    "examples": [
+      {
+        "text": "\"Why was the budget report late again?\" — \"Do you have any idea how much pressure the whole team is under right now?\"",
+        "explanation": "Team stress may be real, but it doesn't answer the specific question about the late report."
+      },
+      {
+        "text": "\"The new policy raises costs for tenants.\" — \"But think about how much landlords have suffered this decade.\"",
+        "explanation": "Landlord hardship is a different topic; it sidesteps the actual claim about tenant costs."
+      },
+      {
+        "text": "\"You promised to fix the bug by Friday.\" — \"Well, the whole codebase is a mess anyway, whose fault is that?\"",
+        "explanation": "The state of the codebase distracts from the unmet, specific commitment."
+      }
+    ],
+    "refutation": [
+      {
+        "title": "Flag the detour",
+        "text": "Note that the topic has shifted and the original point is still open.",
+        "comeback": "That's a separate issue. I still want to come back to the original question."
+      },
+      {
+        "title": "Park it, don't chase it",
+        "text": "Offer to discuss the new topic later, but hold the line now.",
+        "comeback": "Happy to talk about that afterwards — but first, can we resolve the point I raised?"
+      },
+      {
+        "title": "Repeat the question",
+        "text": "Simply restate the original question, unmoved by the diversion.",
+        "comeback": "I hear you, but the question was specifically about the deadline. What happened there?"
+      }
+    ],
+    "avoidance": [
+      "When answering, make sure your response actually addresses the question asked",
+      "Notice the urge to pivot to a topic where you're more comfortable",
+      "Finish one thread before opening another"
+    ]
+  },
+  {
+    "name": "False Dichotomy",
+    "slug": "false-dichotomy",
+    "category": "Logical Fallacy",
+    "aka": [
+      "False Dilemma",
+      "Either/Or Fallacy",
+      "Black-and-White Thinking"
+    ],
+    "hook": "Either we cut the entire arts budget, or the whole city goes bankrupt. Pick one.",
+    "oneLiner": "Presenting only two options when more actually exist.",
+    "deepDive": "A false dichotomy compresses a spectrum of possibilities into just two — usually one the speaker wants and one nobody wants — so the desired choice looks inevitable. It's powerful because it feels decisive and simplifies a hard decision, but it hides the middle ground, the combinations, and the third options entirely. The reasoning smuggles in a hidden premise ('these are the only two choices') that's almost never true. Watch for framing words like 'either/or', 'if you're not with us you're against us', and any argument that treats a compromise or a third path as if it doesn't exist. The counter is almost always to name the missing options — the moment a third choice is on the table, the forced choice collapses.",
+    "howToSpot": [
+      "Only two options are offered, framed as exhaustive ('either X or Y')",
+      "One option is obviously bad, making the other look inevitable",
+      "Middle-ground positions, combinations, or third options are ignored"
+    ],
+    "examples": [
+      {
+        "text": "\"Either we cut all environmental regulations or the economy collapses.\"",
+        "explanation": "There's a wide range of regulatory levels between 'all' and 'none' — the two extremes aren't the only choices."
+      },
+      {
+        "text": "\"You're either with us or against us.\"",
+        "explanation": "This erases neutrality, partial agreement, and conditional support, forcing a binary that rarely reflects reality."
+      },
+      {
+        "text": "\"We either ban the phones entirely or accept that grades will keep falling.\"",
+        "explanation": "Limited use, time restrictions, and other policies exist between a total ban and doing nothing."
+      }
+    ],
+    "refutation": [
+      {
+        "title": "Name the third option",
+        "text": "Point out at least one possibility the framing left out.",
+        "comeback": "Those aren't the only two choices — there's a middle path here, for example…"
+      },
+      {
+        "title": "Reject the forced choice",
+        "text": "Refuse the binary and ask why the options were limited to two.",
+        "comeback": "Why do these have to be the only options? I don't accept that framing."
+      },
+      {
+        "title": "Show the spectrum",
+        "text": "Reframe the issue as a range rather than a switch.",
+        "comeback": "This isn't all-or-nothing — it's a question of how much, and where we draw the line."
+      }
+    ],
+    "avoidance": [
+      "Ask 'are these really the only options?' before accepting a two-way choice",
+      "Look for middle-ground and combination solutions",
+      "Be wary of 'either/or' framing, especially when one option is clearly unappealing"
+    ]
+  },
+  {
+    "name": "Slippery Slope",
+    "slug": "slippery-slope",
+    "category": "Logical Fallacy",
+    "aka": [
+      "Domino Fallacy",
+      "Thin End of the Wedge"
+    ],
+    "hook": "If we let students redo one exam, next they'll expect to redo everything, and soon grades will mean nothing.",
+    "oneLiner": "Claiming one small step will inevitably lead to an extreme outcome, without justifying the chain.",
+    "deepDive": "A slippery slope argues that permitting a modest first step will unavoidably cascade into a disastrous end state — but it never justifies the links in that chain. Each 'and then' is asserted, not demonstrated. It's persuasive because the final outcome is scary and the chain sounds superficially plausible, so the fear does the work that evidence should. The key distinction: a slope argument is only a fallacy when the causal chain is unsupported. If you can show that each step genuinely and predictably leads to the next, it becomes a legitimate risk argument. So the test is always the same — ask for the mechanism connecting each step, and watch how quickly the chain falls apart when it has to be defended rather than merely asserted.",
+    "howToSpot": [
+      "A modest proposal is said to lead 'inevitably' to an extreme result",
+      "The chain of steps is asserted but never actually justified",
+      "The scary end-point does the persuading, not evidence for each link"
+    ],
+    "examples": [
+      {
+        "text": "\"If we allow same-day returns, soon people will abuse it, then we'll lose all profit, then we'll go under.\"",
+        "explanation": "Each step is possible but none is shown to follow necessarily from the last — the chain is assumed, not argued."
+      },
+      {
+        "text": "\"Legalise this one drug and before long everything will be legal and society will collapse.\"",
+        "explanation": "There's no mechanism given for why one specific policy forces every other domino to fall."
+      },
+      {
+        "text": "\"If I let you leave early today, I'll have to let everyone leave early every day.\"",
+        "explanation": "A single exception doesn't automatically become an unbreakable universal rule."
+      }
+    ],
+    "refutation": [
+      {
+        "title": "Ask for the mechanism",
+        "text": "Request evidence for each link in the chain, not just the ending.",
+        "comeback": "What actually makes step one lead to step two? Walk me through the connection."
+      },
+      {
+        "title": "Break the chain",
+        "text": "Point out where a step could easily not follow.",
+        "comeback": "That first step doesn't force the next — we can allow this and still stop there."
+      },
+      {
+        "title": "Distinguish risk from inevitability",
+        "text": "Grant a real risk but reject the claim of certainty.",
+        "comeback": "There's a risk worth managing, sure — but 'possible' isn't 'inevitable.'"
+      }
+    ],
+    "avoidance": [
+      "When predicting consequences, justify each step rather than asserting a chain",
+      "Distinguish 'this could lead to' from 'this will inevitably lead to'",
+      "Evaluate a proposal on its own merits before imagining worst-case cascades"
+    ]
+  },
+  {
+    "name": "Appeal to Authority",
+    "slug": "appeal-to-authority",
+    "category": "Logical Fallacy",
+    "aka": [
+      "Argument from Authority"
+    ],
+    "hook": "A celebrity doctor endorsed this supplement, so it must work.",
+    "oneLiner": "Claiming something is true just because an authority figure said so.",
+    "deepDive": "This fallacy treats a claim as proven because an authority asserted it — but expertise is evidence, not proof, and it only counts when the authority is speaking within their genuine field of expertise and reflects a real consensus. It goes wrong in three common ways: the authority is outside their domain (a physicist on nutrition), the authority is misrepresented or cherry-picked against a broader consensus, or 'authority' is just fame or confidence with no real expertise behind it. Legitimate deference to experts isn't fallacious; the fallacy is substituting the label of authority for the reasoning and evidence that authority is supposed to be summarising. Ask what the expert actually knows, whether it's their field, and whether other experts agree.",
+    "howToSpot": [
+      "'An expert said so' is offered in place of the actual evidence or reasoning",
+      "The authority is speaking outside their real area of expertise",
+      "A single authority is cited against, or without checking, the wider consensus"
+    ],
+    "examples": [
+      {
+        "text": "\"A famous physicist says this diet cures disease, so it must be true.\"",
+        "explanation": "Physics expertise doesn't transfer to medicine — this is authority borrowed from the wrong field."
+      },
+      {
+        "text": "\"My professor believes it, and she's brilliant, so the theory has to be right.\"",
+        "explanation": "Brilliance in general, or even in a field, doesn't make an individual claim correct without supporting evidence."
+      },
+      {
+        "text": "\"This influencer has millions of followers and swears by it, so it works.\"",
+        "explanation": "Popularity and reach are not expertise; a large audience is not evidence."
+      }
+    ],
+    "refutation": [
+      {
+        "title": "Ask for the evidence",
+        "text": "Request the reasoning behind the claim, not just the credential.",
+        "comeback": "What's the actual evidence they're basing that on?"
+      },
+      {
+        "title": "Check the domain",
+        "text": "Point out when the authority is outside their expertise.",
+        "comeback": "That's not really their field — what do specialists in this area say?"
+      },
+      {
+        "title": "Appeal to consensus, not one voice",
+        "text": "Ask whether the wider body of experts agrees.",
+        "comeback": "Is that the general view among experts, or just one person's take?"
+      }
+    ],
+    "avoidance": [
+      "Use authority as a starting point, then look for the underlying evidence",
+      "Check that the expert is speaking within their field",
+      "Prefer expert consensus over any single confident voice"
+    ]
+  },
+  {
+    "name": "Hasty Generalization",
+    "slug": "hasty-generalization",
+    "category": "Logical Fallacy",
+    "aka": [
+      "Jumping to Conclusions",
+      "Overgeneralization"
+    ],
+    "hook": "I met two rude people from that city, so everyone there must be rude.",
+    "oneLiner": "Drawing a broad conclusion from too small or unrepresentative a sample.",
+    "deepDive": "A hasty generalization leaps from a handful of cases — sometimes a single one — to a sweeping rule about a whole group or category. It's a natural shortcut: our brains generalise from limited experience constantly. It becomes a fallacy when the sample is too small, cherry-picked, or unrepresentative to support the size of the claim. The danger is that the conclusion feels earned ('I've seen it with my own eyes') while resting on almost no data. Watch for words like 'all', 'always', 'never', or 'those people' attached to evidence that amounts to a couple of anecdotes. The fix is to ask how many cases the conclusion rests on and whether they're representative of the whole.",
+    "howToSpot": [
+      "A sweeping claim ('all', 'always', 'those people') rests on very few cases",
+      "The examples are anecdotal, cherry-picked, or unrepresentative",
+      "Personal experience is treated as proof of a universal rule"
+    ],
+    "examples": [
+      {
+        "text": "\"My two friends who tried remote work were unproductive, so remote work doesn't work.\"",
+        "explanation": "Two cases can't support a conclusion about remote work in general."
+      },
+      {
+        "text": "\"This one study found no effect, so the whole theory is debunked.\"",
+        "explanation": "A single study is rarely enough to overturn a body of evidence."
+      },
+      {
+        "text": "\"The last three startups I saw fail were all in fintech — clearly fintech is doomed.\"",
+        "explanation": "A tiny, selective sample is being stretched into a claim about an entire sector."
+      }
+    ],
+    "refutation": [
+      {
+        "title": "Question the sample size",
+        "text": "Ask how many cases the conclusion actually rests on.",
+        "comeback": "How many examples is that based on? A couple of cases can't tell us about everyone."
+      },
+      {
+        "title": "Ask about representativeness",
+        "text": "Probe whether the examples reflect the whole group.",
+        "comeback": "Were those cases typical, or just the ones that stood out?"
+      },
+      {
+        "title": "Request stronger data",
+        "text": "Ask for evidence proportional to the size of the claim.",
+        "comeback": "Is there broader data on this, rather than a few anecdotes?"
+      }
+    ],
+    "avoidance": [
+      "Match the strength of your conclusion to the amount of evidence",
+      "Be suspicious of 'all' and 'always' when the evidence is a handful of stories",
+      "Ask whether your examples are representative before generalising"
+    ]
+  },
+  {
+    "name": "Appeal to Emotion",
+    "slug": "appeal-to-emotion",
+    "category": "Logical Fallacy",
+    "aka": [
+      "Emotional Manipulation",
+      "Pathos Fallacy"
+    ],
+    "hook": "If you really cared about children, you wouldn't even ask about the cost.",
+    "oneLiner": "Using feelings — fear, pity, anger — in place of evidence to win an argument.",
+    "deepDive": "An appeal to emotion tries to move you to a conclusion by stirring a feeling rather than giving a reason. Emotions aren't irrelevant to arguments — it's fine to care about outcomes — but the fallacy is when emotion *replaces* the logical case instead of accompanying it. Fear, pity, guilt, and outrage are used because they bypass scrutiny: a frightened or guilty audience is less likely to ask for evidence. The tell is that when you strip the emotional language away, there's no argument left underneath — just a feeling pointed at a conclusion. The fix is to acknowledge the emotion as real, then ask what the actual evidence for the claim is, separate from how it makes you feel.",
+    "howToSpot": [
+      "Vivid emotional language stands in for evidence or reasoning",
+      "You're made to feel guilty, afraid, or heartless for even questioning the claim",
+      "Strip out the feelings and no actual argument remains"
+    ],
+    "examples": [
+      {
+        "text": "\"Think of the children! How can you oppose this bill and still sleep at night?\"",
+        "explanation": "Guilt is used to shut down scrutiny rather than to show the bill actually works."
+      },
+      {
+        "text": "\"After everything I've done for this company, you'd really deny me this?\"",
+        "explanation": "An appeal to pity replaces the question of whether the request is justified on its merits."
+      },
+      {
+        "text": "\"If you don't share this, you clearly don't care about the cause.\"",
+        "explanation": "Fear of looking uncaring is used to pressure action, with no argument for the action itself."
+      }
+    ],
+    "refutation": [
+      {
+        "title": "Acknowledge the feeling",
+        "text": "Validate the emotion, then separate it from the claim.",
+        "comeback": "I do care about this — and precisely because I do, I want to check it actually works."
+      },
+      {
+        "title": "Ask for the evidence",
+        "text": "Request the reasoning underneath the emotional appeal.",
+        "comeback": "Setting the feelings aside for a second, what's the actual case for this?"
+      },
+      {
+        "title": "Name the pressure",
+        "text": "Point out that emotion is being used to avoid scrutiny.",
+        "comeback": "Making me feel guilty doesn't answer whether the proposal is sound."
+      }
+    ],
+    "avoidance": [
+      "Notice when a strong feeling is standing in for a reason",
+      "Let emotion inform your values, but demand evidence for factual claims",
+      "Be wary of arguments that make questioning them feel morally wrong"
     ]
   },
   {
     "name": "Circular Reasoning",
-    "category": "Logical Fallacy",
     "slug": "circular-reasoning",
-    "explanation": "When the conclusion of an argument is used as a premise of that same argument. The reasoning goes in a circle without providing actual support for the conclusion.",
+    "category": "Logical Fallacy",
+    "aka": [
+      "Begging the Question",
+      "Petitio Principii"
+    ],
+    "hook": "This book is trustworthy because it says right there that everything in it is true.",
+    "oneLiner": "Using the conclusion as its own evidence, so the argument goes in a circle.",
+    "deepDive": "Circular reasoning assumes the very thing it's trying to prove — the conclusion is smuggled in as a premise, so the argument never actually establishes anything. It can be hard to spot because it often sounds like an explanation: 'X is true because X is true' gets dressed up in different words at each end of the circle. The reason it's a fallacy is that it provides no independent support; if you already doubted the conclusion, the argument gives you no new reason to accept it. The test is to ask whether the premise would convince someone who doesn't already believe the conclusion. If the only support for a claim is a restatement of the claim, the circle is closed and empty.",
+    "howToSpot": [
+      "The premise and the conclusion are really the same statement in different words",
+      "The reason offered only makes sense if you already accept the conclusion",
+      "No independent evidence is ever introduced"
+    ],
     "examples": [
-      "The Bible is true because it says so in the Bible.",
-      "I'm trustworthy because I say I'm trustworthy.",
-      "This law is just because it's the law."
+      {
+        "text": "\"He's the most honest person I know because he'd never lie to me.\"",
+        "explanation": "Never lying is just a restatement of being honest — no independent reason is given."
+      },
+      {
+        "text": "\"The policy is the right one because it's what a reasonable person would choose.\"",
+        "explanation": "Calling the choice 'reasonable' assumes the conclusion it's meant to support."
+      },
+      {
+        "text": "\"We know the ad works because sales went up, and sales went up because the ad works.\"",
+        "explanation": "Each half leans on the other; nothing outside the loop supports either claim."
+      }
     ],
     "refutation": [
-      "Point out the circularity: 'You're assuming what you're trying to prove.'",
-      "Request independent evidence: 'Can you provide support that doesn't rely on the claim itself?'",
-      "Rephrase to expose it: 'So you're saying X is true because X is true?'"
+      {
+        "title": "Expose the loop",
+        "text": "Show that the premise and conclusion are the same claim.",
+        "comeback": "That's just restating your conclusion — what independent reason supports it?"
+      },
+      {
+        "title": "Ask for outside evidence",
+        "text": "Request support that doesn't assume the point.",
+        "comeback": "Is there any evidence for this that doesn't already assume it's true?"
+      },
+      {
+        "title": "Test on a skeptic",
+        "text": "Point out the argument only works on people who already agree.",
+        "comeback": "Would this convince someone who doesn't already believe it? I don't think it would."
+      }
     ],
     "avoidance": [
-      "Ensure your premises provide independent support for your conclusion",
-      "Check if you're assuming what you're trying to prove",
-      "Build arguments on foundational evidence"
+      "Check that your premises don't secretly assume your conclusion",
+      "Support claims with independent evidence, not restatements",
+      "Ask whether your reasoning would persuade someone who disagrees"
     ]
   },
   {
     "name": "Appeal to Tradition",
-    "category": "Logical Fallacy",
     "slug": "appeal-to-tradition",
-    "explanation": "Arguing that something is correct or better simply because it's traditional or has 'always been done this way.' This fallacy assumes that longevity or tradition equals validity.",
+    "category": "Logical Fallacy",
+    "aka": [
+      "Argumentum ad Antiquitatem",
+      "Because We've Always Done It"
+    ],
+    "hook": "We've always done onboarding this way, so there's no reason to change it.",
+    "oneLiner": "Claiming something is right or best simply because it's how things have always been done.",
+    "deepDive": "This fallacy treats age or longevity as proof of merit — 'we've always done it this way' becomes a reason not to question or change something. But how long a practice has existed says nothing about whether it's effective, ethical, or optimal; plenty of long-standing traditions were also long-standing mistakes. Tradition can carry real accumulated wisdom, so it's not worthless as a consideration — but it's a starting hypothesis, not a conclusion. The fallacy is when 'it's traditional' ends the discussion instead of opening it. The counter is to ask why the practice works, not how old it is: if there's a good reason, the reason will stand on its own without needing the appeal to history.",
+    "howToSpot": [
+      "Age or 'the way it's always been' is offered as the reason something is right",
+      "Change is resisted purely because the current way is established",
+      "No case is made for why the traditional way is actually better"
+    ],
     "examples": [
-      "We've always done it this way, so we shouldn't change.",
-      "Marriage has traditionally been between a man and a woman, so it should stay that way.",
-      "This medical practice has been used for centuries, so it must be effective."
+      {
+        "text": "\"Marriage has always meant this, so it can never mean anything else.\"",
+        "explanation": "Longevity of a definition doesn't establish that it's the only valid one."
+      },
+      {
+        "text": "\"Our company has never offered remote work, so we shouldn't start now.\"",
+        "explanation": "Never having done something isn't a reason it wouldn't work — only that it's untried here."
+      },
+      {
+        "text": "\"This ritual has been performed for centuries; questioning it is disrespectful.\"",
+        "explanation": "Age is used to shield the practice from the question of whether it still serves a purpose."
+      }
     ],
     "refutation": [
-      "Challenge the logic: 'Just because something is traditional doesn't mean it's right or effective.'",
-      "Provide counter-examples: 'Many traditions have been harmful and were rightfully changed.'",
-      "Ask for current evidence: 'What makes this practice valuable today, regardless of its history?'"
+      {
+        "title": "Ask why, not how long",
+        "text": "Redirect from the age of the practice to its justification.",
+        "comeback": "How long we've done it isn't the point — what makes it the right approach today?"
+      },
+      {
+        "title": "Separate wisdom from habit",
+        "text": "Grant tradition may hold value, then ask what that value is.",
+        "comeback": "There may be good reasons behind this — can we name them, rather than just its age?"
+      },
+      {
+        "title": "Test against the goal",
+        "text": "Ask whether the tradition still serves its purpose.",
+        "comeback": "Does it still achieve what we actually want, or are we just repeating it?"
+      }
     ],
     "avoidance": [
-      "Evaluate practices based on current evidence and merit",
-      "Recognize that traditions can be valuable but aren't automatically correct",
-      "Be open to changing ineffective or harmful practices"
+      "Ask why a practice works, not just how long it's existed",
+      "Treat 'we've always done it this way' as a question, not an answer",
+      "Judge traditions by their current merits and outcomes"
     ]
   },
   {
     "name": "Bandwagon Fallacy",
-    "category": "Logical Fallacy",
     "slug": "bandwagon-fallacy",
-    "explanation": "Assuming something is true or good because it's popular. This fallacy appeals to the desire to be part of the majority rather than evaluating the merit of the claim itself.",
+    "category": "Logical Fallacy",
+    "aka": [
+      "Appeal to Popularity",
+      "Argumentum ad Populum"
+    ],
+    "hook": "Everyone's investing in this coin — you're crazy not to be in.",
+    "oneLiner": "Claiming something is true or good because lots of people believe it or do it.",
+    "deepDive": "The bandwagon fallacy treats popularity as evidence: if enough people believe or do something, it must be right. But the number of people holding a view is independent of whether the view is correct — majorities have been wrong throughout history, and popularity is often driven by hype, social pressure, or marketing rather than truth. It exploits our real and useful instinct to follow the crowd (which is a decent heuristic in genuinely uncertain, low-stakes situations) and misapplies it to questions that should be settled by evidence. The tell is 'everyone', 'nobody', or a headcount used in place of a reason. The counter is to ask what the crowd actually knows, and whether their belief is based on evidence or just on each other.",
+    "howToSpot": [
+      "'Everyone believes/does it' is offered as the reason it's correct",
+      "Social proof or headcounts replace evidence",
+      "Pressure to conform substitutes for a genuine argument"
+    ],
     "examples": [
-      "Everyone's buying this product, so it must be good.",
-      "Most people believe this, so it must be true.",
-      "All my friends are doing it, so I should too."
+      {
+        "text": "\"Millions of people can't be wrong about this product.\"",
+        "explanation": "Popularity can be manufactured by marketing; large numbers don't guarantee quality."
+      },
+      {
+        "text": "\"Everyone in the office thinks the plan is fine, so it must be.\"",
+        "explanation": "Shared opinion isn't evidence — the whole group could be missing the same flaw."
+      },
+      {
+        "text": "\"All my friends are dropping the class, so it's obviously a bad course.\"",
+        "explanation": "A cluster of like-minded people copying each other isn't an independent judgement."
+      }
     ],
     "refutation": [
-      "Challenge the logic: 'Popularity doesn't equal correctness.'",
-      "Historical examples: 'Many popular beliefs throughout history have been wrong.'",
-      "Request evidence: 'What makes this true beyond its popularity?'"
+      {
+        "title": "Separate popular from true",
+        "text": "Point out that agreement isn't evidence.",
+        "comeback": "Lots of people believing it doesn't make it true — what's the actual reason?"
+      },
+      {
+        "title": "Ask what the crowd knows",
+        "text": "Probe whether the majority's belief rests on evidence.",
+        "comeback": "Are they basing that on evidence, or just on each other?"
+      },
+      {
+        "title": "Cite counter-examples",
+        "text": "Recall that majorities have often been wrong.",
+        "comeback": "Plenty of popular beliefs have turned out false — popularity isn't a guarantee."
+      }
     ],
     "avoidance": [
-      "Evaluate claims based on evidence, not popularity",
-      "Remember that truth isn't democratic",
-      "Be willing to hold unpopular but well-supported positions"
+      "Ask whether a popular belief rests on evidence or just on numbers",
+      "Be willing to hold a minority view when the evidence supports it",
+      "Notice when you're agreeing to fit in rather than because you're convinced"
     ]
   },
   {
     "name": "False Cause",
-    "category": "Logical Fallacy",
     "slug": "false-cause",
-    "explanation": "Assuming that because two things are correlated, one caused the other. This fallacy confuses correlation with causation.",
+    "category": "Logical Fallacy",
+    "aka": [
+      "Post Hoc Ergo Propter Hoc",
+      "Correlation Implies Causation"
+    ],
+    "hook": "I wore my lucky socks and we won — so the socks won us the game.",
+    "oneLiner": "Assuming that because one thing followed another, the first caused the second.",
+    "deepDive": "False cause treats sequence or correlation as proof of causation: B happened after A, so A must have caused B. But two things can co-occur for many reasons — coincidence, a shared third cause, or reverse causation — none of which involve A causing B. It's a deeply intuitive error because our minds are built to detect causes, and a story where A causes B is more satisfying than 'it's complicated.' The classic form is 'post hoc': it happened after, therefore because of. The fix is to ask whether there's an actual mechanism linking the two, whether something else could explain both, and whether the correlation holds up beyond the one instance. Correlation is a reason to investigate a cause, never proof of one.",
+    "howToSpot": [
+      "A causal claim rests only on one thing happening after another",
+      "No mechanism is given for how A would actually cause B",
+      "Alternative explanations (coincidence, a third factor) are never considered"
+    ],
     "examples": [
-      "Ice cream sales and drowning deaths both increase in summer, so ice cream causes drowning.",
-      "Countries with more firefighters have more fires, so firefighters cause fires.",
-      "I wore my lucky socks and won the game, so the socks caused the win."
+      {
+        "text": "\"Crime rose the same year we opened the new park, so the park caused it.\"",
+        "explanation": "Two things rising together doesn't mean one caused the other — many factors move at once."
+      },
+      {
+        "text": "\"I started taking this vitamin and my cold went away, so it cured me.\"",
+        "explanation": "Colds resolve on their own; the timing doesn't establish the vitamin did anything."
+      },
+      {
+        "text": "\"Every time I wash my car it rains, so washing my car causes rain.\"",
+        "explanation": "A memorable coincidence is mistaken for a causal link with no plausible mechanism."
+      }
     ],
     "refutation": [
-      "Distinguish correlation from causation: 'These things happen together, but that doesn't mean one causes the other.'",
-      "Identify alternative explanations: 'Could there be a third factor affecting both?'",
-      "Request causal mechanism: 'How exactly would A cause B?'"
+      {
+        "title": "Ask for the mechanism",
+        "text": "Request how, exactly, A would cause B.",
+        "comeback": "What's the actual mechanism connecting these two? Timing alone isn't enough."
+      },
+      {
+        "title": "Raise alternatives",
+        "text": "Suggest coincidence or a hidden third cause.",
+        "comeback": "Could something else be causing both — or is this just coincidence?"
+      },
+      {
+        "title": "Distinguish correlation from cause",
+        "text": "State the principle directly.",
+        "comeback": "They happened together, but that doesn't tell us one caused the other."
+      }
     ],
     "avoidance": [
-      "Look for the mechanism connecting cause and effect",
-      "Consider alternative explanations for correlations",
-      "Be cautious about inferring causation from correlation"
+      "Ask whether a correlation might be coincidence or a shared cause",
+      "Look for a plausible mechanism before claiming causation",
+      "Remember 'after' does not mean 'because of'"
     ]
   },
   {
     "name": "Genetic Fallacy",
-    "category": "Logical Fallacy",
     "slug": "genetic-fallacy",
-    "explanation": "Judging something as good or bad based on its origin rather than its current meaning or context. This fallacy dismisses ideas based on their source or history.",
+    "category": "Logical Fallacy",
+    "aka": [
+      "Fallacy of Origins",
+      "Appeal to Origin"
+    ],
+    "hook": "That idea came from a tabloid, so it can't possibly be true.",
+    "oneLiner": "Judging a claim as true or false based on its origin rather than its content.",
+    "deepDive": "The genetic fallacy evaluates an idea by where it came from — its source, history, or the character of whoever first said it — instead of by whether it's actually correct. A good idea from a disreputable source is still good; a bad idea from a prestigious one is still bad. It overlaps with ad hominem but is broader: it applies to institutions, publications, origins, and traditions, not just people. It works because origin is a fast heuristic for credibility, and often a useful one — but a heuristic isn't a verdict. The tell is dismissing or accepting a claim purely on its pedigree ('that's just something the other party made up' / 'it came from a respected journal, so it's right'). The fix is to assess the claim on its own evidence, treating the source as a prompt to investigate rather than a conclusion.",
+    "howToSpot": [
+      "A claim is accepted or rejected because of who or where it came from",
+      "The origin (a source, party, publication) is discussed instead of the content",
+      "No engagement with whether the claim is actually true"
+    ],
     "examples": [
-      "That theory was developed by a pharmaceutical company, so it must be wrong.",
-      "This word has offensive origins, so we can't use it even in an educational context.",
-      "That idea comes from ancient superstition, so it has no value."
+      {
+        "text": "\"This health tip is nonsense — it came from a random blog.\"",
+        "explanation": "A dubious source can still be right; the tip should be checked on its own evidence."
+      },
+      {
+        "text": "\"That theory was originally proposed by a discredited scientist, so it's worthless.\"",
+        "explanation": "Ideas aren't permanently tainted by their origin — they stand or fall on their merits."
+      },
+      {
+        "text": "\"If the opposing party suggested it, it must be a bad policy.\"",
+        "explanation": "The source's identity is used to pre-judge the policy without examining it."
+      }
     ],
     "refutation": [
-      "Separate origin from validity: 'Where something comes from doesn't determine if it's true or useful now.'",
-      "Focus on current merit: 'Let's evaluate this based on its current application and evidence.'",
-      "Acknowledge evolution: 'Ideas and meanings can change over time.'"
+      {
+        "title": "Separate source from claim",
+        "text": "Note that origin doesn't determine truth.",
+        "comeback": "Where it came from doesn't decide whether it's true — let's look at the claim itself."
+      },
+      {
+        "title": "Ask about the content",
+        "text": "Redirect to the actual substance.",
+        "comeback": "Set the source aside — is the claim itself right or wrong, and why?"
+      },
+      {
+        "title": "Use the source as a prompt",
+        "text": "Treat origin as a reason to verify, not to dismiss.",
+        "comeback": "Fair to be skeptical of the source, so let's check the claim rather than reject it outright."
+      }
     ],
     "avoidance": [
-      "Evaluate ideas based on their current merit",
-      "Recognize that good ideas can come from questionable sources",
-      "Don't dismiss something solely based on its origin"
+      "Evaluate claims on their evidence, not their pedigree",
+      "Let a questionable source raise your scrutiny, not close the case",
+      "Don't accept a claim just because it comes from a prestigious source"
     ]
   },
   {
     "name": "No True Scotsman",
-    "category": "Logical Fallacy",
     "slug": "no-true-scotsman",
-    "explanation": "Modifying the definition of a category to exclude counterexamples. This fallacy protects a generalization by arbitrarily excluding cases that don't fit.",
+    "category": "Logical Fallacy",
+    "aka": [
+      "Appeal to Purity",
+      "Moving the Definition"
+    ],
+    "hook": "No real fan would ever criticise the band. — But I'm a fan and I did. — Then you're not a real fan.",
+    "oneLiner": "Redefining a group on the spot to exclude any counter-example.",
+    "deepDive": "This fallacy defends a sweeping generalisation about a group by redefining the group to expel any exception. When a counter-example appears ('here's a Scotsman who does that'), the claimant retreats to 'well, no *true* Scotsman would' — quietly changing the definition so the claim can never be falsified. It's a way of making a statement immune to evidence: whatever contradicts it is defined out of existence. The tell is the appearance of purity words — 'real', 'true', 'genuine' — right after a counter-example is raised. The counter is to pin down the definition *before* discussing exceptions, and to point out that a claim which reshapes itself to survive any counter-example isn't really making a testable claim at all.",
+    "howToSpot": [
+      "A counter-example is met with 'no real/true/genuine [X] would...'",
+      "The definition of the group shifts precisely to exclude the exception",
+      "The claim is arranged so no evidence could ever disprove it"
+    ],
     "examples": [
-      "Person A: 'No Scotsman puts sugar on porridge.' Person B: 'I'm Scottish and I do.' Person A: 'Well, no *true* Scotsman does.'",
-      "Person A: 'Real Christians don't sin.' Person B: 'But this Christian person did.' Person A: 'Well, they're not a *real* Christian then.'",
-      "No true patriot would criticize their country."
+      {
+        "text": "\"No true professional would miss a deadline.\" — \"Sarah's a professional and she did.\" — \"Then she's not truly professional.\"",
+        "explanation": "The definition of 'professional' is rewritten mid-argument to exclude the counter-example."
+      },
+      {
+        "text": "\"Real supporters never boo the team.\" — \"Those were season-ticket holders booing.\" — \"Real supporters wouldn't have.\"",
+        "explanation": "'Real supporter' is redefined so that anyone who boos automatically doesn't count."
+      },
+      {
+        "text": "\"Genuine environmentalists don't fly.\" — \"Many do, for conferences.\" — \"Then they're not genuine.\"",
+        "explanation": "The category is purified on the spot to protect the original blanket claim."
+      }
     ],
     "refutation": [
-      "Point out the shifting definition: 'You're changing what counts as X to exclude counterexamples.'",
-      "Request clear criteria: 'What exactly defines a \"true\" member of this group?'",
-      "Challenge arbitrary exclusion: 'Why doesn't this example count?'"
+      {
+        "title": "Pin the definition first",
+        "text": "Ask them to define the group before allowing exceptions.",
+        "comeback": "Let's agree what counts as a 'real' one first — then we can test the claim."
+      },
+      {
+        "title": "Point out the moving target",
+        "text": "Name the redefinition as it happens.",
+        "comeback": "You've just changed the definition to exclude my example. That's not a fair test."
+      },
+      {
+        "title": "Ask what would count as disproof",
+        "text": "Expose that the claim can't be falsified.",
+        "comeback": "Is there any example that would count against your claim? If not, it isn't really testable."
+      }
     ],
     "avoidance": [
-      "Define categories clearly upfront",
-      "Accept that generalizations have exceptions",
-      "Don't arbitrarily exclude inconvenient examples"
+      "Define your terms before defending a generalisation about a group",
+      "When a counter-example appears, revise the claim, don't redefine the group",
+      "Notice when 'real' or 'true' is doing the work of dodging evidence"
     ]
   },
   {
     "name": "Loaded Question",
-    "category": "Logical Fallacy",
     "slug": "loaded-question",
-    "explanation": "Asking a question that contains an assumption that may be false or disputed. The question is framed so that any direct answer appears to confirm the assumption.",
+    "category": "Logical Fallacy",
+    "aka": [
+      "Complex Question",
+      "Presupposition Trap"
+    ],
+    "hook": "So, have you stopped cutting corners on your projects yet?",
+    "oneLiner": "A question with a built-in assumption, so any direct answer admits something unproven.",
+    "deepDive": "A loaded question smuggles an unproven (usually damaging) assumption into the question itself, so that any straightforward answer concedes the assumption. 'Have you stopped cutting corners?' traps you: 'yes' admits you did it before, 'no' admits you still do. The trick is that the presupposition was never established — it's slipped in as if already agreed. It's a favourite in interrogations, hostile interviews, and online pile-ons because it forces the target onto the back foot. The distinction from an ordinary pointed question is the hidden premise you never accepted. The counter is never to answer on the question's terms: expose and reject the presupposition first, then answer the legitimate part, if there is one.",
+    "howToSpot": [
+      "Any direct yes/no answer forces you to concede something unproven",
+      "The question presupposes a fact that was never established",
+      "It's framed to put you on the defensive from the first word"
+    ],
     "examples": [
-      "Have you stopped beating your wife?",
-      "Why do you hate America?",
-      "How long have you been a liar?"
+      {
+        "text": "\"Why do you always undermine the team in meetings?\"",
+        "explanation": "It assumes you always undermine the team — answering 'why' concedes that you do."
+      },
+      {
+        "text": "\"Have you stopped wasting company money on this project?\"",
+        "explanation": "Both 'yes' and 'no' admit you were wasting money, which was never shown."
+      },
+      {
+        "text": "\"When are you going to admit the whole plan was a mistake?\"",
+        "explanation": "It presupposes the plan was a mistake and that you know it — neither is granted."
+      }
     ],
     "refutation": [
-      "Reject the premise: 'Your question assumes something that isn't true.'",
-      "Reframe: 'Let me address the assumption in your question first.'",
-      "Clarify: 'I won't answer until we establish whether the premise is accurate.'"
+      {
+        "title": "Reject the premise",
+        "text": "Refuse to answer until the hidden assumption is addressed.",
+        "comeback": "That question assumes something I don't accept — let's deal with that first."
+      },
+      {
+        "title": "Split the question",
+        "text": "Separate the loaded part from any legitimate part.",
+        "comeback": "There are two claims baked in there. I'll answer the fair one, but not the assumption."
+      },
+      {
+        "title": "Flip it back",
+        "text": "Ask them to first establish the presupposition.",
+        "comeback": "Before I answer, can you show that the thing you're assuming is even true?"
+      }
     ],
     "avoidance": [
-      "Don't embed controversial assumptions in questions",
-      "Ask neutral questions that don't presuppose disputed facts",
-      "Separate questions about assumptions from questions about conclusions"
+      "Check whether a question contains an assumption you haven't accepted",
+      "Ask neutral questions that don't presuppose their own answers",
+      "Address hidden premises before engaging with the surface question"
     ]
   },
   {
     "name": "Middle Ground Fallacy",
-    "category": "Logical Fallacy",
     "slug": "middle-ground-fallacy",
-    "explanation": "Assuming that a compromise between two positions must be correct. This fallacy suggests that the truth always lies in the middle, which isn't necessarily the case.",
+    "category": "Logical Fallacy",
+    "aka": [
+      "Argument to Moderation",
+      "Golden Mean Fallacy",
+      "False Compromise"
+    ],
+    "hook": "One scientist says the bridge is safe, one says it'll collapse — the truth must be somewhere in between.",
+    "oneLiner": "Assuming the truth is always the compromise between two positions.",
+    "deepDive": "This fallacy treats the midpoint between two views as automatically correct, as if truth were always a matter of splitting the difference. But sometimes one side is simply right and the other simply wrong, and 'meeting in the middle' just moves you toward the error. Compromise is a virtue in negotiation and values disputes; it's not a method for settling questions of fact. The fallacy is especially dangerous when one 'side' is an extreme or fabricated position deliberately staked out to drag the perceived centre toward it. The tell is 'the truth is somewhere in between' asserted without any evidence that the middle is actually where the evidence points. The counter is to insist that the answer be located by evidence, not by geometry.",
+    "howToSpot": [
+      "'The truth is somewhere in the middle' is stated as if it's automatically so",
+      "A compromise is treated as correct simply for being moderate",
+      "Evidence is ignored in favour of splitting the difference"
+    ],
     "examples": [
-      "Some say vaccines are safe, others say they're deadly. The truth must be somewhere in the middle.",
-      "Person A says 2+2=4, Person B says 2+2=6. Let's compromise and say 2+2=5.",
-      "She says he hit her, he denies it. They must both be partially right."
+      {
+        "text": "\"Some say the earth is round, some say flat — probably it's a bit of both.\"",
+        "explanation": "There's no meaningful middle here; one position is factually correct and the other isn't."
+      },
+      {
+        "text": "\"He wants a full refund, I want to pay nothing, so half is obviously fair.\"",
+        "explanation": "Fairness depends on who's actually owed what, not on the arithmetic midpoint."
+      },
+      {
+        "text": "\"One report says the drug is safe, one fringe blog says it's deadly — the truth's in between.\"",
+        "explanation": "Averaging a rigorous study with a baseless claim doesn't produce truth."
+      }
     ],
     "refutation": [
-      "Challenge the assumption: 'Why would the middle position be correct?'",
-      "Provide examples: 'Some questions have right and wrong answers, not middle grounds.'",
-      "Demand evidence: 'Let's look at the evidence for each position rather than assuming compromise is best.'"
+      {
+        "title": "Ask where the evidence points",
+        "text": "Insist the answer be found by evidence, not position.",
+        "comeback": "The middle isn't automatically right — where does the actual evidence land?"
+      },
+      {
+        "title": "Check if one side is just wrong",
+        "text": "Point out that sometimes there's no valid midpoint.",
+        "comeback": "If one side is simply mistaken, compromising with it just moves us toward the error."
+      },
+      {
+        "title": "Expose manufactured extremes",
+        "text": "Note when an extreme was staked out to drag the centre.",
+        "comeback": "That extreme position looks designed to pull the 'middle' in its direction."
+      }
     ],
     "avoidance": [
-      "Evaluate positions based on evidence, not their relative extremity",
-      "Recognize that sometimes one side is simply correct",
-      "Don't assume moderation equals truth"
+      "Locate the truth with evidence, not by splitting the difference",
+      "Remember that sometimes one side is simply correct",
+      "Watch for extreme positions designed to shift the perceived centre"
     ]
   },
   {
     "name": "Equivocation",
-    "category": "Logical Fallacy",
     "slug": "equivocation",
-    "explanation": "Using the same word with different meanings in different parts of an argument. This fallacy exploits ambiguous language to make an argument seem valid when it isn't.",
+    "category": "Logical Fallacy",
+    "aka": [
+      "Ambiguity Fallacy",
+      "Semantic Shift"
+    ],
+    "hook": "Nothing is better than lifelong happiness. A cheese sandwich is better than nothing. So a cheese sandwich is better than lifelong happiness.",
+    "oneLiner": "Using the same word in two different senses to make an argument seem to work.",
+    "deepDive": "Equivocation exploits a word that has more than one meaning, sliding between the senses so that a conclusion appears to follow when it doesn't. The argument looks valid because the same word appears throughout — but the word means one thing in the premise and something else in the conclusion. It's the verbal equivalent of a bait-and-switch. Common culprits are words like 'right' (correct vs. entitlement), 'free' (no cost vs. liberty), 'theory' (hunch vs. scientific framework), and 'natural.' The tell is a conclusion that feels slippery or too clever, where re-reading reveals a key word has quietly changed meaning. The fix is to define the ambiguous term and hold it to one meaning throughout — the argument usually collapses once the word is pinned down.",
+    "howToSpot": [
+      "A key word is used with two different meanings in the same argument",
+      "The conclusion only 'works' because of the shift in meaning",
+      "Pinning down a single definition makes the argument fall apart"
+    ],
     "examples": [
-      "A feather is light. What is light cannot be dark. Therefore, a feather cannot be dark.",
-      "Evolution is just a theory. Theories are uncertain. Therefore, evolution is uncertain.",
-      "The sign said 'fine for parking here,' so I thought it was okay to park."
+      {
+        "text": "\"Evolution is only a theory, and a theory is just a guess, so it's unproven.\"",
+        "explanation": "'Theory' means a casual guess in one clause and a rigorous scientific framework in the other."
+      },
+      {
+        "text": "\"Everyone has the right to free speech, so this platform is violating my rights by moderating me.\"",
+        "explanation": "'Right' as a legal protection against government is swapped for 'right' as an entitlement to any platform."
+      },
+      {
+        "text": "\"The sign says 'fine for parking here', so it must be fine to park here.\"",
+        "explanation": "'Fine' shifts from a penalty to an approval between the sign and the conclusion."
+      }
     ],
     "refutation": [
-      "Identify the shift: 'You're using this word with two different meanings.'",
-      "Define terms: 'Let's be clear about what we mean by this term.'",
-      "Rephrase with consistent definitions: 'If we use one consistent meaning, the argument falls apart.'"
+      {
+        "title": "Define the term",
+        "text": "Ask for a single, fixed meaning of the slippery word.",
+        "comeback": "Which meaning of that word are we using? Let's fix one and stick to it."
+      },
+      {
+        "title": "Expose the shift",
+        "text": "Show where the meaning changes mid-argument.",
+        "comeback": "The word means one thing in your premise and another in your conclusion."
+      },
+      {
+        "title": "Re-run with one meaning",
+        "text": "Rebuild the argument holding the term constant.",
+        "comeback": "If we use the same definition throughout, the conclusion doesn't actually follow."
+      }
     ],
     "avoidance": [
-      "Define key terms clearly",
-      "Use words consistently throughout an argument",
-      "Be aware of multiple meanings and specify which you intend"
+      "Define ambiguous terms and use them consistently",
+      "Re-read arguments to check a key word hasn't shifted meaning",
+      "Be alert to words with both an everyday and a technical sense"
     ]
   },
   {
     "name": "Burden of Proof Fallacy",
-    "category": "Logical Fallacy",
     "slug": "burden-of-proof-fallacy",
-    "explanation": "Shifting the burden of proof to the person questioning a claim rather than the person making it. The person making a claim is responsible for supporting it, not those who question it.",
+    "category": "Logical Fallacy",
+    "aka": [
+      "Shifting the Burden",
+      "Onus Probandi"
+    ],
+    "hook": "I say there's a secret cabal running the economy. Prove there isn't.",
+    "oneLiner": "Demanding others disprove your claim instead of supporting it yourself.",
+    "deepDive": "The burden of proof rests on whoever makes a claim, not on everyone else to refute it. This fallacy reverses that: someone asserts something, then insists you disprove it, treating your inability to do so as evidence they're right. But 'you can't prove me wrong' is not the same as 'I'm right' — especially for unfalsifiable or extraordinary claims, where disproof is impossible by design. It's a favourite of conspiracy theories and pseudoscience because it offloads the hard work of evidence onto the skeptic. The tell is a claim delivered with a challenge to refute it, rather than support for it. The counter is to hold the line: the person asserting a claim owes the evidence, and a claim with no support can be dismissed with no support.",
+    "howToSpot": [
+      "A claim is made, then you're told to disprove it",
+      "Failure to refute is treated as proof the claim is true",
+      "The claimant offers no positive evidence of their own"
+    ],
     "examples": [
-      "Prove that God doesn't exist.",
-      "You can't prove this conspiracy theory isn't true, so it must be real.",
-      "Show me evidence that this supplement doesn't work."
+      {
+        "text": "\"Ghosts are real — can you prove they're not?\"",
+        "explanation": "The person claiming ghosts exist owes the evidence; inability to disprove isn't proof."
+      },
+      {
+        "text": "\"My product boosts memory. Show me a study proving it doesn't.\"",
+        "explanation": "The seller must demonstrate the benefit; skeptics don't have to disprove an unsupported claim."
+      },
+      {
+        "text": "\"I think the manager is sabotaging us. You can't prove he isn't, so I'm probably right.\"",
+        "explanation": "Lack of a disproof doesn't support the accusation — the burden is on the accuser."
+      }
     ],
     "refutation": [
-      "Redirect the burden: 'The burden of proof is on the person making the claim.'",
-      "Explain impossibility: 'Proving a negative is often impossible - that's why you must prove the positive.'",
-      "Cite the standard: 'In logic and law, claims require evidence from those making them.'"
+      {
+        "title": "Return the burden",
+        "text": "Point out the claimant owes the evidence.",
+        "comeback": "You made the claim, so the evidence is on you — not on me to disprove it."
+      },
+      {
+        "title": "Note unfalsifiability",
+        "text": "Flag claims that can't be disproven by design.",
+        "comeback": "If nothing could ever disprove it, 'you can't disprove it' means very little."
+      },
+      {
+        "title": "Dismiss the unsupported",
+        "text": "State that no evidence means no reason to accept.",
+        "comeback": "With no evidence offered, there's nothing here to accept in the first place."
+      }
     ],
     "avoidance": [
-      "Provide evidence for your own claims",
-      "Don't demand others disprove unsupported assertions",
-      "Accept that the burden of proof lies with the claimant"
+      "Support your own claims rather than daring others to refute them",
+      "Remember the burden of proof is on the one making the assertion",
+      "Don't treat 'unrefuted' as 'proven'"
     ]
   },
   {
     "name": "Appeal to Ignorance",
-    "category": "Logical Fallacy",
     "slug": "appeal-to-ignorance",
-    "explanation": "Arguing that something must be true because it hasn't been proven false, or vice versa. This fallacy assumes that lack of evidence against something is evidence for it.",
+    "category": "Logical Fallacy",
+    "aka": [
+      "Argumentum ad Ignorantiam",
+      "Absence of Evidence"
+    ],
+    "hook": "No one has ever proven the treatment doesn't work, so it clearly works.",
+    "oneLiner": "Treating the absence of evidence against a claim as evidence for it.",
+    "deepDive": "This fallacy concludes that a claim is true because it hasn't been proven false (or false because it hasn't been proven true). But 'we don't know' is not a conclusion in either direction — a lack of disproof is not proof. It exploits the gap in our knowledge and fills it with whatever the speaker prefers. It's closely tied to the burden of proof fallacy, but focuses specifically on turning ignorance into evidence. The nuance: in some contexts a *thorough* search that turns up nothing is genuinely informative ('we looked hard and found no side effects'). The fallacy is when mere absence of information — with no real search — is inflated into a positive conclusion. The counter is to insist that unknown means unknown, and to ask for actual positive evidence.",
+    "howToSpot": [
+      "'Not disproven' is treated as 'proven' (or vice versa)",
+      "A gap in knowledge is filled with the speaker's preferred conclusion",
+      "No positive evidence is offered — only the absence of the opposite"
+    ],
     "examples": [
-      "No one has proven aliens don't exist, so they must exist.",
-      "Science hasn't explained this phenomenon, so it must be supernatural.",
-      "We've never seen evidence of election fraud, so it definitely didn't happen."
+      {
+        "text": "\"Nobody has proven aliens haven't visited Earth, so they must have.\"",
+        "explanation": "Absence of disproof isn't evidence of visits — the claim still needs positive support."
+      },
+      {
+        "text": "\"There's no proof the new hire is dishonest, so he must be completely trustworthy.\"",
+        "explanation": "Lack of evidence of dishonesty doesn't establish trustworthiness; it establishes nothing either way."
+      },
+      {
+        "text": "\"No study has shown this supplement is unsafe, therefore it's safe.\"",
+        "explanation": "Untested is not the same as proven safe — absence of findings isn't a clean bill of health."
+      }
     ],
     "refutation": [
-      "Clarify standards: 'Absence of evidence isn't evidence of absence (or presence).'",
-      "Redirect: 'What positive evidence supports this claim?'",
-      "Point out the gap: 'Not knowing something doesn't mean we can assume the opposite is true.'"
+      {
+        "title": "Insist unknown means unknown",
+        "text": "Refuse to convert ignorance into a conclusion.",
+        "comeback": "Not being disproven isn't the same as being true — this is still an open question."
+      },
+      {
+        "title": "Ask for positive evidence",
+        "text": "Request support for the claim itself.",
+        "comeback": "What actual evidence is there for the claim, beyond the lack of evidence against it?"
+      },
+      {
+        "title": "Check if a real search happened",
+        "text": "Distinguish 'we looked and found nothing' from 'we never looked.'",
+        "comeback": "Has anyone actually investigated this, or do we just not know yet?"
+      }
     ],
     "avoidance": [
-      "Distinguish between absence of evidence and evidence of absence",
-      "Seek positive evidence rather than relying on gaps in knowledge",
-      "Accept uncertainty when evidence is lacking"
+      "Treat 'unknown' as unknown, not as evidence for your preferred answer",
+      "Require positive evidence, not just the absence of contradiction",
+      "Distinguish a thorough search that found nothing from never having looked"
     ]
   },
   {
     "name": "Texas Sharpshooter",
-    "category": "Logical Fallacy",
     "slug": "texas-sharpshooter",
-    "explanation": "Cherry-picking data to fit a predetermined conclusion, then claiming to have found a pattern. Named after a shooter who shoots at a barn, then draws a target around the bullet holes.",
+    "category": "Logical Fallacy",
+    "aka": [
+      "Cherry-Picking",
+      "Clustering Illusion"
+    ],
+    "hook": "I predicted three market crashes! (Out of the forty times I predicted a crash.)",
+    "oneLiner": "Cherry-picking data clusters after the fact to fit a pattern you wanted to find.",
+    "deepDive": "The name comes from a shooter who fires at a barn wall, then paints the target around the tightest cluster of holes — making random shots look like expert marksmanship. The fallacy works the same way: you gather data, ignore everything that doesn't fit, draw the 'target' around the hits, and declare a pattern. It ignores the misses, the base rate, and the fact that random data naturally contains clusters. It's rampant in claims about predictions, alternative medicine, and conspiracy 'evidence,' where successes are counted and failures quietly dropped. The tell is a striking pattern presented without the full dataset — no denominator, no mention of what didn't fit. The counter is to ask for everything: all the predictions, all the cases, the hits *and* the misses.",
+    "howToSpot": [
+      "A pattern is highlighted while the data that doesn't fit is omitted",
+      "Only the 'hits' are counted; the misses and the base rate are ignored",
+      "The conclusion was drawn after the data was collected, to fit what was wanted"
+    ],
     "examples": [
-      "Looking at all the times a prediction was correct while ignoring all the times it was wrong.",
-      "Finding similarities between two events and calling it a pattern while ignoring all their differences.",
-      "Highlighting data points that support your hypothesis while excluding those that don't."
+      {
+        "text": "\"This psychic predicted the disaster!\" (ignoring the hundreds of predictions that failed.)",
+        "explanation": "Counting only the one hit, out of many misses, manufactures a pattern from noise."
+      },
+      {
+        "text": "\"Everyone who took the remedy and recovered proves it works.\" (ignoring those who took it and didn't.)",
+        "explanation": "Selecting only the recoveries hides the failures needed to judge whether it actually helps."
+      },
+      {
+        "text": "\"Look how many championship teams wear red — red must cause winning.\"",
+        "explanation": "The red-wearing losers are left out; a cluster is highlighted and the rest ignored."
+      }
     ],
     "refutation": [
-      "Request complete data: 'What about all the cases that don't fit this pattern?'",
-      "Challenge selection: 'How did you decide which data to include and exclude?'",
-      "Demand methodology: 'Was this pattern identified before or after looking at the data?'"
+      {
+        "title": "Ask for the full dataset",
+        "text": "Request the misses as well as the hits.",
+        "comeback": "How many times did it fail? I need the full picture, not just the successes."
+      },
+      {
+        "title": "Ask about the base rate",
+        "text": "Probe how likely the pattern is by chance.",
+        "comeback": "Out of how many total attempts? A few hits in a huge sample isn't remarkable."
+      },
+      {
+        "title": "Check the timing",
+        "text": "Ask whether the pattern was predicted or found afterward.",
+        "comeback": "Was this predicted in advance, or did you spot the pattern after the fact?"
+      }
     ],
     "avoidance": [
-      "Examine all relevant data, not just data that supports your view",
-      "Establish patterns before collecting data, not after",
-      "Be transparent about what data you're including and excluding"
+      "Look at all the data, including the cases that don't fit your pattern",
+      "Ask for the base rate and the misses, not just the hits",
+      "Decide what you're testing before you collect the data"
     ]
   }
 ]

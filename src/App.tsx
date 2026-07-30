@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { CourseProgressProvider } from "@/contexts/CourseProgressContext";
 import { AuthProvider } from "@/contexts/AuthContext";
 import Index from "./pages/Index";
@@ -21,6 +21,7 @@ import ItemDetail from "./pages/ItemDetail";
 import About from "./pages/About";
 import Auth from "./pages/Auth";
 import Account from "./pages/Account";
+import removedSlugRedirects from "./data/removed-slug-redirects.json";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,9 @@ const App = () => (
             <Route path="/learn/cognitive-biases" element={<LearnBiases />} />
             <Route path="/learn/bad-faith-arguments" element={<LearnBadFaith />} />
             <Route path="/learn/search" element={<LearnSearch />} />
+            {Object.entries(removedSlugRedirects).map(([from, to]) => (
+              <Route key={from} path={from} element={<Navigate to={to} replace />} />
+            ))}
             <Route path="/learn/:type/:slug" element={<ItemDetail />} />
             <Route path="/about" element={<About />} />
             <Route path="/auth" element={<Auth />} />

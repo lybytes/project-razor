@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { useCourseProgress } from "@/contexts/CourseProgressContext";
-import { getLessonData, getNextLessonId, type ConceptCard, type DrillQuestion, type WarzonePost } from "@/data/courseData";
+import { getLessonData, getLessonConcepts, getNextLessonId, type DrillQuestion, type WarzonePost } from "@/data/courseData";
 import { Button } from "@/components/ui/button";
 import { Check, X, ChevronRight, ChevronLeft, BookOpen, Target, Swords, BarChart3, Trophy } from "lucide-react";
 
@@ -50,13 +50,13 @@ const LessonFlowInner = ({ lesson, navigate, progress, completeLesson, setLesson
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
-  // Learn stage: 6 cards per concept, then transition
-  const CARDS_PER_CONCEPT = 6;
-  const totalLearnCards = lesson.conceptCards.length * CARDS_PER_CONCEPT + 1;
+  // Learn stage: 5 cards per concept, then transition
+  const CARDS_PER_CONCEPT = 5;
+  const concepts = getLessonConcepts(lesson);
   const currentConceptIndex = Math.floor(learnCardIndex / CARDS_PER_CONCEPT);
   const currentCardType = learnCardIndex % CARDS_PER_CONCEPT;
-  const isTransitionCard = learnCardIndex >= lesson.conceptCards.length * CARDS_PER_CONCEPT;
-  const currentConcept = !isTransitionCard ? lesson.conceptCards[currentConceptIndex] : null;
+  const isTransitionCard = learnCardIndex >= concepts.length * CARDS_PER_CONCEPT;
+  const currentConcept = !isTransitionCard ? concepts[currentConceptIndex] : null;
 
   const advanceStage = useCallback((newStage: number) => {
     setStage(newStage);
@@ -144,7 +144,7 @@ const LessonFlowInner = ({ lesson, navigate, progress, completeLesson, setLesson
             {isTransitionCard ? (
               <div className="text-center py-8 sm:py-16">
                 <p className="text-xl sm:text-2xl font-bold text-foreground mb-3">
-                  You've learned {lesson.conceptCards.length} new concept{lesson.conceptCards.length > 1 ? "s" : ""}. Time to test yourself.
+                  You've learned {concepts.length} new concept{concepts.length > 1 ? "s" : ""}. Time to test yourself.
                 </p>
                 <Button size="lg" onClick={() => advanceStage(1)} className="mt-4 sm:mt-6">
                   Start Drill <ChevronRight className="w-4 h-4 ml-1" />
@@ -167,15 +167,16 @@ const LessonFlowInner = ({ lesson, navigate, progress, completeLesson, setLesson
                       {currentConcept.category}
                     </span>
                     <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-5">{currentConcept.name}</h2>
-                    <p className="text-base sm:text-lg md:text-xl text-foreground/80 max-w-md leading-relaxed">{currentConcept.definition}</p>
+                    <p className="text-base sm:text-lg md:text-xl text-foreground/80 max-w-md leading-relaxed">{currentConcept.oneLiner}</p>
                   </div>
                 )}
 
                 {currentCardType === 2 && (
                   <div className="flex-1">
                     <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">How to spot it</h3>
+                    <p className="text-base text-foreground/80 leading-relaxed mb-6">{currentConcept.deepDive}</p>
                     <ul className="space-y-3 sm:space-y-5">
-                      {currentConcept.spotIt.map((point, i) => (
+                      {currentConcept.howToSpot.map((point, i) => (
                         <li key={i} className="flex gap-3">
                           <span className="text-primary mt-0.5 text-lg">•</span>
                           <span className="text-base text-foreground/90 leading-relaxed">{point}</span>
@@ -187,42 +188,34 @@ const LessonFlowInner = ({ lesson, navigate, progress, completeLesson, setLesson
 
                 {currentCardType === 3 && (
                   <div className="flex-1">
-                    <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">How to counter it</h3>
-                    <ul className="space-y-3 sm:space-y-5 mb-6 sm:mb-8">
-                      {currentConcept.counterIt.map((point, i) => (
-                        <li key={i} className="flex gap-3">
-                          <span className="text-primary mt-0.5 text-lg">•</span>
-                          <span className="text-base text-foreground/90 leading-relaxed">{point}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="border-l-2 border-primary/50 pl-4 py-3">
-                      <p className="text-base text-foreground/80 italic leading-relaxed">"{currentConcept.counterExample}"</p>
-                    </div>
-                  </div>
-                )}
-
-                {currentCardType === 4 && (
-                  <div className="flex-1">
                     <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">Real-world examples</h3>
                     <div className="space-y-3 sm:space-y-4">
-                      {currentConcept.realWorldExamples.map((example, i) => (
+                      {currentConcept.examples.map((example, i) => (
                         <div key={i} className="rounded-lg bg-[hsl(240,6%,10%)] border border-border p-3 sm:p-5">
-                          <p className="text-base text-foreground/90 leading-relaxed italic">"{example}"</p>
+                          <p className="text-base text-foreground/90 leading-relaxed italic">"{example.text}"</p>
+                          <p className="text-sm text-muted-foreground leading-relaxed mt-2">{example.explanation}</p>
                         </div>
                       ))}
                     </div>
                   </div>
                 )}
 
-                {currentCardType === 5 && (
+                {currentCardType === 4 && (
                   <div className="flex-1">
-                    <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">Refutation strategies</h3>
-                    <ul className="space-y-3 sm:space-y-5">
-                      {currentConcept.refutationStrategies.map((strategy, i) => (
+                    <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">How to counter it</h3>
+                    <ul className="space-y-5 sm:space-y-6">
+                      {currentConcept.refutation.map((strategy, i) => (
                         <li key={i} className="flex gap-3">
                           <span className="text-green-400 mt-0.5 text-base font-bold">{i + 1}.</span>
-                          <span className="text-base text-foreground/90 leading-relaxed">{strategy}</span>
+                          <div className="flex-1">
+                            <p className="text-base text-foreground/90 leading-relaxed">
+                              <span className="font-bold text-foreground">{strategy.title}: </span>
+                              {strategy.text}
+                            </p>
+                            <div className="border-l-2 border-primary/50 pl-4 py-2 mt-2">
+                              <p className="text-base text-foreground/80 italic leading-relaxed">"{strategy.comeback}"</p>
+                            </div>
+                          </div>
                         </li>
                       ))}
                     </ul>
@@ -237,7 +230,7 @@ const LessonFlowInner = ({ lesson, navigate, progress, completeLesson, setLesson
                       </Button>
                     )}
                     <span className="text-xs text-muted-foreground">
-                      {currentConceptIndex + 1}/{lesson.conceptCards.length} concepts
+                      {currentConceptIndex + 1}/{concepts.length} concepts
                     </span>
                   </div>
                   <Button onClick={() => setLearnCardIndex(learnCardIndex + 1)}>
