@@ -128,20 +128,20 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
     <div className="min-h-screen bg-background">
       <Navigation />
 
-      <main className="container mx-auto px-4 py-4 sm:py-8 max-w-2xl">
+      <main className="container mx-auto px-4 py-6 sm:py-10 max-w-2xl">
         {/* Stage Indicator */}
-        <div className="flex items-center justify-center gap-1.5 sm:gap-2 mb-6 sm:mb-10">
+        <div className="flex items-center justify-center gap-1.5 sm:gap-3 mb-6 sm:mb-10">
           {STAGES.map((s, i) => {
             const Icon = STAGE_ICONS[i];
             return (
               <div key={s} className="flex items-center gap-2">
-                <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-colors ${
-                  i === stage ? "bg-primary/20 text-primary" : i < stage ? "bg-green-500/20 text-green-400" : "bg-muted/30 text-muted-foreground"
+                <div className={`flex items-center gap-1.5 h-8 px-3 sm:px-4 rounded-full text-xs font-semibold transition-colors border ${
+                  i === stage ? "bg-primary/15 text-primary border-primary/20" : i < stage ? "bg-green-500/15 text-green-400 border-green-500/20" : "bg-muted/30 text-muted-foreground border-transparent"
                 }`}>
                   <Icon className="w-3.5 h-3.5" />
                   <span className="hidden sm:inline">{s}</span>
                 </div>
-                {i < STAGES.length - 1 && <div className={`w-6 h-px ${i < stage ? "bg-green-500/50" : "bg-border"}`} />}
+                {i < STAGES.length - 1 && <div className={`w-4 sm:w-6 h-px ${i < stage ? "bg-green-500/50" : "bg-border"}`} />}
               </div>
             );
           })}
@@ -151,31 +151,31 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
         {stage === 0 && (
           <div className="animate-fade-up">
             {isTransitionCard ? (
-              <div className="text-center py-8 sm:py-16">
+              <div className="text-center py-10 sm:py-16 rounded-xl border border-border bg-card p-6 sm:p-10">
                 <p className="text-xl sm:text-2xl font-bold text-foreground mb-3">
-                  You've learned {concepts.length} new concept{concepts.length > 1 ? "s" : ""}. Time to test yourself.
+                  You&apos;ve learned {concepts.length} new concept{concepts.length > 1 ? "s" : ""}. Time to test yourself.
                 </p>
                 <Button size="lg" onClick={() => advanceStage(1)} className="mt-4 sm:mt-6">
                   Start Drill <ChevronRight className="w-4 h-4 ml-1" />
                 </Button>
               </div>
             ) : currentConcept && (
-              <div className="min-h-[300px] sm:min-h-[400px] flex flex-col">
+              <div className="min-h-[360px] sm:min-h-[420px] flex flex-col rounded-xl border border-border bg-card p-5 sm:p-8">
                 {currentCardType === 0 && (
                   <div className="flex-1 flex flex-col items-center justify-center text-center px-2 sm:px-4">
                     <p className="text-xl sm:text-2xl md:text-3xl text-foreground font-medium italic leading-relaxed max-w-lg">
-                      "{currentConcept.hook}"
+                      &ldquo;{currentConcept.hook}&rdquo;
                     </p>
-                    <p className="text-muted-foreground mt-8 text-base">What's wrong with this argument?</p>
+                    <p className="text-muted-foreground mt-8 text-base">What&apos;s wrong with this argument?</p>
                   </div>
                 )}
 
                 {currentCardType === 1 && (
                   <div className="flex-1 flex flex-col items-center justify-center text-center px-2 sm:px-4">
-                    <span className="inline-block px-4 py-1.5 rounded-full text-sm font-semibold bg-primary/15 text-primary mb-4 sm:mb-5">
+                    <span className="inline-flex h-7 items-center px-4 rounded-full text-xs font-semibold bg-primary/15 text-primary mb-4 sm:mb-5">
                       {currentConcept.category}
                     </span>
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-5">{currentConcept.name}</h2>
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-5 tracking-tight">{currentConcept.name}</h2>
                     <p className="text-base sm:text-lg md:text-xl text-foreground/80 max-w-md leading-relaxed">{currentConcept.oneLiner}</p>
                   </div>
                 )}
@@ -218,8 +218,8 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
                               <span className="font-bold text-foreground">{strategy.title}: </span>
                               {strategy.text}
                             </p>
-                            <div className="border-l-2 border-primary/50 pl-4 py-2 mt-2">
-                              <p className="text-base text-foreground/80 italic leading-relaxed">"{strategy.comeback}"</p>
+                            <div className="border-l-2 border-primary/50 bg-primary/5 rounded-r px-4 py-2 mt-2">
+                              <p className="text-base text-foreground/80 italic leading-relaxed">&ldquo;{strategy.comeback}&rdquo;</p>
                             </div>
                           </div>
                         </li>
@@ -228,8 +228,8 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
                   </div>
                 )}
 
-                <div className="mt-6 sm:mt-8 flex justify-between items-center">
-                  <div className="flex items-center gap-2">
+                <div className="mt-6 sm:mt-8 flex justify-between items-center pt-4 border-t border-border/50">
+                  <div className="flex items-center gap-3">
                     {learnCardIndex > 0 && (
                       <Button variant="ghost" size="sm" onClick={() => setLearnCardIndex(learnCardIndex - 1)}>
                         <ChevronLeft className="w-4 h-4 mr-1" /> Back
@@ -252,8 +252,8 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
         {stage === 1 && (
           <div className="animate-fade-up">
             {drillIndex === -1 ? (
-              <div className="text-center py-8 sm:py-16">
-                <p className="text-xl sm:text-2xl font-bold text-foreground mb-3">Drill complete. Now apply what you've learned in the real world.</p>
+              <div className="text-center py-10 sm:py-16 rounded-xl border border-border bg-card p-6 sm:p-10">
+                <p className="text-xl sm:text-2xl font-bold text-foreground mb-3">Drill complete. Now apply what you&apos;ve learned in the real world.</p>
                 <p className="text-lg text-muted-foreground mb-6">
                   {drillCorrect}/{lesson.drillQuestions.length} correct
                 </p>
@@ -280,12 +280,12 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
         {stage === 2 && (
           <div className="animate-fade-up">
             {warzoneIndex === -1 ? (
-              <div className="text-center py-8 sm:py-16">
+              <div className="text-center py-10 sm:py-16 rounded-xl border border-border bg-card p-6 sm:p-10">
                 <p className="text-xl sm:text-2xl font-bold text-foreground mb-3">Warzone complete!</p>
                 <p className="text-lg text-muted-foreground mb-2">
                   {warzoneCorrect}/{lesson.warzonePosts.length} correct
                 </p>
-                <p className="text-muted-foreground mb-6">You've proven you can apply these concepts to real-world scenarios.</p>
+                <p className="text-muted-foreground mb-6">You&apos;ve proven you can apply these concepts to real-world scenarios.</p>
                 <Button size="lg" onClick={finishLesson}>
                   See Lesson Summary <ChevronRight className="w-4 h-4 ml-1" />
                 </Button>
@@ -333,58 +333,66 @@ const DrillView = ({ question, index, total, selectedOption, submitted, onSelect
   onSelect: (i: number) => void;
   onSubmit: () => void;
   onNext: () => void;
-}) => (
-  <div>
-    <p className="text-sm text-muted-foreground mb-6">Question {index + 1} of {total}</p>
+}) => {
+  const scenarioId = `drill-scenario-${index}`;
+  const questionId = `drill-question-${index}`;
+  return (
+    <div className="rounded-xl border border-border bg-card p-5 sm:p-8">
+      <p id={questionId} className="text-sm text-muted-foreground mb-6">Question {index + 1} of {total}</p>
 
-    <div className="rounded-lg bg-[hsl(240,6%,10%)] border border-border p-3 sm:p-5 mb-4 sm:mb-6">
-      <p className="text-foreground font-mono text-sm sm:text-base leading-relaxed italic">"{question.scenario}"</p>
-    </div>
-
-    <p className="text-foreground text-base sm:text-lg font-semibold mb-3 sm:mb-4">What's happening in this argument?</p>
-
-    <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
-      {question.options.map((opt, i) => {
-        let classes = "w-full text-left p-3 sm:p-4 rounded-lg border transition-all duration-200 text-sm font-medium ";
-        if (submitted) {
-          if (i === question.correctIndex) {
-            classes += "border-green-500 bg-green-500/10 text-green-400";
-          } else if (i === selectedOption && i !== question.correctIndex) {
-            classes += "border-red-500 bg-red-500/10 text-red-400";
-          } else {
-            classes += "border-border/50 bg-card/50 text-muted-foreground";
-          }
-        } else if (i === selectedOption) {
-          classes += "border-primary bg-primary/10 text-primary";
-        } else {
-          classes += "border-border bg-card text-foreground hover:border-primary/50";
-        }
-        return (
-          <button key={i} onClick={() => !submitted && onSelect(i)} disabled={submitted} className={classes}>
-            {opt}
-          </button>
-        );
-      })}
-    </div>
-
-    {submitted && (
-      <div className="space-y-4 mb-4 animate-fade-up">
-        <div className="rounded-lg bg-muted/20 border border-border p-4">
-          <p className="text-foreground text-base leading-relaxed">{question.feedback}</p>
-        </div>
-        <Button onClick={onNext} className="w-full">
-          Next <ChevronRight className="w-4 h-4 ml-1" />
-        </Button>
+      <div
+        role="region"
+        aria-labelledby={scenarioId}
+        className="rounded-xl bg-muted/30 border border-border p-4 sm:p-6 mb-4 sm:mb-6"
+      >
+        <p id={scenarioId} className="text-foreground font-medium text-sm sm:text-base leading-relaxed italic">&ldquo;{question.scenario}&rdquo;</p>
       </div>
-    )}
 
-    {!submitted && (
-      <Button onClick={onSubmit} disabled={selectedOption === null} className="w-full">
-        Submit Answer
-      </Button>
-    )}
-  </div>
-);
+      <p className="text-foreground text-base sm:text-lg font-semibold mb-3 sm:mb-4">What&apos;s happening in this argument?</p>
+
+      <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6" role="radiogroup" aria-labelledby={questionId}>
+        {question.options.map((opt, i) => {
+          let classes = "w-full text-left p-3 sm:p-4 rounded-xl border transition-all duration-200 text-sm font-medium ";
+          if (submitted) {
+            if (i === question.correctIndex) {
+              classes += "border-green-500 bg-green-500/10 text-green-400";
+            } else if (i === selectedOption && i !== question.correctIndex) {
+              classes += "border-red-500 bg-red-500/10 text-red-400";
+            } else {
+              classes += "border-border/50 bg-card/50 text-muted-foreground";
+            }
+          } else if (i === selectedOption) {
+            classes += "border-primary bg-primary/10 text-primary";
+          } else {
+            classes += "border-border bg-card text-foreground hover:border-primary/50";
+          }
+          return (
+            <button key={i} onClick={() => !submitted && onSelect(i)} disabled={submitted} className={classes} role="radio" aria-checked={selectedOption === i}>
+              {opt}
+            </button>
+          );
+        })}
+      </div>
+
+      {submitted && (
+        <div className="space-y-4 mb-4 animate-fade-up">
+          <div className="rounded-xl bg-muted/20 border border-border p-4">
+            <p className="text-foreground text-base leading-relaxed">{question.feedback}</p>
+          </div>
+          <Button onClick={onNext} className="w-full">
+            Next <ChevronRight className="w-4 h-4 ml-1" />
+          </Button>
+        </div>
+      )}
+
+      {!submitted && (
+        <Button onClick={onSubmit} disabled={selectedOption === null} className="w-full">
+          Submit Answer
+        </Button>
+      )}
+    </div>
+  );
+};
 
 // ===== WARZONE COMPONENT =====
 
@@ -397,88 +405,91 @@ const WarzoneView = ({ post, index, total, selectedOption, submitted, onSelect, 
   onSelect: (i: number) => void;
   onSubmit: () => void;
   onNext: () => void;
-}) => (
-  <div>
-    <p className="text-sm text-muted-foreground mb-6">Post {index + 1} of {total}</p>
+}) => {
+  const postQuestionId = `warzone-question-${index}`;
+  return (
+    <div className="rounded-xl border border-border bg-card p-5 sm:p-8">
+      <p className="text-sm text-muted-foreground mb-6">Post {index + 1} of {total}</p>
 
-    <p className="text-xs text-muted-foreground italic mb-3 sm:mb-4">Source: {post.source}</p>
+      <p className="text-xs text-muted-foreground italic mb-3 sm:mb-4">Source: {post.source}</p>
 
-    <div className="rounded-lg bg-[hsl(240,6%,12%)] border border-border/50 p-3 sm:p-5 mb-3 sm:mb-4">
-      <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2 font-medium">Context</p>
-      <p className="text-foreground/90 text-sm sm:text-base leading-relaxed">{post.context}</p>
-    </div>
-
-    <div className="rounded-lg bg-card border border-border p-3 sm:p-5 mb-4 sm:mb-6">
-      <div className="flex items-center gap-2 mb-3">
-        <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-          <span className="text-xs font-bold text-primary">{post.username[0]}</span>
-        </div>
-        <div>
-          <p className="text-sm font-medium text-foreground">{post.username}</p>
-          <p className="text-xs text-muted-foreground">{post.platform}</p>
-        </div>
+      <div className="rounded-xl bg-muted/30 border border-border p-4 sm:p-6 mb-3 sm:mb-4">
+        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2 font-medium">Context</p>
+        <p className="text-foreground/90 text-sm sm:text-base leading-relaxed">{post.context}</p>
       </div>
-      <p className="text-foreground text-sm sm:text-base leading-relaxed italic">"{post.comment}"</p>
-    </div>
 
-    <p className="text-foreground text-base sm:text-lg font-semibold mb-3 sm:mb-4">What BFBA is being used here?</p>
+      <div className="rounded-xl bg-card border border-border p-4 sm:p-6 mb-4 sm:mb-6">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-9 h-9 rounded-full bg-primary/15 flex items-center justify-center">
+            <span className="text-xs font-bold text-primary">{post.username[0]}</span>
+          </div>
+          <div>
+            <p className="text-sm font-medium text-foreground">{post.username}</p>
+            <p className="text-xs text-muted-foreground">{post.platform}</p>
+          </div>
+        </div>
+        <p className="text-foreground text-sm sm:text-base leading-relaxed italic">&ldquo;{post.comment}&rdquo;</p>
+      </div>
 
-    <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
-      {post.options.map((opt, i) => {
-        let classes = "w-full text-left p-3 sm:p-4 rounded-lg border transition-all duration-200 text-sm font-medium ";
-        if (submitted) {
-          if (i === post.correctIndex) {
-            classes += "border-green-500 bg-green-500/10 text-green-400";
-          } else if (i === selectedOption && i !== post.correctIndex) {
-            classes += "border-red-500 bg-red-500/10 text-red-400";
+      <p id={postQuestionId} className="text-foreground text-base sm:text-lg font-semibold mb-3 sm:mb-4">What BFBA is being used here?</p>
+
+      <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6" role="radiogroup" aria-labelledby={postQuestionId}>
+        {post.options.map((opt, i) => {
+          let classes = "w-full text-left p-3 sm:p-4 rounded-xl border transition-all duration-200 text-sm font-medium ";
+          if (submitted) {
+            if (i === post.correctIndex) {
+              classes += "border-green-500 bg-green-500/10 text-green-400";
+            } else if (i === selectedOption && i !== post.correctIndex) {
+              classes += "border-red-500 bg-red-500/10 text-red-400";
+            } else {
+              classes += "border-border/50 bg-card/50 text-muted-foreground";
+            }
+          } else if (i === selectedOption) {
+            classes += "border-primary bg-primary/10 text-primary";
           } else {
-            classes += "border-border/50 bg-card/50 text-muted-foreground";
+            classes += "border-border bg-card text-foreground hover:border-primary/50";
           }
-        } else if (i === selectedOption) {
-          classes += "border-primary bg-primary/10 text-primary";
-        } else {
-          classes += "border-border bg-card text-foreground hover:border-primary/50";
-        }
-        return (
-          <button key={i} onClick={() => !submitted && onSelect(i)} disabled={submitted} className={classes}>
-            {opt}
-          </button>
-        );
-      })}
-    </div>
-
-    {submitted && (
-      <div className="space-y-4 mb-6 animate-fade-up">
-        <div className={`rounded-lg p-4 ${selectedOption === post.correctIndex ? "bg-green-500/10 border border-green-500/30" : "bg-red-500/10 border border-red-500/30"}`}>
-          <div className="flex items-center gap-2 mb-2">
-            {selectedOption === post.correctIndex ? <Check className="w-4 h-4 text-green-400" /> : <X className="w-4 h-4 text-red-400" />}
-            <span className={`font-semibold text-sm ${selectedOption === post.correctIndex ? "text-green-400" : "text-red-400"}`}>
-              {selectedOption === post.correctIndex ? "Correct!" : "Incorrect"} — {post.options[post.correctIndex]}
-            </span>
-          </div>
-          <p className="text-foreground text-base leading-relaxed">{post.explanation}</p>
-        </div>
-
-        {post.counter && (
-          <div className="border-l-2 border-primary/50 pl-4 py-2">
-            <p className="text-xs text-primary/70 font-medium uppercase tracking-wider mb-1">Counter:</p>
-            <p className="text-foreground/80 italic text-base leading-relaxed">"{post.counter}"</p>
-          </div>
-        )}
-
-        <Button onClick={onNext} className="w-full">
-          Next <ChevronRight className="w-4 h-4 ml-1" />
-        </Button>
+          return (
+            <button key={i} onClick={() => !submitted && onSelect(i)} disabled={submitted} className={classes} role="radio" aria-checked={selectedOption === i}>
+              {opt}
+            </button>
+          );
+        })}
       </div>
-    )}
 
-    {!submitted && (
-      <Button onClick={onSubmit} disabled={selectedOption === null} className="w-full">
-        Submit Answer
-      </Button>
-    )}
-  </div>
-);
+      {submitted && (
+        <div className="space-y-4 mb-6 animate-fade-up">
+          <div className={`rounded-xl p-4 ${selectedOption === post.correctIndex ? "bg-green-500/10 border border-green-500/30" : "bg-red-500/10 border border-red-500/30"}`}>
+            <div className="flex items-center gap-2 mb-2">
+              {selectedOption === post.correctIndex ? <Check className="w-4 h-4 text-green-400" /> : <X className="w-4 h-4 text-red-400" />}
+              <span className={`font-semibold text-sm ${selectedOption === post.correctIndex ? "text-green-400" : "text-red-400"}`}>
+                {selectedOption === post.correctIndex ? "Correct!" : "Incorrect"} — {post.options[post.correctIndex]}
+              </span>
+            </div>
+            <p className="text-foreground text-base leading-relaxed">{post.explanation}</p>
+          </div>
+
+          {post.counter && (
+            <div className="border-l-2 border-primary/50 bg-primary/5 rounded-r px-4 py-3">
+              <p className="text-xs text-primary/70 font-medium uppercase tracking-wider mb-1">Counter:</p>
+              <p className="text-foreground/80 italic text-base leading-relaxed">&ldquo;{post.counter}&rdquo;</p>
+            </div>
+          )}
+
+          <Button onClick={onNext} className="w-full">
+            Next <ChevronRight className="w-4 h-4 ml-1" />
+          </Button>
+        </div>
+      )}
+
+      {!submitted && (
+        <Button onClick={onSubmit} disabled={selectedOption === null} className="w-full">
+          Submit Answer
+        </Button>
+      )}
+    </div>
+  );
+};
 
 // ===== SUMMARY =====
 
@@ -499,23 +510,23 @@ const SummaryView = ({ lesson, hasSession, drillScore, warzoneScore, allLessonsC
   const xpEarned = wasAlreadyComplete ? 0 : 50 + (scorePercent >= 80 ? 10 : 0);
 
   return (
-    <div className="animate-fade-up text-center py-4 sm:py-8">
-      <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-green-500/20 flex items-center justify-center mx-auto mb-4 sm:mb-6">
-        <Check className="w-7 h-7 sm:w-8 sm:h-8 text-green-400" />
+    <div className="animate-fade-up text-center py-6 sm:py-10 rounded-xl border border-border bg-card p-5 sm:p-8">
+      <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-green-500/15 flex items-center justify-center mx-auto mb-4 sm:mb-6">
+        <Check className="w-7 h-7 sm:w-8 sm:h-8 text-green-500" />
       </div>
-      <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 sm:mb-6">Lesson Complete!</h2>
+      <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight">Lesson Complete!</h2>
 
-      <div className="bg-card border border-border rounded-lg p-4 sm:p-6 mb-4 sm:mb-6 text-left max-w-md mx-auto">
+      <div className="bg-card/60 border border-border/50 rounded-xl p-4 sm:p-6 mb-4 sm:mb-6 text-left max-w-md mx-auto">
         <p className="text-sm text-muted-foreground mb-3 font-medium">Concepts learned:</p>
         <ul className="space-y-2">
           {lesson.concepts.map(c => (
-            <li key={c} className="flex items-center gap-2 text-foreground">
-              <Check className="w-4 h-4 text-green-400" /> {c}
+            <li key={c} className="flex items-center gap-2 text-foreground text-sm">
+              <Check className="w-4 h-4 text-green-500" /> {c}
             </li>
           ))}
         </ul>
 
-        <div className="border-t border-border mt-4 pt-4 space-y-2">
+        <div className="border-t border-border/50 mt-4 pt-4 space-y-2">
           {drillScore && (
             <p className="text-sm text-muted-foreground">Drill: <span className="text-foreground font-medium">{drillScore.correct}/{drillScore.total}</span></p>
           )}
@@ -529,7 +540,7 @@ const SummaryView = ({ lesson, hasSession, drillScore, warzoneScore, allLessonsC
       </div>
 
       {!hasSession && nextLessonId && (
-        <div className="bg-primary/10 border border-primary/30 rounded-lg p-5 sm:p-6 mb-4 sm:mb-6 max-w-md mx-auto text-left">
+        <div className="bg-primary/10 border border-primary/30 rounded-xl p-5 sm:p-6 mb-4 sm:mb-6 max-w-md mx-auto text-left">
           <p className="text-foreground font-semibold mb-1">
             You just spotted {lesson.concepts.length} manipulation technique{lesson.concepts.length > 1 ? "s" : ""} in the wild.
           </p>
@@ -543,13 +554,13 @@ const SummaryView = ({ lesson, hasSession, drillScore, warzoneScore, allLessonsC
       )}
 
       {allLessonsComplete && (
-        <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 mb-6 max-w-md mx-auto">
-          <Trophy className="w-6 h-6 text-amber-400 mx-auto mb-2" />
-          <p className="text-amber-400 font-semibold">🏆 Module 1 Gauntlet Unlocked!</p>
+        <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 mb-6 max-w-md mx-auto">
+          <Trophy className="w-6 h-6 text-amber-500 mx-auto mb-2" />
+          <p className="text-amber-500 font-semibold">Module 1 Gauntlet Unlocked!</p>
         </div>
       )}
 
-      <div className="flex gap-3 justify-center">
+      <div className="flex flex-col sm:flex-row gap-3 justify-center">
         {nextLessonId && hasSession && (
           <Button onClick={() => navigate(`/train/lesson/${nextLessonId}`)}>
             Next Lesson <ChevronRight className="w-4 h-4 ml-1" />

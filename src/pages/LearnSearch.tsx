@@ -1,6 +1,6 @@
 import { Navigation } from "@/components/Navigation";
 import { Link } from "react-router-dom";
-import { Search, Brain, AlertTriangle, Shield } from "lucide-react";
+import { Search, Brain, AlertTriangle, Shield, ArrowLeft } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import fallacies from "@/data/fallacies.json";
@@ -71,28 +71,29 @@ const LearnSearch = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       
-      <main className="container mx-auto px-4 py-16">
+      <main className="container mx-auto px-4 py-8 sm:py-12">
         <div className="max-w-3xl mx-auto">
-          <div className="mb-8 opacity-0 animate-fade-up">
-            <Link to="/learn" className="text-primary hover:underline mb-4 inline-block">
-              ← Back to Library
+          <div className="mb-6 sm:mb-8 opacity-0 animate-fade-up">
+            <Link to="/learn" className="inline-flex items-center text-sm font-medium text-primary hover:text-primary/80 mb-3 transition-colors">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Library
             </Link>
-            <h1 className="text-4xl font-bold text-foreground mb-2">
+            <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-2 tracking-tight">
               Search Knowledge Base
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-base text-muted-foreground">
               Search across {allItems.length} fallacies, biases, and bad-faith arguments
             </p>
           </div>
 
-          <div className="relative mb-8 opacity-0 animate-fade-up" style={{ animationDelay: "100ms" }}>
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+          <div className="relative mb-6 sm:mb-8 opacity-0 animate-fade-up" style={{ animationDelay: "100ms" }}>
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
             <Input
               type="text"
               placeholder="Search for ad hominem, confirmation bias, gaslighting..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-12 h-14 text-lg"
+              className="pl-11 h-12 bg-card border-border text-base placeholder:text-muted-foreground/60 rounded-xl"
               autoFocus
             />
           </div>
@@ -109,23 +110,23 @@ const LearnSearch = () => {
                   <Link
                     key={`${item.type}-${item.slug}`}
                     to={getLink(item)}
-                    className="block bg-card border border-border rounded-lg p-6 hover:border-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-1 opacity-0 animate-fade-up"
+                    className="group block bg-card border border-border rounded-xl p-4 sm:p-5 hover:border-primary/50 hover:bg-primary/[0.02] transition-all duration-300 hover:-translate-y-0.5 opacity-0 animate-fade-up"
                     style={{ animationDelay: `${200 + index * 50}ms` }}
                   >
                     <div className="flex items-start gap-4">
-                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${getTypeColor(item.type)}`}>
+                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${getTypeColor(item.type)}`}>
                         <Icon className="w-5 h-5" />
                       </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-2">
-                          <h3 className="text-xl font-bold text-foreground">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-wrap items-center gap-2 mb-1.5">
+                          <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
                             {item.name}
                           </h3>
-                          <span className={`text-xs px-2 py-1 rounded-full ${getTypeColor(item.type)}`}>
+                          <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${getTypeColor(item.type)}`}>
                             {getTypeLabel(item.type)}
                           </span>
                         </div>
-                        <p className="text-muted-foreground line-clamp-2">
+                        <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
                           {item.summary}
                         </p>
                       </div>
@@ -135,16 +136,17 @@ const LearnSearch = () => {
               })}
 
               {filtered.length === 0 && (
-                <div className="text-center py-16 text-muted-foreground">
-                  No results found for "{search}"
+                <div className="text-center py-12 sm:py-16 rounded-xl border border-dashed border-border bg-card/50">
+                  <Search className="w-10 h-10 mx-auto mb-3 text-muted-foreground/50" />
+                  <p className="text-muted-foreground">No results found for &ldquo;{search}&rdquo;</p>
                 </div>
               )}
             </div>
           )}
 
           {!search.trim() && (
-            <div className="text-center py-16 opacity-0 animate-fade-up" style={{ animationDelay: "200ms" }}>
-              <Search className="w-16 h-16 mx-auto mb-4 text-muted-foreground/50" />
+            <div className="text-center py-12 sm:py-16 rounded-xl border border-dashed border-border bg-card/50 opacity-0 animate-fade-up" style={{ animationDelay: "200ms" }}>
+              <Search className="w-10 h-10 mx-auto mb-3 text-muted-foreground/50" />
               <p className="text-muted-foreground">
                 Start typing to search the knowledge base
               </p>

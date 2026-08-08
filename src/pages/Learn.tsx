@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
-import { Brain, AlertTriangle, Shield, Search } from "lucide-react";
+import { Brain, AlertTriangle, Shield, Search, ArrowRight } from "lucide-react";
+import fallacies from "@/data/fallacies.json";
+import biases from "@/data/biases.json";
+import badFaith from "@/data/bad-faith.json";
 
 const Learn = () => {
   const libraries = [
@@ -8,25 +11,22 @@ const Learn = () => {
       title: "Logical Fallacies",
       description: "Errors in reasoning that undermine the logic of an argument. Learn to identify invalid logical structures.",
       icon: Brain,
-      color: "from-purple-600 to-purple-800",
       link: "/learn/logical-fallacies",
-      count: 20
+      count: fallacies.length
     },
     {
       title: "Cognitive Biases",
       description: "Systematic patterns of deviation from rationality. Understand how your brain can trick you.",
       icon: AlertTriangle,
-      color: "from-violet-600 to-violet-800",
       link: "/learn/cognitive-biases",
-      count: 20
+      count: biases.length
     },
     {
       title: "Bad-Faith Arguments",
       description: "Manipulative tactics used to win arguments dishonestly. Recognize and counter disingenuous debate.",
       icon: Shield,
-      color: "from-indigo-600 to-indigo-800",
       link: "/learn/bad-faith-arguments",
-      count: 15
+      count: badFaith.length
     }
   ];
 
@@ -34,68 +34,62 @@ const Learn = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
       
-      <main className="container mx-auto px-4 py-8 sm:py-16">
-        <div className="text-center mb-8 sm:mb-16 opacity-0 animate-fade-up" style={{ animationDelay: "0ms" }}>
-          <h1 className="text-3xl sm:text-5xl font-bold text-foreground mb-3 sm:mb-4">
-            Knowledge Library
-          </h1>
-          <p className="text-base sm:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Explore comprehensive guides on logical fallacies, cognitive biases, and bad-faith arguments.
-          </p>
-        </div>
-
-        {/* Search Bar Link */}
-        <Link
-          to="/learn/search"
-          className="block max-w-2xl mx-auto mb-8 sm:mb-12 group opacity-0 animate-fade-up"
-          style={{ animationDelay: "100ms" }}
-        >
-          <div className="flex items-center gap-4 bg-card border border-border rounded-lg p-4 hover:border-primary transition-all duration-300 hover:shadow-lg hover:shadow-primary/10">
-            <Search className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-            <span className="text-muted-foreground group-hover:text-foreground transition-colors">
-              Search for ad hominem, confirmation bias, gaslighting...
-            </span>
+      <main className="container mx-auto px-4 py-8 sm:py-12">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-8 sm:mb-12 opacity-0 animate-fade-up">
+            <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-3 tracking-tight">
+              Knowledge Library
+            </h1>
+            <p className="text-base sm:text-lg text-muted-foreground max-w-2xl">
+              Explore logical fallacies, cognitive biases, and bad-faith arguments.
+            </p>
           </div>
-        </Link>
 
-        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8 max-w-6xl mx-auto">
-          {libraries.map((library, index) => (
-            <Link
-              key={library.title}
-              to={library.link}
-              className="group relative overflow-hidden rounded-lg border border-border bg-card hover:border-primary transition-all duration-300 opacity-0 animate-fade-up hover:shadow-lg hover:shadow-primary/10 hover:-translate-y-1"
-              style={{ animationDelay: `${150 + index * 100}ms` }}
-            >
-              <div className={`absolute inset-0 bg-gradient-to-br ${library.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
-              
-              {/* Animated border glow on hover */}
-              <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
-                <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary/20 via-primary/10 to-primary/20" />
-              </div>
-              
-              <div className="relative p-5 sm:p-8">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-primary/20 transition-all duration-300">
-                  <library.icon className="w-6 h-6 text-primary" />
+          {/* Search Bar Link */}
+          <Link
+            to="/learn/search"
+            className="block max-w-xl mb-8 sm:mb-12 group opacity-0 animate-fade-up"
+            style={{ animationDelay: "100ms" }}
+          >
+            <div className="flex items-center gap-3 bg-card border border-border rounded-xl p-4 hover:border-primary/50 hover:bg-primary/[0.02] transition-all duration-300">
+              <Search className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+              <span className="text-muted-foreground group-hover:text-foreground transition-colors text-sm">
+                Search for ad hominem, confirmation bias, gaslighting...
+              </span>
+              <ArrowRight className="w-4 h-4 text-muted-foreground ml-auto group-hover:text-primary group-hover:translate-x-0.5 transition-all duration-300" />
+            </div>
+          </Link>
+
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+            {libraries.map((library, index) => (
+              <Link
+                key={library.title}
+                to={library.link}
+                className="group flex flex-col rounded-xl border border-border bg-card p-5 sm:p-6 hover:border-primary/50 hover:bg-primary/[0.03] hover:-translate-y-0.5 transition-all duration-300 opacity-0 animate-fade-up"
+                style={{ animationDelay: `${150 + index * 100}ms` }}
+              >
+                <div className="w-11 h-11 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:scale-105 group-hover:bg-primary/15 transition-all duration-300">
+                  <library.icon className="w-5 h-5 text-primary" />
                 </div>
-                <div className="flex items-baseline gap-2 mb-3">
-                  <h3 className="text-xl sm:text-2xl font-bold text-foreground">
+                <div className="flex items-baseline gap-2 mb-2">
+                  <h3 className="text-lg sm:text-xl font-semibold text-foreground group-hover:text-primary transition-colors">
                     {library.title}
                   </h3>
-                  <span className="text-sm text-muted-foreground bg-muted/50 px-2 py-0.5 rounded-full">
+                  <span className="text-xs text-muted-foreground bg-muted/50 px-2 py-0.5 rounded-full">
                     {library.count}
                   </span>
                 </div>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-sm text-muted-foreground leading-relaxed flex-1">
                   {library.description}
                 </p>
                 
-                <div className="mt-6 flex items-center text-primary font-semibold">
-                  Explore Library
-                  <span className="ml-2 transform group-hover:translate-x-2 transition-transform duration-300">→</span>
+                <div className="mt-5 inline-flex items-center text-sm font-medium text-primary">
+                  Explore
+                  <ArrowRight className="w-4 h-4 ml-1.5 group-hover:translate-x-1 transition-transform duration-300" />
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))}
+          </div>
         </div>
       </main>
     </div>
