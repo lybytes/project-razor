@@ -101,3 +101,8 @@ All cards should:
 - Maintain contrast 4.5:1 for body text.
 - Visible focus rings (Tailwind `focus-visible:ring-2 focus-visible:ring-ring`).
 - Prefer Lucide icons; never use emojis as the only icon indicator.
+
+## Local dev gotchas
+
+- If the app renders a blank white page, check that `.env` defines `VITE_SUPABASE_ANON_KEY` (the Supabase client reads that exact name, not `VITE_SUPABASE_PUBLISHABLE_KEY`).
+- Never wrap `example.text` or `example.explanation` in extra quote characters, either in JSX string literals or via template strings; the JSON source already includes punctuation.
