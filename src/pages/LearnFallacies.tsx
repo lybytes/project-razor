@@ -12,7 +12,6 @@ const LearnFallacies = () => (
       concepts={fallacies as Concept[]}
       basePath="/learn/logical-fallacies"
       searchPlaceholder="Search fallacies..."
-      emptyMessage="No fallacies found matching {search}"
     />
   </>
 );

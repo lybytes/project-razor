@@ -12,7 +12,6 @@ const LearnBadFaith = () => (
       concepts={badFaith as Concept[]}
       basePath="/learn/bad-faith-arguments"
       searchPlaceholder="Search tactics..."
-      emptyMessage="No tactics found matching {search}"
     />
   </>
 );

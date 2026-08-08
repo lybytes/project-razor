@@ -5,9 +5,11 @@ import { useCourseProgress } from "@/contexts/CourseProgressContext";
 import { modules } from "@/data/courseData";
 import { Progress } from "@/components/ui/progress";
 import { Lock, ChevronDown, ChevronUp, Check, Trophy, MessageSquare, Zap, Play, ChevronRight } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Course = () => {
-  const { progress, getLessonsComplete } = useCourseProgress();
+  const { progress, getLessonsComplete, isLessonUnlocked } = useCourseProgress();
+  const { hasSession } = useAuth();
   const [expandedModule, setExpandedModule] = useState<number | null>(1);
 
   const totalConcepts = progress.conceptsUnlocked.length;
@@ -65,7 +67,7 @@ const Course = () => {
                 style={{ animationDelay: `${100 + i * 80}ms` }}
               >
                 {mod.locked ? (
-                  <div className="rounded-xl border border-border/50 bg-card/50 p-4 sm:p-5 relative overflow-hidden">
+                  <div className="rounded-xl border border-border/50 bg-card/50 p-4 sm:p-5">
                     <div className="flex items-center gap-4">
                       <div className="w-10 h-10 rounded-lg bg-muted/40 flex items-center justify-center shrink-0">
                         <Lock className="w-4 h-4 text-muted-foreground/60" />
@@ -119,7 +121,34 @@ const Course = () => {
                         <div className="mt-4 space-y-3">
                           {mod.lessons.map((lesson, li) => {
                             const lStatus = getLessonStatus(lesson.id);
+                            const unlocked = isLessonUnlocked(lesson.id, hasSession);
                             const isComplete = lStatus === "complete";
+
+                            if (!unlocked) {
+                              return (
+                                <div
+                                  key={lesson.id}
+                                  className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl bg-background/40 border border-border/40 opacity-60"
+                                >
+                                  <div className="w-8 h-8 rounded-full bg-muted/40 flex items-center justify-center shrink-0">
+                                    <Lock className="w-3.5 h-3.5 text-muted-foreground" />
+                                  </div>
+                                  <div className="min-w-0 flex-1">
+                                    <p className="text-sm sm:text-base font-semibold text-foreground">{lesson.title}</p>
+                                    <div className="flex flex-wrap gap-1.5 mt-1.5">
+                                      {lesson.concepts.map(c => (
+                                        <span key={c} className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary/80 font-medium">
+                                          {c}
+                                        </span>
+                                      ))}
+                                    </div>
+                                  </div>
+                                  <span className="shrink-0 inline-flex items-center gap-1.5 h-8 px-3 rounded-md text-xs font-medium border border-border bg-card text-muted-foreground">
+                                    <Lock className="w-3 h-3" /> Locked
+                                  </span>
+                                </div>
+                              );
+                            }
 
                             return (
                               <Link

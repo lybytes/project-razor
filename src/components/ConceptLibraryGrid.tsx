@@ -10,7 +10,6 @@ interface ConceptLibraryGridProps {
   concepts: Concept[];
   basePath: string;
   searchPlaceholder: string;
-  emptyMessage: string;
 }
 
 const ConceptLibraryGrid = ({
@@ -19,7 +18,6 @@ const ConceptLibraryGrid = ({
   concepts,
   basePath,
   searchPlaceholder,
-  emptyMessage,
 }: ConceptLibraryGridProps) => {
   const [search, setSearch] = useState("");
 
@@ -83,7 +81,7 @@ const ConceptLibraryGrid = ({
 
           {filtered.length === 0 && (
             <div className="text-center py-16 rounded-xl border border-dashed border-border bg-card/50">
-              <p className="text-muted-foreground">{emptyMessage.replace("{search}", search)}</p>
+              <p className="text-muted-foreground">No results for &ldquo;{search}&rdquo;</p>
             </div>
           )}
         </div>
