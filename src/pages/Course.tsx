@@ -4,17 +4,14 @@ import { Navigation } from "@/components/Navigation";
 import { useCourseProgress } from "@/contexts/CourseProgressContext";
 import { modules } from "@/data/courseData";
 import { Progress } from "@/components/ui/progress";
-import { Lock, ChevronDown, ChevronUp, Check, Trophy, Brain, MessageSquare, Zap } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useAuth } from "@/contexts/AuthContext";
+import { Lock, ChevronDown, ChevronUp, Check, Trophy, MessageSquare, Zap, Play, ChevronRight } from "lucide-react";
 
 const Course = () => {
-  const { progress, getLessonsComplete, isLessonUnlocked } = useCourseProgress();
-  const { hasSession } = useAuth();
+  const { progress, getLessonsComplete } = useCourseProgress();
   const [expandedModule, setExpandedModule] = useState<number | null>(1);
 
   const totalConcepts = progress.conceptsUnlocked.length;
-  const progressPercent = (totalConcepts / 25) * 100;
+  const progressPercent = Math.min((totalConcepts / 25) * 100, 100);
 
   const getModuleStatus = (mod: typeof modules[0]) => {
     if (mod.locked) return "locked";
@@ -37,19 +34,25 @@ const Course = () => {
     <div className="min-h-screen bg-background">
       <Navigation />
 
-      <main className="container mx-auto px-4 py-6 sm:py-12 max-w-3xl">
+      <main className="container mx-auto px-4 py-8 sm:py-12 max-w-3xl">
         {/* Header */}
-        <div className="mb-6 sm:mb-12 opacity-0 animate-fade-up">
-          <h1 className="text-2xl sm:text-4xl font-bold text-foreground mb-2">Your Course</h1>
-          <p className="text-muted-foreground text-base sm:text-lg mb-4 sm:mb-6">Master critical thinking, one lesson at a time.</p>
-          <div className="flex items-center gap-4">
-            <Progress value={progressPercent} className="h-3 flex-1" />
-            <span className="text-sm text-muted-foreground whitespace-nowrap">{totalConcepts}/25 concepts</span>
+        <div className="mb-8 sm:mb-10 opacity-0 animate-fade-up">
+          <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-2">Course</p>
+          <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-3 tracking-tight">Your Course</h1>
+          <p className="text-base sm:text-lg text-muted-foreground mb-6 max-w-xl">
+            Master critical thinking, one lesson at a time.
+          </p>
+          <div className="p-4 sm:p-5 rounded-xl bg-card border border-border">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm font-medium text-foreground">Overall progress</span>
+              <span className="text-sm font-medium text-muted-foreground">{totalConcepts}/25 concepts</span>
+            </div>
+            <Progress value={progressPercent} className="h-2.5" />
           </div>
         </div>
 
         {/* Module Map */}
-        <div className="space-y-4 mb-16">
+        <div className="space-y-4 mb-12">
           {modules.map((mod, i) => {
             const status = getModuleStatus(mod);
             const isExpanded = expandedModule === mod.id;
@@ -62,141 +65,130 @@ const Course = () => {
                 style={{ animationDelay: `${100 + i * 80}ms` }}
               >
                 {mod.locked ? (
-                  <div className="rounded-lg border border-border/30 bg-card/30 p-4 sm:p-6 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 opacity-50" />
-                    <div className="relative flex items-center gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-muted/20 flex items-center justify-center shrink-0 border border-border/30">
-                        <Lock className="w-4 h-4 text-muted-foreground/50" />
+                  <div className="rounded-xl border border-border/50 bg-card/50 p-4 sm:p-5 relative overflow-hidden">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-lg bg-muted/40 flex items-center justify-center shrink-0">
+                        <Lock className="w-4 h-4 text-muted-foreground/60" />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <div className="flex items-center gap-3 flex-wrap">
-                          <h3 className="text-lg font-semibold text-muted-foreground/60">
-                            Module {mod.id} — {mod.title}
-                          </h3>
-                          <span className="text-[10px] uppercase tracking-widest font-medium text-primary/50 bg-primary/10 px-2.5 py-0.5 rounded-full border border-primary/20">
-                            Coming Soon
-                          </span>
-                        </div>
-                        <p className="text-sm text-muted-foreground/40 mt-0.5">{mod.description}</p>
+                        <h3 className="text-base font-semibold text-muted-foreground/70">
+                          Module {mod.id} — {mod.title}
+                        </h3>
+                        <p className="text-sm text-muted-foreground/50 mt-0.5">{mod.description}</p>
                       </div>
+                      <span className="text-[10px] uppercase tracking-widest font-semibold text-muted-foreground/60 bg-muted/40 px-2 py-1 rounded-full shrink-0">
+                        Coming Soon
+                      </span>
                     </div>
                   </div>
                 ) : (
-                <div className="rounded-lg border transition-all duration-300 border-border bg-card hover:border-primary/40">
-                  {/* Module Header */}
-                  <button
-                    onClick={() => setExpandedModule(isExpanded ? null : mod.id)}
-                    className="w-full p-4 sm:p-6 flex items-center justify-between text-left"
-                  >
-                    <div className="flex items-center gap-4 flex-1 min-w-0">
+                  <div className="rounded-xl border border-border bg-card hover:border-primary/40 transition-all duration-300 overflow-hidden">
+                    {/* Module Header */}
+                    <button
+                      onClick={() => setExpandedModule(isExpanded ? null : mod.id)}
+                      className="w-full p-4 sm:p-5 flex items-center gap-4 text-left"
+                    >
                       {status === "complete" ? (
-                        <div className="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center shrink-0">
-                          <Check className="w-5 h-5 text-green-400" />
+                        <div className="w-10 h-10 rounded-lg bg-green-500/15 flex items-center justify-center shrink-0">
+                          <Check className="w-5 h-5 text-green-500" />
                         </div>
                       ) : (
-                        <div className="w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center shrink-0">
+                        <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
                           <span className="text-primary font-bold">{mod.id}</span>
                         </div>
                       )}
-                      <div className="min-w-0">
-                        <h3 className="text-lg font-semibold text-foreground">
+                      <div className="min-w-0 flex-1">
+                        <h3 className="text-base font-semibold text-foreground">
                           Module {mod.id} — {mod.title}
                         </h3>
-                        <p className="text-sm text-muted-foreground/80">{mod.description}</p>
+                        <p className="text-sm text-muted-foreground mt-0.5">{mod.description}</p>
                       </div>
-                    </div>
-                    <div className="flex items-center gap-3 shrink-0 ml-4">
-                      {mod.lessons.length > 0 && (
-                        <span className="text-xs text-muted-foreground">
-                          {lessonsComplete}/{mod.lessons.length} lessons
-                        </span>
-                      )}
-                      {isExpanded ? <ChevronUp className="w-5 h-5 text-muted-foreground" /> : <ChevronDown className="w-5 h-5 text-muted-foreground" />}
-                    </div>
-                  </button>
+                      <div className="flex items-center gap-3 shrink-0">
+                        {mod.lessons.length > 0 && (
+                          <span className="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground bg-muted/50 px-2 py-1 rounded-full">
+                            {lessonsComplete}/{mod.lessons.length} lessons
+                          </span>
+                        )}
+                        {isExpanded ? <ChevronUp className="w-5 h-5 text-muted-foreground" /> : <ChevronDown className="w-5 h-5 text-muted-foreground" />}
+                      </div>
+                    </button>
 
-                  {/* Expanded Lesson List */}
-                  {isExpanded && !mod.locked && (
-                    <div className="px-4 pb-4 sm:px-6 sm:pb-6 border-t border-border/50">
-                      <div className="mt-4 space-y-3">
-                        {mod.lessons.map((lesson, li) => {
-                          const lStatus = getLessonStatus(lesson.id);
-                          const unlocked = isLessonUnlocked(lesson.id, hasSession);
-                          return (
-                            <div
-                              key={lesson.id}
-                              className={`flex items-center justify-between p-3 sm:p-4 rounded-lg bg-background/50 border border-border/50 ${unlocked ? "" : "opacity-60"}`}
-                            >
-                              <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-                                {lStatus === "complete" ? (
-                                  <div className="w-7 h-7 rounded-full bg-green-500/20 flex items-center justify-center shrink-0">
-                                    <Check className="w-4 h-4 text-green-400" />
-                                  </div>
-                                ) : unlocked ? (
-                                  <div className="w-7 h-7 rounded-full bg-muted/30 flex items-center justify-center shrink-0">
-                                    <span className="text-xs text-muted-foreground font-medium">{mod.id}.{li + 1}</span>
+                    {/* Expanded Lesson List */}
+                    {isExpanded && !mod.locked && (
+                      <div className="px-4 pb-4 sm:px-5 sm:pb-5 border-t border-border/50">
+                        <div className="mt-4 space-y-3">
+                          {mod.lessons.map((lesson, li) => {
+                            const lStatus = getLessonStatus(lesson.id);
+                            const isComplete = lStatus === "complete";
+
+                            return (
+                              <Link
+                                key={lesson.id}
+                                to={`/train/lesson/${lesson.id}`}
+                                className="group flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl bg-background/60 border border-border/60 hover:border-primary/50 hover:bg-background transition-all duration-200"
+                              >
+                                {isComplete ? (
+                                  <div className="w-8 h-8 rounded-full bg-green-500/15 flex items-center justify-center shrink-0">
+                                    <Check className="w-4 h-4 text-green-500" />
                                   </div>
                                 ) : (
-                                  <div className="w-7 h-7 rounded-full bg-muted/30 flex items-center justify-center shrink-0">
-                                    <Lock className="w-3.5 h-3.5 text-muted-foreground" />
+                                  <div className="w-8 h-8 rounded-full bg-muted/50 flex items-center justify-center shrink-0 group-hover:bg-primary/10 transition-colors">
+                                    <span className="text-xs font-medium text-muted-foreground group-hover:text-primary">{mod.id}.{li + 1}</span>
                                   </div>
                                 )}
                                 <div className="min-w-0 flex-1">
-                                  <p className="text-sm sm:text-base font-medium text-foreground">{lesson.title}</p>
-                                  <div className="flex flex-wrap gap-1 sm:gap-1.5 mt-1">
+                                  <div className="flex items-baseline gap-2 flex-wrap">
+                                    <p className={`text-sm sm:text-base font-semibold ${isComplete ? "text-muted-foreground" : "text-foreground"}`}>
+                                      {lesson.title}
+                                    </p>
+                                    {isComplete && (
+                                      <span className="text-[10px] font-semibold uppercase tracking-wider text-green-500 bg-green-500/10 px-1.5 py-0.5 rounded-full">
+                                        Complete
+                                      </span>
+                                    )}
+                                  </div>
+                                  <div className="flex flex-wrap gap-1.5 mt-1.5">
                                     {lesson.concepts.map(c => (
-                                      <span key={c} className="text-[10px] sm:text-xs px-1.5 sm:px-2 py-0.5 rounded-full bg-primary/10 text-primary/80">{c}</span>
+                                      <span key={c} className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary/80 font-medium">
+                                        {c}
+                                      </span>
                                     ))}
                                   </div>
                                 </div>
-                              </div>
-                              {unlocked ? (
-                                <Button
-                                  size="sm"
-                                  variant={lStatus === "complete" ? "outline" : "default"}
-                                  asChild
-                                  className="shrink-0 ml-3"
-                                >
-                                  <Link to={`/train/lesson/${lesson.id}`}>
-                                    {lStatus === "complete" ? "Review" : lStatus === "in-progress" ? "Continue" : "Start"}
-                                  </Link>
-                                </Button>
-                              ) : (
-                                <Button size="sm" variant="outline" disabled className="shrink-0 ml-3">
-                                  <Lock className="w-3.5 h-3.5 mr-1.5" /> Locked
-                                </Button>
-                              )}
-                            </div>
-                          );
-                        })}
+                                <div className={`shrink-0 inline-flex items-center gap-1.5 h-8 px-3 rounded-md text-xs font-medium transition-colors ${isComplete ? "border border-border bg-background text-foreground" : "bg-primary text-primary-foreground"}`}>
+                                  {isComplete ? "Review" : lStatus === "in-progress" ? "Continue" : "Start"}
+                                  {isComplete ? <ChevronRight className="w-3 h-3" /> : <Play className="w-3 h-3 fill-current" />}
+                                </div>
+                              </Link>
+                            );
+                          })}
 
-                        {/* Gauntlet */}
-                        <div className="flex items-center justify-between p-4 rounded-lg bg-background/50 border border-amber-500/20">
-                          <div className="flex items-center gap-3">
-                            <div className="w-7 h-7 rounded-full bg-amber-500/20 flex items-center justify-center shrink-0">
-                              <Trophy className="w-4 h-4 text-amber-400" />
+                          {/* Gauntlet */}
+                          <div className={`flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border ${allModule1LessonsComplete ? "bg-amber-500/5 border-amber-500/20" : "bg-background/60 border-border/60"}`}>
+                            <div className="w-8 h-8 rounded-full bg-amber-500/15 flex items-center justify-center shrink-0">
+                              <Trophy className="w-4 h-4 text-amber-500" />
                             </div>
-                            <div>
-                              <p className="text-sm font-medium text-foreground">Module 1 Gauntlet</p>
-                              <p className="text-xs text-muted-foreground">
+                            <div className="min-w-0 flex-1">
+                              <p className="text-sm sm:text-base font-semibold text-foreground">Module 1 Gauntlet</p>
+                              <p className="text-xs sm:text-sm text-muted-foreground">
                                 {allModule1LessonsComplete ? "10 mixed questions — your hardest challenge" : "Complete all 3 lessons to unlock"}
                               </p>
                             </div>
-                          </div>
-                          {allModule1LessonsComplete ? (
-                            <Button size="sm" variant={progress.gauntletComplete["1"] ? "outline" : "default"} asChild className="shrink-0 ml-3">
-                              <Link to="/train/gauntlet/1">
+                            {allModule1LessonsComplete ? (
+                              <Link
+                                to="/train/gauntlet/1"
+                                className={`shrink-0 inline-flex items-center h-8 px-3 rounded-md text-xs font-medium transition-colors ${progress.gauntletComplete["1"] ? "border border-border bg-background text-foreground" : "bg-amber-500 text-amber-950"}`}
+                              >
                                 {progress.gauntletComplete["1"] ? `Score: ${progress.gauntletScore["1"]}/10` : "Start"}
                               </Link>
-                            </Button>
-                          ) : (
-                            <Lock className="w-4 h-4 text-muted-foreground shrink-0 ml-3" />
-                          )}
+                            ) : (
+                              <Lock className="w-4 h-4 text-muted-foreground shrink-0" />
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )}
-                </div>
+                    )}
+                  </div>
                 )}
               </div>
             );
@@ -205,24 +197,32 @@ const Course = () => {
 
         {/* Free Play */}
         <div className="opacity-0 animate-fade-up" style={{ animationDelay: "600ms" }}>
-          <h2 className="text-xl font-semibold text-foreground mb-4">Free Play</h2>
+          <h2 className="text-xl font-semibold text-foreground mb-2">Free Play</h2>
           <p className="text-sm text-muted-foreground mb-4">Practice with concepts you've already learned.</p>
-          <div className="grid grid-cols-2 gap-3 sm:gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Link
               to="/train/social-warzone"
-              className={`p-4 sm:p-5 rounded-lg border border-border bg-card hover:border-primary/40 transition-all duration-300 ${totalConcepts === 0 ? "opacity-50 pointer-events-none" : ""}`}
+              className={`flex items-start gap-4 p-4 sm:p-5 rounded-xl border border-border bg-card hover:border-primary/40 hover:bg-primary/5 transition-all duration-300 ${totalConcepts === 0 ? "opacity-50 pointer-events-none" : ""}`}
             >
-              <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6 text-primary mb-2 sm:mb-3" />
-              <h3 className="font-semibold text-foreground text-sm">Social Warzone</h3>
-              <p className="text-xs text-muted-foreground mt-1">Apply skills to realistic posts</p>
+              <div className="p-2.5 rounded-lg bg-primary/10 shrink-0">
+                <MessageSquare className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-foreground">Social Warzone</h3>
+                <p className="text-sm text-muted-foreground mt-1">Apply skills to realistic posts</p>
+              </div>
             </Link>
             <Link
               to="/train/rapid-reasoning"
-              className={`p-4 sm:p-5 rounded-lg border border-border bg-card hover:border-primary/40 transition-all duration-300 ${totalConcepts === 0 ? "opacity-50 pointer-events-none" : ""}`}
+              className={`flex items-start gap-4 p-4 sm:p-5 rounded-xl border border-border bg-card hover:border-primary/40 hover:bg-primary/5 transition-all duration-300 ${totalConcepts === 0 ? "opacity-50 pointer-events-none" : ""}`}
             >
-              <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-primary mb-2 sm:mb-3" />
-              <h3 className="font-semibold text-foreground text-sm">Rapid Reasoning</h3>
-              <p className="text-xs text-muted-foreground mt-1">Quick-fire identification drills</p>
+              <div className="p-2.5 rounded-lg bg-primary/10 shrink-0">
+                <Zap className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-foreground">Rapid Reasoning</h3>
+                <p className="text-sm text-muted-foreground mt-1">Quick-fire identification drills</p>
+              </div>
             </Link>
           </div>
         </div>

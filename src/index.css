@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -14,7 +16,7 @@ All colors MUST be HSL.
     --card: 240 8% 8%;
     --card-foreground: 0 0% 98%;
 
-    --popover: 240 8% 8%;
+    --popover: 240 7% 7%;
     --popover-foreground: 0 0% 98%;
 
     --primary: 270 95% 65%;
@@ -24,7 +26,7 @@ All colors MUST be HSL.
     --secondary-foreground: 0 0% 98%;
 
     --muted: 240 6% 14%;
-    --muted-foreground: 240 5% 55%;
+    --muted-foreground: 240 5% 62%;
 
     --accent: 280 90% 60%;
     --accent-foreground: 0 0% 100%;
@@ -32,13 +34,13 @@ All colors MUST be HSL.
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --success: 142 76% 36%;
+    --success: 142 76% 40%;
     --success-foreground: 0 0% 98%;
 
-    --warning: 38 92% 50%;
+    --warning: 38 92% 55%;
     --warning-foreground: 0 0% 98%;
 
-    --border: 240 6% 18%;
+    --border: 240 6% 20%;
     --input: 240 6% 15%;
     --ring: 270 95% 65%;
 
@@ -58,23 +60,34 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold;
+    @apply font-bold tracking-tight;
   }
 
   h1 {
-    @apply text-4xl md:text-5xl lg:text-6xl;
-  }
-
-  h2 {
     @apply text-3xl md:text-4xl;
   }
 
-  h3 {
+  h2 {
     @apply text-2xl md:text-3xl;
+  }
+
+  h3 {
+    @apply text-xl md:text-2xl;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
   }
 }

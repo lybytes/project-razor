@@ -15,6 +15,9 @@ export default {
       screens: {
         "2xl": "1400px",
       },
+      fontFamily: {
+        sans: ["Inter", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "sans-serif"],
+      },
     },
     extend: {
       colors: {
