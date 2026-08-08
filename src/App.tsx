@@ -20,6 +20,7 @@ import LearnSearch from "./pages/LearnSearch";
 import ItemDetail from "./pages/ItemDetail";
 import About from "./pages/About";
 import Auth from "./pages/Auth";
+import ResetPassword from "./pages/ResetPassword";
 import Account from "./pages/Account";
 import removedSlugRedirects from "./data/removed-slug-redirects.json";
 
@@ -51,6 +52,7 @@ const App = () => (
             <Route path="/learn/:type/:slug" element={<ItemDetail />} />
             <Route path="/about" element={<About />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/account" element={<Account />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

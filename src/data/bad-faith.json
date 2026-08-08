@@ -9,7 +9,7 @@
     ],
     "hook": "Well, actually, if you consider these fifteen points I'm about to list in ninety seconds…",
     "oneLiner": "Burying an opponent in a flood of weak claims faster than any can be answered.",
-    "deepDive": "The Gish gallop wins by volume, not validity. The tactic is to fire off so many claims, questions, and half-truths in quick succession that the opponent can't possibly rebut them all in the time available — and any point left unanswered is then declared 'unchallenged' and therefore true. It exploits an asymmetry: it takes seconds to assert a falsehood and minutes to properly debunk one. Individually most of the claims are weak, but the sheer quantity creates an impression of an overwhelming case. It thrives in live debate and fast-moving comment threads. The key is to refuse the frame: you don't have to answer everything to win. Pick the strongest or most load-bearing claim, dismantle it thoroughly, and name the tactic openly.",
+    "deepDive": "The Gish gallop wins by volume, not validity: fire off so many claims that no one can rebut them all in time, then declare the unanswered ones 'true.' It exploits an asymmetry — asserting a falsehood takes seconds, properly debunking one takes minutes.",
     "howToSpot": [
       "A rapid barrage of many separate claims, too many to address at once",
       "Quantity is doing the persuading, not the quality of any single point",
@@ -57,7 +57,7 @@
     ],
     "hook": "Okay, you gave me one study — but one study means nothing. Show me ten. …Fine, but were they peer-reviewed in the last year?",
     "oneLiner": "Changing the standard of evidence the moment it's met, so it can never be satisfied.",
-    "deepDive": "Moving the goalposts is a way of never having to concede. Someone sets a condition ('show me evidence and I'll believe it'), and the moment you meet it, they raise the bar — the evidence suddenly isn't recent enough, or numerous enough, or from the right source. The demand keeps retreating just out of reach, so no amount of evidence is ever sufficient. It creates the illusion of open-mindedness while guaranteeing the person never has to change their view. The tell is a standard that shifts *after* it's been met, rather than being defined upfront. The counter is to lock the criteria in place before providing evidence, and when the goalposts move, to name it and hold them to the original bar.",
+    "deepDive": "This is how someone never concedes: they set a standard for evidence, and the moment you meet it they raise the bar — not recent enough, not enough sources. The demand keeps retreating, so nothing is ever sufficient. Lock the criteria before you provide them.",
     "howToSpot": [
       "A demand for evidence is met, then immediately replaced with a harder one",
       "The standard keeps rising precisely as you keep satisfying it",
@@ -105,7 +105,7 @@
     ],
     "hook": "Sorry to bother you again — could you just cite a source for that? And that? And define that term? Just curious!",
     "oneLiner": "Feigning polite, endless requests for evidence to exhaust rather than to understand.",
-    "deepDive": "Sealioning disguises harassment as reasonable curiosity. The sealion asks for evidence, then definitions, then sources for the sources, always politely, never satisfied, never engaging in good faith with the answers given. The goal isn't understanding — it's to drain the other person's time and energy until they give up or lose their temper, at which point the sealion plays the reasonable party being treated unfairly. The politeness is the weapon: it makes any frustration look like the target is the aggressor. The tell is relentless, escalating demands that never lead anywhere, combined with performative civility and no genuine engagement with the responses. The counter is to answer once, notice the pattern, and then disengage without taking the bait of the fake reasonableness.",
+    "deepDive": "Sealioning disguises harassment as polite curiosity: endless requests for evidence, definitions, sources for the sources — never satisfied, never engaging in good faith. The goal is to drain your energy until you snap, then look like the reasonable one. Answer once, then disengage.",
     "howToSpot": [
       "Endless requests for sources, definitions, and clarification that never resolve",
       "Exaggerated politeness paired with total refusal to engage the answers",
@@ -153,7 +153,7 @@
     ],
     "hook": "You're criticising our record on this? What about what the other side did five years ago?",
     "oneLiner": "Deflecting criticism by pointing at someone else's unrelated wrongdoing.",
-    "deepDive": "Whataboutism answers a criticism not by addressing it but by pointing to an entirely different alleged wrong — 'but what about them?' It's a deflection: it changes the subject from the issue at hand to someone else's conduct, implying that unless the critic is perfectly consistent, the original criticism doesn't count. But someone else's wrongdoing doesn't cancel out the wrongdoing being discussed; two things can both be bad. It's a close relative of tu quoque, but rather than targeting the speaker's own hypocrisy, it deflects to a third party or an unrelated event. It thrives in political argument because there's always some other grievance to point to. The counter is to acknowledge the deflection, decline to be dragged off-topic, and return the focus to the original issue.",
+    "deepDive": "Whataboutism answers a criticism by pointing at someone else's unrelated wrong — 'but what about them?' — implying you must be flawless to have a point. But two things can both be bad; another's wrongdoing doesn't cancel the one actually being discussed.",
     "howToSpot": [
       "Criticism is met with 'but what about...' pointing to a different wrong",
       "The original issue is never actually addressed",
@@ -201,7 +201,7 @@
     ],
     "hook": "A parking ticket, a bank robbery — they're both breaking the law, so who are you to judge?",
     "oneLiner": "Treating two things as morally or factually equal when the difference in scale or kind is huge.",
-    "deepDive": "False equivalence flattens an important difference by drawing a comparison between two things that share a surface feature but differ enormously in scale, severity, or kind. 'They both lied' can equate a white lie with a systematic fraud; 'both sides have extremists' can equate a fringe of one group with the core of another. The comparison feels fair because there's a real point of similarity — but the similarity is trivial next to the differences being ignored. It's often used to launder something serious by parking it next to something minor, or to manufacture a false balance. The tell is a comparison that collapses distinctions of degree or context. The counter is to grant the surface similarity and then spell out, concretely, the difference in magnitude or kind that the comparison erases.",
+    "deepDive": "False equivalence flattens a huge difference by comparing two things that share only a surface feature — 'they both lied' equating a white lie with fraud. The similarity is trivial next to the differences it ignores. Grant the surface, then spell out the gap in scale.",
     "howToSpot": [
       "Two very different things are treated as equivalent on a shared surface feature",
       "Differences in scale, severity, or context are ignored",
@@ -249,7 +249,7 @@
     ],
     "hook": "I never said that. You're remembering it wrong — you always twist things. Are you sure you're okay?",
     "oneLiner": "Making someone doubt their own memory, perception, or sanity to gain control of the narrative.",
-    "deepDive": "Gaslighting attacks not the argument but the other person's confidence in their own grip on reality. Through flat denial ('that never happened'), rewriting events, and questioning the target's memory or stability, the gaslighter makes them second-guess what they clearly saw or heard — until they defer to the gaslighter's version by default. It's corrosive because it undermines the very tool you'd use to defend yourself: your own perception. In debate it looks like insisting you 'never said' something you demonstrably did, or that an event everyone witnessed didn't occur. It's a serious manipulation tactic, and at an interpersonal level a recognised form of emotional abuse. The counters are external: keep records, trust corroborated memory, name the behaviour, and — where it's a pattern in a relationship — seek outside support and perspective.",
+    "deepDive": "Gaslighting attacks not your argument but your confidence in reality — flat denial, rewritten events, questioning your memory or sanity — until you defer to their version. It's corrosive because it undermines the very tool you'd defend yourself with. At an interpersonal level it's a form of abuse.",
     "howToSpot": [
       "Flat denial of things that clearly happened or were clearly said",
       "Your memory, perception, or mental state is questioned instead of the facts",
@@ -297,7 +297,7 @@
     ],
     "hook": "I'm not saying it's rigged — I'm just asking why nobody will explain these 'irregularities.' Just asking questions!",
     "oneLiner": "Spreading insinuations by phrasing assertions as innocent questions.",
-    "deepDive": "JAQing off (from 'Just Asking Questions') smuggles a claim into a conversation without ever having to defend it, by framing the claim as a mere question. 'I'm just asking why X' plants the suggestion that X is true or suspicious, while giving the speaker deniability — they never *asserted* anything, so they can't be pinned down or asked for evidence. It's a favourite of conspiracy-spreading because it lets someone seed doubt while posing as an open-minded truth-seeker. The tell is a 'question' that clearly implies an answer, asked by someone who shows no genuine interest in the actual answer and just moves to the next insinuation. The counter is to make the hidden claim explicit and put the burden back where it belongs: if you're implying something, state it and defend it.",
+    "deepDive": "JAQing off ('just asking questions') smuggles a claim in as a question — 'I'm just asking why X' — planting the insinuation while keeping deniability, since nothing was actually asserted. The doubt is the point. Make the hidden claim explicit and hand the burden back.",
     "howToSpot": [
       "'Questions' that clearly imply a claim without stating it",
       "The asker isn't interested in answers, only in raising suspicion",
@@ -345,7 +345,7 @@
     ],
     "hook": "Everyone knows this group is dangerous. — That's a huge claim. — Well, I just mean we should be a bit cautious, obviously.",
     "oneLiner": "Advancing a bold claim, then retreating to a modest one when challenged — and back again.",
-    "deepDive": "The name comes from medieval castles: the 'bailey' is the desirable but hard-to-defend courtyard; the 'motte' is the fortified, easily-defended tower you retreat to under attack. The tactic advances a controversial, ambitious claim (the bailey) to win ground, but when challenged, retreats to a bland, obviously-true claim (the motte) — 'I only meant we should be cautious.' Once the challenge passes, they quietly return to the bold claim as if it were established. The two claims get treated as interchangeable, so defending the trivial one appears to vindicate the contentious one. The tell is a sudden shrink in the claim under pressure, followed by a return to the original once the pressure lifts. The counter is to pin down which claim is actually being made and refuse to let them switch.",
+    "deepDive": "Named for a castle: advance a bold, hard-to-defend claim (the bailey), then retreat to a bland, obvious one (the motte) when challenged — and quietly return once the pressure lifts. The two get treated as interchangeable. Pin down which claim they're actually making.",
     "howToSpot": [
       "A bold claim shrinks to a trivial one exactly when it's challenged",
       "Once the challenge passes, the bold claim quietly returns",
@@ -393,7 +393,7 @@
     ],
     "hook": "As someone who really supports your cause, I'm worried these tactics are hurting you. Just trying to help!",
     "oneLiner": "Feigning support or worry to undermine a person or cause from the inside.",
-    "deepDive": "A concern troll poses as a friend, ally, or worried well-wisher while actually working to weaken the thing they claim to support. The 'concern' — that your strategy is backfiring, that you're alienating people, that you're your own worst enemy — is designed to sow doubt, lower morale, and steer you away from effective action, all under cover of helpfulness. Because it's framed as support, pushing back makes you look defensive or ungrateful. It's common in activism and online communities, where an opponent gains more traction by masquerading as a nervous ally than as an open adversary. The tell is 'advice' that consistently points toward doing less, disarming, or giving up, from someone whose actual sympathies are unclear. The counter is to judge the substance of the concern on its merits while staying alert to the pattern.",
+    "deepDive": "A concern troll poses as a worried ally while steering you toward weakness — 'I support you, but your tactics are hurting you.' Framed as help, the advice always points toward doing less or giving up. Because it's 'support,' pushing back makes you look defensive.",
     "howToSpot": [
       "Professed support paired with advice that always weakens your position",
       "The 'concern' consistently nudges you toward doing less or giving up",
@@ -441,7 +441,7 @@
     ],
     "hook": "I'd take your point more seriously if you weren't so emotional about it. Let's keep this civil.",
     "oneLiner": "Using politeness and 'tone' as a weapon to dismiss substance and control the conversation.",
-    "deepDive": "False civility weaponises the norms of politeness: instead of engaging with what someone says, it attacks how they said it. By demanding a calmer tone, 'civility,' or perfect composure — often from people who have legitimate reason to be frustrated — it shifts the conversation from the substance to the target's demeanour, and casts the person raising an issue as the real problem for being 'emotional' or 'aggressive.' Meanwhile the person policing tone gets to appear reasonable and above the fray. It's especially effective at silencing valid grievances, because any pushback can be reframed as further incivility. The tell is a focus on delivery rather than content, and a standard of composure applied selectively. The counter is to decline the tone debate and firmly return to the substance.",
+    "deepDive": "False civility weaponises politeness: instead of engaging what you said, it attacks how you said it, demanding a calmer tone as the price of being heard. It reframes legitimate frustration as the real problem while the tone-policer looks reasonable. Decline the tone debate; return to substance.",
     "howToSpot": [
       "The focus shifts to your tone or emotion instead of your point",
       "Politeness or 'civility' is demanded as a precondition for engaging the substance",
@@ -489,7 +489,7 @@
     ],
     "hook": "Your denial only proves how deep the denial goes. An innocent person wouldn't be so defensive.",
     "oneLiner": "Framing any denial of an accusation as further proof of guilt.",
-    "deepDive": "A Kafka trap (named after Kafka's 'The Trial,' where the accused can never learn the charge or clear his name) is an accusation constructed so that denying it counts as confirming it. 'You're in denial,' 'that's exactly what a guilty person would say,' 'your defensiveness proves it' — every possible response, including silence, is folded back into the case against you. It's unfalsifiable by design: there is no move that counts as innocence. It's coercive because it strips the accused of any way to defend themselves and pressures them to accept the charge just to escape the loop. The tell is that denial, agreement, and silence are all treated as evidence of guilt. The counter is to name the structure directly: an accusation that can't be disproven isn't evidence of anything, and the burden remains on the accuser.",
+    "deepDive": "A Kafka trap is built so that denying the accusation confirms it — 'your defensiveness proves it,' and silence proves it too. No response counts as innocence; it's unfalsifiable by design. Name the structure: an accusation nothing could disprove is evidence of nothing.",
     "howToSpot": [
       "Denying the accusation is treated as proof of it",
       "There is no response — including silence — that would count as innocence",
@@ -537,7 +537,7 @@
     ],
     "hook": "I can't believe you're attacking me like this — after everything, you're the one making me feel awful.",
     "oneLiner": "Recasting yourself as the wronged party to deflect accountability and gain sympathy.",
-    "deepDive": "Playing the victim flips the roles in a dispute: when confronted about their own behaviour, the person reframes themselves as the one being harmed, so the conversation shifts from their accountability to your alleged cruelty. It often follows the DARVO pattern — Deny, Attack, and Reverse Victim and Offender — where the actual wrongdoer ends up cast as the aggressor and the person raising a legitimate concern is put on the defensive. It works by hijacking sympathy: people instinctively rush to comfort someone in visible distress, and that instinct gets weaponised to shut down valid criticism. The tell is a sudden pivot to hurt feelings the moment accountability is raised, with the original issue left unaddressed. The counter is to acknowledge genuine feelings briefly while firmly declining to let them erase the original point.",
+    "deepDive": "When confronted, the person flips roles and becomes the injured party, so the conversation shifts from their accountability to your alleged cruelty. It often follows DARVO — Deny, Attack, Reverse Victim and Offender — hijacking sympathy to bury a valid concern.",
     "howToSpot": [
       "The moment they're held accountable, they become the injured party",
       "Roles are reversed — the person raising the issue is cast as the aggressor",
@@ -585,7 +585,7 @@
     ],
     "hook": "This is an absolute scandal! …No, I had nothing to say when our own side did the exact same thing.",
     "oneLiner": "Expressing intense outrage over an act only when the 'other side' does it.",
-    "deepDive": "Selective outrage applies a moral standard inconsistently — reacting with fury when an opponent does something, while staying silent or making excuses when an ally does the identical thing. It reveals that the outrage isn't really about the principle being invoked; the principle is a weapon of convenience, deployed against enemies and holstered for friends. It's persuasive because the outrage itself feels like moral seriousness, and the inconsistency is often invisible unless you line up the two cases side by side. It's endemic in partisan politics and tribal online discourse. The tell is a passionate stand on a principle from someone who ignored that same principle when it was inconvenient. The counter is to hold up the parallel case and ask whether the principle applies universally — if it doesn't, the outrage was never about the principle.",
+    "deepDive": "Selective outrage applies a standard inconsistently — fury when an opponent acts, silence or excuses when an ally does the same. The principle turns out to be a weapon of convenience, not a real conviction. Line the two cases up side by side and the double standard shows.",
     "howToSpot": [
       "Fierce outrage at one side's act, silence or excuses for the same act by the other",
       "The 'principle' is only ever invoked against opponents",

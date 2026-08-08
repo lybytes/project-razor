@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
-import { getProgress, completeLesson as apiCompleteLesson, type ProgressEntry } from "@/lib/api";
+import { getProgress, completeLesson as apiCompleteLesson, migrateGuestProgress, type ProgressEntry } from "@/lib/api";
+import { LESSON_ORDER } from "@/data/courseData";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
@@ -34,6 +35,8 @@ interface CourseProgressContextType {
   saveWarzoneScore: (lessonId: string, correct: number, total: number) => void;
   addXP: (amount: number) => void;
   isConceptUnlocked: (concept: string) => boolean;
+  isLessonUnlocked: (lessonId: string, hasSession: boolean) => boolean;
+  getFurthestUnlockedLesson: (hasSession: boolean) => string;
   getLessonsComplete: (moduleNum: number) => number;
   resetProgress: () => void;
   loadFromServer: () => Promise<void>;
@@ -42,6 +45,7 @@ interface CourseProgressContextType {
 const CourseProgressContext = createContext<CourseProgressContextType | null>(null);
 
 const STORAGE_KEY = "project-razor-course-progress";
+const GUEST_MIGRATED_KEY = "project-razor-guest-progress-migrated";
 
 function getModuleIdFromLesson(lessonId: string): number {
   const parts = lessonId.split("-");
@@ -67,6 +71,30 @@ export const CourseProgressProvider: React.FC<{ children: React.ReactNode }> = (
     if (!session) return;
 
     try {
+      // Carry anonymous progress into the account before reading it back, so a
+      // guest who signs up after the free lesson never replays it.
+      if (!localStorage.getItem(GUEST_MIGRATED_KEY)) {
+        const guest = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}") as Partial<CourseProgress>;
+        const completed = Object.keys(guest.lessonComplete || {}).filter(id => guest.lessonComplete?.[id]);
+        if (completed.length > 0) {
+          await migrateGuestProgress(
+            completed.map(lessonId => {
+              const drill = guest.drillScores?.[lessonId];
+              const warzone = guest.warzoneScores?.[lessonId];
+              const correct = (drill?.correct || 0) + (warzone?.correct || 0);
+              const total = (drill?.total || 0) + (warzone?.total || 0);
+              return {
+                lesson_id: lessonId,
+                module_id: getModuleIdFromLesson(lessonId),
+                score: total > 0 ? Math.round((correct / total) * 100) : 0,
+              };
+            }),
+            guest.xpTotal || 0,
+          );
+        }
+        localStorage.setItem(GUEST_MIGRATED_KEY, "true");
+      }
+
       const serverProgress = await getProgress();
       const lessonComplete: Record<string, boolean> = {};
       serverProgress.forEach((p: ProgressEntry) => {
@@ -84,6 +112,16 @@ export const CourseProgressProvider: React.FC<{ children: React.ReactNode }> = (
 
   useEffect(() => {
     loadFromServer();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event) => {
+      if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
+        loadFromServer();
+      } else if (event === "SIGNED_OUT") {
+        localStorage.removeItem(GUEST_MIGRATED_KEY);
+      }
+    });
+
+    return () => subscription.unsubscribe();
   }, [loadFromServer]);
 
   const completeLesson = useCallback(async (lessonId: string, concepts: string[]) => {
@@ -159,6 +197,24 @@ export const CourseProgressProvider: React.FC<{ children: React.ReactNode }> = (
     return progress.conceptsUnlocked.includes(concept);
   }, [progress.conceptsUnlocked]);
 
+  // Lessons unlock in order; the free lesson is always the entry point and
+  // everything after it also needs an account.
+  const isLessonUnlocked = useCallback((lessonId: string, hasSession: boolean) => {
+    const index = LESSON_ORDER.indexOf(lessonId);
+    if (index === -1) return true;
+    if (index === 0) return true;
+    if (!hasSession) return false;
+    return !!progress.lessonComplete[LESSON_ORDER[index - 1]];
+  }, [progress.lessonComplete]);
+
+  const getFurthestUnlockedLesson = useCallback((hasSession: boolean) => {
+    let furthest = LESSON_ORDER[0];
+    for (const lessonId of LESSON_ORDER) {
+      if (isLessonUnlocked(lessonId, hasSession)) furthest = lessonId;
+    }
+    return furthest;
+  }, [isLessonUnlocked]);
+
   const getLessonsComplete = useCallback((moduleNum: number) => {
     const lessonIds = [`${moduleNum}-1`, `${moduleNum}-2`, `${moduleNum}-3`];
     return lessonIds.filter(id => progress.lessonComplete[id]).length;
@@ -167,6 +223,7 @@ export const CourseProgressProvider: React.FC<{ children: React.ReactNode }> = (
   const resetProgress = useCallback(() => {
     setProgress(DEFAULT_PROGRESS);
     localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(GUEST_MIGRATED_KEY);
   }, []);
 
   return (
@@ -179,6 +236,8 @@ export const CourseProgressProvider: React.FC<{ children: React.ReactNode }> = (
       saveWarzoneScore,
       addXP,
       isConceptUnlocked,
+      isLessonUnlocked,
+      getFurthestUnlockedLesson,
       getLessonsComplete,
       resetProgress,
       loadFromServer,

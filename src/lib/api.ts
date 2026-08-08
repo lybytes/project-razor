@@ -144,6 +144,45 @@ export async function completeLesson(
   };
 }
 
+export interface GuestProgressEntry {
+  lesson_id: string;
+  module_id: number;
+  score: number;
+}
+
+/* Moves progress earned while signed out into the freshly authenticated
+   account in one batched upsert. RLS restricts rows to auth.uid(). */
+export async function migrateGuestProgress(entries: GuestProgressEntry[], guestXp: number): Promise<void> {
+  if (entries.length === 0) return;
+
+  const { user, profile } = await ensureUserProfile();
+  const completedAt = new Date().toISOString();
+
+  const { error: progressError } = await supabase
+    .from("progress")
+    .upsert(
+      entries.map(entry => ({
+        user_id: user.id,
+        lesson_id: entry.lesson_id,
+        module_id: entry.module_id,
+        score: entry.score,
+        completed_at: completedAt,
+      })),
+      { onConflict: "user_id,lesson_id", ignoreDuplicates: true }
+    );
+
+  if (progressError) throw progressError;
+
+  if (guestXp > 0) {
+    const { error: xpError } = await supabase
+      .from("profiles")
+      .update({ total_xp: (profile.total_xp ?? 0) + guestXp })
+      .eq("user_id", user.id);
+
+    if (xpError) throw xpError;
+  }
+}
+
 export async function getProgress(): Promise<ProgressEntry[]> {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) throw new Error("Not authenticated");
