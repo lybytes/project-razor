@@ -1,9 +1,10 @@
+import { useEffect, useRef } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import { motion } from "motion/react";
+import { motion, useMotionValue } from "motion/react";
 import { HeroBackground } from "@/components/HeroBackground";
 
 const easeOut = [0.23, 1, 0.32, 1] as const;
@@ -75,14 +76,36 @@ const learnCards = [
 ];
 
 const Index = () => {
+  const heroRef = useRef<HTMLElement>(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  useEffect(() => {
+    if (heroRef.current) {
+      const rect = heroRef.current.getBoundingClientRect();
+      mouseX.set(rect.width / 2);
+      mouseY.set(rect.height / 2);
+    }
+  }, [mouseX, mouseY]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    mouseX.set(e.clientX - rect.left);
+    mouseY.set(e.clientY - rect.top);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
 
       <main>
         {/* Hero */}
-        <section className="relative min-h-[100dvh] flex items-center container mx-auto px-4 pt-24 pb-16 overflow-hidden">
-          <HeroBackground />
+        <section
+          ref={heroRef}
+          onMouseMove={handleMouseMove}
+          className="relative min-h-[100dvh] flex items-center container mx-auto px-4 pt-24 pb-16 overflow-hidden"
+        >
+          <HeroBackground mouseX={mouseX} mouseY={mouseY} />
           <div className="relative z-10 max-w-4xl">
             <motion.span
               className="inline-block text-xs sm:text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-6"

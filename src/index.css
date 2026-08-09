@@ -102,20 +102,23 @@ All colors MUST be HSL.
 
 /* Ambient hero background motion */
 @keyframes driftPrimary {
-  0% { transform: translate(0, 0); }
-  50% { transform: translate(-14vw, 9vw); }
-  100% { transform: translate(0, 0); }
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-16vw, 10vw, 0) scale(1.1); }
 }
 
 @keyframes driftAccent {
-  0% { transform: translate(0, 0); }
-  50% { transform: translate(10vw, -8vw); }
-  100% { transform: translate(0, 0); }
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(12vw, -10vw, 0) scale(1.08); }
+}
+
+@keyframes driftCore {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(8vw, 6vw, 0) scale(1.15); }
 }
 
 @keyframes nodePulse {
-  0%, 100% { opacity: 0.35; transform: scale(1); }
-  50% { opacity: 0.95; transform: scale(1.7); }
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
 }
 
 @keyframes dashFlow {
@@ -124,44 +127,66 @@ All colors MUST be HSL.
 
 .hero-orb-primary {
   position: absolute;
-  width: 62vw;
-  height: 62vw;
+  width: 80vw;
+  height: 80vw;
   border-radius: 9999px;
-  background: radial-gradient(circle, hsl(var(--primary) / 0.18) 0%, hsl(var(--primary) / 0.05) 45%, transparent 70%);
+  background: radial-gradient(circle, hsl(var(--primary) / 0.45) 0%, hsl(var(--primary) / 0.15) 35%, transparent 65%);
   filter: blur(120px);
   will-change: transform;
-  animation: driftPrimary 26s ease-in-out infinite;
+  animation: driftPrimary 22s ease-in-out infinite;
 }
 
 .hero-orb-accent {
   position: absolute;
-  width: 58vw;
-  height: 58vw;
+  width: 70vw;
+  height: 70vw;
   border-radius: 9999px;
-  background: radial-gradient(circle, hsl(var(--accent) / 0.14) 0%, hsl(var(--accent) / 0.04) 45%, transparent 70%);
+  background: radial-gradient(circle, hsl(var(--accent) / 0.4) 0%, hsl(var(--accent) / 0.12) 35%, transparent 65%);
   filter: blur(100px);
   will-change: transform;
-  animation: driftAccent 22s ease-in-out infinite;
+  animation: driftAccent 18s ease-in-out infinite;
+}
+
+.hero-orb-core {
+  position: absolute;
+  width: 45vw;
+  height: 45vw;
+  border-radius: 9999px;
+  background: radial-gradient(circle, hsl(var(--primary) / 0.25) 0%, hsl(var(--accent) / 0.1) 40%, transparent 70%);
+  filter: blur(90px);
+  will-change: transform;
+  animation: driftCore 28s ease-in-out infinite;
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, hsl(var(--border) / 0.18) 1px, transparent 1px),
+    linear-gradient(to bottom, hsl(var(--border) / 0.18) 1px, transparent 1px);
+  background-size: 70px 70px;
+  mask-image: radial-gradient(ellipse 80% 80% at 60% 40%, black 0%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 60% 40%, black 0%, transparent 70%);
 }
 
 .hero-node {
   transform-box: fill-box;
   transform-origin: center;
   will-change: transform, opacity;
-  animation: nodePulse 3.5s ease-in-out infinite;
+  animation: nodePulse 3s ease-in-out infinite;
 }
 
 .hero-thread {
   will-change: stroke-dashoffset;
-  animation: dashFlow 7s linear infinite;
+  animation: dashFlow 5s linear infinite;
 }
 
 .hero-thread-slow {
   will-change: stroke-dashoffset;
-  animation: dashFlow 16s linear infinite;
+  animation: dashFlow 14s linear infinite;
 }
 
 .hero-thread-reverse {
   will-change: stroke-dashoffset;
-  animation: dashFlow 9s linear infinite reverse;
+  animation: dashFlow 8s linear infinite reverse;
 }
