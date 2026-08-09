@@ -1,109 +1,148 @@
 import { Navigation } from "@/components/Navigation";
-import { Shield, Target, Users, Zap } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import { motion } from "motion/react";
+
+const easeOut = [0.23, 1, 0.32, 1] as const;
+const reveal = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-80px" },
+  transition: { duration: 0.5, ease: easeOut },
+} as const;
+
+const pillars = [
+  {
+    title: "Our Mission",
+    description:
+      "To empower individuals with the tools and knowledge needed to identify and counter biases, fallacies, and bad-faith arguments in everyday discourse.",
+  },
+  {
+    title: "Our Approach",
+    description:
+      "Combining education with interactive training, we help users develop practical skills through real-world scenarios and historical case studies.",
+  },
+  {
+    title: "What We Teach",
+    description:
+      "Logical fallacies, cognitive biases, and bad-faith argumentation tactics through comprehensive libraries and interactive training modes.",
+  },
+  {
+    title: "Who It's For",
+    description:
+      "Students, educators, debaters, journalists, and anyone who wants to think more critically and communicate more effectively.",
+  },
+];
+
+const framework = [
+  {
+    label: "Biases",
+    text: "Systematic patterns of deviation from rationality in judgment. These are unconscious mental shortcuts that can lead us astray.",
+  },
+  {
+    label: "Fallacies",
+    text: "Errors in reasoning that undermine the logic of an argument. These are flaws in the structure of arguments themselves.",
+  },
+  {
+    label: "Bad-Faith Arguments",
+    text: "Manipulative tactics used to win arguments dishonestly. These are deliberate strategies to avoid genuine discussion.",
+  },
+];
 
 const About = () => {
-  const cards = [
-    {
-      icon: Target,
-      title: "Our Mission",
-      description: "To empower individuals with the tools and knowledge needed to identify and counter biases, fallacies, and bad-faith arguments in everyday discourse."
-    },
-    {
-      icon: Shield,
-      title: "Our Approach",
-      description: "Combining education with interactive training, we help users develop practical skills through real-world scenarios and historical case studies."
-    },
-    {
-      icon: Zap,
-      title: "What We Teach",
-      description: "Logical fallacies, cognitive biases, and bad-faith argumentation tactics through comprehensive libraries and interactive training modes."
-    },
-    {
-      icon: Users,
-      title: "Who It's For",
-      description: "Students, educators, debaters, journalists, and anyone who wants to think more critically and communicate more effectively."
-    }
-  ];
-
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
-      <main className="container mx-auto px-4 py-8 sm:py-16">
-        <div className="max-w-4xl mx-auto">
-          <h1 
-            className="text-3xl sm:text-5xl font-bold text-foreground mb-4 sm:mb-6 opacity-0 animate-fade-up"
-            style={{ animationDelay: "0ms" }}
-          >
-            About Project Razor
-          </h1>
-          
-          <div className="prose prose-invert max-w-none">
-            <p 
-              className="text-base sm:text-xl text-muted-foreground leading-relaxed mb-8 sm:mb-12 opacity-0 animate-fade-up"
-              style={{ animationDelay: "100ms" }}
-            >
-              Project Razor is a comprehensive platform designed to sharpen your critical thinking skills and build resilience against disinformation, logical fallacies, and bad-faith argumentation.
-            </p>
 
-            <div className="grid sm:grid-cols-2 gap-4 sm:gap-8 mb-8 sm:mb-16">
-              {cards.map((card, index) => (
-                <div 
+      <main className="container mx-auto px-4 py-8 sm:py-20">
+        <div className="max-w-4xl">
+          <motion.header
+            className="mb-16 sm:mb-20"
+            initial={{ opacity: 0, y: 32 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: easeOut }}
+          >
+            <span className="inline-block text-xs sm:text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-6">
+              About
+            </span>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-foreground mb-6 tracking-tighter leading-[1.05]">
+              Project Razor
+            </h1>
+            <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl">
+              A training platform for the skill no one formally teaches: how to think clearly when someone is trying to make you think badly.
+            </p>
+          </motion.header>
+
+          <motion.section className="mb-20 sm:mb-24" {...reveal}>
+            <div className="grid sm:grid-cols-2 gap-6">
+              {pillars.map((card, index) => (
+                <Card
                   key={card.title}
-                  className="bg-card border border-border rounded-lg p-4 sm:p-6 opacity-0 animate-fade-up hover:border-primary/50 hover:-translate-y-1 transition-all duration-300"
-                  style={{ animationDelay: `${200 + index * 100}ms` }}
+                  className="p-6 border border-border bg-card rounded-xl hover:border-primary/50 hover:-translate-y-0.5 transition-all duration-300"
                 >
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
-                    <card.icon className="w-6 h-6 text-primary" />
+                  <h3 className="text-xl font-bold text-foreground mb-3">{card.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{card.description}</p>
+                </Card>
+              ))}
+            </div>
+          </motion.section>
+
+          <motion.section className="mb-20 sm:mb-24" {...reveal}>
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-6 tracking-tight">
+              Why &ldquo;Razor&rdquo;?
+            </h2>
+            <div className="max-w-[65ch] space-y-4 text-lg text-muted-foreground leading-relaxed">
+              <p>
+                The name is inspired by <strong className="text-foreground">Occam&apos;s Razor</strong> — the principle that simpler explanations are generally better than complex ones. In critical thinking, a &ldquo;razor&rdquo; is a tool that cuts through complexity to reveal truth.
+              </p>
+              <p>
+                Project Razor gives you multiple &ldquo;razors&rdquo; — sharp mental tools to cut through faulty logic, identify cognitive traps, and recognize manipulative tactics.
+              </p>
+            </div>
+          </motion.section>
+
+          <motion.section className="mb-20 sm:mb-24" {...reveal}>
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-8 tracking-tight">
+              The BFBA Framework
+            </h2>
+            <div className="space-y-4">
+              {framework.map((item, index) => (
+                <div
+                  key={item.label}
+                  className="rounded-xl border border-border bg-card p-5 sm:p-6 hover:border-primary/40 transition-colors"
+                >
+                  <div className="flex items-baseline gap-4">
+                    <span className="text-sm font-semibold uppercase tracking-wider text-primary min-w-[2ch]">
+                      {String.fromCharCode(66 + index)}
+                    </span>
+                    <div>
+                      <h3 className="text-xl font-bold text-foreground mb-2">{item.label}</h3>
+                      <p className="text-muted-foreground leading-relaxed">{item.text}</p>
+                    </div>
                   </div>
-                  <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-2 sm:mb-3">{card.title}</h3>
-                  <p className="text-muted-foreground">
-                    {card.description}
-                  </p>
                 </div>
               ))}
             </div>
+          </motion.section>
 
-            <section 
-              className="bg-card border border-border rounded-lg p-5 sm:p-8 mb-6 sm:mb-8 opacity-0 animate-fade-up"
-              style={{ animationDelay: "600ms" }}
-            >
-              <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-3 sm:mb-4">Why "Razor"?</h2>
-              <p className="text-muted-foreground leading-relaxed mb-4">
-                The name is inspired by <strong className="text-foreground">Occam's Razor</strong> - the principle that simpler explanations are generally better than complex ones. In critical thinking, a "razor" is a tool that cuts through complexity to reveal truth.
-              </p>
-              <p className="text-muted-foreground leading-relaxed">
-                Project Razor gives you multiple "razors" - sharp mental tools to cut through faulty logic, identify cognitive traps, and recognize manipulative tactics.
-              </p>
-            </section>
-
-            <section 
-              className="bg-card border border-border rounded-lg p-5 sm:p-8 opacity-0 animate-fade-up"
-              style={{ animationDelay: "700ms" }}
-            >
-              <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-3 sm:mb-4">The BFBA Framework</h2>
-              <div className="space-y-4">
-                <div className="p-4 rounded-lg bg-muted/20 hover:bg-muted/30 transition-colors">
-                  <h3 className="text-xl font-bold text-primary mb-2">B - Biases</h3>
-                  <p className="text-muted-foreground">
-                    Systematic patterns of deviation from rationality in judgment. These are unconscious mental shortcuts that can lead us astray.
-                  </p>
-                </div>
-                <div className="p-4 rounded-lg bg-muted/20 hover:bg-muted/30 transition-colors">
-                  <h3 className="text-xl font-bold text-primary mb-2">F - Fallacies</h3>
-                  <p className="text-muted-foreground">
-                    Errors in reasoning that undermine the logic of an argument. These are flaws in the structure of arguments themselves.
-                  </p>
-                </div>
-                <div className="p-4 rounded-lg bg-muted/20 hover:bg-muted/30 transition-colors">
-                  <h3 className="text-xl font-bold text-primary mb-2">BA - Bad-Faith Arguments</h3>
-                  <p className="text-muted-foreground">
-                    Manipulative tactics used to win arguments dishonestly. These are deliberate strategies to avoid genuine discussion.
-                  </p>
-                </div>
-              </div>
-            </section>
-          </div>
+          <motion.section
+            className="py-12 sm:py-16 border-y border-border/50"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6, ease: easeOut }}
+          >
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-6 tracking-tight">
+              Start training your judgment
+            </h2>
+            <p className="text-lg text-muted-foreground mb-8 max-w-2xl leading-relaxed">
+              The first lesson is free. No sign-up required until you want to save your progress.
+            </p>
+            <Button size="lg" asChild className="rounded-full px-8 h-12 text-base">
+              <Link to="/train">Start the Course</Link>
+            </Button>
+          </motion.section>
         </div>
       </main>
     </div>
