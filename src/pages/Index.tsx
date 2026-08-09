@@ -1,9 +1,11 @@
+import { useEffect, useRef } from "react";
 import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import { motion } from "motion/react";
+import { motion, useMotionValue } from "motion/react";
+import { HeroBackground } from "@/components/HeroBackground";
 
 const easeOut = [0.23, 1, 0.32, 1] as const;
 const reveal = {
@@ -74,14 +76,37 @@ const learnCards = [
 ];
 
 const Index = () => {
+  const heroRef = useRef<HTMLElement>(null);
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  useEffect(() => {
+    if (heroRef.current) {
+      const rect = heroRef.current.getBoundingClientRect();
+      mouseX.set(rect.width / 2);
+      mouseY.set(rect.height / 2);
+    }
+  }, [mouseX, mouseY]);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    mouseX.set(e.clientX - rect.left);
+    mouseY.set(e.clientY - rect.top);
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
 
       <main>
         {/* Hero */}
-        <section className="min-h-[100dvh] flex items-center container mx-auto px-4 pt-24 pb-16">
-          <div className="max-w-4xl">
+        <section
+          ref={heroRef}
+          onMouseMove={handleMouseMove}
+          className="relative min-h-[100dvh] flex items-center container mx-auto px-4 pt-24 pb-16 overflow-hidden"
+        >
+          <HeroBackground mouseX={mouseX} mouseY={mouseY} />
+          <div className="relative z-10 max-w-4xl">
             <motion.span
               className="inline-block text-xs sm:text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-6"
               {...heroReveal}
@@ -100,17 +125,25 @@ const Index = () => {
             </motion.h1>
 
             <motion.p
-              className="text-lg sm:text-xl text-muted-foreground max-w-2xl mb-10 leading-relaxed"
+              className="text-lg sm:text-xl text-muted-foreground max-w-2xl mb-4 leading-relaxed"
               {...heroReveal}
               transition={{ ...heroReveal.transition, delay: 0.16 }}
             >
-              Every day, someone online is trying to win you over with an argument that's quietly broken. A dodge, a strawman, a fake either/or. Razor trains you to catch the move, name it, and shut it down.
+              Every day, someone online is trying to win you over with an argument that&apos;s quietly broken. A dodge, a strawman, a fake either/or.
+            </motion.p>
+
+            <motion.p
+              className="text-lg sm:text-xl text-foreground font-medium max-w-2xl mb-10 leading-relaxed"
+              {...heroReveal}
+              transition={{ ...heroReveal.transition, delay: 0.2 }}
+            >
+              Razor trains you to catch the move, name it, and shut it down.
             </motion.p>
 
             <motion.div
               className="flex flex-col sm:flex-row gap-4"
               {...heroReveal}
-              transition={{ ...heroReveal.transition, delay: 0.24 }}
+              transition={{ ...heroReveal.transition, delay: 0.28 }}
             >
               <Button size="lg" asChild className="rounded-full px-8 h-12 text-base">
                 <Link to="/train">
@@ -146,7 +179,7 @@ const Index = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 sm:gap-8">
               {steps.map((step, i) => (
                 <div key={i} className="relative">
-                  <span className="absolute -top-8 left-0 text-7xl font-bold text-muted/20 select-none">
+                  <span className="absolute -top-8 left-0 text-7xl font-bold text-muted-foreground/20 select-none">
                     {step.num}
                   </span>
                   <div className="relative pt-6">
