@@ -1,10 +1,11 @@
 import { Navigation } from "@/components/Navigation";
+import { PageShell } from "@/components/PageShell";
 import ConceptLibraryGrid from "@/components/ConceptLibraryGrid";
 import badFaith from "@/data/bad-faith.json";
 import type { Concept } from "@/data/concepts";
 
 const LearnBadFaith = () => (
-  <>
+  <PageShell>
     <Navigation />
     <ConceptLibraryGrid
       title="Bad-Faith Tactics"
@@ -13,7 +14,7 @@ const LearnBadFaith = () => (
       basePath="/learn/bad-faith-arguments"
       searchPlaceholder="Search tactics..."
     />
-  </>
+  </PageShell>
 );
 
 export default LearnBadFaith;

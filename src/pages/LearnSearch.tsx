@@ -1,4 +1,5 @@
 import { Navigation } from "@/components/Navigation";
+import { PageShell } from "@/components/PageShell";
 import { Link } from "react-router-dom";
 import { Search, Brain, AlertTriangle, Shield, ArrowLeft } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -68,7 +69,7 @@ const LearnSearch = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <PageShell>
       <Navigation />
       
       <main className="container mx-auto px-4 py-8 sm:py-12">
@@ -154,7 +155,7 @@ const LearnSearch = () => {
           )}
         </div>
       </main>
-    </div>
+    </PageShell>
   );
 };
 

@@ -190,3 +190,82 @@ All colors MUST be HSL.
   will-change: stroke-dashoffset;
   animation: dashFlow 8s linear infinite reverse;
 }
+
+/* Page ambient background — calmer than the hero motif */
+.ambient-orb-primary {
+  position: absolute;
+  width: 55vw;
+  height: 55vw;
+  border-radius: 9999px;
+  background: radial-gradient(circle, hsl(var(--primary) / 0.28) 0%, hsl(var(--primary) / 0.08) 35%, transparent 65%);
+  filter: blur(100px);
+  will-change: transform;
+  animation: driftPrimary 28s ease-in-out infinite;
+}
+
+.ambient-orb-accent {
+  position: absolute;
+  width: 45vw;
+  height: 45vw;
+  border-radius: 9999px;
+  background: radial-gradient(circle, hsl(var(--accent) / 0.25) 0%, hsl(var(--accent) / 0.07) 35%, transparent 65%);
+  filter: blur(90px);
+  will-change: transform;
+  animation: driftAccent 22s ease-in-out infinite;
+}
+
+.ambient-orb-core {
+  position: absolute;
+  width: 35vw;
+  height: 35vw;
+  border-radius: 9999px;
+  background: radial-gradient(circle, hsl(var(--primary) / 0.16) 0%, hsl(var(--accent) / 0.07) 40%, transparent 70%);
+  filter: blur(80px);
+  will-change: transform;
+  animation: driftCore 34s ease-in-out infinite;
+}
+
+.ambient-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, hsl(var(--border) / 0.12) 1px, transparent 1px),
+    linear-gradient(to bottom, hsl(var(--border) / 0.12) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(ellipse 90% 90% at 50% 40%, black 0%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 90% at 50% 40%, black 0%, transparent 75%);
+}
+
+.ambient-node {
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: transform, opacity;
+  animation: nodePulse 4s ease-in-out infinite;
+}
+
+.ambient-thread {
+  will-change: stroke-dashoffset;
+  animation: dashFlow 7s linear infinite;
+}
+
+.ambient-thread-slow {
+  will-change: stroke-dashoffset;
+  animation: dashFlow 18s linear infinite;
+}
+
+.ambient-thread-reverse {
+  will-change: stroke-dashoffset;
+  animation: dashFlow 11s linear infinite reverse;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-orb-primary,
+  .ambient-orb-accent,
+  .ambient-orb-core,
+  .ambient-node,
+  .ambient-thread,
+  .ambient-thread-slow,
+  .ambient-thread-reverse {
+    animation: none !important;
+  }
+}

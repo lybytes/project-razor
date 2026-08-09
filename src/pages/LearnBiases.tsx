@@ -1,4 +1,5 @@
 import { Navigation } from "@/components/Navigation";
+import { PageShell } from "@/components/PageShell";
 import { Link } from "react-router-dom";
 import biases from "@/data/biases.json";
 import { Search } from "lucide-react";
@@ -14,7 +15,7 @@ const LearnBiases = () => {
   );
 
   return (
-    <div className="min-h-screen bg-background">
+    <PageShell>
       <Navigation />
       
       <main className="container mx-auto px-4 py-16">
@@ -66,7 +67,7 @@ const LearnBiases = () => {
           )}
         </div>
       </main>
-    </div>
+    </PageShell>
   );
 };
 

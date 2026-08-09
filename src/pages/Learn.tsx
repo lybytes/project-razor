@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
+import { PageShell } from "@/components/PageShell";
 import { Brain, AlertTriangle, Shield, Search, ArrowRight } from "lucide-react";
 import fallacies from "@/data/fallacies.json";
 import biases from "@/data/biases.json";
@@ -31,7 +32,7 @@ const Learn = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <PageShell>
       <Navigation />
       
       <main className="container mx-auto px-4 py-8 sm:py-12">
@@ -92,7 +93,7 @@ const Learn = () => {
           </div>
         </div>
       </main>
-    </div>
+    </PageShell>
   );
 };
 

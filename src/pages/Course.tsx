@@ -7,6 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { Lock, ChevronDown, Check, Trophy, MessageSquare, Zap, Play, ChevronRight } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { motion, AnimatePresence } from "motion/react";
+import { PageShell } from "@/components/PageShell";
 
 const easeOut = [0.23, 1, 0.32, 1] as const;
 
@@ -35,7 +36,7 @@ const Course = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <PageShell>
       <Navigation />
 
       <main className="container mx-auto px-4 py-8 sm:py-12 max-w-3xl">
@@ -303,7 +304,7 @@ const Course = () => {
           </div>
         </motion.div>
       </main>
-    </div>
+    </PageShell>
   );
 };
 
