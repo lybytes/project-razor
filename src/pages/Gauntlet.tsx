@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { useCourseProgress } from "@/contexts/CourseProgressContext";
@@ -21,6 +21,10 @@ const Gauntlet = () => {
   const [correctCount, setCorrectCount] = useState(0);
   const [finished, setFinished] = useState(false);
   const [missedConcepts, setMissedConcepts] = useState<string[]>([]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, [currentIndex, started, finished]);
 
   const moduleData = modules.find(m => m.id === moduleNum);
   const moduleLessonsComplete = moduleData?.lessons.every(l => progress.lessonComplete[l.id]) ?? false;

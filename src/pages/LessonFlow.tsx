@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useParams, useNavigate, Link, Navigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Navigation } from "@/components/Navigation";
@@ -62,6 +62,10 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, [stage, learnCardIndex, drillIndex, warzoneIndex]);
+
   // Learn stage: 5 cards per concept, then transition
   const CARDS_PER_CONCEPT = 5;
   const concepts = getLessonConcepts(lesson);
@@ -85,14 +89,12 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
   };
 
   const handleDrillNext = () => {
-    const isCorrect = selectedOption === lesson.drillQuestions[drillIndex].correctIndex;
     if (drillIndex + 1 < lesson.drillQuestions.length) {
       setDrillIndex(drillIndex + 1);
       setSelectedOption(null);
       setSubmitted(false);
     } else {
-      const finalCorrect = isCorrect ? drillCorrect + 1 : drillCorrect;
-      saveDrillScore(lesson.id, finalCorrect, lesson.drillQuestions.length);
+      saveDrillScore(lesson.id, drillCorrect, lesson.drillQuestions.length);
       setDrillIndex(-1);
       setSelectedOption(null);
       setSubmitted(false);
@@ -107,14 +109,12 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
   };
 
   const handleWarzoneNext = () => {
-    const isCorrect = selectedOption === lesson.warzonePosts[warzoneIndex].correctIndex;
     if (warzoneIndex + 1 < lesson.warzonePosts.length) {
       setWarzoneIndex(warzoneIndex + 1);
       setSelectedOption(null);
       setSubmitted(false);
     } else {
-      const finalCorrect = isCorrect ? warzoneCorrect + 1 : warzoneCorrect;
-      saveWarzoneScore(lesson.id, finalCorrect, lesson.warzonePosts.length);
+      saveWarzoneScore(lesson.id, warzoneCorrect, lesson.warzonePosts.length);
       setWarzoneIndex(-1); // transition
       setSelectedOption(null);
       setSubmitted(false);
