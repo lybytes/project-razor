@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { Flame, Calendar, Trophy, User, LogOut, BookOpen, Zap } from "lucide-react";
+import { Flame, Calendar, Trophy, User, LogOut, BookOpen, Zap, Mail } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { useAuth } from "@/contexts/AuthContext";
 import { getUserStats, getProgress, type UserStats, type ProgressEntry } from "@/lib/api";
 
 const Account = () => {
-  const { hasSession, loading: authLoading, logout } = useAuth();
+  const { user, hasSession, loading: authLoading, logout } = useAuth();
   const [stats, setStats] = useState<UserStats | null>(null);
   const [completedLessons, setCompletedLessons] = useState<ProgressEntry[]>([]);
   const [loading, setLoading] = useState(true);
@@ -105,7 +105,7 @@ const Account = () => {
                 <User className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
               </div>
               <div className="min-w-0">
-                <h1 className="text-2xl sm:text-3xl font-bold text-foreground truncate">{stats.display_name || "User"}</h1>
+                <h1 className="text-2xl sm:text-3xl font-bold text-foreground truncate">{user?.display_name || stats.display_name || "User"}</h1>
                 <p className="text-sm sm:text-base text-muted-foreground truncate">{stats.email}</p>
               </div>
             </div>
@@ -114,6 +114,18 @@ const Account = () => {
               Sign Out
             </Button>
           </div>
+
+          {user && !user.email_confirmed && (
+            <div className="mb-6 p-4 rounded-lg border border-amber-500/30 bg-amber-500/10 text-amber-200 flex items-start gap-3 opacity-0 animate-fade-up">
+              <Mail className="w-5 h-5 mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="font-medium">Please confirm your email</p>
+                <p className="text-sm text-amber-200/80">
+                  Your course progress is not affected, but some account features may be limited until you confirm.
+                </p>
+              </div>
+            </div>
+          )}
 
           {/* Stats Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
