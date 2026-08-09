@@ -206,6 +206,7 @@ export interface UserStats {
   lessons_completed: number;
   display_name: string | null;
   email: string;
+  last_activity_date: string | null;
 }
 
 export async function getUserStats(): Promise<UserStats> {
@@ -225,6 +226,7 @@ export async function getUserStats(): Promise<UserStats> {
     lessons_completed: count || 0,
     display_name: profile.display_name,
     email: profile.email || user.email || "",
+    last_activity_date: profile.last_activity_date ?? null,
   };
 }
 

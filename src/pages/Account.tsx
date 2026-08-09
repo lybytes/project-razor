@@ -1,13 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
 import { getUserStats, getProgress, type UserStats, type ProgressEntry } from "@/lib/api";
 import { motion } from "motion/react";
+import { Pencil, Check, X } from "lucide-react";
 
 const easeOut = [0.23, 1, 0.32, 1] as const;
 const reveal = {
@@ -18,11 +20,14 @@ const reveal = {
 } as const;
 
 const Account = () => {
-  const { user, hasSession, loading: authLoading, logout } = useAuth();
+  const { user, hasSession, loading: authLoading, logout, updateDisplayName } = useAuth();
   const [stats, setStats] = useState<UserStats | null>(null);
   const [completedLessons, setCompletedLessons] = useState<ProgressEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [editingName, setEditingName] = useState(false);
+  const [nameInput, setNameInput] = useState(user?.display_name || "");
+  const [savingName, setSavingName] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,6 +42,12 @@ const Account = () => {
       fetchData();
     }
   }, [hasSession]);
+
+  useEffect(() => {
+    if (user?.display_name) {
+      setNameInput(user.display_name);
+    }
+  }, [user?.display_name]);
 
   const fetchData = async () => {
     setLoading(true);
@@ -66,6 +77,20 @@ const Account = () => {
     logout();
     toast.success("Signed out successfully");
     navigate("/");
+  };
+
+  const handleSaveName = async () => {
+    setSavingName(true);
+    try {
+      await updateDisplayName(nameInput);
+      toast.success("Display name updated");
+      setEditingName(false);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to update display name";
+      toast.error(message);
+    } finally {
+      setSavingName(false);
+    }
   };
 
   if (authLoading || (hasSession && loading)) {
@@ -118,9 +143,37 @@ const Account = () => {
               <span className="inline-block text-xs sm:text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-3">
                 Account
               </span>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-foreground tracking-tighter leading-[1.05] mb-2">
-                {displayName}
-              </h1>
+
+              {editingName ? (
+                <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-2">
+                  <Input
+                    value={nameInput}
+                    onChange={(e) => setNameInput(e.target.value)}
+                    placeholder="Display name"
+                    className="text-lg h-11 max-w-xs rounded-full px-4"
+                    disabled={savingName}
+                    autoFocus
+                  />
+                  <div className="flex items-center gap-2">
+                    <Button size="sm" onClick={handleSaveName} disabled={savingName || !nameInput.trim()} className="rounded-full h-9 px-4">
+                      <Check className="w-4 h-4 mr-1" /> Save
+                    </Button>
+                    <Button size="sm" variant="ghost" onClick={() => { setEditingName(false); setNameInput(displayName); }} disabled={savingName} className="rounded-full h-9 px-4">
+                      <X className="w-4 h-4 mr-1" /> Cancel
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-center gap-3 mb-2">
+                  <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-foreground tracking-tighter leading-[1.05]">
+                    {displayName}
+                  </h1>
+                  <Button variant="ghost" size="sm" onClick={() => setEditingName(true)} className="rounded-full h-9 px-3 text-muted-foreground hover:text-foreground">
+                    <Pencil className="w-4 h-4" />
+                  </Button>
+                </div>
+              )}
+
               <p className="text-lg text-muted-foreground">{stats.email}</p>
             </div>
             <Button
@@ -175,6 +228,16 @@ const Account = () => {
             </div>
           </motion.section>
 
+          <motion.section className="mb-12" {...reveal}>
+            <Card className="p-6 border border-border bg-card rounded-xl">
+              <div className="flex items-baseline justify-between mb-6">
+                <h2 className="text-2xl font-bold text-foreground tracking-tight">Active days</h2>
+                <p className="text-sm text-muted-foreground">Last 12 months</p>
+              </div>
+              <ActivityHeatmap completedLessons={completedLessons} lastActivityDate={stats.last_activity_date ?? null} />
+            </Card>
+          </motion.section>
+
           <motion.section {...reveal}>
             <Card className="p-6 border border-border bg-card rounded-xl">
               <h2 className="text-2xl font-bold text-foreground mb-6 tracking-tight">Course progress</h2>
@@ -206,5 +269,128 @@ const Account = () => {
     </div>
   );
 };
+
+function getDateKey(date: Date) {
+  return date.toISOString().split("T")[0];
+}
+
+function ActivityHeatmap({ completedLessons, lastActivityDate }: { completedLessons: ProgressEntry[]; lastActivityDate: string | null }) {
+  const { weeks, maxCount } = useMemo(() => {
+    const today = new Date();
+    today.setUTCHours(0, 0, 0, 0);
+
+    const daysToShow = 371;
+    const start = new Date(today);
+    start.setUTCDate(start.getUTCDate() - (daysToShow - 1));
+
+    const counts = new Map<string, number>();
+    for (const lesson of completedLessons) {
+      if (!lesson.completed_at) continue;
+      const d = new Date(lesson.completed_at);
+      d.setUTCHours(0, 0, 0, 0);
+      const key = getDateKey(d);
+      counts.set(key, (counts.get(key) || 0) + 1);
+    }
+
+    if (lastActivityDate) {
+      const [year, month, day] = lastActivityDate.split("-").map(Number);
+      if (year && month && day) {
+        const d = new Date(Date.UTC(year, month - 1, day));
+        const key = getDateKey(d);
+        counts.set(key, (counts.get(key) || 0) + 1);
+      }
+    }
+
+    const allDays: { date: Date; count: number }[] = [];
+    for (let i = 0; i < daysToShow; i++) {
+      const d = new Date(start);
+      d.setUTCDate(start.getUTCDate() + i);
+      allDays.push({ date: d, count: counts.get(getDateKey(d)) || 0 });
+    }
+
+    const cols: { date: Date; count: number }[][] = [];
+    for (let i = 0; i < allDays.length; i += 7) {
+      cols.push(allDays.slice(i, i + 7));
+    }
+
+    const max = Math.max(1, ...counts.values());
+    return { weeks: cols, maxCount: max };
+  }, [completedLessons, lastActivityDate]);
+
+  const monthLabels = useMemo(() => {
+    const labels: { label: string; colIndex: number }[] = [];
+    weeks.forEach((col, i) => {
+      const firstDayOfWeek = col[0]?.date;
+      if (!firstDayOfWeek) return;
+      if (firstDayOfWeek.getUTCDate() <= 7) {
+        const label = firstDayOfWeek.toLocaleString("default", { month: "short", timeZone: "UTC" });
+        if (!labels.length || labels[labels.length - 1].label !== label) {
+          labels.push({ label, colIndex: i });
+        }
+      }
+    });
+    return labels;
+  }, [weeks]);
+
+  const level = (count: number) => {
+    if (count === 0) return "bg-muted/40";
+    if (count / maxCount > 0.75) return "bg-primary";
+    if (count / maxCount > 0.5) return "bg-primary/70";
+    if (count / maxCount > 0.25) return "bg-primary/45";
+    return "bg-primary/25";
+  };
+
+  return (
+    <div className="overflow-x-auto">
+      <div className="min-w-[600px] pl-6 pb-1 select-none">
+        <svg width={0} height={0} />
+        <div className="relative">
+          <div className="absolute left-0 top-4 flex flex-col gap-3.5 text-[10px] text-muted-foreground/60 text-right w-5">
+            <span className="h-2.5 leading-none">Mon</span>
+            <span className="h-2.5 leading-none">Wed</span>
+            <span className="h-2.5 leading-none">Fri</span>
+          </div>
+
+          <div className="relative ml-6">
+            <div className="flex gap-0.5">
+              {weeks.map((col, colIndex) => (
+                <div key={colIndex} className="flex flex-col gap-0.5">
+                  {monthLabels.find((m) => m.colIndex === colIndex) && (
+                    <div className="absolute -top-5 left-0 -translate-x-1/2 text-[10px] text-muted-foreground/60">
+                      {monthLabels.find((m) => m.colIndex === colIndex)?.label}
+                    </div>
+                  )}
+                  {col.map((day) => {
+                    const key = getDateKey(day.date);
+                    const title = `${day.date.toLocaleDateString("default", { month: "short", day: "numeric", timeZone: "UTC" })} — ${day.count} active ${day.count === 1 ? "day" : "days"}`;
+                    return (
+                      <div
+                        key={key}
+                        title={title}
+                        className={`w-2.5 h-2.5 rounded-sm ${level(day.count)}`}
+                      />
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3 mt-5 text-[10px] text-muted-foreground/60">
+          <span>Less</span>
+          <div className="flex gap-1">
+            <div className="w-2.5 h-2.5 rounded-sm bg-muted/40" />
+            <div className="w-2.5 h-2.5 rounded-sm bg-primary/25" />
+            <div className="w-2.5 h-2.5 rounded-sm bg-primary/45" />
+            <div className="w-2.5 h-2.5 rounded-sm bg-primary/70" />
+            <div className="w-2.5 h-2.5 rounded-sm bg-primary" />
+          </div>
+          <span>More</span>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default Account;
