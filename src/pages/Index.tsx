@@ -21,16 +21,16 @@ const heroReveal = {
 
 const stats = [
   {
-    stat: "3.2 billion",
-    desc: "social media users are exposed daily to misleading arguments, emotionally manipulative content, and outright false reasoning.",
+    stat: "~50 tactics",
+    desc: "logical fallacies and manipulation tricks are reused constantly by advertisers, politicians, and bad-faith accounts. Most people can't name five.",
   },
   {
-    stat: "~50 known",
-    desc: "logical fallacies and cognitive biases are reliably exploited by politicians, advertisers, and bad-faith actors — most people can't name five.",
+    stat: "Seconds",
+    desc: "that's how fast a bad argument works. You feel something's off but can't name why before the moment's gone. That gap is what gets exploited.",
   },
   {
-    stat: "0 schools",
-    desc: "teach applied critical thinking as a practical, trainable skill. Most people graduate without ever learning how arguments actually work.",
+    stat: "Almost never taught",
+    desc: "most people finish school without ever learning how an argument is actually built, or how it's rigged.",
   },
 ];
 
@@ -43,12 +43,12 @@ const steps = [
   {
     num: "02",
     title: "Train on real content",
-    desc: "Practice spotting fallacies in actual social media posts, news comments, and political discourse. Not textbook abstractions — the real thing.",
+    desc: "Practice spotting fallacies in real-world arguments — comment sections, ads, and political discourse — not textbook abstractions.",
   },
   {
     num: "03",
-    title: "Build a lasting skill",
-    desc: "Spaced repetition, daily streaks, and progressive difficulty mean the skill sticks. You'll start seeing manipulation everywhere — and know how to respond.",
+    title: "Build the reflex",
+    desc: "Daily practice and rising difficulty turn recognition into instinct. After a while you'll spot the moves in real time — in comment sections, ads, arguments, your own head.",
   },
 ];
 
@@ -95,8 +95,8 @@ const Index = () => {
               {...heroReveal}
               transition={{ ...heroReveal.transition, delay: 0.08 }}
             >
-              The internet is full of{" "}
-              <span className="text-primary">manipulation</span>. Learn to see through it.
+              Stop getting{" "}
+              <span className="text-primary">played</span>.
             </motion.h1>
 
             <motion.p
@@ -104,7 +104,7 @@ const Index = () => {
               {...heroReveal}
               transition={{ ...heroReveal.transition, delay: 0.16 }}
             >
-              Project Razor is a structured training platform that teaches you to spot logical fallacies, flawed arguments, and manipulation tactics through real-world examples and daily practice.
+              Every day, someone online is trying to win you over with an argument that's quietly broken — a dodge, a strawman, a fake either/or. Razor trains you to catch the move, name it, and shut it down.
             </motion.p>
 
             <motion.div

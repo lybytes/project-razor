@@ -31,6 +31,7 @@ const PageTitle = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
     const base = "Project Razor";
     const pageTitle = (() => {
       if (pathname === "/") return base;
