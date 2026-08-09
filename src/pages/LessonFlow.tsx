@@ -7,6 +7,9 @@ import { getLessonData, getLessonConcepts, getNextLessonId, type DrillQuestion, 
 import { Button } from "@/components/ui/button";
 import { ConceptExampleCard } from "@/components/ConceptExampleCard";
 import { Check, X, ChevronRight, ChevronLeft, BookOpen, Target, Swords, BarChart3, Trophy } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+
+const easeOut = [0.23, 1, 0.32, 1] as const;
 
 const STAGES = ["Learn", "Drill", "Warzone", "Summary"];
 const STAGE_ICONS = [BookOpen, Target, Swords, BarChart3];
@@ -133,190 +136,288 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
         <div className="flex items-center justify-center gap-1.5 sm:gap-3 mb-6 sm:mb-10">
           {STAGES.map((s, i) => {
             const Icon = STAGE_ICONS[i];
+            const isActive = i === stage;
+            const isCompleted = i < stage;
             return (
               <div key={s} className="flex items-center gap-2">
-                <div className={`flex items-center gap-1.5 h-8 px-3 sm:px-4 rounded-full text-xs font-semibold transition-colors border ${
-                  i === stage ? "bg-primary/15 text-primary border-primary/20" : i < stage ? "bg-green-500/15 text-green-400 border-green-500/20" : "bg-muted/30 text-muted-foreground border-transparent"
-                }`}>
-                  <Icon className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">{s}</span>
+                <div className="relative flex items-center gap-1.5 h-8 px-3 sm:px-4 rounded-full text-xs font-semibold border border-transparent">
+                  {isActive && (
+                    <motion.div
+                      layoutId="stage-pill"
+                      className="absolute inset-0 rounded-full bg-primary/15 border border-primary/20"
+                      initial={false}
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    />
+                  )}
+                  <Icon className={`w-3.5 h-3.5 relative z-10 ${isActive ? "text-primary" : isCompleted ? "text-green-400" : "text-muted-foreground"}`} />
+                  <span className={`hidden sm:inline relative z-10 ${isActive ? "text-primary" : isCompleted ? "text-green-400" : "text-muted-foreground"}`}>
+                    {s}
+                  </span>
                 </div>
-                {i < STAGES.length - 1 && <div className={`w-4 sm:w-6 h-px ${i < stage ? "bg-green-500/50" : "bg-border"}`} />}
+                {i < STAGES.length - 1 && (
+                  <motion.div
+                    className="h-px"
+                    initial={false}
+                    animate={{
+                      width: i < stage ? 24 : 16,
+                      backgroundColor: i < stage ? "rgba(74,222,128,0.5)" : "hsl(240 6% 20%)",
+                    }}
+                    transition={{ duration: 0.3, ease: easeOut }}
+                  />
+                )}
               </div>
             );
           })}
         </div>
 
+        <AnimatePresence mode="wait">
         {/* STAGE 0: LEARN */}
         {stage === 0 && (
-          <div className="animate-fade-up">
-            {isTransitionCard ? (
-              <div className="text-center py-10 sm:py-16 rounded-xl border border-border bg-card p-6 sm:p-10">
-                <p className="text-xl sm:text-2xl font-bold text-foreground mb-3">
-                  You&apos;ve learned {concepts.length} new concept{concepts.length > 1 ? "s" : ""}. Time to test yourself.
-                </p>
-                <Button size="lg" onClick={() => advanceStage(1)} className="mt-4 sm:mt-6">
-                  Start Drill <ChevronRight className="w-4 h-4 ml-1" />
-                </Button>
-              </div>
-            ) : currentConcept && (
-              <div className="min-h-[360px] sm:min-h-[420px] flex flex-col rounded-xl border border-border bg-card p-5 sm:p-8">
-                {currentCardType === 0 && (
-                  <div className="flex-1 flex flex-col items-center justify-center text-center px-2 sm:px-4">
-                    <p className="text-xl sm:text-2xl md:text-3xl text-foreground font-medium italic leading-relaxed max-w-lg">
-                      &ldquo;{currentConcept.hook}&rdquo;
-                    </p>
-                    <p className="text-muted-foreground mt-8 text-base">What&apos;s wrong with this argument?</p>
-                  </div>
-                )}
-
-                {currentCardType === 1 && (
-                  <div className="flex-1 flex flex-col items-center justify-center text-center px-2 sm:px-4">
-                    <span className="inline-flex h-7 items-center px-4 rounded-full text-xs font-semibold bg-primary/15 text-primary mb-4 sm:mb-5">
-                      {currentConcept.category}
-                    </span>
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-5 tracking-tight">{currentConcept.name}</h2>
-                    <p className="text-base sm:text-lg md:text-xl text-foreground/80 max-w-md leading-relaxed">{currentConcept.oneLiner}</p>
-                  </div>
-                )}
-
-                {currentCardType === 2 && (
-                  <div className="flex-1">
-                    <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">How to spot it</h3>
-                    <p className="text-base text-foreground/80 leading-relaxed mb-6">{currentConcept.deepDive}</p>
-                    <ul className="space-y-3 sm:space-y-5">
-                      {currentConcept.howToSpot.map((point, i) => (
-                        <li key={i} className="flex gap-3">
-                          <span className="text-primary mt-0.5 text-lg">•</span>
-                          <span className="text-base text-foreground/90 leading-relaxed">{point}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {currentCardType === 3 && (
-                  <div className="flex-1">
-                    <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">Real-world examples</h3>
-                    <div className="space-y-4">
-                      {currentConcept.examples.map((example, i) => (
-                        <ConceptExampleCard key={i} example={example} index={i} conceptName={currentConcept.name} />
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {currentCardType === 4 && (
-                  <div className="flex-1">
-                    <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">How to Refute</h3>
-                    <ul className="space-y-5 sm:space-y-6">
-                      {currentConcept.refutation.map((strategy, i) => (
-                        <li key={i} className="flex gap-3">
-                          <span className="text-green-400 mt-0.5 text-base font-bold">{i + 1}.</span>
-                          <div className="flex-1">
-                            <p className="text-base text-foreground/90 leading-relaxed">
-                              <span className="font-bold text-foreground">{strategy.title}: </span>
-                              {strategy.text}
-                            </p>
-                            <div className="border-l-2 border-primary/50 bg-primary/5 rounded-r px-4 py-2 mt-2">
-                              <p className="text-base text-foreground/80 italic leading-relaxed">&ldquo;{strategy.comeback}&rdquo;</p>
-                            </div>
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                <div className="mt-6 sm:mt-8 flex justify-between items-center pt-4 border-t border-border/50">
-                  <div className="flex items-center gap-3">
-                    {learnCardIndex > 0 && (
-                      <Button variant="ghost" size="sm" onClick={() => setLearnCardIndex(learnCardIndex - 1)}>
-                        <ChevronLeft className="w-4 h-4 mr-1" /> Back
-                      </Button>
-                    )}
-                    <span className="text-xs text-muted-foreground">
-                      {currentConceptIndex + 1}/{concepts.length} concepts
-                    </span>
-                  </div>
-                  <Button onClick={() => setLearnCardIndex(learnCardIndex + 1)}>
-                    Continue <ChevronRight className="w-4 h-4 ml-1" />
+          <motion.div
+            key="learn"
+            initial={{ opacity: 0, y: 24, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -24, scale: 0.98 }}
+            transition={{ duration: 0.35, ease: easeOut }}
+          >
+            <AnimatePresence mode="wait">
+              {isTransitionCard ? (
+                <motion.div
+                  key="transition"
+                  initial={{ opacity: 0, y: 16, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -16, scale: 0.98 }}
+                  transition={{ duration: 0.3, ease: easeOut }}
+                  className="text-center py-10 sm:py-16 rounded-xl border border-border bg-card p-6 sm:p-10"
+                >
+                  <p className="text-xl sm:text-2xl font-bold text-foreground mb-3">
+                    You&apos;ve learned {concepts.length} new concept{concepts.length > 1 ? "s" : ""}. Time to test yourself.
+                  </p>
+                  <Button size="lg" onClick={() => advanceStage(1)} className="mt-4 sm:mt-6">
+                    Start Drill <ChevronRight className="w-4 h-4 ml-1" />
                   </Button>
-                </div>
-              </div>
-            )}
-          </div>
+                </motion.div>
+              ) : currentConcept && (
+                <motion.div
+                  key={learnCardIndex}
+                  initial={{ opacity: 0, y: 16, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -16, scale: 0.98 }}
+                  transition={{ duration: 0.3, ease: easeOut }}
+                  className="min-h-[360px] sm:min-h-[420px] flex flex-col rounded-xl border border-border bg-card p-5 sm:p-8"
+                >
+                  {currentCardType === 0 && (
+                    <div className="flex-1 flex flex-col items-center justify-center text-center px-2 sm:px-4">
+                      <p className="text-xl sm:text-2xl md:text-3xl text-foreground font-medium italic leading-relaxed max-w-lg">
+                        &ldquo;{currentConcept.hook}&rdquo;
+                      </p>
+                      <p className="text-muted-foreground mt-8 text-base">What&apos;s wrong with this argument?</p>
+                    </div>
+                  )}
+
+                  {currentCardType === 1 && (
+                    <div className="flex-1 flex flex-col items-center justify-center text-center px-2 sm:px-4">
+                      <span className="inline-flex h-7 items-center px-4 rounded-full text-xs font-semibold bg-primary/15 text-primary mb-4 sm:mb-5">
+                        {currentConcept.category}
+                      </span>
+                      <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-5 tracking-tight">{currentConcept.name}</h2>
+                      <p className="text-base sm:text-lg md:text-xl text-foreground/80 max-w-md leading-relaxed">{currentConcept.oneLiner}</p>
+                    </div>
+                  )}
+
+                  {currentCardType === 2 && (
+                    <div className="flex-1">
+                      <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">How to spot it</h3>
+                      <p className="text-base text-foreground/80 leading-relaxed mb-6">{currentConcept.deepDive}</p>
+                      <ul className="space-y-3 sm:space-y-5">
+                        {currentConcept.howToSpot.map((point, i) => (
+                          <li key={i} className="flex gap-3">
+                            <span className="text-primary mt-0.5 text-lg">•</span>
+                            <span className="text-base text-foreground/90 leading-relaxed">{point}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {currentCardType === 3 && (
+                    <div className="flex-1">
+                      <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">Real-world examples</h3>
+                      <div className="space-y-4">
+                        {currentConcept.examples.map((example, i) => (
+                          <ConceptExampleCard key={i} example={example} index={i} conceptName={currentConcept.name} />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {currentCardType === 4 && (
+                    <div className="flex-1">
+                      <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">How to Refute</h3>
+                      <ul className="space-y-5 sm:space-y-6">
+                        {currentConcept.refutation.map((strategy, i) => (
+                          <li key={i} className="flex gap-3">
+                            <span className="text-green-400 mt-0.5 text-base font-bold">{i + 1}.</span>
+                            <div className="flex-1">
+                              <p className="text-base text-foreground/90 leading-relaxed">
+                                <span className="font-bold text-foreground">{strategy.title}: </span>
+                                {strategy.text}
+                              </p>
+                              <div className="border-l-2 border-primary/50 bg-primary/5 rounded-r px-4 py-2 mt-2">
+                                <p className="text-base text-foreground/80 italic leading-relaxed">&ldquo;{strategy.comeback}&rdquo;</p>
+                              </div>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  <div className="mt-6 sm:mt-8 flex justify-between items-center pt-4 border-t border-border/50">
+                    <div className="flex items-center gap-3">
+                      {learnCardIndex > 0 && (
+                        <Button variant="ghost" size="sm" onClick={() => setLearnCardIndex(learnCardIndex - 1)}>
+                          <ChevronLeft className="w-4 h-4 mr-1" /> Back
+                        </Button>
+                      )}
+                      <span className="text-xs text-muted-foreground">
+                        {currentConceptIndex + 1}/{concepts.length} concepts
+                      </span>
+                    </div>
+                    <Button onClick={() => setLearnCardIndex(learnCardIndex + 1)}>
+                      Continue <ChevronRight className="w-4 h-4 ml-1" />
+                    </Button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
         )}
 
         {/* STAGE 1: DRILL */}
         {stage === 1 && (
-          <div className="animate-fade-up">
-            {drillIndex === -1 ? (
-              <div className="text-center py-10 sm:py-16 rounded-xl border border-border bg-card p-6 sm:p-10">
-                <p className="text-xl sm:text-2xl font-bold text-foreground mb-3">Drill complete. Now apply what you&apos;ve learned in the real world.</p>
-                <p className="text-lg text-muted-foreground mb-6">
-                  {drillCorrect}/{lesson.drillQuestions.length} correct
-                </p>
-                <Button size="lg" onClick={() => advanceStage(2)}>
-                  Enter the Warzone <ChevronRight className="w-4 h-4 ml-1" />
-                </Button>
-              </div>
-            ) : (
-              <DrillView
-                question={lesson.drillQuestions[drillIndex]}
-                index={drillIndex}
-                total={lesson.drillQuestions.length}
-                selectedOption={selectedOption}
-                submitted={submitted}
-                onSelect={setSelectedOption}
-                onSubmit={handleDrillSubmit}
-                onNext={handleDrillNext}
-              />
-            )}
-          </div>
+          <motion.div
+            key="drill"
+            initial={{ opacity: 0, y: 24, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -24, scale: 0.98 }}
+            transition={{ duration: 0.35, ease: easeOut }}
+          >
+            <AnimatePresence mode="wait">
+              {drillIndex === -1 ? (
+                <motion.div
+                  key="drill-done"
+                  initial={{ opacity: 0, y: 16, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -16, scale: 0.98 }}
+                  transition={{ duration: 0.3, ease: easeOut }}
+                  className="text-center py-10 sm:py-16 rounded-xl border border-border bg-card p-6 sm:p-10"
+                >
+                  <p className="text-xl sm:text-2xl font-bold text-foreground mb-3">Drill complete. Now apply what you&apos;ve learned in the real world.</p>
+                  <p className="text-lg text-muted-foreground mb-6">
+                    {drillCorrect}/{lesson.drillQuestions.length} correct
+                  </p>
+                  <Button size="lg" onClick={() => advanceStage(2)}>
+                    Enter the Warzone <ChevronRight className="w-4 h-4 ml-1" />
+                  </Button>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key={drillIndex}
+                  initial={{ opacity: 0, y: 16, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -16, scale: 0.98 }}
+                  transition={{ duration: 0.3, ease: easeOut }}
+                >
+                  <DrillView
+                    question={lesson.drillQuestions[drillIndex]}
+                    index={drillIndex}
+                    total={lesson.drillQuestions.length}
+                    selectedOption={selectedOption}
+                    submitted={submitted}
+                    onSelect={setSelectedOption}
+                    onSubmit={handleDrillSubmit}
+                    onNext={handleDrillNext}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
         )}
 
         {/* STAGE 2: WARZONE */}
         {stage === 2 && (
-          <div className="animate-fade-up">
-            {warzoneIndex === -1 ? (
-              <div className="text-center py-10 sm:py-16 rounded-xl border border-border bg-card p-6 sm:p-10">
-                <p className="text-xl sm:text-2xl font-bold text-foreground mb-3">Warzone complete!</p>
-                <p className="text-lg text-muted-foreground mb-2">
-                  {warzoneCorrect}/{lesson.warzonePosts.length} correct
-                </p>
-                <p className="text-muted-foreground mb-6">You&apos;ve proven you can apply these concepts to real-world scenarios.</p>
-                <Button size="lg" onClick={finishLesson}>
-                  See Lesson Summary <ChevronRight className="w-4 h-4 ml-1" />
-                </Button>
-              </div>
-            ) : (
-              <WarzoneView
-                post={lesson.warzonePosts[warzoneIndex]}
-                index={warzoneIndex}
-                total={lesson.warzonePosts.length}
-                selectedOption={selectedOption}
-                submitted={submitted}
-                onSelect={setSelectedOption}
-                onSubmit={handleWarzoneSubmit}
-                onNext={handleWarzoneNext}
-              />
-            )}
-          </div>
+          <motion.div
+            key="warzone"
+            initial={{ opacity: 0, y: 24, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -24, scale: 0.98 }}
+            transition={{ duration: 0.35, ease: easeOut }}
+          >
+            <AnimatePresence mode="wait">
+              {warzoneIndex === -1 ? (
+                <motion.div
+                  key="warzone-done"
+                  initial={{ opacity: 0, y: 16, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -16, scale: 0.98 }}
+                  transition={{ duration: 0.3, ease: easeOut }}
+                  className="text-center py-10 sm:py-16 rounded-xl border border-border bg-card p-6 sm:p-10"
+                >
+                  <p className="text-xl sm:text-2xl font-bold text-foreground mb-3">Warzone complete!</p>
+                  <p className="text-lg text-muted-foreground mb-2">
+                    {warzoneCorrect}/{lesson.warzonePosts.length} correct
+                  </p>
+                  <p className="text-muted-foreground mb-6">You&apos;ve proven you can apply these concepts to real-world scenarios.</p>
+                  <Button size="lg" onClick={finishLesson}>
+                    See Lesson Summary <ChevronRight className="w-4 h-4 ml-1" />
+                  </Button>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key={warzoneIndex}
+                  initial={{ opacity: 0, y: 16, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -16, scale: 0.98 }}
+                  transition={{ duration: 0.3, ease: easeOut }}
+                >
+                  <WarzoneView
+                    post={lesson.warzonePosts[warzoneIndex]}
+                    index={warzoneIndex}
+                    total={lesson.warzonePosts.length}
+                    selectedOption={selectedOption}
+                    submitted={submitted}
+                    onSelect={setSelectedOption}
+                    onSubmit={handleWarzoneSubmit}
+                    onNext={handleWarzoneNext}
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
         )}
 
         {/* STAGE 3: SUMMARY */}
         {stage === 3 && (
-          <SummaryView
-            lesson={lesson}
-            hasSession={hasSession}
-            drillScore={progress.drillScores[lesson.id]}
-            warzoneScore={progress.warzoneScores[lesson.id]}
-            allLessonsComplete={["1-1", "1-2", "1-3"].every(id => progress.lessonComplete[id])}
-            wasAlreadyComplete={wasAlreadyComplete}
-            navigate={navigate}
-          />
+          <motion.div
+            key="summary"
+            initial={{ opacity: 0, y: 24, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -24, scale: 0.98 }}
+            transition={{ duration: 0.35, ease: easeOut }}
+          >
+            <SummaryView
+              lesson={lesson}
+              hasSession={hasSession}
+              drillScore={progress.drillScores[lesson.id]}
+              warzoneScore={progress.warzoneScores[lesson.id]}
+              allLessonsComplete={["1-1", "1-2", "1-3"].every(id => progress.lessonComplete[id])}
+              wasAlreadyComplete={wasAlreadyComplete}
+              navigate={navigate}
+            />
+          </motion.div>
         )}
+        </AnimatePresence>
       </main>
     </div>
   );
