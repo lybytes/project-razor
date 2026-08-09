@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Home, Brain, BookOpen, Info, User, LogIn } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { cn } from "@/lib/utils";
+import { Logo } from "@/components/Logo";
 
 const NavItem = ({ to, icon: Icon, label, isActive }: { to: string; icon: React.ElementType; label: string; isActive: boolean }) => (
   <Link 
@@ -31,14 +32,7 @@ export const Navigation = () => {
     <nav className="sticky top-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg shadow-primary/20 group-hover:shadow-primary/40 transition-shadow duration-300">
-              <span className="text-lg font-bold text-primary-foreground">R</span>
-            </div>
-            <span className="text-lg font-semibold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text hidden sm:inline">
-              Project Razor
-            </span>
-          </Link>
+          <Logo />
           
           <div className="flex items-center gap-0.5 sm:gap-1 bg-muted/30 rounded-full p-1 sm:p-1.5">
             <NavItem to="/" icon={Home} label="Home" isActive={isActive("/")} />

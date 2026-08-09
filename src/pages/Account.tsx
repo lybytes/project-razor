@@ -2,11 +2,20 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
-import { Flame, Calendar, Trophy, User, LogOut, BookOpen, Zap, Mail } from "lucide-react";
+import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
 import { getUserStats, getProgress, type UserStats, type ProgressEntry } from "@/lib/api";
+import { motion } from "motion/react";
+
+const easeOut = [0.23, 1, 0.32, 1] as const;
+const reveal = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-80px" },
+  transition: { duration: 0.5, ease: easeOut },
+} as const;
 
 const Account = () => {
   const { user, hasSession, loading: authLoading, logout } = useAuth();
@@ -79,124 +88,119 @@ const Account = () => {
       <div className="min-h-screen bg-background">
         <Navigation />
         <main className="container mx-auto px-4 py-16">
-          <div className="max-w-xl mx-auto bg-card border border-border rounded-lg p-6 text-center">
+          <Card className="max-w-xl mx-auto border border-border bg-card rounded-xl p-6 text-center">
             <h1 className="text-2xl font-bold text-foreground mb-2">Account unavailable</h1>
             <p className="text-muted-foreground mb-4">{error || "We couldn't load your account data."}</p>
-            <Button onClick={fetchData}>Try Again</Button>
-          </div>
+            <Button onClick={fetchData} className="rounded-full px-6">Try Again</Button>
+          </Card>
         </main>
       </div>
     );
   }
 
+  const displayName = user?.display_name || stats.display_name || "User";
   const module1Lessons = completedLessons.filter((p) => p.module_id === 1).length;
   const module1Progress = (module1Lessons / 3) * 100;
 
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
+
       <main className="container mx-auto px-4 py-8 sm:py-16">
         <div className="max-w-4xl mx-auto">
-          {/* Profile Header */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8 opacity-0 animate-fade-up">
-            <div className="flex items-center gap-3 sm:gap-4">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
-                <User className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
-              </div>
-              <div className="min-w-0">
-                <h1 className="text-2xl sm:text-3xl font-bold text-foreground truncate">{user?.display_name || stats.display_name || "User"}</h1>
-                <p className="text-sm sm:text-base text-muted-foreground truncate">{stats.email}</p>
-              </div>
+          <motion.header
+            className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-12"
+            initial={{ opacity: 0, y: 32 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: easeOut }}
+          >
+            <div>
+              <span className="inline-block text-xs sm:text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-3">
+                Account
+              </span>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-foreground tracking-tighter leading-[1.05] mb-2">
+                {displayName}
+              </h1>
+              <p className="text-lg text-muted-foreground">{stats.email}</p>
             </div>
-            <Button variant="outline" onClick={handleSignOut} className="self-start sm:self-auto">
-              <LogOut className="w-4 h-4 mr-2" />
+            <Button
+              variant="outline"
+              onClick={handleSignOut}
+              className="self-start sm:self-auto rounded-full px-6 h-11"
+            >
               Sign Out
             </Button>
-          </div>
+          </motion.header>
 
           {user && !user.email_confirmed && (
-            <div className="mb-6 p-4 rounded-lg border border-amber-500/30 bg-amber-500/10 text-amber-200 flex items-start gap-3 opacity-0 animate-fade-up">
-              <Mail className="w-5 h-5 mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="font-medium">Please confirm your email</p>
-                <p className="text-sm text-amber-200/80">
-                  Your course progress is not affected, but some account features may be limited until you confirm.
-                </p>
-              </div>
-            </div>
+            <motion.div
+              className="mb-8 p-4 rounded-xl border border-amber-500/30 bg-amber-500/10 text-amber-200"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, ease: easeOut, delay: 0.1 }}
+            >
+              <p className="font-medium mb-1">Please confirm your email</p>
+              <p className="text-sm text-amber-200/80">
+                Your course progress is not affected, but some account features may be limited until you confirm.
+              </p>
+            </motion.div>
           )}
 
-          {/* Stats Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
-            <div className="bg-card border border-border rounded-lg p-4 sm:p-6 opacity-0 animate-fade-up" style={{ animationDelay: "100ms" }}>
-              <div className="flex items-center gap-3 mb-2">
-                <Flame className="w-5 h-5 sm:w-6 sm:h-6 text-orange-500" />
-                <span className="text-sm sm:text-base text-muted-foreground">Current Streak</span>
-              </div>
-              <p className="text-3xl sm:text-4xl font-bold text-foreground">
-                {stats.current_streak}
-                <span className="text-base sm:text-lg font-normal text-muted-foreground ml-2">days</span>
-              </p>
+          <motion.section className="mb-12" {...reveal}>
+            <h2 className="text-2xl font-bold text-foreground mb-6 tracking-tight">Your stats</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <Card className="p-6 border border-border bg-card rounded-xl">
+                <p className="text-sm text-muted-foreground mb-2">Current streak</p>
+                <p className="text-4xl font-bold text-foreground">
+                  {stats.current_streak}
+                  <span className="text-lg font-normal text-muted-foreground ml-2">days</span>
+                </p>
+              </Card>
+
+              <Card className="p-6 border border-border bg-card rounded-xl">
+                <p className="text-sm text-muted-foreground mb-2">Longest streak</p>
+                <p className="text-4xl font-bold text-foreground">
+                  {stats.longest_streak}
+                  <span className="text-lg font-normal text-muted-foreground ml-2">days</span>
+                </p>
+              </Card>
+
+              <Card className="p-6 border border-border bg-card rounded-xl">
+                <p className="text-sm text-muted-foreground mb-2">Lessons completed</p>
+                <p className="text-4xl font-bold text-foreground">
+                  {stats.lessons_completed}
+                  <span className="text-lg font-normal text-muted-foreground ml-2">lessons</span>
+                </p>
+              </Card>
             </div>
+          </motion.section>
 
-            <div className="bg-card border border-border rounded-lg p-4 sm:p-6 opacity-0 animate-fade-up" style={{ animationDelay: "150ms" }}>
-              <div className="flex items-center gap-3 mb-2">
-                <Trophy className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-500" />
-                <span className="text-sm sm:text-base text-muted-foreground">Longest Streak</span>
-              </div>
-              <p className="text-3xl sm:text-4xl font-bold text-foreground">
-                {stats.longest_streak}
-                <span className="text-base sm:text-lg font-normal text-muted-foreground ml-2">days</span>
-              </p>
-            </div>
+          <motion.section {...reveal}>
+            <Card className="p-6 border border-border bg-card rounded-xl">
+              <h2 className="text-2xl font-bold text-foreground mb-6 tracking-tight">Course progress</h2>
 
-            <div className="bg-card border border-border rounded-lg p-4 sm:p-6 opacity-0 animate-fade-up" style={{ animationDelay: "200ms" }}>
-              <div className="flex items-center gap-3 mb-2">
-                <Calendar className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
-                <span className="text-sm sm:text-base text-muted-foreground">Lessons Completed</span>
-              </div>
-              <p className="text-3xl sm:text-4xl font-bold text-foreground">
-                {stats.lessons_completed}
-                <span className="text-base sm:text-lg font-normal text-muted-foreground ml-2">lessons</span>
-              </p>
-            </div>
-          </div>
-
-          {/* Course Progress */}
-          <div className="bg-card border border-border rounded-lg p-4 sm:p-6 opacity-0 animate-fade-up" style={{ animationDelay: "300ms" }}>
-            <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
-              <BookOpen className="w-5 h-5 text-primary" />
-              Course Progress
-            </h2>
-
-            <div className="space-y-4">
-              <div>
-                <div className="flex justify-between text-sm mb-2">
-                  <span className="text-muted-foreground">Module 1 — The Classics</span>
-                  <span className="text-foreground font-medium">{module1Lessons}/3 lessons</span>
-                </div>
-                <Progress value={module1Progress} className="h-2" />
-              </div>
-
-              <div className="grid grid-cols-2 gap-3 sm:gap-4 pt-2">
-                <div className="bg-background/50 rounded-lg p-3 sm:p-4 border border-border/50">
-                  <div className="flex items-center gap-2 mb-1">
-                    <Zap className="w-4 h-4 text-primary" />
-                    <span className="text-sm text-muted-foreground">Total XP</span>
+              <div className="space-y-4">
+                <div>
+                  <div className="flex justify-between text-sm mb-2">
+                    <span className="text-muted-foreground">Module 1 — The Classics</span>
+                    <span className="text-foreground font-medium">{module1Lessons}/3 lessons</span>
                   </div>
-                  <p className="text-2xl font-bold text-foreground">{stats.total_xp}</p>
+                  <Progress value={module1Progress} className="h-2" />
                 </div>
-                <div className="bg-background/50 rounded-lg p-3 sm:p-4 border border-border/50">
-                  <div className="flex items-center gap-2 mb-1">
-                    <Trophy className="w-4 h-4 text-amber-400" />
-                    <span className="text-sm text-muted-foreground">Lessons</span>
+
+                <div className="grid grid-cols-2 gap-4 pt-2">
+                  <div className="p-4 rounded-xl border border-border bg-background/50">
+                    <p className="text-sm text-muted-foreground mb-1">Total XP</p>
+                    <p className="text-3xl font-bold text-foreground">{stats.total_xp}</p>
                   </div>
-                  <p className="text-xl sm:text-2xl font-bold text-foreground">{stats.lessons_completed}</p>
+                  <div className="p-4 rounded-xl border border-border bg-background/50">
+                    <p className="text-sm text-muted-foreground mb-1">Lessons</p>
+                    <p className="text-3xl font-bold text-foreground">{stats.lessons_completed}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </Card>
+          </motion.section>
         </div>
       </main>
     </div>
