@@ -103,55 +103,65 @@ All colors MUST be HSL.
 /* Ambient hero background motion */
 @keyframes driftPrimary {
   0% { transform: translate(0, 0); }
-  50% { transform: translate(-8vw, 6vw); }
+  50% { transform: translate(-14vw, 9vw); }
   100% { transform: translate(0, 0); }
 }
 
 @keyframes driftAccent {
   0% { transform: translate(0, 0); }
-  50% { transform: translate(7vw, -5vw); }
+  50% { transform: translate(10vw, -8vw); }
   100% { transform: translate(0, 0); }
 }
 
 @keyframes nodePulse {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.9; transform: scale(1.6); }
+  0%, 100% { opacity: 0.35; transform: scale(1); }
+  50% { opacity: 0.95; transform: scale(1.7); }
 }
 
 @keyframes dashFlow {
-  to { stroke-dashoffset: -40; }
+  to { stroke-dashoffset: -80; }
 }
 
 .hero-orb-primary {
   position: absolute;
-  width: 60vw;
-  height: 60vw;
+  width: 62vw;
+  height: 62vw;
   border-radius: 9999px;
   background: radial-gradient(circle, hsl(var(--primary) / 0.18) 0%, hsl(var(--primary) / 0.05) 45%, transparent 70%);
   filter: blur(120px);
   will-change: transform;
-  animation: driftPrimary 24s ease-in-out infinite;
+  animation: driftPrimary 26s ease-in-out infinite;
 }
 
 .hero-orb-accent {
   position: absolute;
-  width: 55vw;
-  height: 55vw;
+  width: 58vw;
+  height: 58vw;
   border-radius: 9999px;
   background: radial-gradient(circle, hsl(var(--accent) / 0.14) 0%, hsl(var(--accent) / 0.04) 45%, transparent 70%);
   filter: blur(100px);
   will-change: transform;
-  animation: driftAccent 20s ease-in-out infinite;
+  animation: driftAccent 22s ease-in-out infinite;
 }
 
 .hero-node {
   transform-box: fill-box;
   transform-origin: center;
   will-change: transform, opacity;
-  animation: nodePulse 4s ease-in-out infinite;
+  animation: nodePulse 3.5s ease-in-out infinite;
 }
 
 .hero-thread {
   will-change: stroke-dashoffset;
-  animation: dashFlow 10s linear infinite;
+  animation: dashFlow 7s linear infinite;
+}
+
+.hero-thread-slow {
+  will-change: stroke-dashoffset;
+  animation: dashFlow 16s linear infinite;
+}
+
+.hero-thread-reverse {
+  will-change: stroke-dashoffset;
+  animation: dashFlow 9s linear infinite reverse;
 }

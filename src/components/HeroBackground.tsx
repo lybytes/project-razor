@@ -22,9 +22,9 @@ export const HeroBackground = () => (
       {/* Top-left cluster */}
       <path d="M260 240 L360 180" stroke="currentColor" strokeWidth="1" fill="none" />
       <path d="M360 180 L460 280" stroke="currentColor" strokeWidth="1" fill="none" />
-      <path d="M260 240 L300 360" stroke="currentColor" strokeWidth="1" fill="none" className="hero-thread" strokeDasharray="3 3" />
+      <path d="M260 240 L300 360" stroke="currentColor" strokeWidth="1" fill="none" className="hero-thread-slow" strokeDasharray="3 3" />
       <path d="M300 360 L440 400" stroke="currentColor" strokeWidth="1" fill="none" />
-      <path d="M460 280 L440 400" stroke="currentColor" strokeWidth="1" fill="none" className="hero-thread" strokeDasharray="3 3" />
+      <path d="M460 280 L440 400" stroke="currentColor" strokeWidth="1" fill="none" className="hero-thread-slow" strokeDasharray="3 3" />
       <circle cx="260" cy="240" r="3" fill="currentColor" className="hero-node" style={{ animationDelay: "0.6s" }} />
       <circle cx="360" cy="180" r="2.5" fill="currentColor" className="hero-node" style={{ animationDelay: "0.8s" }} />
       <circle cx="460" cy="280" r="3" fill="currentColor" className="hero-node" style={{ animationDelay: "1s" }} />
@@ -33,10 +33,10 @@ export const HeroBackground = () => (
 
       {/* Top-right cluster */}
       <path d="M980 200 L1080 140" stroke="currentColor" strokeWidth="1" fill="none" />
-      <path d="M1080 140 L1220 180" stroke="currentColor" strokeWidth="1" fill="none" className="hero-thread" strokeDasharray="3 3" />
+      <path d="M1080 140 L1220 180" stroke="currentColor" strokeWidth="1" fill="none" className="hero-thread-slow" strokeDasharray="3 3" />
       <path d="M1220 180 L1180 300" stroke="currentColor" strokeWidth="1" fill="none" />
       <path d="M1180 300 L1040 320" stroke="currentColor" strokeWidth="1" fill="none" />
-      <path d="M1040 320 L980 200" stroke="currentColor" strokeWidth="1" fill="none" className="hero-thread" strokeDasharray="3 3" />
+      <path d="M1040 320 L980 200" stroke="currentColor" strokeWidth="1" fill="none" className="hero-thread-slow" strokeDasharray="3 3" />
       <circle cx="980" cy="200" r="2.5" fill="currentColor" className="hero-node" style={{ animationDelay: "1.1s" }} />
       <circle cx="1080" cy="140" r="3" fill="currentColor" className="hero-node" style={{ animationDelay: "0.9s" }} />
       <circle cx="1220" cy="180" r="2" fill="currentColor" className="hero-node" style={{ animationDelay: "1.3s" }} />
@@ -45,19 +45,27 @@ export const HeroBackground = () => (
 
       {/* Bottom-right cluster */}
       <path d="M1100 620 L1220 660" stroke="currentColor" strokeWidth="1" fill="none" />
-      <path d="M1220 660 L1280 760" stroke="currentColor" strokeWidth="1" fill="none" className="hero-thread" strokeDasharray="3 3" />
+      <path d="M1220 660 L1280 760" stroke="currentColor" strokeWidth="1" fill="none" className="hero-thread-slow" strokeDasharray="3 3" />
       <path d="M1280 760 L1160 800" stroke="currentColor" strokeWidth="1" fill="none" />
       <path d="M1160 800 L1060 720" stroke="currentColor" strokeWidth="1" fill="none" />
-      <path d="M1060 720 L1100 620" stroke="currentColor" strokeWidth="1" fill="none" className="hero-thread" strokeDasharray="3 3" />
+      <path d="M1060 720 L1100 620" stroke="currentColor" strokeWidth="1" fill="none" className="hero-thread-slow" strokeDasharray="3 3" />
       <circle cx="1100" cy="620" r="3" fill="currentColor" className="hero-node" style={{ animationDelay: "1.6s" }} />
       <circle cx="1220" cy="660" r="2" fill="currentColor" className="hero-node" style={{ animationDelay: "1.8s" }} />
       <circle cx="1280" cy="760" r="2.5" fill="currentColor" className="hero-node" style={{ animationDelay: "2s" }} />
       <circle cx="1160" cy="800" r="3" fill="currentColor" className="hero-node" style={{ animationDelay: "1.7s" }} />
       <circle cx="1060" cy="720" r="2" fill="currentColor" className="hero-node" style={{ animationDelay: "1.9s" }} />
 
-      {/* Cross-connections between clusters */}
+      {/* Cross-connections — the main moving threads */}
       <path d="M440 400 L980 200" stroke="currentColor" strokeWidth="1" fill="none" className="hero-thread" strokeDasharray="4 6" />
       <path d="M1040 320 L1100 620" stroke="currentColor" strokeWidth="1" fill="none" className="hero-thread" strokeDasharray="4 6" />
+      <path d="M260 240 L1080 140" stroke="currentColor" strokeWidth="1" fill="none" className="hero-thread-reverse" strokeDasharray="5 7" />
+      <path d="M460 280 L1160 800" stroke="currentColor" strokeWidth="1" fill="none" className="hero-thread" strokeDasharray="4 6" />
+
+      {/* Slower, deeper background threads for extra layers */}
+      <g className="text-foreground/[0.035]" opacity="1">
+        <path d="M180 180 C 420 80, 900 40, 1280 160" stroke="currentColor" strokeWidth="0.5" fill="none" className="hero-thread-slow" strokeDasharray="8 10" />
+        <path d="M80 600 C 300 500, 600 850, 1360 720" stroke="currentColor" strokeWidth="0.5" fill="none" className="hero-thread-slow" strokeDasharray="8 10" style={{ animationDelay: "4s" }} />
+      </g>
     </svg>
 
     {/* Bottom fade so the next section doesn't clash */}
