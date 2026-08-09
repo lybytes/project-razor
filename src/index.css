@@ -51,7 +51,15 @@ All colors MUST be HSL.
     --gradient-subtle: linear-gradient(180deg, hsl(240 8% 8%), hsl(240 10% 4%));
     --shadow-glow: 0 0 40px hsla(270, 95%, 65%, 0.25);
     --shadow-glow-sm: 0 0 20px hsla(270, 95%, 65%, 0.15);
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+
+    /* Motion easing per emil-design-eng */
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+    --duration-sm: 150ms;
+    --duration-md: 250ms;
+    --duration-lg: 400ms;
   }
 }
 

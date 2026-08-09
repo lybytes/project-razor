@@ -1,12 +1,32 @@
 import { useState, useEffect, useMemo } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
+import { Button } from "@/components/ui/button";
 import fallacies from "@/data/fallacies.json";
 import biases from "@/data/biases.json";
 import badFaith from "@/data/bad-faith.json";
 import type { Concept } from "@/data/concepts";
 import { ConceptExampleCard } from "@/components/ConceptExampleCard";
 import { ArrowLeft, BookOpen } from "lucide-react";
+import { motion, useScroll, useSpring } from "motion/react";
+
+const easeOut = [0.23, 1, 0.32, 1] as const;
+const reveal = { duration: 0.45, ease: easeOut } as const;
+
+const ReadingProgress = () => {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+  return (
+    <motion.div
+      className="fixed top-0 left-0 right-0 h-[2px] bg-primary z-50 origin-left"
+      style={{ scaleX }}
+    />
+  );
+};
 
 const ItemDetail = () => {
   const { type, slug } = useParams();
@@ -101,7 +121,12 @@ const Toc = ({ items, activeId }: { items: TocItem[]; activeId: string }) => {
   };
 
   return (
-    <nav className="hidden lg:block">
+    <motion.nav
+      initial={{ opacity: 0, x: 20 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ delay: 0.3, ...reveal }}
+      className="hidden lg:block"
+    >
       <div className="sticky top-28">
         <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-4">
           On this page
@@ -110,15 +135,22 @@ const Toc = ({ items, activeId }: { items: TocItem[]; activeId: string }) => {
           {items.map(({ id, title }) => {
             const active = activeId === id;
             return (
-              <li key={id}>
+              <li key={id} className="relative">
+                {active && (
+                  <motion.div
+                    layoutId="toc-active"
+                    className="absolute -left-px top-0 bottom-0 w-[2px] bg-primary rounded-full"
+                    transition={{ duration: 0.2, ease: easeOut }}
+                  />
+                )}
                 <a
                   href={`#${id}`}
                   onClick={(e) => handleClick(e, id)}
                   className={[
-                    "block pl-4 text-sm transition-colors -ml-px border-l-2",
+                    "block pl-4 text-sm transition-colors",
                     active
-                      ? "border-primary text-foreground font-medium"
-                      : "border-transparent text-muted-foreground hover:text-foreground",
+                      ? "text-foreground font-medium"
+                      : "text-muted-foreground hover:text-foreground",
                   ].join(" ")}
                 >
                   {title}
@@ -128,7 +160,7 @@ const Toc = ({ items, activeId }: { items: TocItem[]; activeId: string }) => {
           })}
         </ul>
       </div>
-    </nav>
+    </motion.nav>
   );
 };
 
@@ -158,6 +190,7 @@ const ConceptDetail = ({
 
   return (
     <div className="min-h-screen bg-background">
+      <ReadingProgress />
       <Navigation />
 
       <main className="container mx-auto px-4 py-8 sm:py-12">
@@ -172,7 +205,12 @@ const ConceptDetail = ({
 
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-12">
             <article className="max-w-3xl">
-              <header className="mb-10">
+              <motion.header
+                className="mb-10"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.55, ease: easeOut }}
+              >
                 <span className="inline-flex items-center h-7 px-3 rounded-full bg-primary/10 text-primary text-xs font-semibold tracking-wide mb-4">
                   {categoryName}
                 </span>
@@ -184,26 +222,51 @@ const ConceptDetail = ({
                     Also known as: <span className="text-foreground">{item.aka.join(", ")}</span>
                   </p>
                 )}
-              </header>
+              </motion.header>
 
               {item.hook && (
-                <section id="hook" className="mb-14 scroll-mt-28">
+                <motion.section
+                  id="hook"
+                  className="mb-14 scroll-mt-28"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={reveal}
+                >
                   <blockquote className="border-l-2 border-primary pl-5 py-1">
                     <p className="text-lg sm:text-xl italic text-foreground/90 leading-relaxed">
                       &ldquo;{item.hook}&rdquo;
                     </p>
                   </blockquote>
-                </section>
+                </motion.section>
               )}
 
-              <section id="overview" className="mb-14 scroll-mt-28">
+              <motion.section
+                id="overview"
+                className="mb-14 scroll-mt-28"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={reveal}
+              >
                 <SectionLabel>Overview</SectionLabel>
                 <h2 className="text-2xl font-bold text-foreground mb-4">What is it?</h2>
-                <p className="text-lg text-foreground/90 leading-relaxed mb-6">{item.oneLiner}</p>
-                <p className="text-base text-foreground/80 leading-relaxed">{item.deepDive}</p>
-              </section>
+                <p className="text-lg text-foreground/90 leading-relaxed mb-6 max-w-[65ch]">
+                  {item.oneLiner}
+                </p>
+                <p className="text-base text-foreground/80 leading-relaxed max-w-[65ch]">
+                  {item.deepDive}
+                </p>
+              </motion.section>
 
-              <section id="how-to-spot" className="mb-14 scroll-mt-28">
+              <motion.section
+                id="how-to-spot"
+                className="mb-14 scroll-mt-28"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={reveal}
+              >
                 <SectionLabel>Detection</SectionLabel>
                 <h2 className="text-2xl font-bold text-foreground mb-4">How to spot it</h2>
                 <ul className="space-y-3">
@@ -214,9 +277,16 @@ const ConceptDetail = ({
                     </li>
                   ))}
                 </ul>
-              </section>
+              </motion.section>
 
-              <section id="examples" className="mb-14 scroll-mt-28">
+              <motion.section
+                id="examples"
+                className="mb-14 scroll-mt-28"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={reveal}
+              >
                 <SectionLabel>Examples</SectionLabel>
                 <h2 className="text-2xl font-bold text-foreground mb-6">See it in action</h2>
                 <div className="space-y-4 sm:space-y-5">
@@ -224,14 +294,27 @@ const ConceptDetail = ({
                     <ConceptExampleCard key={idx} example={example} index={idx} conceptName={item.name} />
                   ))}
                 </div>
-              </section>
+              </motion.section>
 
-              <section id="refutation" className="mb-14 scroll-mt-28">
+              <motion.section
+                id="refutation"
+                className="mb-14 scroll-mt-28"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={reveal}
+              >
                 <SectionLabel>Response</SectionLabel>
                 <h2 className="text-2xl font-bold text-foreground mb-6">How to refute</h2>
                 <div className="space-y-8">
                   {item.refutation.map((point, idx) => (
-                    <div key={idx}>
+                    <motion.div
+                      key={idx}
+                      initial={{ opacity: 0, y: 16 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-60px" }}
+                      transition={{ ...reveal, delay: idx * 0.08 }}
+                    >
                       <h3 className="text-lg font-semibold text-foreground mb-2">{point.title}</h3>
                       <p className="text-base text-foreground/80 leading-relaxed mb-4">{point.text}</p>
                       <blockquote className="border-l-2 border-primary/70 bg-primary/[0.03] rounded-r-lg pl-5 pr-4 py-3">
@@ -239,13 +322,20 @@ const ConceptDetail = ({
                           &ldquo;{point.comeback}&rdquo;
                         </p>
                       </blockquote>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
-              </section>
+              </motion.section>
 
               {item.avoidance && item.avoidance.length > 0 && (
-                <section id="avoidance" className="mb-14 scroll-mt-28">
+                <motion.section
+                  id="avoidance"
+                  className="mb-14 scroll-mt-28"
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={reveal}
+                >
                   <SectionLabel>Prevention</SectionLabel>
                   <h2 className="text-2xl font-bold text-foreground mb-4">How to avoid it</h2>
                   <ul className="space-y-3">
@@ -256,18 +346,23 @@ const ConceptDetail = ({
                       </li>
                     ))}
                   </ul>
-                </section>
+                </motion.section>
               )}
 
-              <div className="pt-8 border-t border-border">
-                <Link
-                  to="/train"
-                  className="inline-flex items-center justify-center h-11 px-6 rounded-full bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
-                >
-                  <BookOpen className="w-4 h-4 mr-2" />
-                  Practice in a lesson
-                </Link>
-              </div>
+              <motion.div
+                className="pt-8 border-t border-border"
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={reveal}
+              >
+                <Button asChild className="rounded-full h-11 px-6">
+                  <Link to="/train">
+                    <BookOpen className="w-4 h-4 mr-2" />
+                    Practice in a lesson
+                  </Link>
+                </Button>
+              </motion.div>
             </article>
 
             <Toc items={tocItems} activeId={activeId} />
@@ -304,6 +399,7 @@ const BiasDetail = ({
 
   return (
     <div className="min-h-screen bg-background">
+      <ReadingProgress />
       <Navigation />
 
       <main className="container mx-auto px-4 py-8 sm:py-12">
@@ -318,40 +414,72 @@ const BiasDetail = ({
 
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_280px] gap-12">
             <article className="max-w-3xl">
-              <header className="mb-10">
+              <motion.header
+                className="mb-10"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.55, ease: easeOut }}
+              >
                 <span className="inline-flex items-center h-7 px-3 rounded-full bg-primary/10 text-primary text-xs font-semibold tracking-wide mb-4">
                   {categoryName}
                 </span>
                 <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground tracking-tight mb-4">
                   {bias.name}
                 </h1>
-              </header>
+              </motion.header>
 
-              <section id="overview" className="mb-14 scroll-mt-28">
+              <motion.section
+                id="overview"
+                className="mb-14 scroll-mt-28"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={reveal}
+              >
                 <SectionLabel>Overview</SectionLabel>
                 <h2 className="text-2xl font-bold text-foreground mb-4">What is it?</h2>
-                <p className="text-base text-foreground/90 leading-relaxed">{bias.explanation}</p>
-              </section>
+                <p className="text-base text-foreground/90 leading-relaxed max-w-[65ch]">
+                  {bias.explanation}
+                </p>
+              </motion.section>
 
-              <section id="examples" className="mb-14 scroll-mt-28">
+              <motion.section
+                id="examples"
+                className="mb-14 scroll-mt-28"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={reveal}
+              >
                 <SectionLabel>Examples</SectionLabel>
                 <h2 className="text-2xl font-bold text-foreground mb-6">See it in action</h2>
                 <div className="space-y-4">
                   {bias.examples.map((example, idx) => (
-                    <div
+                    <motion.div
                       key={idx}
                       className="rounded-xl border border-border bg-card/30 p-4 sm:p-5"
+                      initial={{ opacity: 0, y: 16 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-60px" }}
+                      transition={{ ...reveal, delay: idx * 0.06 }}
                     >
                       <div className="flex gap-3">
                         <span className="text-primary font-bold flex-shrink-0">{idx + 1}.</span>
                         <p className="text-base text-foreground leading-relaxed">{example}</p>
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
-              </section>
+              </motion.section>
 
-              <section id="refutation" className="mb-14 scroll-mt-28">
+              <motion.section
+                id="refutation"
+                className="mb-14 scroll-mt-28"
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={reveal}
+              >
                 <SectionLabel>Response</SectionLabel>
                 <h2 className="text-2xl font-bold text-foreground mb-4">How to counter it</h2>
                 <ul className="space-y-3">
@@ -362,10 +490,17 @@ const BiasDetail = ({
                     </li>
                   ))}
                 </ul>
-              </section>
+              </motion.section>
 
               {bias.avoidance && bias.avoidance.length > 0 && (
-                <section id="avoidance" className="mb-14 scroll-mt-28">
+                <motion.section
+                  id="avoidance"
+                  className="mb-14 scroll-mt-28"
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={reveal}
+                >
                   <SectionLabel>Prevention</SectionLabel>
                   <h2 className="text-2xl font-bold text-foreground mb-4">How to avoid it</h2>
                   <ul className="space-y-3">
@@ -376,18 +511,23 @@ const BiasDetail = ({
                       </li>
                     ))}
                   </ul>
-                </section>
+                </motion.section>
               )}
 
-              <div className="pt-8 border-t border-border">
-                <Link
-                  to="/train"
-                  className="inline-flex items-center justify-center h-11 px-6 rounded-full bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
-                >
-                  <BookOpen className="w-4 h-4 mr-2" />
-                  Practice in a lesson
-                </Link>
-              </div>
+              <motion.div
+                className="pt-8 border-t border-border"
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={reveal}
+              >
+                <Button asChild className="rounded-full h-11 px-6">
+                  <Link to="/train">
+                    <BookOpen className="w-4 h-4 mr-2" />
+                    Practice in a lesson
+                  </Link>
+                </Button>
+              </motion.div>
             </article>
 
             <Toc items={tocItems} activeId={activeId} />
