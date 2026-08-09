@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { useCourseProgress } from "@/contexts/CourseProgressContext";
-import { modules } from "@/data/courseData";
+import { modules, getGauntletQuestions } from "@/data/courseData";
 import { Progress } from "@/components/ui/progress";
 import { Lock, ChevronDown, Check, Trophy, MessageSquare, Zap, Play, ChevronRight } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
@@ -11,7 +11,7 @@ import { motion, AnimatePresence } from "motion/react";
 const easeOut = [0.23, 1, 0.32, 1] as const;
 
 const Course = () => {
-  const { progress, getLessonsComplete, isLessonUnlocked } = useCourseProgress();
+  const { progress, getLessonsComplete, isLessonUnlocked, isModuleUnlocked } = useCourseProgress();
   const { hasSession } = useAuth();
   const [expandedModule, setExpandedModule] = useState<number | null>(1);
 
@@ -19,10 +19,11 @@ const Course = () => {
   const progressPercent = Math.min((totalConcepts / 25) * 100, 100);
 
   const getModuleStatus = (mod: typeof modules[0]) => {
-    if (mod.locked) return "locked";
+    if (mod.locked || !isModuleUnlocked(mod.id)) return "locked";
     const complete = getLessonsComplete(mod.id);
+    const hasGauntlet = getGauntletQuestions(mod.id).length > 0;
     if (complete === 0) return "not-started";
-    if (complete >= mod.lessons.length && (mod.id !== 1 || progress.gauntletComplete["1"])) return "complete";
+    if (complete >= mod.lessons.length && (!hasGauntlet || progress.gauntletComplete[String(mod.id)])) return "complete";
     return "in-progress";
   };
 
@@ -32,8 +33,6 @@ const Course = () => {
     if (stage !== undefined && stage > 0) return "in-progress";
     return "not-started";
   };
-
-  const allModule1LessonsComplete = ["1-1", "1-2", "1-3"].every(id => progress.lessonComplete[id]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -67,6 +66,7 @@ const Course = () => {
             const status = getModuleStatus(mod);
             const isExpanded = expandedModule === mod.id;
             const lessonsComplete = getLessonsComplete(mod.id);
+            const moduleLessonsComplete = lessonsComplete >= mod.lessons.length;
 
             return (
               <motion.div
@@ -75,8 +75,8 @@ const Course = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, ease: easeOut, delay: i * 0.06 }}
               >
-                {mod.locked ? (
-                  <div className="rounded-xl border border-border/50 bg-card/50 p-4 sm:p-5">
+                {status === "locked" ? (
+                  <div className="rounded-xl border border-border/50 bg-card/50 p-4 sm:p-5 opacity-80">
                     <div className="flex items-center gap-4">
                       <div className="w-10 h-10 rounded-lg bg-muted/40 flex items-center justify-center shrink-0">
                         <Lock className="w-4 h-4 text-muted-foreground/60" />
@@ -85,10 +85,12 @@ const Course = () => {
                         <h3 className="text-base font-semibold text-muted-foreground/70">
                           Module {mod.id} — {mod.title}
                         </h3>
-                        <p className="text-sm text-muted-foreground/50 mt-0.5">{mod.description}</p>
+                        <p className="text-sm text-muted-foreground/50 mt-0.5">
+                          {mod.locked ? mod.description : `Complete Module ${mod.id - 1} Gauntlet to unlock`}
+                        </p>
                       </div>
                       <span className="text-[10px] uppercase tracking-widest font-semibold text-muted-foreground/60 bg-muted/40 px-2 py-1 rounded-full shrink-0">
-                        Coming Soon
+                        {mod.locked ? "Coming Soon" : "Locked"}
                       </span>
                     </div>
                   </div>
@@ -225,32 +227,34 @@ const Course = () => {
                               })}
 
                               {/* Gauntlet */}
-                              <motion.div
-                                initial={{ opacity: 0, x: -8 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.3, ease: easeOut, delay: mod.lessons.length * 0.04 }}
-                                className={`flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border ${allModule1LessonsComplete ? "bg-amber-500/5 border-amber-500/20" : "bg-background/60 border-border/60"}`}
-                              >
-                                <div className="w-8 h-8 rounded-full bg-amber-500/15 flex items-center justify-center shrink-0">
-                                  <Trophy className="w-4 h-4 text-amber-500" />
-                                </div>
-                                <div className="min-w-0 flex-1">
-                                  <p className="text-sm sm:text-base font-semibold text-foreground">Module 1 Gauntlet</p>
-                                  <p className="text-xs sm:text-sm text-muted-foreground">
-                                    {allModule1LessonsComplete ? "10 mixed questions — your hardest challenge" : "Complete all 3 lessons to unlock"}
-                                  </p>
-                                </div>
-                                {allModule1LessonsComplete ? (
-                                  <Link
-                                    to="/train/gauntlet/1"
-                                    className={`shrink-0 inline-flex items-center h-8 px-3 rounded-md text-xs font-medium transition-colors ${progress.gauntletComplete["1"] ? "border border-border bg-background text-foreground" : "bg-amber-500 text-amber-950"}`}
-                                  >
-                                    {progress.gauntletComplete["1"] ? `Score: ${progress.gauntletScore["1"]}/10` : "Start"}
-                                  </Link>
-                                ) : (
-                                  <Lock className="w-4 h-4 text-muted-foreground shrink-0" />
-                                )}
-                              </motion.div>
+                              {getGauntletQuestions(mod.id).length > 0 && (
+                                <motion.div
+                                  initial={{ opacity: 0, x: -8 }}
+                                  animate={{ opacity: 1, x: 0 }}
+                                  transition={{ duration: 0.3, ease: easeOut, delay: mod.lessons.length * 0.04 }}
+                                  className={`flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-xl border ${moduleLessonsComplete ? "bg-amber-500/5 border-amber-500/20" : "bg-background/60 border-border/60"}`}
+                                >
+                                  <div className="w-8 h-8 rounded-full bg-amber-500/15 flex items-center justify-center shrink-0">
+                                    <Trophy className="w-4 h-4 text-amber-500" />
+                                  </div>
+                                  <div className="min-w-0 flex-1">
+                                    <p className="text-sm sm:text-base font-semibold text-foreground">Module {mod.id} Gauntlet</p>
+                                    <p className="text-xs sm:text-sm text-muted-foreground">
+                                      {moduleLessonsComplete ? "10 mixed questions — your hardest challenge" : "Complete all lessons to unlock"}
+                                    </p>
+                                  </div>
+                                  {moduleLessonsComplete ? (
+                                    <Link
+                                      to={`/train/gauntlet/${mod.id}`}
+                                      className={`shrink-0 inline-flex items-center h-8 px-3 rounded-md text-xs font-medium transition-colors ${progress.gauntletComplete[String(mod.id)] ? "border border-border bg-background text-foreground" : "bg-amber-500 text-amber-950"}`}
+                                    >
+                                      {progress.gauntletComplete[String(mod.id)] ? `Score: ${progress.gauntletScore[String(mod.id)]}/10` : "Start"}
+                                    </Link>
+                                  ) : (
+                                    <Lock className="w-4 h-4 text-muted-foreground shrink-0" />
+                                  )}
+                                </motion.div>
+                              )}
                             </div>
                           </div>
                         </motion.div>

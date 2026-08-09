@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { getProgress, completeLesson as apiCompleteLesson, migrateGuestProgress, type ProgressEntry } from "@/lib/api";
-import { LESSON_ORDER } from "@/data/courseData";
+import { LESSON_ORDER, getModuleIdFromLesson, isModuleUnlocked } from "@/data/courseData";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
@@ -36,6 +36,7 @@ interface CourseProgressContextType {
   addXP: (amount: number) => void;
   isConceptUnlocked: (concept: string) => boolean;
   isLessonUnlocked: (lessonId: string, hasSession: boolean) => boolean;
+  isModuleUnlocked: (moduleId: number) => boolean;
   getFurthestUnlockedLesson: (hasSession: boolean) => string;
   getLessonsComplete: (moduleNum: number) => number;
   resetProgress: () => void;
@@ -47,10 +48,6 @@ const CourseProgressContext = createContext<CourseProgressContextType | null>(nu
 const STORAGE_KEY = "project-razor-course-progress";
 const GUEST_MIGRATED_KEY = "project-razor-guest-progress-migrated";
 
-function getModuleIdFromLesson(lessonId: string): number {
-  const parts = lessonId.split("-");
-  return parseInt(parts[0], 10) || 1;
-}
 
 export const CourseProgressProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [progress, setProgress] = useState<CourseProgress>(() => {
@@ -197,15 +194,22 @@ export const CourseProgressProvider: React.FC<{ children: React.ReactNode }> = (
     return progress.conceptsUnlocked.includes(concept);
   }, [progress.conceptsUnlocked]);
 
+  const isModuleUnlockedCallback = useCallback((moduleId: number) => {
+    return isModuleUnlocked(moduleId, { gauntletComplete: progress.gauntletComplete });
+  }, [progress.gauntletComplete]);
+
   // Lessons unlock in order; the free lesson is always the entry point and
-  // everything after it also needs an account.
+  // everything after it also needs an account. Module boundaries also
+  // require the previous module's gauntlet.
   const isLessonUnlocked = useCallback((lessonId: string, hasSession: boolean) => {
     const index = LESSON_ORDER.indexOf(lessonId);
     if (index === -1) return true;
     if (index === 0) return true;
     if (!hasSession) return false;
-    return !!progress.lessonComplete[LESSON_ORDER[index - 1]];
-  }, [progress.lessonComplete]);
+    const previousUnlocked = !!progress.lessonComplete[LESSON_ORDER[index - 1]];
+    const moduleId = getModuleIdFromLesson(lessonId);
+    return previousUnlocked && isModuleUnlocked(moduleId, { gauntletComplete: progress.gauntletComplete });
+  }, [progress.lessonComplete, progress.gauntletComplete]);
 
   const getFurthestUnlockedLesson = useCallback((hasSession: boolean) => {
     let furthest = LESSON_ORDER[0];
@@ -237,6 +241,7 @@ export const CourseProgressProvider: React.FC<{ children: React.ReactNode }> = (
       addXP,
       isConceptUnlocked,
       isLessonUnlocked,
+      isModuleUnlocked: isModuleUnlockedCallback,
       getFurthestUnlockedLesson,
       getLessonsComplete,
       resetProgress,

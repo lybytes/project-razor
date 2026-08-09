@@ -5,5 +5,12 @@
   "Red Herring": "red-herring",
   "Whataboutism": "whataboutism",
   "False Dilemma": "false-dichotomy",
-  "Slippery Slope": "slippery-slope"
+  "Slippery Slope": "slippery-slope",
+  "Appeal to Emotion": "appeal-to-emotion",
+  "Appeal to Consequences": "appeal-to-consequences",
+  "Appeal to Ridicule": "appeal-to-ridicule",
+  "Tone Policing": "false-civility",
+  "Appeal to Tradition": "appeal-to-tradition",
+  "Bandwagon Fallacy": "bandwagon-fallacy",
+  "Appeal to Nature": "appeal-to-nature"
 }

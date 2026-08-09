@@ -180,11 +180,14 @@ const ConceptDetail = ({
       { id: "examples", title: "Examples" },
       { id: "refutation", title: "How to refute" },
     ];
+    if (item.validUses?.length) {
+      items.splice(1, 0, { id: "valid-uses", title: "When it's not a fallacy" });
+    }
     if (item.avoidance?.length) {
       items.push({ id: "avoidance", title: "How to avoid it" });
     }
     return items;
-  }, [item.avoidance?.length]);
+  }, [item.avoidance?.length, item.validUses?.length]);
 
   const activeId = useActiveSection(tocItems);
 
@@ -258,6 +261,28 @@ const ConceptDetail = ({
                   {item.deepDive}
                 </p>
               </motion.section>
+
+              {item.validUses?.length ? (
+                <motion.section
+                  id="valid-uses"
+                  className="mb-14 scroll-mt-28"
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={reveal}
+                >
+                  <SectionLabel>Boundaries</SectionLabel>
+                  <h2 className="text-2xl font-bold text-foreground mb-4">When it's not a fallacy</h2>
+                  <ul className="space-y-3 max-w-[65ch]">
+                    {item.validUses.map((point, idx) => (
+                      <li key={idx} className="flex gap-3 text-base text-foreground/90 leading-relaxed">
+                        <span className="text-primary font-semibold flex-shrink-0">{idx + 1}.</span>
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.section>
+              ) : null}
 
               <motion.section
                 id="how-to-spot"

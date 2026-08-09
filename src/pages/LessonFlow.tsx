@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link, Navigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Navigation } from "@/components/Navigation";
 import { useCourseProgress } from "@/contexts/CourseProgressContext";
-import { getLessonData, getLessonConcepts, getNextLessonId, type DrillQuestion, type WarzonePost } from "@/data/courseData";
+import { getLessonData, getLessonConcepts, getNextLessonId, getModuleIdFromLesson, getGauntletQuestions, modules, type DrillQuestion, type WarzonePost } from "@/data/courseData";
 import { Button } from "@/components/ui/button";
 import { ConceptExampleCard } from "@/components/ConceptExampleCard";
 import { Check, X, ChevronRight, ChevronLeft, BookOpen, Target, Swords, BarChart3, Trophy } from "lucide-react";
@@ -411,7 +411,6 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
               hasSession={hasSession}
               drillScore={progress.drillScores[lesson.id]}
               warzoneScore={progress.warzoneScores[lesson.id]}
-              allLessonsComplete={["1-1", "1-2", "1-3"].every(id => progress.lessonComplete[id])}
               wasAlreadyComplete={wasAlreadyComplete}
               navigate={navigate}
             />
@@ -594,16 +593,24 @@ const WarzoneView = ({ post, index, total, selectedOption, submitted, onSelect, 
 
 // ===== SUMMARY =====
 
-const SummaryView = ({ lesson, hasSession, drillScore, warzoneScore, allLessonsComplete, wasAlreadyComplete, navigate }: {
+const SummaryView = ({ lesson, hasSession, drillScore, warzoneScore, wasAlreadyComplete, navigate }: {
   lesson: NonNullable<ReturnType<typeof getLessonData>>;
   hasSession: boolean;
   drillScore?: { correct: number; total: number };
   warzoneScore?: { correct: number; total: number };
-  allLessonsComplete: boolean;
   wasAlreadyComplete: boolean;
   navigate: ReturnType<typeof useNavigate>;
 }) => {
+  const { progress } = useCourseProgress();
+  const moduleId = getModuleIdFromLesson(lesson.id);
+  const moduleData = modules.find(m => m.id === moduleId);
+  const moduleLessonsComplete = moduleData?.lessons.every(l => progress.lessonComplete[l.id]) ?? false;
+  const moduleGauntlet = getGauntletQuestions(moduleId);
+  const hasGauntlet = moduleGauntlet.length > 0;
+  const gauntletComplete = !!progress.gauntletComplete[String(moduleId)];
   const nextLessonId = getNextLessonId(lesson.id);
+  const gauntletPending = moduleLessonsComplete && hasGauntlet && !gauntletComplete;
+  const goToNextLesson = nextLessonId && hasSession && !gauntletPending;
 
   const totalCorrect = (drillScore?.correct || 0) + (warzoneScore?.correct || 0);
   const totalQuestions = (drillScore?.total || 0) + (warzoneScore?.total || 0);
@@ -646,7 +653,7 @@ const SummaryView = ({ lesson, hasSession, drillScore, warzoneScore, allLessonsC
             You just spotted {lesson.concepts.length} manipulation technique{lesson.concepts.length > 1 ? "s" : ""} in the wild.
           </p>
           <p className="text-sm text-muted-foreground mb-4">
-            Create a free account to unlock the rest of Module 1 — your progress and XP from this lesson carry over.
+            Create a free account to unlock the rest of the course — your progress and XP from this lesson carry over.
           </p>
           <Button className="w-full" onClick={() => navigate("/auth")}>
             Create free account <ChevronRight className="w-4 h-4 ml-1" />
@@ -654,22 +661,35 @@ const SummaryView = ({ lesson, hasSession, drillScore, warzoneScore, allLessonsC
         </div>
       )}
 
-      {allLessonsComplete && (
+      {gauntletPending && hasSession && (
         <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 mb-6 max-w-md mx-auto">
           <Trophy className="w-6 h-6 text-amber-500 mx-auto mb-2" />
-          <p className="text-amber-500 font-semibold">Module 1 Gauntlet Unlocked!</p>
+          <p className="text-amber-500 font-semibold">Module {moduleId} Gauntlet Unlocked!</p>
+          <p className="text-sm text-muted-foreground mt-1">Pass or fail, completing it unlocks the next module.</p>
         </div>
       )}
 
       <div className="flex flex-col sm:flex-row gap-3 justify-center">
-        {nextLessonId && hasSession && (
+        {goToNextLesson && (
           <Button onClick={() => navigate(`/train/lesson/${nextLessonId}`)}>
             Next Lesson <ChevronRight className="w-4 h-4 ml-1" />
           </Button>
         )}
-        <Button variant="outline" onClick={() => navigate("/train")}>
-          Back to Course
-        </Button>
+        {gauntletPending && hasSession && (
+          <Button onClick={() => navigate(`/train/gauntlet/${moduleId}`)} className="bg-amber-500 text-amber-950 hover:bg-amber-400">
+            Start Module {moduleId} Gauntlet <ChevronRight className="w-4 h-4 ml-1" />
+          </Button>
+        )}
+        {!goToNextLesson && !gauntletPending && hasSession && (
+          <Button onClick={() => navigate("/train")}>
+            Back to Course
+          </Button>
+        )}
+        {!hasSession && (
+          <Button variant="outline" onClick={() => navigate("/train")}>
+            Back to Course
+          </Button>
+        )}
       </div>
     </div>
   );
