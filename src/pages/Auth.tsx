@@ -76,19 +76,23 @@ const Auth = () => {
     try {
       const { session } = await signup(email, password, name);
 
-      // If Supabase auto-creates a session (email confirmation disabled), sign
-      // the user out so they land on the login screen as requested.
+      // With email confirmation enabled, Supabase intentionally returns the
+      // same success response for both new signups and existing emails to avoid
+      // leaking account existence. We can't distinguish them client-side.
       if (session) {
+        // Email confirmation is disabled and a new account was created.
         await supabase.auth.signOut();
+        toast.success("Account created — sign in to start training.");
+      } else {
+        toast.success("If this email isn't already registered, a confirmation link has been sent.");
       }
 
-      toast.success("Account created — sign in to start training.");
       setIsSignUp(false);
       setPassword("");
       setConfirmPassword("");
     } catch (err) {
       const message = err instanceof Error ? err.message : "Something went wrong";
-      if (message.includes("already registered")) {
+      if (message.toLowerCase().includes("already registered") || message.toLowerCase().includes("user already registered")) {
         toast.error("This email is already registered. Please sign in instead.");
       } else {
         toast.error(message);
