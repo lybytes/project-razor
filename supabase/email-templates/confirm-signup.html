@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confirm your email</title>
+</head>
+<body style="margin:0; padding:0; background-color:#0a0a0f; font-family:Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color:#fafafa;">
+  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background-color:#0a0a0f;">
+    <tr>
+      <td align="center" style="padding:48px 16px;">
+        <table role="presentation" width="100%" max-width="480" cellspacing="0" cellpadding="0" border="0" style="max-width:480px; border:1px solid #2a2a35; border-radius:16px; background-color:#13131a; overflow:hidden;">
+          <tr>
+            <td align="center" style="padding:40px 32px 24px;">
+              <div style="width:56px; height:56px; border-radius:12px; background:linear-gradient(135deg, #8b5cf6, #a78bfa); display:inline-flex; align-items:center; justify-content:center; font-size:24px; font-weight:800; color:#ffffff;">
+                R
+              </div>
+              <h1 style="margin:24px 0 8px; font-size:24px; font-weight:700; color:#ffffff;">Welcome to Project Razor</h1>
+              <p style="margin:0; font-size:16px; color:#a1a1aa; line-height:1.5;">Confirm your email to start training your critical thinking skills.</p>
+            </td>
+          </tr>
+          <tr>
+            <td align="center" style="padding:0 32px 32px;">
+              <a href="{{ .ConfirmationURL }}" style="display:inline-block; padding:14px 28px; border-radius:9999px; background-color:#8b5cf6; color:#ffffff; font-weight:600; text-decoration:none; font-size:16px;">
+                Confirm email address
+              </a>
+              <p style="margin-top:24px; font-size:13px; color:#71717a; line-height:1.5;">
+                If the button doesn’t work, paste this link into your browser:<br />
+                <a href="{{ .ConfirmationURL }}" style="color:#a78bfa; text-decoration:underline;">{{ .ConfirmationURL }}</a>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:24px 32px; border-top:1px solid #2a2a35; text-align:center;">
+              <p style="margin:0; font-size:12px; color:#52525b;">© 2025 Project Razor · Built to make the world think more clearly</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

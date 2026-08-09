@@ -20,6 +20,7 @@ export type Database = {
           current_streak: number
           display_name: string | null
           email: string
+          email_confirmed: boolean | null
           id: string
           last_activity_date: string | null
           longest_streak: number
@@ -32,6 +33,7 @@ export type Database = {
           current_streak?: number
           display_name?: string | null
           email: string
+          email_confirmed?: boolean | null
           id?: string
           last_activity_date?: string | null
           longest_streak?: number
@@ -44,6 +46,7 @@ export type Database = {
           current_streak?: number
           display_name?: string | null
           email?: string
+          email_confirmed?: boolean | null
           id?: string
           last_activity_date?: string | null
           longest_streak?: number

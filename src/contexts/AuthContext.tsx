@@ -6,6 +6,7 @@ interface UserData {
   id: string;
   email: string;
   display_name: string | null;
+  email_confirmed: boolean;
   current_streak: number;
   longest_streak: number;
   total_xp: number;
@@ -16,7 +17,7 @@ interface AuthContextType {
   loading: boolean;
   hasSession: boolean;
   login: (email: string, password: string) => Promise<void>;
-  signup: (email: string, password: string, displayName: string) => Promise<void>;
+  signup: (email: string, password: string, displayName: string) => Promise<{ user: import("@supabase/supabase-js").User | null; session: import("@supabase/supabase-js").Session | null }>;
   logout: () => Promise<void>;
   requestPasswordReset: (email: string) => Promise<void>;
   updatePassword: (password: string) => Promise<void>;
@@ -34,6 +35,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     id: authUser.id,
     email: authUser.email || "",
     display_name: typeof authUser.user_metadata?.display_name === "string" ? authUser.user_metadata.display_name : null,
+    email_confirmed: !!authUser.email_confirmed_at,
     current_streak: 0,
     longest_streak: 0,
     total_xp: 0,
@@ -66,7 +68,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return {
       id: authUser.id,
       email: profile.email || authUser.email || "",
-      display_name: profile.display_name,
+      display_name: profile.display_name || (typeof authUser.user_metadata?.display_name === "string" ? authUser.user_metadata.display_name : null),
+      email_confirmed: "email_confirmed" in profile ? (profile as { email_confirmed?: boolean }).email_confirmed ?? !!authUser.email_confirmed_at : !!authUser.email_confirmed_at,
       current_streak: profile.current_streak ?? 0,
       longest_streak: profile.longest_streak ?? 0,
       total_xp: profile.total_xp ?? 0,
@@ -131,25 +134,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signup = useCallback(
     async (email: string, password: string, displayName: string) => {
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
           data: {
             display_name: displayName,
           },
+          emailRedirectTo: `${window.location.origin}/auth`,
         },
       });
       if (error) throw error;
 
-      // Update profile with display name after signup
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
+      // Best-effort profile update in case the DB trigger hasn't run yet.
+      if (data.user) {
         await supabase
           .from("profiles")
           .update({ display_name: displayName })
-          .eq("user_id", user.id);
+          .eq("user_id", data.user.id);
       }
+
+      return { user: data.user ?? null, session: data.session ?? null };
     },
     []
   );
