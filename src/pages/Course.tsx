@@ -265,38 +265,37 @@ const Course = () => {
 
         {/* Free Play */}
         <motion.div
-          className=""
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: easeOut, delay: 0.3 }}
         >
           <h2 className="text-xl font-semibold text-foreground mb-2">Free Play</h2>
-          <p className="text-sm text-muted-foreground mb-4">Practice with concepts you've already learned.</p>
+          <p className="text-sm text-muted-foreground mb-4">Extra practice modes for when you&apos;ve built a solid foundation.</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Link
-              to="/train/social-warzone"
-              className={`flex items-start gap-4 p-4 sm:p-5 rounded-xl border border-border bg-card hover:border-primary/40 hover:bg-primary/5 transition-all duration-300 ${totalConcepts === 0 ? "opacity-50 pointer-events-none" : ""}`}
-            >
-              <div className="p-2.5 rounded-lg bg-primary/10 shrink-0">
-                <MessageSquare className="w-5 h-5 text-primary" />
+            <div className="flex items-center gap-4 p-4 sm:p-5 rounded-xl border border-border/50 bg-card/50 opacity-60">
+              <div className="w-10 h-10 rounded-lg bg-muted/40 flex items-center justify-center shrink-0">
+                <MessageSquare className="w-4 h-4 text-muted-foreground/70" />
               </div>
-              <div>
-                <h3 className="font-semibold text-foreground">Social Warzone</h3>
-                <p className="text-sm text-muted-foreground mt-1">Apply skills to realistic posts</p>
+              <div className="min-w-0 flex-1">
+                <h3 className="text-base font-semibold text-muted-foreground/80">Social Warzone</h3>
+                <p className="text-sm text-muted-foreground/60 mt-0.5">Apply skills to realistic posts</p>
               </div>
-            </Link>
-            <Link
-              to="/train/rapid-reasoning"
-              className={`flex items-start gap-4 p-4 sm:p-5 rounded-xl border border-border bg-card hover:border-primary/40 hover:bg-primary/5 transition-all duration-300 ${totalConcepts === 0 ? "opacity-50 pointer-events-none" : ""}`}
-            >
-              <div className="p-2.5 rounded-lg bg-primary/10 shrink-0">
-                <Zap className="w-5 h-5 text-primary" />
+              <span className="text-[10px] uppercase tracking-widest font-semibold text-muted-foreground/60 bg-muted/40 px-2 py-1 rounded-full shrink-0">
+                Coming Soon
+              </span>
+            </div>
+            <div className="flex items-center gap-4 p-4 sm:p-5 rounded-xl border border-border/50 bg-card/50 opacity-60">
+              <div className="w-10 h-10 rounded-lg bg-muted/40 flex items-center justify-center shrink-0">
+                <Zap className="w-4 h-4 text-muted-foreground/70" />
               </div>
-              <div>
-                <h3 className="font-semibold text-foreground">Rapid Reasoning</h3>
-                <p className="text-sm text-muted-foreground mt-1">Quick-fire identification drills</p>
+              <div className="min-w-0 flex-1">
+                <h3 className="text-base font-semibold text-muted-foreground/80">Rapid Reasoning</h3>
+                <p className="text-sm text-muted-foreground/60 mt-0.5">Quick-fire identification drills</p>
               </div>
-            </Link>
+              <span className="text-[10px] uppercase tracking-widest font-semibold text-muted-foreground/60 bg-muted/40 px-2 py-1 rounded-full shrink-0">
+                Coming Soon
+              </span>
+            </div>
           </div>
         </motion.div>
       </main>

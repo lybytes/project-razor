@@ -21,6 +21,7 @@ interface AuthContextType {
   logout: () => Promise<void>;
   requestPasswordReset: (email: string) => Promise<void>;
   updatePassword: (password: string) => Promise<void>;
+  updateDisplayName: (name: string) => Promise<void>;
   refreshUser: () => Promise<void>;
 }
 
@@ -171,6 +172,28 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (error) throw error;
   }, []);
 
+  const updateDisplayName = useCallback(async (name: string) => {
+    const trimmed = name.trim();
+    if (!trimmed) throw new Error("Display name cannot be empty");
+
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    if (userError) throw userError;
+    if (!user) throw new Error("Not authenticated");
+
+    const { error: metadataError } = await supabase.auth.updateUser({
+      data: { display_name: trimmed },
+    });
+    if (metadataError) throw metadataError;
+
+    const { error: profileError } = await supabase
+      .from("profiles")
+      .update({ display_name: trimmed })
+      .eq("user_id", user.id);
+    if (profileError) throw profileError;
+
+    await refreshUser();
+  }, [refreshUser]);
+
   const logout = useCallback(async () => {
     await supabase.auth.signOut();
     setHasSession(false);
@@ -178,7 +201,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, hasSession, login, signup, logout, requestPasswordReset, updatePassword, refreshUser }}>
+    <AuthContext.Provider value={{ user, loading, hasSession, login, signup, logout, requestPasswordReset, updatePassword, updateDisplayName, refreshUser }}>
       {children}
     </AuthContext.Provider>
   );
