@@ -1,6 +1,135 @@
 import type { MotionValue } from "motion/react";
 import { motion, useSpring, useTransform } from "motion/react";
 
+interface NeuralNode {
+  id: string;
+  x: number;
+  y: number;
+  primary?: boolean;
+}
+
+const nodes: NeuralNode[] = [
+  // left hemisphere
+  { id: "l1", x: 1000, y: 240 },
+  { id: "l2", x: 1060, y: 200, primary: true },
+  { id: "l3", x: 1030, y: 290 },
+  { id: "l4", x: 1080, y: 260 },
+  { id: "l5", x: 1010, y: 370 },
+  { id: "l6", x: 1070, y: 390, primary: true },
+  { id: "l7", x: 1040, y: 460 },
+  { id: "l8", x: 970, y: 440 },
+  // right hemisphere
+  { id: "r1", x: 1220, y: 240 },
+  { id: "r2", x: 1280, y: 200, primary: true },
+  { id: "r3", x: 1250, y: 290 },
+  { id: "r4", x: 1200, y: 260 },
+  { id: "r5", x: 1280, y: 370 },
+  { id: "r6", x: 1220, y: 390, primary: true },
+  { id: "r7", x: 1250, y: 460 },
+  { id: "r8", x: 1300, y: 440 },
+  // bridge
+  { id: "b1", x: 1130, y: 270, primary: true },
+  { id: "b2", x: 1140, y: 330, primary: true },
+  { id: "b3", x: 1130, y: 400, primary: true },
+  // stem
+  { id: "s1", x: 1110, y: 510 },
+  { id: "s2", x: 1160, y: 540 },
+  { id: "s3", x: 1210, y: 510 },
+  { id: "s4", x: 1130, y: 600 },
+  { id: "s5", x: 1190, y: 620 },
+  { id: "s6", x: 1160, y: 670 },
+  // outer accents
+  { id: "o1", x: 940, y: 310 },
+  { id: "o2", x: 1320, y: 310 },
+  { id: "o3", x: 1090, y: 700 },
+  { id: "o4", x: 1230, y: 700 },
+];
+
+const cluster = (id: string) => id[0];
+
+const BrainNetwork = () => {
+  const connections: [number, number, number][] = [];
+  const threadConnections: [number, number][] = [];
+
+  for (let i = 0; i < nodes.length; i++) {
+    for (let j = i + 1; j < nodes.length; j++) {
+      const a = nodes[i];
+      const b = nodes[j];
+      const dx = a.x - b.x;
+      const dy = a.y - b.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist <= 170) {
+        connections.push([i, j, dist]);
+      } else if (dist <= 260 && cluster(a.id) !== cluster(b.id)) {
+        connections.push([i, j, dist]);
+        threadConnections.push([i, j]);
+      }
+    }
+  }
+
+  // Pick a fixed subset of long-range cross-hemisphere threads.
+  const visibleThreads = threadConnections.filter((_, idx) => idx % 2 === 0).slice(0, 14);
+
+  return (
+    <g>
+      {/* Static synapse web */}
+      <g className="text-foreground/[0.12]" filter="url(#synapse-glow)">
+        {connections.map(([i, j]) => {
+          const a = nodes[i];
+          const b = nodes[j];
+          const isThread = visibleThreads.some(([ti, tj]) => (ti === i && tj === j) || (ti === j && tj === i));
+          if (isThread) return null;
+          return (
+            <path
+              key={`${a.id}-${b.id}`}
+              d={`M${a.x} ${a.y} L${b.x} ${b.y}`}
+              stroke="currentColor"
+              strokeWidth="1"
+              fill="none"
+            />
+          );
+        })}
+      </g>
+
+      {/* Moving signal threads */}
+      <g className="text-primary/60" filter="url(#synapse-glow)">
+        {visibleThreads.map(([i, j], idx) => {
+          const a = nodes[i];
+          const b = nodes[j];
+          const speed = ["hero-thread", "hero-thread-slow", "hero-thread-reverse"][idx % 3];
+          return (
+            <path
+              key={`thread-${a.id}-${b.id}`}
+              d={`M${a.x} ${a.y} L${b.x} ${b.y}`}
+              stroke="currentColor"
+              strokeWidth="1.5"
+              fill="none"
+              className={speed}
+              strokeDasharray="4 6"
+              style={{ animationDelay: `${idx * 0.4}s` }}
+            />
+          );
+        })}
+      </g>
+
+      {/* Nodes */}
+      {nodes.map((node, idx) => (
+        <circle
+          key={node.id}
+          cx={node.x}
+          cy={node.y}
+          r={node.primary ? 3 : 2}
+          fill="currentColor"
+          className={`hero-node ${node.primary ? "text-primary/90" : "text-foreground/70"}`}
+          style={{ animationDelay: `${idx * 0.12}s` }}
+          filter="url(#synapse-glow)"
+        />
+      ))}
+    </g>
+  );
+};
+
 interface HeroBackgroundProps {
   mouseX: MotionValue<number>;
   mouseY: MotionValue<number>;
@@ -23,7 +152,7 @@ export const HeroBackground = ({ mouseX, mouseY }: HeroBackgroundProps) => {
       {/* Subtle grid */}
       <div className="hero-grid" />
 
-      {/* Argument network */}
+      {/* Neural network / brain motif */}
       <svg
         viewBox="0 0 1440 900"
         preserveAspectRatio="xMidYMid slice"
@@ -32,53 +161,24 @@ export const HeroBackground = ({ mouseX, mouseY }: HeroBackgroundProps) => {
         aria-hidden="true"
         focusable="false"
       >
-        {/* Static structure — faint white */}
-        <g className="text-foreground/[0.12]">
-          <path d="M260 240 L360 180" stroke="currentColor" strokeWidth="1" fill="none" />
-          <path d="M360 180 L460 280" stroke="currentColor" strokeWidth="1" fill="none" />
-          <path d="M300 360 L440 400" stroke="currentColor" strokeWidth="1" fill="none" />
-          <path d="M980 200 L1080 140" stroke="currentColor" strokeWidth="1" fill="none" />
-          <path d="M1220 180 L1180 300" stroke="currentColor" strokeWidth="1" fill="none" />
-          <path d="M1180 300 L1040 320" stroke="currentColor" strokeWidth="1" fill="none" />
-          <path d="M1100 620 L1220 660" stroke="currentColor" strokeWidth="1" fill="none" />
-          <path d="M1280 760 L1160 800" stroke="currentColor" strokeWidth="1" fill="none" />
-          <path d="M1160 800 L1060 720" stroke="currentColor" strokeWidth="1" fill="none" />
-          <circle cx="260" cy="240" r="2.5" fill="currentColor" className="hero-node" style={{ animationDelay: "0.6s" }} />
-          <circle cx="360" cy="180" r="2" fill="currentColor" className="hero-node" style={{ animationDelay: "0.8s" }} />
-          <circle cx="460" cy="280" r="2.5" fill="currentColor" className="hero-node" style={{ animationDelay: "1s" }} />
-          <circle cx="300" cy="360" r="1.5" fill="currentColor" className="hero-node" style={{ animationDelay: "1.2s" }} />
-          <circle cx="440" cy="400" r="2" fill="currentColor" className="hero-node" style={{ animationDelay: "0.7s" }} />
-          <circle cx="980" cy="200" r="2" fill="currentColor" className="hero-node" style={{ animationDelay: "1.1s" }} />
-          <circle cx="1080" cy="140" r="2.5" fill="currentColor" className="hero-node" style={{ animationDelay: "0.9s" }} />
-          <circle cx="1220" cy="180" r="1.5" fill="currentColor" className="hero-node" style={{ animationDelay: "1.3s" }} />
-          <circle cx="1180" cy="300" r="2" fill="currentColor" className="hero-node" style={{ animationDelay: "1.5s" }} />
-          <circle cx="1040" cy="320" r="1.5" fill="currentColor" className="hero-node" style={{ animationDelay: "1.4s" }} />
-          <circle cx="1100" cy="620" r="2.5" fill="currentColor" className="hero-node" style={{ animationDelay: "1.6s" }} />
-          <circle cx="1220" cy="660" r="1.5" fill="currentColor" className="hero-node" style={{ animationDelay: "1.8s" }} />
-          <circle cx="1280" cy="760" r="2" fill="currentColor" className="hero-node" style={{ animationDelay: "2s" }} />
-          <circle cx="1160" cy="800" r="2.5" fill="currentColor" className="hero-node" style={{ animationDelay: "1.7s" }} />
-          <circle cx="1060" cy="720" r="1.5" fill="currentColor" className="hero-node" style={{ animationDelay: "1.9s" }} />
+        <defs>
+          <filter id="synapse-glow" x="-100%" y="-100%" width="300%" height="300%">
+            <feGaussianBlur stdDeviation="2" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        {/* Soft brain silhouette */}
+        <g className="fill-foreground/[0.04]">
+          <ellipse cx="1030" cy="360" rx="125" ry="185" />
+          <ellipse cx="1250" cy="360" rx="125" ry="185" />
+          <ellipse cx="1140" cy="570" rx="90" ry="115" />
         </g>
 
-        {/* Moving threads — purple to make them visible */}
-        <g className="text-primary/50">
-          <path d="M260 240 L300 360" stroke="currentColor" strokeWidth="1.5" fill="none" className="hero-thread-slow" strokeDasharray="3 3" />
-          <path d="M460 280 L440 400" stroke="currentColor" strokeWidth="1.5" fill="none" className="hero-thread-slow" strokeDasharray="3 3" />
-          <path d="M1080 140 L1220 180" stroke="currentColor" strokeWidth="1.5" fill="none" className="hero-thread-slow" strokeDasharray="3 3" />
-          <path d="M1040 320 L980 200" stroke="currentColor" strokeWidth="1.5" fill="none" className="hero-thread-slow" strokeDasharray="3 3" />
-          <path d="M1220 660 L1280 760" stroke="currentColor" strokeWidth="1.5" fill="none" className="hero-thread-slow" strokeDasharray="3 3" />
-          <path d="M1060 720 L1100 620" stroke="currentColor" strokeWidth="1.5" fill="none" className="hero-thread-slow" strokeDasharray="3 3" />
-          <path d="M440 400 L980 200" stroke="currentColor" strokeWidth="1.5" fill="none" className="hero-thread" strokeDasharray="4 6" />
-          <path d="M1040 320 L1100 620" stroke="currentColor" strokeWidth="1.5" fill="none" className="hero-thread" strokeDasharray="4 6" />
-          <path d="M260 240 L1080 140" stroke="currentColor" strokeWidth="1.5" fill="none" className="hero-thread-reverse" strokeDasharray="5 7" />
-          <path d="M460 280 L1160 800" stroke="currentColor" strokeWidth="1.5" fill="none" className="hero-thread" strokeDasharray="4 6" />
-        </g>
-
-        {/* Deeper background threads */}
-        <g className="text-foreground/[0.06]">
-          <path d="M180 180 C 420 80, 900 40, 1280 160" stroke="currentColor" strokeWidth="0.5" fill="none" className="hero-thread-slow" strokeDasharray="8 10" />
-          <path d="M80 600 C 300 500, 600 850, 1360 720" stroke="currentColor" strokeWidth="0.5" fill="none" className="hero-thread-slow" strokeDasharray="8 10" style={{ animationDelay: "4s" }} />
-        </g>
+        <BrainNetwork />
       </svg>
 
       {/* Cursor spotlight */}
