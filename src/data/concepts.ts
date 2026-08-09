@@ -22,6 +22,7 @@ export interface Concept {
   deepDive: string;
   howToSpot: string[];
   examples: ConceptExample[];
+  validUses?: string[];
   refutation: ConceptRefutation[];
   avoidance?: string[];
 }

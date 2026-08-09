@@ -1112,5 +1112,170 @@
       "Ask for the base rate and the misses, not just the hits",
       "Decide what you're testing before you collect the data"
     ]
+  },
+  {
+    "name": "Appeal to Consequences",
+    "slug": "appeal-to-consequences",
+    "category": "Logical Fallacy",
+    "aka": ["Argumentum ad Consequentiam", "Wishful Thinking"],
+    "hook": "That audit can't be right. Do you know how many people lose their jobs if it is?",
+    "oneLiner": "Deciding whether a claim is true based on how desirable its consequences would be.",
+    "deepDive": "This judges whether a claim is true by how much you'd like the consequences of it being true. But reality doesn't negotiate — a fact isn't falsified by being inconvenient. Consequences are legitimate reasons to choose an action, never evidence about what's actually the case.",
+    "howToSpot": [
+      "The reason offered against a claim is that its being true would be bad, not that the evidence is weak",
+      "'If that were true, then…' followed by an unacceptable outcome rather than a flaw in the reasoning",
+      "Belief is treated as a choice with costs and benefits rather than as a response to evidence"
+    ],
+    "examples": [
+      {
+        "text": "\"The report can't be right that the product is unsafe — do you realise what that would do to the share price?\"",
+        "explanation": "Share-price damage is a consequence of the finding, not a reason the finding is mistaken."
+      },
+      {
+        "text": "\"Free will can't be an illusion. If it were, nobody could be held responsible for anything.\"",
+        "explanation": "The unpalatable implication is treated as a refutation, but nothing has been said about the actual evidence."
+      },
+      {
+        "text": "\"We can't accept that the deadline is unachievable — the client would walk.\"",
+        "explanation": "Whether the deadline is achievable is a matter of fact; the cost of admitting it doesn't change the answer."
+      }
+    ],
+    "validUses": [
+      "Consequences are perfectly good reasons to choose or reject an **action**: 'this rota would leave one nurse for forty patients' is a real argument, not a fallacy",
+      "Weighing outcomes in a decision is not the same as using outcomes to settle a factual question",
+      "Pointing out that a claim, if true, would require urgent action is legitimate — the fallacy is only in reasoning backwards from the outcome to the truth"
+    ],
+    "refutation": [
+      {
+        "title": "Separate true from convenient",
+        "text": "Point out that the cost of a fact says nothing about whether it's a fact.",
+        "comeback": "That's a reason we'd hate it to be true. It isn't a reason it isn't true."
+      },
+      {
+        "title": "Ask about the evidence instead",
+        "text": "Redirect to the actual basis for the claim.",
+        "comeback": "Set the fallout aside for a second — what's actually wrong with the analysis?"
+      },
+      {
+        "title": "Split the two questions",
+        "text": "Agree to handle 'is it true' and 'what do we do' separately.",
+        "comeback": "Let's settle whether it's accurate first, then argue about what we do about it."
+      }
+    ],
+    "avoidance": [
+      "Notice when you're resisting a conclusion because of what it would cost you, not because of its evidence",
+      "Keep 'is this true?' and 'what should we do?' as two separate questions",
+      "Be most suspicious of your reasoning when the convenient answer is also the one you reached"
+    ]
+  },
+  {
+    "name": "Appeal to Ridicule",
+    "slug": "appeal-to-ridicule",
+    "category": "Logical Fallacy",
+    "aka": ["Argumentum ad Ridiculum", "Appeal to Mockery", "Appeal to the Stone"],
+    "hook": "A four-day week? Sure, and let's all work from a hammock and get paid in crystals 😂",
+    "oneLiner": "Dismissing an argument by mocking it instead of showing what's wrong with it.",
+    "deepDive": "Ridicule substitutes mockery for refutation: laugh at a position hard enough and it looks defeated without anyone showing why it's wrong. Sarcasm does the work an argument should. The test — strip the tone out and check whether any actual objection remains underneath.",
+    "howToSpot": [
+      "Sarcasm, emoji, or an absurd restatement stands in for a stated objection",
+      "The position is declared self-evidently ridiculous without any reason being given",
+      "Remove the mockery and there's no argument left in the reply"
+    ],
+    "examples": [
+      {
+        "text": "\"Oh brilliant, another expert with a spreadsheet. I'm sure the maths will keep the lights on 🙄\"",
+        "explanation": "The analysis is mocked rather than engaged; no flaw in it is ever identified."
+      },
+      {
+        "text": "\"Sure, and while we're at it why don't we just abolish money entirely 😂\"",
+        "explanation": "An absurd extension is offered as a punchline rather than as a reasoned objection."
+      },
+      {
+        "text": "\"lmao imagine believing that. genuinely the funniest thing I've read all week.\"",
+        "explanation": "Pure dismissal — the reader is invited to laugh instead of to evaluate anything."
+      }
+    ],
+    "validUses": [
+      "*Reductio ad absurdum* is valid and is not this fallacy: showing by actual reasoning that a position entails a conclusion its holder rejects",
+      "Satire that also contains an argument — the joke carries a point rather than replacing one",
+      "The test is whether an objection survives when you delete the tone. If it does, it's a reductio; if nothing's left, it's ridicule"
+    ],
+    "refutation": [
+      {
+        "title": "Ask for the objection",
+        "text": "Request the actual criticism the mockery is standing in for.",
+        "comeback": "That's funny, but what's the actual objection? Which part is wrong?"
+      },
+      {
+        "title": "Restate your position accurately",
+        "text": "Put your real claim back, stripped of the caricature.",
+        "comeback": "The version you're laughing at isn't the one I argued. Here's the actual claim."
+      },
+      {
+        "title": "Name the substitution",
+        "text": "Point out that tone has replaced content.",
+        "comeback": "Mockery isn't a rebuttal. Take the tone out and there's nothing there to respond to."
+      }
+    ],
+    "avoidance": [
+      "If you're reaching for sarcasm, check whether you actually have an objection underneath it",
+      "State the flaw first; you can be funny about it afterwards",
+      "Be wary when a position feels too silly to argue with — that feeling isn't an argument"
+    ]
+  },
+  {
+    "name": "Appeal to Nature",
+    "slug": "appeal-to-nature",
+    "category": "Logical Fallacy",
+    "aka": ["Naturalistic Appeal", "Natural-Is-Better Fallacy"],
+    "hook": "It's a natural remedy, so it can't have side effects.",
+    "oneLiner": "Treating something as good or safe because it's natural, and bad because it's synthetic.",
+    "deepDive": "This treats 'natural' as a synonym for good, safe, or healthy, and 'synthetic' as the opposite. But origin tells you nothing about effect — hemlock is natural, insulin is synthesised. Safety comes from dose, mechanism, and evidence, not from where a substance came from.",
+    "howToSpot": [
+      "'Natural', 'chemical-free', or 'made in a lab' are doing the work of an evidence claim",
+      "Origin is offered as the reason something is safe or effective",
+      "No mechanism, dose, or study is mentioned — only where the thing came from"
+    ],
+    "examples": [
+      {
+        "text": "\"Cane sugar is natural, so it's healthier than any sweetener made in a lab.\"",
+        "explanation": "The body processes sugar the same way regardless of origin; naturalness isn't a health property."
+      },
+      {
+        "text": "\"No synthetic preservatives, just naturally derived extracts — so it's gentler on sensitive skin.\"",
+        "explanation": "Plenty of naturally derived extracts are potent irritants; 'derived from a plant' predicts nothing about tolerance."
+      },
+      {
+        "text": "\"If it's grown, it's safe. If it's synthesised, it isn't. It's not complicated.\"",
+        "explanation": "Stated as a rule, this would classify hemlock as safe and insulin as unsafe."
+      }
+    ],
+    "validUses": [
+      "A specific mechanism-based claim is fine: 'this additive is an emulsifier associated with X effect in Y studies' is an argument, not an appeal to nature",
+      "Long human use can be weak evidence about safety at customary doses — but it's the track record doing the work, not the naturalness",
+      "Ecological arguments about introducing something into an ecosystem can be valid when the mechanism is spelled out"
+    ],
+    "refutation": [
+      {
+        "title": "Break the natural–safe link",
+        "text": "Give a counter-example that separates origin from safety.",
+        "comeback": "Hemlock's natural and insulin's synthesised. Where something comes from doesn't tell us what it does."
+      },
+      {
+        "title": "Ask for the mechanism",
+        "text": "Request the actual reason this substance has this effect.",
+        "comeback": "What specifically does it do in the body, and at what dose? 'Natural' doesn't answer that."
+      },
+      {
+        "title": "Query the definition",
+        "text": "Point out that 'natural' is rarely defined and often unregulated.",
+        "comeback": "What counts as natural here? On most labels the word has no fixed meaning."
+      }
+    ],
+    "avoidance": [
+      "Judge substances by dose, mechanism, and evidence rather than by origin",
+      "Treat 'natural' and 'chemical-free' on packaging as marketing, not information",
+      "Notice when 'made in a lab' is doing your thinking for you"
+    ]
   }
 ]

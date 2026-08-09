@@ -1,11 +1,12 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useParams, useNavigate, Link, Navigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Navigation } from "@/components/Navigation";
 import { useCourseProgress } from "@/contexts/CourseProgressContext";
-import { getLessonData, getLessonConcepts, getNextLessonId, type DrillQuestion, type WarzonePost } from "@/data/courseData";
+import { getLessonData, getLessonConcepts, getNextLessonId, getModuleIdFromLesson, getGauntletQuestions, modules, type DrillQuestion, type WarzonePost } from "@/data/courseData";
 import { Button } from "@/components/ui/button";
 import { ConceptExampleCard } from "@/components/ConceptExampleCard";
+import { InlineMarkdown } from "@/components/InlineMarkdown";
 import { Check, X, ChevronRight, ChevronLeft, BookOpen, Target, Swords, BarChart3, Trophy } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -37,7 +38,7 @@ const LessonFlow = () => {
     );
   }
 
-  return <LessonFlowInner lesson={lesson} navigate={navigate} hasSession={hasSession} progress={progress} completeLesson={completeLesson} setLessonStage={setLessonStage} saveDrillScore={saveDrillScore} saveWarzoneScore={saveWarzoneScore} />;
+  return <LessonFlowInner key={lesson.id} lesson={lesson} navigate={navigate} hasSession={hasSession} progress={progress} completeLesson={completeLesson} setLessonStage={setLessonStage} saveDrillScore={saveDrillScore} saveWarzoneScore={saveWarzoneScore} />;
 };
 
 interface InnerProps {
@@ -62,6 +63,10 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, [stage, learnCardIndex, drillIndex, warzoneIndex]);
+
   // Learn stage: 5 cards per concept, then transition
   const CARDS_PER_CONCEPT = 5;
   const concepts = getLessonConcepts(lesson);
@@ -85,14 +90,12 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
   };
 
   const handleDrillNext = () => {
-    const isCorrect = selectedOption === lesson.drillQuestions[drillIndex].correctIndex;
     if (drillIndex + 1 < lesson.drillQuestions.length) {
       setDrillIndex(drillIndex + 1);
       setSelectedOption(null);
       setSubmitted(false);
     } else {
-      const finalCorrect = isCorrect ? drillCorrect + 1 : drillCorrect;
-      saveDrillScore(lesson.id, finalCorrect, lesson.drillQuestions.length);
+      saveDrillScore(lesson.id, drillCorrect, lesson.drillQuestions.length);
       setDrillIndex(-1);
       setSelectedOption(null);
       setSubmitted(false);
@@ -107,14 +110,12 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
   };
 
   const handleWarzoneNext = () => {
-    const isCorrect = selectedOption === lesson.warzonePosts[warzoneIndex].correctIndex;
     if (warzoneIndex + 1 < lesson.warzonePosts.length) {
       setWarzoneIndex(warzoneIndex + 1);
       setSelectedOption(null);
       setSubmitted(false);
     } else {
-      const finalCorrect = isCorrect ? warzoneCorrect + 1 : warzoneCorrect;
-      saveWarzoneScore(lesson.id, finalCorrect, lesson.warzonePosts.length);
+      saveWarzoneScore(lesson.id, warzoneCorrect, lesson.warzonePosts.length);
       setWarzoneIndex(-1); // transition
       setSelectedOption(null);
       setSubmitted(false);
@@ -221,19 +222,19 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
                         {currentConcept.category}
                       </span>
                       <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-5 tracking-tight">{currentConcept.name}</h2>
-                      <p className="text-base sm:text-lg md:text-xl text-foreground/80 max-w-md leading-relaxed">{currentConcept.oneLiner}</p>
+                      <p className="text-base sm:text-lg md:text-xl text-foreground/80 max-w-md leading-relaxed"><InlineMarkdown text={currentConcept.oneLiner} /></p>
                     </div>
                   )}
 
                   {currentCardType === 2 && (
                     <div className="flex-1">
                       <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">How to spot it</h3>
-                      <p className="text-base text-foreground/80 leading-relaxed mb-6">{currentConcept.deepDive}</p>
+                      <p className="text-base text-foreground/80 leading-relaxed mb-6"><InlineMarkdown text={currentConcept.deepDive} /></p>
                       <ul className="space-y-3 sm:space-y-5">
                         {currentConcept.howToSpot.map((point, i) => (
                           <li key={i} className="flex gap-3">
                             <span className="text-primary mt-0.5 text-lg">•</span>
-                            <span className="text-base text-foreground/90 leading-relaxed">{point}</span>
+                            <span className="text-base text-foreground/90 leading-relaxed"><InlineMarkdown text={point} /></span>
                           </li>
                         ))}
                       </ul>
@@ -261,10 +262,10 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
                             <div className="flex-1">
                               <p className="text-base text-foreground/90 leading-relaxed">
                                 <span className="font-bold text-foreground">{strategy.title}: </span>
-                                {strategy.text}
+                                <InlineMarkdown text={strategy.text} />
                               </p>
                               <div className="border-l-2 border-primary/50 bg-primary/5 rounded-r px-4 py-2 mt-2">
-                                <p className="text-base text-foreground/80 italic leading-relaxed">&ldquo;{strategy.comeback}&rdquo;</p>
+                                <p className="text-base text-foreground/80 italic leading-relaxed">&ldquo;<InlineMarkdown text={strategy.comeback} />&rdquo;</p>
                               </div>
                             </div>
                           </li>
@@ -411,7 +412,6 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
               hasSession={hasSession}
               drillScore={progress.drillScores[lesson.id]}
               warzoneScore={progress.warzoneScores[lesson.id]}
-              allLessonsComplete={["1-1", "1-2", "1-3"].every(id => progress.lessonComplete[id])}
               wasAlreadyComplete={wasAlreadyComplete}
               navigate={navigate}
             />
@@ -446,7 +446,7 @@ const DrillView = ({ question, index, total, selectedOption, submitted, onSelect
         aria-labelledby={scenarioId}
         className="rounded-xl bg-muted/30 border border-border p-4 sm:p-6 mb-4 sm:mb-6"
       >
-        <p id={scenarioId} className="text-foreground font-medium text-sm sm:text-base leading-relaxed italic">&ldquo;{question.scenario}&rdquo;</p>
+        <p id={scenarioId} className="text-foreground font-medium text-sm sm:text-base leading-relaxed italic">&ldquo;<InlineMarkdown text={question.scenario} />&rdquo;</p>
       </div>
 
       <p className="text-foreground text-base sm:text-lg font-semibold mb-3 sm:mb-4">What&apos;s happening in this argument?</p>
@@ -478,7 +478,7 @@ const DrillView = ({ question, index, total, selectedOption, submitted, onSelect
       {submitted && (
         <div className="space-y-4 mb-4 animate-fade-up">
           <div className="rounded-xl bg-muted/20 border border-border p-4">
-            <p className="text-foreground text-base leading-relaxed">{question.feedback}</p>
+            <p className="text-foreground text-base leading-relaxed"><InlineMarkdown text={question.feedback} /></p>
           </div>
           <Button onClick={onNext} className="w-full">
             Next <ChevronRight className="w-4 h-4 ml-1" />
@@ -516,7 +516,7 @@ const WarzoneView = ({ post, index, total, selectedOption, submitted, onSelect, 
 
       <div className="rounded-xl bg-muted/30 border border-border p-4 sm:p-6 mb-3 sm:mb-4">
         <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2 font-medium">Context</p>
-        <p className="text-foreground/90 text-sm sm:text-base leading-relaxed">{post.context}</p>
+        <p className="text-foreground/90 text-sm sm:text-base leading-relaxed"><InlineMarkdown text={post.context} /></p>
       </div>
 
       <div className="rounded-xl bg-card border border-border p-4 sm:p-6 mb-4 sm:mb-6">
@@ -529,7 +529,7 @@ const WarzoneView = ({ post, index, total, selectedOption, submitted, onSelect, 
             <p className="text-xs text-muted-foreground">{post.platform}</p>
           </div>
         </div>
-        <p className="text-foreground text-sm sm:text-base leading-relaxed italic">&ldquo;{post.comment}&rdquo;</p>
+        <p className="text-foreground text-sm sm:text-base leading-relaxed italic">&ldquo;<InlineMarkdown text={post.comment} />&rdquo;</p>
       </div>
 
       <p id={postQuestionId} className="text-foreground text-base sm:text-lg font-semibold mb-3 sm:mb-4">What BFBA is being used here?</p>
@@ -567,13 +567,13 @@ const WarzoneView = ({ post, index, total, selectedOption, submitted, onSelect, 
                 {selectedOption === post.correctIndex ? "Correct!" : "Incorrect"} — {post.options[post.correctIndex]}
               </span>
             </div>
-            <p className="text-foreground text-base leading-relaxed">{post.explanation}</p>
+            <p className="text-foreground text-base leading-relaxed"><InlineMarkdown text={post.explanation} /></p>
           </div>
 
           {post.counter && (
             <div className="border-l-2 border-primary/50 bg-primary/5 rounded-r px-4 py-3">
               <p className="text-xs text-primary/70 font-medium uppercase tracking-wider mb-1">Counter:</p>
-              <p className="text-foreground/80 italic text-base leading-relaxed">&ldquo;{post.counter}&rdquo;</p>
+              <p className="text-foreground/80 italic text-base leading-relaxed">&ldquo;<InlineMarkdown text={post.counter} />&rdquo;</p>
             </div>
           )}
 
@@ -594,16 +594,24 @@ const WarzoneView = ({ post, index, total, selectedOption, submitted, onSelect, 
 
 // ===== SUMMARY =====
 
-const SummaryView = ({ lesson, hasSession, drillScore, warzoneScore, allLessonsComplete, wasAlreadyComplete, navigate }: {
+const SummaryView = ({ lesson, hasSession, drillScore, warzoneScore, wasAlreadyComplete, navigate }: {
   lesson: NonNullable<ReturnType<typeof getLessonData>>;
   hasSession: boolean;
   drillScore?: { correct: number; total: number };
   warzoneScore?: { correct: number; total: number };
-  allLessonsComplete: boolean;
   wasAlreadyComplete: boolean;
   navigate: ReturnType<typeof useNavigate>;
 }) => {
+  const { progress } = useCourseProgress();
+  const moduleId = getModuleIdFromLesson(lesson.id);
+  const moduleData = modules.find(m => m.id === moduleId);
+  const moduleLessonsComplete = moduleData?.lessons.every(l => progress.lessonComplete[l.id]) ?? false;
+  const moduleGauntlet = getGauntletQuestions(moduleId);
+  const hasGauntlet = moduleGauntlet.length > 0;
+  const gauntletComplete = !!progress.gauntletComplete[String(moduleId)];
   const nextLessonId = getNextLessonId(lesson.id);
+  const gauntletPending = moduleLessonsComplete && hasGauntlet && !gauntletComplete;
+  const goToNextLesson = nextLessonId && hasSession && !gauntletPending;
 
   const totalCorrect = (drillScore?.correct || 0) + (warzoneScore?.correct || 0);
   const totalQuestions = (drillScore?.total || 0) + (warzoneScore?.total || 0);
@@ -646,7 +654,7 @@ const SummaryView = ({ lesson, hasSession, drillScore, warzoneScore, allLessonsC
             You just spotted {lesson.concepts.length} manipulation technique{lesson.concepts.length > 1 ? "s" : ""} in the wild.
           </p>
           <p className="text-sm text-muted-foreground mb-4">
-            Create a free account to unlock the rest of Module 1 — your progress and XP from this lesson carry over.
+            Create a free account to unlock the rest of the course — your progress and XP from this lesson carry over.
           </p>
           <Button className="w-full" onClick={() => navigate("/auth")}>
             Create free account <ChevronRight className="w-4 h-4 ml-1" />
@@ -654,22 +662,35 @@ const SummaryView = ({ lesson, hasSession, drillScore, warzoneScore, allLessonsC
         </div>
       )}
 
-      {allLessonsComplete && (
+      {gauntletPending && hasSession && (
         <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 mb-6 max-w-md mx-auto">
           <Trophy className="w-6 h-6 text-amber-500 mx-auto mb-2" />
-          <p className="text-amber-500 font-semibold">Module 1 Gauntlet Unlocked!</p>
+          <p className="text-amber-500 font-semibold">Module {moduleId} Gauntlet Unlocked!</p>
+          <p className="text-sm text-muted-foreground mt-1">Pass or fail, completing it unlocks the next module.</p>
         </div>
       )}
 
       <div className="flex flex-col sm:flex-row gap-3 justify-center">
-        {nextLessonId && hasSession && (
+        {goToNextLesson && (
           <Button onClick={() => navigate(`/train/lesson/${nextLessonId}`)}>
             Next Lesson <ChevronRight className="w-4 h-4 ml-1" />
           </Button>
         )}
-        <Button variant="outline" onClick={() => navigate("/train")}>
-          Back to Course
-        </Button>
+        {gauntletPending && hasSession && (
+          <Button onClick={() => navigate(`/train/gauntlet/${moduleId}`)} className="bg-amber-500 text-amber-950 hover:bg-amber-400">
+            Start Module {moduleId} Gauntlet <ChevronRight className="w-4 h-4 ml-1" />
+          </Button>
+        )}
+        {!goToNextLesson && !gauntletPending && hasSession && (
+          <Button onClick={() => navigate("/train")}>
+            Back to Course
+          </Button>
+        )}
+        {!hasSession && (
+          <Button variant="outline" onClick={() => navigate("/train")}>
+            Back to Course
+          </Button>
+        )}
       </div>
     </div>
   );

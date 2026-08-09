@@ -3,7 +3,8 @@
 // resolved by slug — only course-specific material belongs in this file.
 
 import slugMap from "@/data/course-concept-slug-map.json";
-import { getConcept, type Concept } from "@/data/concepts";
+import { getConcept, allConcepts, type Concept } from "@/data/concepts";
+import { lesson2_1, lesson2_2, lesson2_3, gauntlet2Questions } from "@/data/module2";
 
 const slugFor = (conceptName: string): string => {
   const slug = (slugMap as Record<string, string>)[conceptName];
@@ -291,7 +292,7 @@ const lesson1_3: LessonData = {
 
 // ===== GAUNTLET =====
 
-export const gauntletQuestions: WarzonePost[] = [
+const gauntlet1Questions: WarzonePost[] = [
   {
     id: "gq1",
     source: "Labour's Employment Rights Bill (2025)",
@@ -414,6 +415,17 @@ export const gauntletQuestions: WarzonePost[] = [
   },
 ];
 
+export const gauntletsByModule: Record<number, WarzonePost[]> = {
+  1: gauntlet1Questions,
+  2: gauntlet2Questions,
+};
+
+export const getGauntletQuestions = (moduleId: number): WarzonePost[] =>
+  gauntletsByModule[moduleId] ?? [];
+
+/** @deprecated use getGauntletQuestions(1) */
+export const gauntletQuestions: WarzonePost[] = gauntlet1Questions;
+
 // ===== MODULES =====
 
 export const modules: ModuleData[] = [
@@ -426,10 +438,10 @@ export const modules: ModuleData[] = [
   },
   {
     id: 2,
-    title: "Emotional Manipulation",
-    description: "How emotions are weaponised to bypass logic",
-    lessons: [],
-    locked: true,
+    title: "Playing on Feelings",
+    description: "How feelings, mockery, and the crowd get used in place of an argument",
+    lessons: [lesson2_1, lesson2_2, lesson2_3],
+    locked: false,
   },
   {
     id: 3,
@@ -463,7 +475,7 @@ export const getLessonData = (lessonId: string): LessonData | undefined => {
 };
 
 // Lessons unlock in this order; the first one is playable without an account.
-export const LESSON_ORDER = ["1-1", "1-2", "1-3"];
+export const LESSON_ORDER = ["1-1", "1-2", "1-3", "2-1", "2-2", "2-3"];
 export const FREE_LESSON_ID = LESSON_ORDER[0];
 
 export const getLessonConcepts = (lesson: LessonData): Concept[] =>
@@ -474,6 +486,57 @@ export const getLessonConcepts = (lesson: LessonData): Concept[] =>
   });
 
 export const getNextLessonId = (currentId: string): string | null => {
-  const map: Record<string, string> = { "1-1": "1-2", "1-2": "1-3" };
-  return map[currentId] || null;
+  const index = LESSON_ORDER.indexOf(currentId);
+  return index >= 0 && index < LESSON_ORDER.length - 1 ? LESSON_ORDER[index + 1] : null;
 };
+
+export const getModuleIdFromLesson = (lessonId: string): number => {
+  const parts = lessonId.split("-");
+  return parseInt(parts[0], 10) || 1;
+};
+
+export const isModuleUnlocked = (
+  moduleId: number,
+  progress: { gauntletComplete: Record<string, boolean> }
+): boolean => {
+  if (moduleId <= 1) return true;
+  return !!progress.gauntletComplete[String(moduleId - 1)];
+};
+
+// ===== DEV-ONLY CONCEPT RESOLUTION CHECK =====
+
+const assertCourseConceptsResolve = () => {
+  if (!import.meta.env.DEV || typeof window === "undefined") return;
+
+  const knownNames = new Set<string>();
+  for (const c of allConcepts) {
+    knownNames.add(c.name);
+    c.aka.forEach(a => knownNames.add(a));
+  }
+
+  const check = (name: string, location: string) => {
+    if (!knownNames.has(name)) return;
+    const slug = (slugMap as Record<string, string>)[name];
+    if (!slug) {
+      throw new Error(`Course concept "${name}" in ${location} has no slug mapping`);
+    }
+    const concept = getConcept(slug);
+    if (!concept) {
+      throw new Error(`Course concept "${name}" (${slug}) in ${location} not found in the library index`);
+    }
+  };
+
+  for (const mod of modules) {
+    for (const lesson of mod.lessons) {
+      for (const c of lesson.concepts) check(c, `lesson ${lesson.id} concepts`);
+      for (const q of lesson.drillQuestions) q.options.forEach(o => check(o, `lesson ${lesson.id} drill ${q.id}`));
+      for (const w of lesson.warzonePosts) w.options.forEach(o => check(o, `lesson ${lesson.id} warzone ${w.id}`));
+    }
+    for (const gq of getGauntletQuestions(mod.id)) {
+      gq.options.forEach(o => check(o, `module ${mod.id} gauntlet ${gq.id}`));
+    }
+  }
+  console.log("[courseData] all course concepts resolved");
+};
+
+assertCourseConceptsResolve();

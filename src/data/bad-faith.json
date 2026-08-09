@@ -432,16 +432,16 @@
     ]
   },
   {
-    "name": "False Civility",
+    "name": "Tone Policing",
     "slug": "false-civility",
     "category": "Bad-Faith Tactic",
     "aka": [
-      "Tone Policing",
+      "False Civility",
       "Weaponised Politeness"
     ],
     "hook": "I'd take your point more seriously if you weren't so emotional about it. Let's keep this civil.",
     "oneLiner": "Using politeness and 'tone' as a weapon to dismiss substance and control the conversation.",
-    "deepDive": "False civility weaponises politeness: instead of engaging what you said, it attacks how you said it, demanding a calmer tone as the price of being heard. It reframes legitimate frustration as the real problem while the tone-policer looks reasonable. Decline the tone debate; return to substance.",
+    "deepDive": "Tone policing shifts scrutiny from what you said to how you said it, making a calmer delivery the price of being heard at all. The argument goes unanswered while the tone-policer looks like the reasonable one. It hinges on dismissal: engagement withheld, not merely requested.",
     "howToSpot": [
       "The focus shifts to your tone or emotion instead of your point",
       "Politeness or 'civility' is demanded as a precondition for engaging the substance",
@@ -460,6 +460,11 @@
         "text": "\"If you really wanted to be taken seriously, you'd be more polite about it.\"",
         "explanation": "Tone is used as a gatekeeping standard to avoid dealing with the substance."
       }
+    ],
+    "validUses": [
+      "Asking someone to stop personal insults **while still engaging the substance** is not tone policing",
+      "Noting that delivery is costing someone persuasive ground is strategic advice, not a dismissal of their claim",
+      "Disengaging from genuine abuse is legitimate — the fallacy is treating tone as a reason the argument is wrong"
     ],
     "refutation": [
       {

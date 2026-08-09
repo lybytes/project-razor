@@ -7,6 +7,7 @@ import biases from "@/data/biases.json";
 import badFaith from "@/data/bad-faith.json";
 import type { Concept } from "@/data/concepts";
 import { ConceptExampleCard } from "@/components/ConceptExampleCard";
+import { InlineMarkdown } from "@/components/InlineMarkdown";
 import { ArrowLeft, BookOpen } from "lucide-react";
 import { motion, useScroll, useSpring } from "motion/react";
 
@@ -180,11 +181,14 @@ const ConceptDetail = ({
       { id: "examples", title: "Examples" },
       { id: "refutation", title: "How to refute" },
     ];
+    if (item.validUses?.length) {
+      items.splice(1, 0, { id: "valid-uses", title: "When it's not a fallacy" });
+    }
     if (item.avoidance?.length) {
       items.push({ id: "avoidance", title: "How to avoid it" });
     }
     return items;
-  }, [item.avoidance?.length]);
+  }, [item.avoidance?.length, item.validUses?.length]);
 
   const activeId = useActiveSection(tocItems);
 
@@ -252,12 +256,34 @@ const ConceptDetail = ({
                 <SectionLabel>Overview</SectionLabel>
                 <h2 className="text-2xl font-bold text-foreground mb-4">What is it?</h2>
                 <p className="text-lg text-foreground/90 leading-relaxed mb-6 max-w-[65ch]">
-                  {item.oneLiner}
+                  <InlineMarkdown text={item.oneLiner} />
                 </p>
                 <p className="text-base text-foreground/80 leading-relaxed max-w-[65ch]">
-                  {item.deepDive}
+                  <InlineMarkdown text={item.deepDive} />
                 </p>
               </motion.section>
+
+              {item.validUses?.length ? (
+                <motion.section
+                  id="valid-uses"
+                  className="mb-14 scroll-mt-28"
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={reveal}
+                >
+                  <SectionLabel>Boundaries</SectionLabel>
+                  <h2 className="text-2xl font-bold text-foreground mb-4">When it's not a fallacy</h2>
+                  <ul className="space-y-3 max-w-[65ch]">
+                    {item.validUses.map((point, idx) => (
+                      <li key={idx} className="flex gap-3 text-base text-foreground/90 leading-relaxed">
+                        <span className="text-primary font-semibold flex-shrink-0">{idx + 1}.</span>
+                        <span><InlineMarkdown text={point} /></span>
+                      </li>
+                    ))}
+                  </ul>
+                </motion.section>
+              ) : null}
 
               <motion.section
                 id="how-to-spot"
@@ -273,7 +299,7 @@ const ConceptDetail = ({
                   {item.howToSpot.map((point, idx) => (
                     <li key={idx} className="flex gap-3 text-base text-foreground/90 leading-relaxed">
                       <span className="text-primary font-semibold flex-shrink-0">{idx + 1}.</span>
-                      <span>{point}</span>
+                      <span><InlineMarkdown text={point} /></span>
                     </li>
                   ))}
                 </ul>
@@ -316,10 +342,10 @@ const ConceptDetail = ({
                       transition={{ ...reveal, delay: idx * 0.08 }}
                     >
                       <h3 className="text-lg font-semibold text-foreground mb-2">{point.title}</h3>
-                      <p className="text-base text-foreground/80 leading-relaxed mb-4">{point.text}</p>
+                      <p className="text-base text-foreground/80 leading-relaxed mb-4"><InlineMarkdown text={point.text} /></p>
                       <blockquote className="border-l-2 border-primary/70 bg-primary/[0.03] rounded-r-lg pl-5 pr-4 py-3">
                         <p className="text-base italic text-foreground/90">
-                          &ldquo;{point.comeback}&rdquo;
+                          &ldquo;<InlineMarkdown text={point.comeback} />&rdquo;
                         </p>
                       </blockquote>
                     </motion.div>
@@ -342,7 +368,7 @@ const ConceptDetail = ({
                     {item.avoidance.map((point, idx) => (
                       <li key={idx} className="flex gap-3 text-base text-foreground/90 leading-relaxed">
                         <span className="text-primary font-semibold flex-shrink-0">{idx + 1}.</span>
-                        <span>{point}</span>
+                        <span><InlineMarkdown text={point} /></span>
                       </li>
                     ))}
                   </ul>
@@ -439,7 +465,7 @@ const BiasDetail = ({
                 <SectionLabel>Overview</SectionLabel>
                 <h2 className="text-2xl font-bold text-foreground mb-4">What is it?</h2>
                 <p className="text-base text-foreground/90 leading-relaxed max-w-[65ch]">
-                  {bias.explanation}
+                  <InlineMarkdown text={bias.explanation} />
                 </p>
               </motion.section>
 
@@ -465,7 +491,7 @@ const BiasDetail = ({
                     >
                       <div className="flex gap-3">
                         <span className="text-primary font-bold flex-shrink-0">{idx + 1}.</span>
-                        <p className="text-base text-foreground leading-relaxed">{example}</p>
+                        <p className="text-base text-foreground leading-relaxed"><InlineMarkdown text={example} /></p>
                       </div>
                     </motion.div>
                   ))}
@@ -486,7 +512,7 @@ const BiasDetail = ({
                   {bias.refutation.map((point, idx) => (
                     <li key={idx} className="flex gap-3 text-base text-foreground/90 leading-relaxed">
                       <span className="text-primary font-semibold flex-shrink-0">{idx + 1}.</span>
-                      <span>{point}</span>
+                      <span><InlineMarkdown text={point} /></span>
                     </li>
                   ))}
                 </ul>
@@ -507,7 +533,7 @@ const BiasDetail = ({
                     {bias.avoidance.map((point, idx) => (
                       <li key={idx} className="flex gap-3 text-base text-foreground/90 leading-relaxed">
                         <span className="text-primary font-semibold flex-shrink-0">{idx + 1}.</span>
-                        <span>{point}</span>
+                        <span><InlineMarkdown text={point} /></span>
                       </li>
                     ))}
                   </ul>
