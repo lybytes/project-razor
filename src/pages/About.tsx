@@ -16,12 +16,12 @@ const pillars = [
   {
     title: "Our Mission",
     description:
-      "To empower individuals with the tools and knowledge needed to identify and counter biases, fallacies, and bad-faith arguments in everyday discourse.",
+      "To empower individuals with the tools and knowledge needed to identify and counter logical fallacies and bad-faith arguments in everyday discourse.",
   },
   {
     title: "Our Approach",
     description:
-      "Combining education with interactive training, we help users develop practical skills through real-world scenarios and historical case studies.",
+      "Combining education with interactive training, we help users develop practical skills through realistic scenarios and real-world examples.",
   },
   {
     title: "What We Teach",
@@ -70,7 +70,7 @@ const About = () => {
               Project Razor
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl">
-              A training platform for the skill no one formally teaches: how to think clearly when someone is trying to make you think badly.
+              A training platform for how to think clearly, when someone is trying to make you think badly.
             </p>
           </motion.header>
 
@@ -94,10 +94,10 @@ const About = () => {
             </h2>
             <div className="max-w-[65ch] space-y-4 text-lg text-muted-foreground leading-relaxed">
               <p>
-                The name is inspired by <strong className="text-foreground">Occam&apos;s Razor</strong> — the principle that simpler explanations are generally better than complex ones. In critical thinking, a &ldquo;razor&rdquo; is a tool that cuts through complexity to reveal truth.
+                The name is inspired by <strong className="text-foreground">Occam&apos;s Razor</strong> — the principle that simpler explanations are generally better than complex ones. In critical thinking, a &ldquo;razor&rdquo; is a tool that cuts through noise to reveal truth.
               </p>
               <p>
-                Project Razor gives you multiple &ldquo;razors&rdquo; — sharp mental tools to cut through faulty logic, identify cognitive traps, and recognize manipulative tactics.
+                Project Razor gives you multiple &ldquo;razors&rdquo;, sharp mental tools to cut through faulty logic, identify cognitive traps, and recognize manipulative tactics.
               </p>
             </div>
           </motion.section>

@@ -22,15 +22,15 @@ const heroReveal = {
 const stats = [
   {
     stat: "~50 tactics",
-    desc: "logical fallacies and manipulation tricks are reused constantly by advertisers, politicians, and bad-faith accounts. Most people can't name five.",
+    desc: "logical fallacies and manipulation tricks are reused constantly by advertisers, politicians, and state actors. Most people can't name five.",
   },
   {
     stat: "Seconds",
-    desc: "that's how fast a bad argument works. You feel something's off but can't name why before the moment's gone. That gap is what gets exploited.",
+    desc: "is how long it takes a bad argument to work. You feel something's off but can't name why before the moment's gone",
   },
   {
     stat: "Almost never taught",
-    desc: "most people finish school without ever learning how an argument is actually built, or how it's rigged.",
+    desc: "most people will never learn how an argument is actually built, and more importantly how it's rigged.",
   },
 ];
 
@@ -38,36 +38,36 @@ const steps = [
   {
     num: "01",
     title: "Learn the tactics",
-    desc: "Each lesson introduces 2–3 real manipulation techniques — from strawmanning to slippery slopes — with clear explanations and real-world examples.",
+    desc: "Each lesson introduces 2–3 real logical fallacies,from strawmanning to slippery slopes, with clear explanations and real-world examples.",
   },
   {
     num: "02",
     title: "Train on real content",
-    desc: "Practice spotting fallacies in real-world arguments — comment sections, ads, and political discourse — not textbook abstractions.",
+    desc: "Practice spotting fallacies in the real world, from comment sections to ads and political discourse.",
   },
   {
     num: "03",
     title: "Build the reflex",
-    desc: "Daily practice and rising difficulty turn recognition into instinct. After a while you'll spot the moves in real time — in comment sections, ads, arguments, your own head.",
+    desc: "Daily practice and rising difficulty turn recognition into instinct. After a while you'll spot the moves in real time.",
   },
 ];
 
 const learnCards = [
   {
     title: "Logical Fallacies",
-    desc: "Flawed arguments disguised as sound reasoning. Ad hominem attacks, strawmen, false dilemmas, slippery slopes — the tricks used to win arguments dishonestly.",
+    desc: "Flawed arguments disguised as sound reasoning. Ad hominem attacks, strawmen, false dilemmas, slippery slopes. These are the tricks used to win arguments dishonestly.",
     link: "/learn/logical-fallacies",
     linkText: "Explore Fallacies",
   },
   {
     title: "Cognitive Biases",
-    desc: "The mental shortcuts your brain takes that make you vulnerable to manipulation. Confirmation bias, availability heuristic, anchoring — and how others exploit them.",
+    desc: "The mental shortcuts your brain takes that make you vulnerable to manipulation. Confirmation bias, availability heuristic, anchoring.",
     link: "/learn/cognitive-biases",
     linkText: "Explore Biases",
   },
   {
     title: "Bad-Faith Tactics",
-    desc: "Deliberate manipulation techniques used in arguments and debate. Gaslighting, moving the goalposts, whataboutism — used every day in politics and online discourse.",
+    desc: "Deliberate manipulation techniques used in arguments and debate. Gaslighting, moving the goalposts, whataboutism. These areused every day in politics and online discourse.",
     link: "/learn/bad-faith-arguments",
     linkText: "Explore Tactics",
   },
@@ -104,7 +104,7 @@ const Index = () => {
               {...heroReveal}
               transition={{ ...heroReveal.transition, delay: 0.16 }}
             >
-              Every day, someone online is trying to win you over with an argument that's quietly broken — a dodge, a strawman, a fake either/or. Razor trains you to catch the move, name it, and shut it down.
+              Every day, someone online is trying to win you over with an argument that's quietly broken. A dodge, a strawman, a fake either/or. Razor trains you to catch the move, name it, and shut it down.
             </motion.p>
 
             <motion.div
@@ -202,7 +202,7 @@ const Index = () => {
               Project Razor trains you to tell the difference.
             </p>
             <Button size="lg" asChild className="rounded-full px-8 h-12 text-base">
-              <Link to="/train">Start Training — It&apos;s Free</Link>
+              <Link to="/train">Start Training. It&apos;s Free</Link>
             </Button>
           </motion.div>
         </section>
