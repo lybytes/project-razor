@@ -38,14 +38,17 @@ const pillars = [
 
 const framework = [
   {
+    initial: "B",
     label: "Biases",
     text: "Systematic patterns of deviation from rationality in judgment. These are unconscious mental shortcuts that can lead us astray.",
   },
   {
+    initial: "F",
     label: "Fallacies",
     text: "Errors in reasoning that undermine the logic of an argument. These are flaws in the structure of arguments themselves.",
   },
   {
+    initial: "BA",
     label: "Bad-Faith Arguments",
     text: "Manipulative tactics used to win arguments dishonestly. These are deliberate strategies to avoid genuine discussion.",
   },
@@ -113,17 +116,40 @@ const About = () => {
                   key={item.label}
                   className="rounded-xl border border-border bg-card p-5 sm:p-6 hover:border-primary/40 transition-colors"
                 >
-                  <div className="flex items-baseline gap-4">
-                    <span className="text-sm font-semibold uppercase tracking-wider text-primary min-w-[2ch]">
-                      {String.fromCharCode(66 + index)}
-                    </span>
-                    <div>
-                      <h3 className="text-xl font-bold text-foreground mb-2">{item.label}</h3>
-                      <p className="text-muted-foreground leading-relaxed">{item.text}</p>
-                    </div>
-                  </div>
+                  <h3 className="text-xl font-bold text-foreground mb-2">
+                    <span className="text-primary">{item.initial}</span>
+                    <span className="text-muted-foreground font-medium mx-2">—</span>
+                    {item.label}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">{item.text}</p>
                 </div>
               ))}
+            </div>
+          </motion.section>
+
+          <motion.section
+            className="py-20 sm:py-28 border-t border-border/50"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6, ease: easeOut }}
+          >
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-10 tracking-tight">
+              What this is for
+            </h2>
+            <div className="max-w-[70ch] space-y-6 text-lg sm:text-xl text-foreground/90 leading-relaxed">
+              <p className="text-foreground">
+                Razor exists to make you better at spotting bad reasoning. That&apos;s the whole purpose, and it&apos;s the reason the platform doesn&apos;t take political positions.
+              </p>
+              <p>
+                You&apos;ll encounter arguments here from every part of the political spectrum, because bad reasoning isn&apos;t concentrated on one side of it. Strawmen, false dilemmas and appeals to emotion get used by governments and by their critics, by campaigners and by the people who oppose them. An educational platform that drew its examples from only one direction wouldn&apos;t be teaching critical thinking, but allegiance.
+              </p>
+              <p>
+                Therefore the goal in every exercise is the reasoning, not the conclusion. When Razor takes apart a fallacious argument for a claim, idea or policy, that is not an argument against the policy. A position can be badly defended and still be correct. Treating a bad argument as proof that the whole claim is false is itself a fallacy (the &ldquo;Fallacy Fallacy&rdquo;), and it&apos;s one of the most common mistakes made by people who have just learned to name a few others.
+              </p>
+              <p>
+                Razor is independent. It isn&apos;t funded by, affiliated with, or acting on behalf of any party, campaign or advocacy organisation, and no political group has input into what gets taught or which examples are used. We sincerely hope users can use the tools we teach them to formulate their own opinions.
+              </p>
             </div>
           </motion.section>
 

@@ -8,6 +8,8 @@ import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
 import { getUserStats, getProgress, type UserStats, type ProgressEntry } from "@/lib/api";
+import { modules } from "@/data/courseData";
+import { validateDisplayName } from "@/lib/utils";
 import { motion } from "motion/react";
 import { PageShell } from "@/components/PageShell";
 import { Pencil, Check, X } from "lucide-react";
@@ -125,8 +127,13 @@ const Account = () => {
   }
 
   const displayName = user?.display_name || stats.display_name || "User";
-  const module1Lessons = completedLessons.filter((p) => p.module_id === 1).length;
-  const module1Progress = (module1Lessons / 3) * 100;
+
+  const activeModules = modules.filter((m) => m.lessons.length > 0);
+  const moduleProgress = activeModules.map((mod) => {
+    const completed = completedLessons.filter((p) => p.module_id === mod.id).length;
+    const total = mod.lessons.length;
+    return { ...mod, completed, total, percent: total > 0 ? (completed / total) * 100 : 0 };
+  });
 
   return (
     <PageShell>
@@ -147,16 +154,22 @@ const Account = () => {
 
               {editingName ? (
                 <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-2">
-                  <Input
-                    value={nameInput}
-                    onChange={(e) => setNameInput(e.target.value)}
-                    placeholder="Display name"
-                    className="text-lg h-11 max-w-xs rounded-full px-4"
-                    disabled={savingName}
-                    autoFocus
-                  />
+                  <div className="flex flex-col gap-1">
+                    <Input
+                      value={nameInput}
+                      onChange={(e) => setNameInput(e.target.value)}
+                      placeholder="Display name"
+                      maxLength={30}
+                      className="text-lg h-11 max-w-xs rounded-full px-4"
+                      disabled={savingName}
+                      autoFocus
+                    />
+                    {validateDisplayName(nameInput) && (
+                      <span className="text-xs text-destructive">{validateDisplayName(nameInput)}</span>
+                    )}
+                  </div>
                   <div className="flex items-center gap-2">
-                    <Button size="sm" onClick={handleSaveName} disabled={savingName || !nameInput.trim()} className="rounded-full h-9 px-4">
+                    <Button size="sm" onClick={handleSaveName} disabled={savingName || validateDisplayName(nameInput) !== null} className="rounded-full h-9 px-4">
                       <Check className="w-4 h-4 mr-1" /> Save
                     </Button>
                     <Button size="sm" variant="ghost" onClick={() => { setEditingName(false); setNameInput(displayName); }} disabled={savingName} className="rounded-full h-9 px-4">
@@ -243,14 +256,16 @@ const Account = () => {
             <Card className="p-6 border border-border bg-card rounded-xl">
               <h2 className="text-2xl font-bold text-foreground mb-6 tracking-tight">Course progress</h2>
 
-              <div className="space-y-4">
-                <div>
-                  <div className="flex justify-between text-sm mb-2">
-                    <span className="text-muted-foreground">Module 1 — The Classics</span>
-                    <span className="text-foreground font-medium">{module1Lessons}/3 lessons</span>
+              <div className="space-y-5">
+                {moduleProgress.map((mod) => (
+                  <div key={mod.id}>
+                    <div className="flex justify-between text-sm mb-2">
+                      <span className="text-muted-foreground">Module {mod.id} — {mod.title}</span>
+                      <span className="text-foreground font-medium">{mod.completed}/{mod.total} lessons</span>
+                    </div>
+                    <Progress value={mod.percent} className="h-2" />
                   </div>
-                  <Progress value={module1Progress} className="h-2" />
-                </div>
+                ))}
 
                 <div className="grid grid-cols-2 gap-4 pt-2">
                   <div className="p-4 rounded-xl border border-border bg-background/50">

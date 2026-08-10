@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { useCourseProgress } from "@/contexts/CourseProgressContext";
 import { modules, getGauntletQuestions } from "@/data/courseData";
-import { Progress } from "@/components/ui/progress";
 import { Lock, ChevronDown, Check, Trophy, MessageSquare, Zap, Play, ChevronRight } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { motion, AnimatePresence } from "motion/react";
@@ -15,9 +14,6 @@ const Course = () => {
   const { progress, getLessonsComplete, isLessonUnlocked, isModuleUnlocked } = useCourseProgress();
   const { hasSession } = useAuth();
   const [expandedModule, setExpandedModule] = useState<number | null>(1);
-
-  const totalConcepts = progress.conceptsUnlocked.length;
-  const progressPercent = Math.min((totalConcepts / 25) * 100, 100);
 
   const getModuleStatus = (mod: typeof modules[0]) => {
     if (mod.locked || !isModuleUnlocked(mod.id)) return "locked";
@@ -48,17 +44,10 @@ const Course = () => {
           transition={{ duration: 0.5, ease: easeOut }}
         >
           <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-2">Course</p>
-          <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-3 tracking-tight">Your Course</h1>
-          <p className="text-base sm:text-lg text-muted-foreground mb-6 max-w-xl">
+          <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-3 tracking-tight">Foundations</h1>
+          <p className="text-base sm:text-lg text-muted-foreground max-w-xl">
             Master critical thinking, one lesson at a time.
           </p>
-          <div className="p-4 sm:p-5 rounded-xl bg-card border border-border">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-sm font-medium text-foreground">Overall progress</span>
-              <span className="text-sm font-medium text-muted-foreground">{totalConcepts}/25 concepts</span>
-            </div>
-            <Progress value={progressPercent} className="h-2.5" />
-          </div>
         </motion.div>
 
         {/* Module Map */}
