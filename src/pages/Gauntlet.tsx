@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { PageShell } from "@/components/PageShell";
 import { useCourseProgress } from "@/contexts/CourseProgressContext";
 import { getGauntletQuestions, modules, getNextLessonId, type WarzonePost } from "@/data/courseData";
 import { Button } from "@/components/ui/button";
-import { motion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import { Check, X, ChevronRight, Trophy, Shield, RotateCcw, Target } from "lucide-react";
 
 const Gauntlet = () => {
@@ -23,9 +23,12 @@ const Gauntlet = () => {
   const [correctCount, setCorrectCount] = useState(0);
   const [finished, setFinished] = useState(false);
   const [missedConcepts, setMissedConcepts] = useState<string[]>([]);
+  const contentRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    window.scrollTo({ top: 0 });
+    if (!contentRef.current) return;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    contentRef.current.scrollIntoView({ block: "start", behavior: prefersReducedMotion ? "auto" : "smooth" });
   }, [currentIndex, started, finished]);
 
   const moduleData = modules.find(m => m.id === moduleNum);
@@ -106,7 +109,7 @@ const Gauntlet = () => {
     <PageShell>
       <Navigation />
 
-      <main className="container mx-auto px-4 py-8 max-w-2xl flex-1 flex flex-col">
+      <main ref={contentRef} className="container mx-auto px-4 py-8 max-w-2xl flex-1 flex flex-col scroll-mt-24">
         {!started && !finished && (
           <div className="text-center py-16 animate-fade-up">
             <Trophy className="w-16 h-16 text-warning mx-auto mb-6" />
@@ -120,10 +123,18 @@ const Gauntlet = () => {
         )}
 
         {started && !finished && (
-          <div className="animate-fade-up">
+          <div>
             <p className="text-sm text-muted-foreground mb-6">Question {currentIndex + 1} of {questions.length}</p>
 
-            <div className="rounded-lg bg-muted border border-border/50 p-5 mb-4">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentIndex}
+                initial={{ opacity: 0, y: 20, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.98 }}
+                transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
+              >
+                <div className="rounded-lg bg-muted border border-border/50 p-5 mb-4">
               <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2 font-medium">Context</p>
               <p className="text-foreground/90 text-sm leading-relaxed">{post.context}</p>
             </div>
@@ -190,6 +201,8 @@ const Gauntlet = () => {
                 Submit Answer
               </Button>
             )}
+              </motion.div>
+            </AnimatePresence>
           </div>
         )}
 
