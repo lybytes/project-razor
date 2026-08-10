@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { useParams, useNavigate, Link, Navigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Navigation } from "@/components/Navigation";
@@ -62,9 +62,13 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
   const [warzoneCorrect, setWarzoneCorrect] = useState(0);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
+  const [learnDirection, setLearnDirection] = useState(1);
+  const contentRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    window.scrollTo({ top: 0 });
+    if (!contentRef.current) return;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    contentRef.current.scrollIntoView({ block: "start", behavior: prefersReducedMotion ? "auto" : "smooth" });
   }, [stage, learnCardIndex, drillIndex, warzoneIndex]);
 
   // Learn stage: 5 cards per concept, then transition
@@ -132,7 +136,7 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
     <div className="min-h-screen bg-background">
       <Navigation />
 
-      <main className="container mx-auto px-4 py-6 sm:py-10 max-w-2xl">
+      <main ref={contentRef} className="container mx-auto px-4 py-6 sm:py-10 max-w-2xl scroll-mt-24">
         {/* Stage Indicator */}
         <div className="flex items-center justify-center gap-1.5 sm:gap-3 mb-6 sm:mb-10">
           {STAGES.map((s, i) => {
@@ -150,8 +154,8 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
                       transition={{ type: "spring", stiffness: 300, damping: 30 }}
                     />
                   )}
-                  <Icon className={`w-3.5 h-3.5 relative z-10 ${isActive ? "text-primary" : isCompleted ? "text-green-400" : "text-muted-foreground"}`} />
-                  <span className={`hidden sm:inline relative z-10 ${isActive ? "text-primary" : isCompleted ? "text-green-400" : "text-muted-foreground"}`}>
+                  <Icon className={`w-3.5 h-3.5 relative z-10 ${isActive ? "text-primary" : isCompleted ? "text-success" : "text-muted-foreground"}`} />
+                  <span className={`hidden sm:inline relative z-10 ${isActive ? "text-primary" : isCompleted ? "text-success" : "text-muted-foreground"}`}>
                     {s}
                   </span>
                 </div>
@@ -161,7 +165,7 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
                     initial={false}
                     animate={{
                       width: i < stage ? 24 : 16,
-                      backgroundColor: i < stage ? "rgba(74,222,128,0.5)" : "hsl(240 6% 20%)",
+                      backgroundColor: i < stage ? "hsl(var(--success) / 0.5)" : "hsl(var(--border))",
                     }}
                     transition={{ duration: 0.3, ease: easeOut }}
                   />
@@ -201,9 +205,9 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
               ) : currentConcept && (
                 <motion.div
                   key={learnCardIndex}
-                  initial={{ opacity: 0, y: 16, scale: 0.98 }}
+                  initial={{ opacity: 0, y: learnDirection * 16, scale: 0.98 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -16, scale: 0.98 }}
+                  exit={{ opacity: 0, y: learnDirection * -16, scale: 0.98 }}
                   transition={{ duration: 0.3, ease: easeOut }}
                   className="min-h-[360px] sm:min-h-[420px] flex flex-col rounded-xl border border-border bg-card p-5 sm:p-8"
                 >
@@ -258,7 +262,7 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
                       <ul className="space-y-5 sm:space-y-6">
                         {currentConcept.refutation.map((strategy, i) => (
                           <li key={i} className="flex gap-3">
-                            <span className="text-green-400 mt-0.5 text-base font-bold">{i + 1}.</span>
+                            <span className="text-success mt-0.5 text-base font-bold">{i + 1}.</span>
                             <div className="flex-1">
                               <p className="text-base text-foreground/90 leading-relaxed">
                                 <span className="font-bold text-foreground">{strategy.title}: </span>
@@ -277,7 +281,7 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
                   <div className="mt-6 sm:mt-8 flex justify-between items-center pt-4 border-t border-border/50">
                     <div className="flex items-center gap-3">
                       {learnCardIndex > 0 && (
-                        <Button variant="ghost" size="sm" onClick={() => setLearnCardIndex(learnCardIndex - 1)}>
+                        <Button variant="ghost" size="sm" onClick={() => { setLearnDirection(-1); setLearnCardIndex(learnCardIndex - 1); }}>
                           <ChevronLeft className="w-4 h-4 mr-1" /> Back
                         </Button>
                       )}
@@ -285,7 +289,7 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
                         {currentConceptIndex + 1}/{concepts.length} concepts
                       </span>
                     </div>
-                    <Button onClick={() => setLearnCardIndex(learnCardIndex + 1)}>
+                    <Button onClick={() => { setLearnDirection(1); setLearnCardIndex(learnCardIndex + 1); }}>
                       Continue <ChevronRight className="w-4 h-4 ml-1" />
                     </Button>
                   </div>
@@ -456,9 +460,9 @@ const DrillView = ({ question, index, total, selectedOption, submitted, onSelect
           let classes = "w-full text-left p-3 sm:p-4 rounded-xl border transition-all duration-200 text-sm font-medium ";
           if (submitted) {
             if (i === question.correctIndex) {
-              classes += "border-green-500 bg-green-500/10 text-green-400";
+              classes += "border-success bg-success/10 text-success";
             } else if (i === selectedOption && i !== question.correctIndex) {
-              classes += "border-red-500 bg-red-500/10 text-red-400";
+              classes += "border-destructive bg-destructive/10 text-destructive";
             } else {
               classes += "border-border/50 bg-card/50 text-muted-foreground";
             }
@@ -539,9 +543,9 @@ const WarzoneView = ({ post, index, total, selectedOption, submitted, onSelect, 
           let classes = "w-full text-left p-3 sm:p-4 rounded-xl border transition-all duration-200 text-sm font-medium ";
           if (submitted) {
             if (i === post.correctIndex) {
-              classes += "border-green-500 bg-green-500/10 text-green-400";
+              classes += "border-success bg-success/10 text-success";
             } else if (i === selectedOption && i !== post.correctIndex) {
-              classes += "border-red-500 bg-red-500/10 text-red-400";
+              classes += "border-destructive bg-destructive/10 text-destructive";
             } else {
               classes += "border-border/50 bg-card/50 text-muted-foreground";
             }
@@ -560,10 +564,10 @@ const WarzoneView = ({ post, index, total, selectedOption, submitted, onSelect, 
 
       {submitted && (
         <div className="space-y-4 mb-6 animate-fade-up">
-          <div className={`rounded-xl p-4 ${selectedOption === post.correctIndex ? "bg-green-500/10 border border-green-500/30" : "bg-red-500/10 border border-red-500/30"}`}>
+          <div className={`rounded-xl p-4 ${selectedOption === post.correctIndex ? "bg-success/10 border border-success/30" : "bg-destructive/10 border border-destructive/30"}`}>
             <div className="flex items-center gap-2 mb-2">
-              {selectedOption === post.correctIndex ? <Check className="w-4 h-4 text-green-400" /> : <X className="w-4 h-4 text-red-400" />}
-              <span className={`font-semibold text-sm ${selectedOption === post.correctIndex ? "text-green-400" : "text-red-400"}`}>
+              {selectedOption === post.correctIndex ? <Check className="w-4 h-4 text-success" /> : <X className="w-4 h-4 text-destructive" />}
+              <span className={`font-semibold text-sm ${selectedOption === post.correctIndex ? "text-success" : "text-destructive"}`}>
                 {selectedOption === post.correctIndex ? "Correct!" : "Incorrect"} — {post.options[post.correctIndex]}
               </span>
             </div>
@@ -620,8 +624,8 @@ const SummaryView = ({ lesson, hasSession, drillScore, warzoneScore, wasAlreadyC
 
   return (
     <div className="animate-fade-up text-center py-6 sm:py-10 rounded-xl border border-border bg-card p-5 sm:p-8">
-      <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-green-500/15 flex items-center justify-center mx-auto mb-4 sm:mb-6">
-        <Check className="w-7 h-7 sm:w-8 sm:h-8 text-green-500" />
+      <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-success/15 flex items-center justify-center mx-auto mb-4 sm:mb-6">
+        <Check className="w-7 h-7 sm:w-8 sm:h-8 text-success" />
       </div>
       <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 sm:mb-6 tracking-tight">Lesson Complete!</h2>
 
@@ -630,7 +634,7 @@ const SummaryView = ({ lesson, hasSession, drillScore, warzoneScore, wasAlreadyC
         <ul className="space-y-2">
           {lesson.concepts.map(c => (
             <li key={c} className="flex items-center gap-2 text-foreground text-sm">
-              <Check className="w-4 h-4 text-green-500" /> {c}
+              <Check className="w-4 h-4 text-success" /> {c}
             </li>
           ))}
         </ul>
@@ -663,9 +667,9 @@ const SummaryView = ({ lesson, hasSession, drillScore, warzoneScore, wasAlreadyC
       )}
 
       {gauntletPending && hasSession && (
-        <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 mb-6 max-w-md mx-auto">
-          <Trophy className="w-6 h-6 text-amber-500 mx-auto mb-2" />
-          <p className="text-amber-500 font-semibold">Module {moduleId} Gauntlet Unlocked!</p>
+        <div className="bg-warning/10 border border-warning/30 rounded-xl p-4 mb-6 max-w-md mx-auto">
+          <Trophy className="w-6 h-6 text-warning mx-auto mb-2" />
+          <p className="text-warning font-semibold">Module {moduleId} Gauntlet Unlocked!</p>
           <p className="text-sm text-muted-foreground mt-1">Pass or fail, completing it unlocks the next module.</p>
         </div>
       )}
@@ -677,7 +681,7 @@ const SummaryView = ({ lesson, hasSession, drillScore, warzoneScore, wasAlreadyC
           </Button>
         )}
         {gauntletPending && hasSession && (
-          <Button onClick={() => navigate(`/train/gauntlet/${moduleId}`)} className="bg-amber-500 text-amber-950 hover:bg-amber-400">
+          <Button onClick={() => navigate(`/train/gauntlet/${moduleId}`)} className="bg-warning text-warning-foreground hover:bg-warning/90">
             Start Module {moduleId} Gauntlet <ChevronRight className="w-4 h-4 ml-1" />
           </Button>
         )}
