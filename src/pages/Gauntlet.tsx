@@ -1,17 +1,19 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
+import { PageShell } from "@/components/PageShell";
 import { useCourseProgress } from "@/contexts/CourseProgressContext";
 import { getGauntletQuestions, modules, getNextLessonId, type WarzonePost } from "@/data/courseData";
 import { Button } from "@/components/ui/button";
-import { Check, X, ChevronRight, Trophy, Shield } from "lucide-react";
+import { motion } from "motion/react";
+import { Check, X, ChevronRight, Trophy, Shield, RotateCcw, Target } from "lucide-react";
 
 const Gauntlet = () => {
   const { moduleId: moduleIdParam } = useParams<{ moduleId: string }>();
   const moduleId = moduleIdParam || "1";
   const moduleNum = parseInt(moduleId, 10) || 1;
   const navigate = useNavigate();
-  const { progress, completeGauntlet } = useCourseProgress();
+  const { progress, completeGauntlet, isModuleUnlocked } = useCourseProgress();
   const questions = getGauntletQuestions(moduleNum);
 
   const [started, setStarted] = useState(false);
@@ -32,7 +34,7 @@ const Gauntlet = () => {
 
   if (questions.length === 0) {
     return (
-      <div className="min-h-screen bg-background">
+      <PageShell>
         <Navigation />
         <main className="container mx-auto px-4 py-16 text-center">
           <Shield className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
@@ -40,13 +42,13 @@ const Gauntlet = () => {
           <p className="text-muted-foreground mb-6">There is no gauntlet for this module yet.</p>
           <Button asChild><Link to="/train">Back to Course</Link></Button>
         </main>
-      </div>
+      </PageShell>
     );
   }
 
   if (!moduleLessonsComplete) {
     return (
-      <div className="min-h-screen bg-background">
+      <PageShell>
         <Navigation />
         <main className="container mx-auto px-4 py-16 text-center">
           <Shield className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
@@ -56,7 +58,7 @@ const Gauntlet = () => {
           </p>
           <Button asChild><Link to="/train">Back to Course</Link></Button>
         </main>
-      </div>
+      </PageShell>
     );
   }
 
@@ -96,18 +98,21 @@ const Gauntlet = () => {
   };
 
   const passed = correctCount >= 6;
+  const totalQuestions = questions.length;
+  const nextModule = modules.find(m => m.id === moduleNum + 1);
+  const nextModuleUnlocked = nextModule ? isModuleUnlocked(nextModule.id) : false;
 
   return (
-    <div className="min-h-screen bg-background">
+    <PageShell>
       <Navigation />
 
-      <main className="container mx-auto px-4 py-8 max-w-2xl">
+      <main className="container mx-auto px-4 py-8 max-w-2xl flex-1 flex flex-col">
         {!started && !finished && (
           <div className="text-center py-16 animate-fade-up">
-            <Trophy className="w-16 h-16 text-amber-400 mx-auto mb-6" />
+            <Trophy className="w-16 h-16 text-warning mx-auto mb-6" />
             <h1 className="text-3xl font-bold text-foreground mb-3">Module {moduleNum} Gauntlet</h1>
             <p className="text-lg text-muted-foreground mb-2">{questions.length} questions. All Module {moduleNum} concepts. Your hardest challenge yet.</p>
-            <p className="text-sm text-amber-400/80 mb-8">These examples are more ambiguous than the lessons. Think carefully.</p>
+            <p className="text-sm text-warning/80 mb-8">These examples are more ambiguous than the lessons. Think carefully.</p>
             <Button size="lg" onClick={() => setStarted(true)}>
               Begin Gauntlet <ChevronRight className="w-4 h-4 ml-1" />
             </Button>
@@ -118,7 +123,7 @@ const Gauntlet = () => {
           <div className="animate-fade-up">
             <p className="text-sm text-muted-foreground mb-6">Question {currentIndex + 1} of {questions.length}</p>
 
-            <div className="rounded-lg bg-[hsl(240,6%,12%)] border border-border/50 p-5 mb-4">
+            <div className="rounded-lg bg-muted border border-border/50 p-5 mb-4">
               <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2 font-medium">Context</p>
               <p className="text-foreground/90 text-sm leading-relaxed">{post.context}</p>
             </div>
@@ -142,8 +147,8 @@ const Gauntlet = () => {
               {post.options.map((opt, i) => {
                 let classes = "w-full text-left p-4 rounded-lg border transition-all duration-200 text-sm font-medium ";
                 if (submitted) {
-                  if (i === post.correctIndex) classes += "border-green-500 bg-green-500/10 text-green-400";
-                  else if (i === selectedOption && i !== post.correctIndex) classes += "border-red-500 bg-red-500/10 text-red-400";
+                  if (i === post.correctIndex) classes += "border-success bg-success/10 text-success";
+                  else if (i === selectedOption && i !== post.correctIndex) classes += "border-destructive bg-destructive/10 text-destructive";
                   else classes += "border-border/50 bg-card/50 text-muted-foreground";
                 } else if (i === selectedOption) classes += "border-primary bg-primary/10 text-primary";
                 else classes += "border-border bg-card text-foreground hover:border-primary/50";
@@ -157,10 +162,10 @@ const Gauntlet = () => {
 
             {submitted && (
               <div className="space-y-4 mb-6 animate-fade-up">
-                <div className={`rounded-lg p-4 ${selectedOption === post.correctIndex ? "bg-green-500/10 border border-green-500/30" : "bg-red-500/10 border border-red-500/30"}`}>
+                <div className={`rounded-lg p-4 ${selectedOption === post.correctIndex ? "bg-success/10 border border-success/30" : "bg-destructive/10 border border-destructive/30"}`}>
                   <div className="flex items-center gap-2 mb-2">
-                    {selectedOption === post.correctIndex ? <Check className="w-4 h-4 text-green-400" /> : <X className="w-4 h-4 text-red-400" />}
-                    <span className={`font-semibold text-sm ${selectedOption === post.correctIndex ? "text-green-400" : "text-red-400"}`}>
+                    {selectedOption === post.correctIndex ? <Check className="w-4 h-4 text-success" /> : <X className="w-4 h-4 text-destructive" />}
+                    <span className={`font-semibold text-sm ${selectedOption === post.correctIndex ? "text-success" : "text-destructive"}`}>
                       {selectedOption === post.correctIndex ? "Correct!" : "Incorrect"} — {post.options[post.correctIndex]}
                     </span>
                   </div>
@@ -189,53 +194,108 @@ const Gauntlet = () => {
         )}
 
         {finished && (
-          <div className="text-center py-12 animate-fade-up">
+          <motion.div
+            className="flex-1 flex flex-col items-center justify-center min-h-[calc(100vh-12rem)] py-12 text-center"
+            initial={{ opacity: 0, y: 24, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+          >
             {passed ? (
-              <>
-                <Trophy className="w-16 h-16 text-amber-400 mx-auto mb-4" />
-                <h2 className="text-3xl font-bold text-foreground mb-2">Module {moduleNum} Complete!</h2>
-                <p className="text-lg text-foreground mb-2">{correctCount}/10 correct</p>
-                <p className="text-primary font-medium mb-6">+500 XP earned</p>
-              </>
-            ) : (
-              <>
-                <div className="w-16 h-16 rounded-full bg-muted/30 flex items-center justify-center mx-auto mb-4">
-                  <span className="text-2xl">{correctCount}/10</span>
-                </div>
-                <h2 className="text-2xl font-bold text-foreground mb-2">Keep going!</h2>
-                <p className="text-muted-foreground mb-4">You need 6/10 to pass. Try again whenever you're ready.</p>
+              <div className="max-w-xl w-full">
+                <motion.div
+                  className="relative w-24 h-24 mx-auto mb-8"
+                  initial={{ scale: 0.8, rotate: -8, opacity: 0 }}
+                  animate={{ scale: 1, rotate: 0, opacity: 1 }}
+                  transition={{ type: "spring", stiffness: 200, damping: 16, delay: 0.1 }}
+                >
+                  <div className="absolute inset-0 rounded-full bg-warning/10 blur-xl" />
+                  <div className="relative w-24 h-24 rounded-full bg-warning/10 border border-warning/30 flex items-center justify-center">
+                    <Trophy className="w-12 h-12 text-warning" />
+                  </div>
+                </motion.div>
+
+                <p className="text-xs font-semibold uppercase tracking-widest text-primary mb-3">
+                  Module {moduleNum} complete
+                </p>
+                <h2 className="text-4xl sm:text-5xl font-bold text-foreground mb-4 tracking-tight">
+                  {moduleData?.title}
+                </h2>
+                <p className="text-lg text-muted-foreground mb-8 max-w-md mx-auto leading-relaxed">
+                  You passed the gauntlet — {correctCount}/{totalQuestions} correct — and earned <span className="text-foreground font-medium">+500 XP</span>.
+                </p>
+
                 {missedConcepts.length > 0 && (
-                  <div className="bg-card border border-border rounded-lg p-4 mb-6 max-w-md mx-auto text-left">
-                    <p className="text-sm text-muted-foreground mb-2">Concepts to review:</p>
-                    <ul className="space-y-1">
+                  <div className="mb-8 max-w-md mx-auto">
+                    <p className="text-sm text-muted-foreground mb-3">Still worth reviewing:</p>
+                    <div className="flex flex-wrap justify-center gap-2">
+                      {missedConcepts.map(c => (
+                        <span key={c} className="text-xs px-3 py-1 rounded-full bg-muted border border-border text-foreground">
+                          {c}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                  {nextModuleUnlocked && nextModule ? (
+                    <Button size="lg" onClick={() => navigate(`/train/lesson/${nextModule.lessons[0]?.id}`)} className="rounded-full h-12 px-8">
+                      Start {nextModule.title} <ChevronRight className="w-4 h-4 ml-1" />
+                    </Button>
+                  ) : nextLessonId ? (
+                    <Button size="lg" onClick={() => navigate(`/train/lesson/${nextLessonId}`)} className="rounded-full h-12 px-8">
+                      Continue Training <ChevronRight className="w-4 h-4 ml-1" />
+                    </Button>
+                  ) : null}
+                  <Button size="lg" variant="outline" onClick={() => navigate("/train")} className="rounded-full h-12 px-8">
+                    Back to Course
+                  </Button>
+                </div>
+
+                <Button variant="ghost" onClick={handleRestart} className="mt-6 text-muted-foreground hover:text-foreground">
+                  <RotateCcw className="w-4 h-4 mr-2" /> Replay Gauntlet
+                </Button>
+              </div>
+            ) : (
+              <div className="max-w-xl w-full">
+                <div className="w-20 h-20 rounded-full bg-muted/50 border border-border flex items-center justify-center mx-auto mb-6">
+                  <Target className="w-10 h-10 text-muted-foreground" />
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3 tracking-tight">Keep going</h2>
+                <p className="text-lg text-muted-foreground mb-2">
+                  You scored {correctCount}/{totalQuestions}.
+                </p>
+                <p className="text-muted-foreground mb-8">
+                  You need 6/{totalQuestions} to pass. Review the missed concepts and try again.
+                </p>
+
+                {missedConcepts.length > 0 && (
+                  <div className="bg-card border border-border rounded-xl p-5 mb-8 max-w-md mx-auto text-left">
+                    <p className="text-sm text-muted-foreground mb-3">Concepts to review:</p>
+                    <ul className="space-y-2">
                       {missedConcepts.map(c => (
                         <li key={c} className="text-sm text-foreground flex items-center gap-2">
-                          <X className="w-3 h-3 text-red-400" /> {c}
+                          <X className="w-4 h-4 text-destructive" /> {c}
                         </li>
                       ))}
                     </ul>
                   </div>
                 )}
-              </>
-            )}
 
-            <div className="flex gap-3 justify-center flex-wrap">
-              {passed && nextLessonId && (
-                <Button onClick={() => navigate(`/train/lesson/${nextLessonId}`)}>
-                  Next Lesson <ChevronRight className="w-4 h-4 ml-1" />
-                </Button>
-              )}
-              <Button variant="outline" onClick={handleRestart}>
-                Try Again
-              </Button>
-              <Button variant="outline" onClick={() => navigate("/train")}>
-                Back to Course
-              </Button>
-            </div>
-          </div>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                  <Button size="lg" onClick={handleRestart} className="rounded-full h-12 px-8">
+                    Try Again <RotateCcw className="w-4 h-4 ml-2" />
+                  </Button>
+                  <Button size="lg" variant="outline" onClick={() => navigate("/train")} className="rounded-full h-12 px-8">
+                    Back to Course
+                  </Button>
+                </div>
+              </div>
+            )}
+          </motion.div>
         )}
       </main>
-    </div>
+    </PageShell>
   );
 };
 
