@@ -253,7 +253,7 @@ const Gauntlet = () => {
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                   {nextModuleUnlocked && nextModule ? (
                     <Button size="lg" onClick={() => navigate(`/train/lesson/${nextModule.lessons[0]?.id}`)} className="rounded-full h-12 px-8">
-                      Start {nextModule.title} <ChevronRight className="w-4 h-4 ml-1" />
+                      Start Module {nextModule.id}: {nextModule.title} <ChevronRight className="w-4 h-4 ml-1" />
                     </Button>
                   ) : nextLessonId ? (
                     <Button size="lg" onClick={() => navigate(`/train/lesson/${nextLessonId}`)} className="rounded-full h-12 px-8">
