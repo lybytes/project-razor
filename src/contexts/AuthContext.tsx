@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { sanitizeDisplayName, validateDisplayName } from "@/lib/utils";
 import type { User } from "@supabase/supabase-js";
 
 interface UserData {
@@ -135,12 +136,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signup = useCallback(
     async (email: string, password: string, displayName: string) => {
+      const validationError = validateDisplayName(displayName);
+      if (validationError) throw new Error(validationError);
+
+      const sanitized = sanitizeDisplayName(displayName);
+
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
           data: {
-            display_name: displayName,
+            display_name: sanitized,
           },
           emailRedirectTo: `${window.location.origin}/auth`,
         },
@@ -151,7 +157,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (data.user) {
         await supabase
           .from("profiles")
-          .update({ display_name: displayName })
+          .update({ display_name: sanitized })
           .eq("user_id", data.user.id);
       }
 
@@ -173,21 +179,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const updateDisplayName = useCallback(async (name: string) => {
-    const trimmed = name.trim();
-    if (!trimmed) throw new Error("Display name cannot be empty");
+    const validationError = validateDisplayName(name);
+    if (validationError) throw new Error(validationError);
+
+    const sanitized = sanitizeDisplayName(name);
 
     const { data: { user }, error: userError } = await supabase.auth.getUser();
     if (userError) throw userError;
     if (!user) throw new Error("Not authenticated");
 
     const { error: metadataError } = await supabase.auth.updateUser({
-      data: { display_name: trimmed },
+      data: { display_name: sanitized },
     });
     if (metadataError) throw metadataError;
 
     const { error: profileError } = await supabase
       .from("profiles")
-      .update({ display_name: trimmed })
+      .update({ display_name: sanitized })
       .eq("user_id", user.id);
     if (profileError) throw profileError;
 
@@ -207,6 +215,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => {
   const ctx = useContext(AuthContext);
   if (!ctx) throw new Error("useAuth must be used within AuthProvider");

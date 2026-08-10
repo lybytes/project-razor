@@ -15,7 +15,14 @@ const signUpSchema = z
     email: z.string().email("Please enter a valid email address"),
     password: z.string().min(8, "Password must be at least 8 characters"),
     confirmPassword: z.string().min(1, "Please re-enter your password"),
-    name: z.string().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
+    name: z
+      .string()
+      .min(2, "Name must be at least 2 characters")
+      .max(30, "Name must be 30 characters or fewer")
+      .regex(
+        /^[A-Za-z0-9'’_\- ]+$/,
+        "Name can only contain letters, numbers, spaces, hyphens, underscores, and apostrophes"
+      ),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
@@ -260,6 +267,7 @@ const Auth = () => {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="Your name"
+                      maxLength={30}
                       className={errors.name ? "border-red-500" : ""}
                     />
                     {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
