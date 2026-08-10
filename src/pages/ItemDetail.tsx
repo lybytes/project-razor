@@ -8,6 +8,7 @@ import badFaith from "@/data/bad-faith.json";
 import type { Concept } from "@/data/concepts";
 import { ConceptExampleCard } from "@/components/ConceptExampleCard";
 import { InlineMarkdown } from "@/components/InlineMarkdown";
+import { PageShell } from "@/components/PageShell";
 import { ArrowLeft, BookOpen } from "lucide-react";
 import { motion, useScroll, useSpring } from "motion/react";
 
@@ -193,7 +194,7 @@ const ConceptDetail = ({
   const activeId = useActiveSection(tocItems);
 
   return (
-    <div className="min-h-screen bg-background">
+    <PageShell>
       <ReadingProgress />
       <Navigation />
 
@@ -395,7 +396,7 @@ const ConceptDetail = ({
           </div>
         </div>
       </main>
-    </div>
+    </PageShell>
   );
 };
 
@@ -424,7 +425,7 @@ const BiasDetail = ({
   const activeId = useActiveSection(tocItems);
 
   return (
-    <div className="min-h-screen bg-background">
+    <PageShell>
       <ReadingProgress />
       <Navigation />
 
@@ -560,7 +561,7 @@ const BiasDetail = ({
           </div>
         </div>
       </main>
-    </div>
+    </PageShell>
   );
 };
 

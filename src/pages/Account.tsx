@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
 import { getUserStats, getProgress, type UserStats, type ProgressEntry } from "@/lib/api";
 import { motion } from "motion/react";
+import { PageShell } from "@/components/PageShell";
 import { Pencil, Check, X } from "lucide-react";
 
 const easeOut = [0.23, 1, 0.32, 1] as const;
@@ -95,14 +96,14 @@ const Account = () => {
 
   if (authLoading || (hasSession && loading)) {
     return (
-      <div className="min-h-screen bg-background">
+      <PageShell>
         <Navigation />
         <main className="container mx-auto px-4 py-16">
           <div className="flex items-center justify-center">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
           </div>
         </main>
-      </div>
+      </PageShell>
     );
   }
 
@@ -110,7 +111,7 @@ const Account = () => {
 
   if (error || !stats) {
     return (
-      <div className="min-h-screen bg-background">
+      <PageShell>
         <Navigation />
         <main className="container mx-auto px-4 py-16">
           <Card className="max-w-xl mx-auto border border-border bg-card rounded-xl p-6 text-center">
@@ -119,7 +120,7 @@ const Account = () => {
             <Button onClick={fetchData} className="rounded-full px-6">Try Again</Button>
           </Card>
         </main>
-      </div>
+      </PageShell>
     );
   }
 
@@ -128,7 +129,7 @@ const Account = () => {
   const module1Progress = (module1Lessons / 3) * 100;
 
   return (
-    <div className="min-h-screen bg-background">
+    <PageShell>
       <Navigation />
 
       <main className="container mx-auto px-4 py-8 sm:py-16">
@@ -266,7 +267,7 @@ const Account = () => {
           </motion.section>
         </div>
       </main>
-    </div>
+    </PageShell>
   );
 };
 
