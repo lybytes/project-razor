@@ -9,6 +9,8 @@ import { ConceptExampleCard } from "@/components/ConceptExampleCard";
 import { InlineMarkdown } from "@/components/InlineMarkdown";
 import { Check, X, ChevronRight, ChevronLeft, BookOpen, Target, Swords, BarChart3, Trophy } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
+import { track } from "@/lib/analytics";
+import { setPostAuthRedirect } from "@/lib/postAuthRedirect";
 
 const easeOut = [0.23, 1, 0.32, 1] as const;
 
@@ -64,6 +66,12 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
   const [submitted, setSubmitted] = useState(false);
   const [learnDirection, setLearnDirection] = useState(1);
   const contentRef = useRef<HTMLElement>(null);
+
+  // A lesson begins once per mount (the key on LessonFlowInner is the lesson
+  // id, so navigating to a different lesson remounts and fires again).
+  useEffect(() => {
+    track({ name: "lesson_started", props: { lesson_id: lesson.id } });
+  }, [lesson.id]);
 
   useEffect(() => {
     if (!contentRef.current) return;
@@ -127,6 +135,11 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
   };
 
   const finishLesson = () => {
+    // Fire the 1.1-completion event only on the first real completion —
+    // replaying the summary of an already-complete lesson must not count.
+    if (lesson.id === "1-1" && !wasAlreadyComplete) {
+      track({ name: "lesson_1_1_completed" });
+    }
     completeLesson(lesson.id, lesson.concepts);
     advanceStage(3);
   };
@@ -622,6 +635,24 @@ const SummaryView = ({ lesson, hasSession, drillScore, warzoneScore, wasAlreadyC
   const scorePercent = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
   const xpEarned = wasAlreadyComplete ? 0 : 50 + (scorePercent >= 80 ? 10 : 0);
 
+  const wallVisible = !hasSession && !!nextLessonId;
+
+  useEffect(() => {
+    if (wallVisible) {
+      track({ name: "signup_wall_shown", props: { lesson_id: lesson.id } });
+    }
+  }, [wallVisible, lesson.id]);
+
+  const handleCreateAccount = () => {
+    // Send the learner straight into the signup form, and remember to continue
+    // to the next lesson once they've authenticated and their guest progress
+    // has migrated — rather than dropping them on the default /account page.
+    if (nextLessonId) {
+      setPostAuthRedirect(`/train/lesson/${nextLessonId}`);
+    }
+    navigate("/auth?mode=signup");
+  };
+
   return (
     <div className="animate-fade-up text-center py-6 sm:py-10 rounded-xl border border-border bg-card p-5 sm:p-8">
       <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-success/15 flex items-center justify-center mx-auto mb-4 sm:mb-6">
@@ -660,7 +691,7 @@ const SummaryView = ({ lesson, hasSession, drillScore, warzoneScore, wasAlreadyC
           <p className="text-sm text-muted-foreground mb-4">
             Create a free account to unlock the rest of the course — your progress and XP from this lesson carry over.
           </p>
-          <Button className="w-full" onClick={() => navigate("/auth")}>
+          <Button className="w-full" onClick={handleCreateAccount}>
             Create free account <ChevronRight className="w-4 h-4 ml-1" />
           </Button>
         </div>

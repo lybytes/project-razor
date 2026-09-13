@@ -5,12 +5,12 @@ import { cn } from "@/lib/utils";
 import { Logo } from "@/components/Logo";
 
 const NavItem = ({ to, icon: Icon, label, isActive }: { to: string; icon: React.ElementType; label: string; isActive: boolean }) => (
-  <Link 
-    to={to} 
+  <Link
+    to={to}
     className={cn(
-      "flex items-center gap-2 px-2.5 py-2 sm:px-4 rounded-full text-sm font-medium transition-all duration-300",
-      isActive 
-        ? "bg-primary/15 text-primary" 
+      "flex items-center justify-center gap-2 min-h-11 min-w-11 px-2.5 py-2 sm:px-4 sm:min-w-0 rounded-full text-sm font-medium transition-all duration-300",
+      isActive
+        ? "bg-primary/15 text-primary"
         : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
     )}
   >
@@ -43,9 +43,9 @@ export const Navigation = () => {
               hasSession ? (
                 <NavItem to="/account" icon={User} label="Account" isActive={isActive("/account")} />
               ) : (
-                <Link 
-                  to="/auth" 
-                  className="flex items-center gap-2 px-2.5 py-2 sm:px-4 rounded-full text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-300 ml-1"
+                <Link
+                  to="/auth"
+                  className="flex items-center justify-center gap-2 min-h-11 min-w-11 px-2.5 py-2 sm:px-4 sm:min-w-0 rounded-full text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-300 ml-1"
                 >
                   <LogIn className="h-4 w-4" />
                   <span className="hidden sm:inline">Sign In</span>

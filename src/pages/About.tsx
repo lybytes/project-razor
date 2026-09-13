@@ -167,7 +167,7 @@ const About = () => {
               The first lesson is free. No sign-up required until you want to save your progress.
             </p>
             <Button size="lg" asChild className="rounded-full px-8 h-12 text-base">
-              <Link to="/train">Start the Course</Link>
+              <Link to="/train/lesson/1-1">Start Lesson 1</Link>
             </Button>
           </motion.section>
         </div>

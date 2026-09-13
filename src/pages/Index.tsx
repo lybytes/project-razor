@@ -146,8 +146,8 @@ const Index = () => {
               transition={{ ...heroReveal.transition, delay: 0.28 }}
             >
               <Button size="lg" asChild className="rounded-full px-8 h-12 text-base">
-                <Link to="/train">
-                  Start the Course <ArrowRight className="ml-2 h-4 w-4" />
+                <Link to="/train/lesson/1-1">
+                  Start Lesson 1 <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
               <Button size="lg" variant="outline" asChild className="rounded-full px-8 h-12 text-base">
@@ -235,7 +235,7 @@ const Index = () => {
               Project Razor trains you to tell the difference.
             </p>
             <Button size="lg" asChild className="rounded-full px-8 h-12 text-base">
-              <Link to="/train">Start Training. It&apos;s Free</Link>
+              <Link to="/train/lesson/1-1">Start Lesson 1. It&apos;s Free</Link>
             </Button>
           </motion.div>
         </section>
@@ -243,8 +243,13 @@ const Index = () => {
         {/* Footer */}
         <footer className="py-10 text-center">
           <p className="text-sm text-muted-foreground">
-            © 2025 Project Razor · Built to make the world think more clearly
+            © {new Date().getFullYear()} Project Razor · Built to make the world think more clearly
           </p>
+          <nav className="mt-3 flex items-center justify-center gap-6">
+            <Link to="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">About</Link>
+            <Link to="/privacy" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Privacy</Link>
+            <Link to="/terms" className="text-sm text-muted-foreground hover:text-foreground transition-colors">Terms</Link>
+          </nav>
         </footer>
       </main>
     </div>
