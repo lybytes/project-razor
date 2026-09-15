@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useNavigate, useSearchParams, Link } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,6 +12,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { track } from "@/lib/analytics";
 import { consumePostAuthRedirect } from "@/lib/postAuthRedirect";
 import { Turnstile, isTurnstileEnabled } from "@/components/Turnstile";
+import { LegalModal, type LegalDoc } from "@/components/legal/LegalModal";
 
 const signUpSchema = z
   .object({
@@ -49,9 +50,20 @@ const Auth = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaKey, setCaptchaKey] = useState(0);
+  const [legalDoc, setLegalDoc] = useState<LegalDoc | null>(null);
   const navigate = useNavigate();
   const { hasSession, login, signup, requestPasswordReset } = useAuth();
   const signupStartedRef = useRef(false);
+
+  // Turnstile tokens are single-use and short-lived. After any auth call the
+  // token is spent, so re-mount the widget (new key) to mint a fresh one for
+  // the next attempt — otherwise a retry sends a stale/empty token and
+  // Supabase rejects it with "no captcha_token found".
+  const resetCaptcha = () => {
+    setCaptchaToken(null);
+    setCaptchaKey((k) => k + 1);
+  };
 
   // A confirmed new account lands back here via the email link, whose hash
   // carries type=signup. That is the only honest signal of a verified new
@@ -135,6 +147,7 @@ const Auth = () => {
       }
     }
 
+    if (isTurnstileEnabled()) resetCaptcha();
     setLoading(false);
   };
 
@@ -159,6 +172,7 @@ const Auth = () => {
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Couldn't send the reset link");
     }
+    if (isTurnstileEnabled()) resetCaptcha();
     setLoading(false);
   };
 
@@ -198,6 +212,7 @@ const Auth = () => {
       }
     }
 
+    if (isTurnstileEnabled()) resetCaptcha();
     setLoading(false);
   };
 
@@ -314,7 +329,7 @@ const Auth = () => {
                 </>
               )}
 
-              {isTurnstileEnabled() && <Turnstile onToken={setCaptchaToken} />}
+              {isTurnstileEnabled() && <Turnstile key={captchaKey} onToken={setCaptchaToken} />}
 
               <Button type="submit" className="w-full" disabled={loading}>
                 {loading ? "Loading..." : isSignUp ? "Create Account" : "Sign In"}
@@ -324,9 +339,9 @@ const Auth = () => {
               {isSignUp && (
                 <p className="text-xs text-muted-foreground text-center">
                   By creating an account you agree to our{" "}
-                  <Link to="/terms" className="text-primary hover:underline">Terms</Link>{" "}
+                  <button type="button" onClick={() => setLegalDoc("terms")} className="text-primary hover:underline">Terms</button>{" "}
                   and{" "}
-                  <Link to="/privacy" className="text-primary hover:underline">Privacy Policy</Link>.
+                  <button type="button" onClick={() => setLegalDoc("privacy")} className="text-primary hover:underline">Privacy Policy</button>.
                 </p>
               )}
             </form>
@@ -348,6 +363,8 @@ const Auth = () => {
           </div>
         </div>
       </main>
+
+      <LegalModal doc={legalDoc} onOpenChange={(open) => { if (!open) setLegalDoc(null); }} />
     </div>
   );
 };
