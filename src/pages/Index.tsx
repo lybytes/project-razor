@@ -103,10 +103,11 @@ const Index = () => {
         <section
           ref={heroRef}
           onMouseMove={handleMouseMove}
-          className="relative min-h-[100dvh] flex items-center container mx-auto px-4 pt-24 pb-16 overflow-hidden"
+          className="relative min-h-[100dvh] flex items-center pt-24 pb-16 overflow-hidden"
         >
           <HeroBackground mouseX={mouseX} mouseY={mouseY} />
-          <div className="relative z-10 max-w-4xl">
+          <div className="relative z-10 w-full container mx-auto px-4">
+           <div className="max-w-4xl">
             <motion.span
               className="inline-block text-xs sm:text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-6"
               {...heroReveal}
@@ -154,6 +155,7 @@ const Index = () => {
                 <Link to="/learn">Explore the Library</Link>
               </Button>
             </motion.div>
+           </div>
           </div>
         </section>
 
