@@ -3,6 +3,7 @@ import { getProgress, completeLesson as apiCompleteLesson, migrateGuestProgress,
 import { LESSON_ORDER, getModuleIdFromLesson, isModuleUnlocked } from "@/data/courseData";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { track } from "@/lib/analytics";
 
 interface CourseProgress {
   lessonComplete: Record<string, boolean>;
@@ -74,7 +75,7 @@ export const CourseProgressProvider: React.FC<{ children: React.ReactNode }> = (
         const guest = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}") as Partial<CourseProgress>;
         const completed = Object.keys(guest.lessonComplete || {}).filter(id => guest.lessonComplete?.[id]);
         if (completed.length > 0) {
-          await migrateGuestProgress(
+          const result = await migrateGuestProgress(
             completed.map(lessonId => {
               const drill = guest.drillScores?.[lessonId];
               const warzone = guest.warzoneScores?.[lessonId];
@@ -88,6 +89,12 @@ export const CourseProgressProvider: React.FC<{ children: React.ReactNode }> = (
             }),
             guest.xpTotal || 0,
           );
+          // Only a real, non-duplicate persist counts — a retry that found
+          // everything already migrated reports migratedCount 0 and stays
+          // silent here.
+          if (result.migratedCount > 0) {
+            track({ name: "anon_progress_migrated", props: { lesson_count: result.migratedCount } });
+          }
         }
         localStorage.setItem(GUEST_MIGRATED_KEY, "true");
       }
@@ -114,7 +121,13 @@ export const CourseProgressProvider: React.FC<{ children: React.ReactNode }> = (
       if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
         loadFromServer();
       } else if (event === "SIGNED_OUT") {
+        // Wipe all local progress on logout so a different account signing in
+        // on this browser can't inherit the previous session's XP or lesson
+        // state, and the migration flag can't leave a later guest run stranded.
+        // The next sign-in rehydrates cleanly from the server.
+        localStorage.removeItem(STORAGE_KEY);
         localStorage.removeItem(GUEST_MIGRATED_KEY);
+        setProgress(DEFAULT_PROGRESS);
       }
     });
 

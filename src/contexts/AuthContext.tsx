@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { sanitizeDisplayName, validateDisplayName } from "@/lib/utils";
+import { identifyUser } from "@/lib/analytics";
 import type { User } from "@supabase/supabase-js";
 
 interface UserData {
@@ -17,10 +18,10 @@ interface AuthContextType {
   user: UserData | null;
   loading: boolean;
   hasSession: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  signup: (email: string, password: string, displayName: string) => Promise<{ user: import("@supabase/supabase-js").User | null; session: import("@supabase/supabase-js").Session | null }>;
+  login: (email: string, password: string, captchaToken?: string) => Promise<void>;
+  signup: (email: string, password: string, displayName: string, captchaToken?: string) => Promise<{ user: import("@supabase/supabase-js").User | null; session: import("@supabase/supabase-js").Session | null }>;
   logout: () => Promise<void>;
-  requestPasswordReset: (email: string) => Promise<void>;
+  requestPasswordReset: (email: string, captchaToken?: string) => Promise<void>;
   updatePassword: (password: string) => Promise<void>;
   updateDisplayName: (name: string) => Promise<void>;
   refreshUser: () => Promise<void>;
@@ -95,6 +96,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     supabase.auth.getSession().then(({ data: { session } }) => {
       setHasSession(!!session?.user);
       if (session?.user) {
+        identifyUser(session.user.id);
         setUser(getFallbackUser(session.user));
         setLoading(false);
         fetchUserProfile(session.user).then((profile) => {
@@ -110,6 +112,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setHasSession(!!session?.user);
       if (session?.user) {
+        // Reconcile the anonymous distinct_id with the account so the
+        // lesson_started -> signup_completed funnel survives anon->auth.
+        // No-ops when analytics is unconfigured or consent hasn't been given.
+        identifyUser(session.user.id);
         setUser(getFallbackUser(session.user));
         setLoading(false);
         setTimeout(() => {
@@ -126,16 +132,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return () => subscription.unsubscribe();
   }, [fetchUserProfile, getFallbackUser]);
 
-  const login = useCallback(async (email: string, password: string) => {
+  const login = useCallback(async (email: string, password: string, captchaToken?: string) => {
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
+      options: captchaToken ? { captchaToken } : undefined,
     });
     if (error) throw error;
   }, []);
 
   const signup = useCallback(
-    async (email: string, password: string, displayName: string) => {
+    async (email: string, password: string, displayName: string, captchaToken?: string) => {
       const validationError = validateDisplayName(displayName);
       if (validationError) throw new Error(validationError);
 
@@ -149,6 +156,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             display_name: sanitized,
           },
           emailRedirectTo: `${window.location.origin}/auth`,
+          ...(captchaToken ? { captchaToken } : {}),
         },
       });
       if (error) throw error;
@@ -166,9 +174,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     []
   );
 
-  const requestPasswordReset = useCallback(async (email: string) => {
+  const requestPasswordReset = useCallback(async (email: string, captchaToken?: string) => {
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/reset-password`,
+      ...(captchaToken ? { captchaToken } : {}),
     });
     if (error) throw error;
   }, []);

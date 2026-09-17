@@ -150,15 +150,27 @@ export interface GuestProgressEntry {
   score: number;
 }
 
+export interface MigrationResult {
+  migratedCount: number;
+}
+
 /* Moves progress earned while signed out into the freshly authenticated
-   account in one batched upsert. RLS restricts rows to auth.uid(). */
-export async function migrateGuestProgress(entries: GuestProgressEntry[], guestXp: number): Promise<void> {
-  if (entries.length === 0) return;
+   account in one batched upsert. RLS restricts rows to auth.uid().
+
+   Idempotent by construction: the upsert uses ignoreDuplicates so replaying
+   the same entries (reload mid-flow, retry after a dropped connection,
+   signing in again later) never touches a lesson_id that's already recorded
+   for this user. `.select()` on the upsert returns only the rows Postgres
+   actually inserted (ON CONFLICT DO NOTHING rows are never returned), so we
+   can tell a genuine first migration from a no-op retry and only award the
+   guest XP once — on the attempt that really persists something. */
+export async function migrateGuestProgress(entries: GuestProgressEntry[], guestXp: number): Promise<MigrationResult> {
+  if (entries.length === 0) return { migratedCount: 0 };
 
   const { user, profile } = await ensureUserProfile();
   const completedAt = new Date().toISOString();
 
-  const { error: progressError } = await supabase
+  const { data: insertedRows, error: progressError } = await supabase
     .from("progress")
     .upsert(
       entries.map(entry => ({
@@ -169,9 +181,17 @@ export async function migrateGuestProgress(entries: GuestProgressEntry[], guestX
         completed_at: completedAt,
       })),
       { onConflict: "user_id,lesson_id", ignoreDuplicates: true }
-    );
+    )
+    .select("lesson_id");
 
   if (progressError) throw progressError;
+
+  const migratedCount = insertedRows?.length ?? 0;
+
+  // Nothing new was actually persisted (every lesson here was already
+  // migrated in a previous attempt) — skip the XP award so a retry can't
+  // double it.
+  if (migratedCount === 0) return { migratedCount: 0 };
 
   if (guestXp > 0) {
     const { error: xpError } = await supabase
@@ -181,6 +201,8 @@ export async function migrateGuestProgress(entries: GuestProgressEntry[], guestX
 
     if (xpError) throw xpError;
   }
+
+  return { migratedCount };
 }
 
 export async function getProgress(): Promise<ProgressEntry[]> {

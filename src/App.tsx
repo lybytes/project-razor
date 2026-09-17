@@ -6,6 +6,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { CourseProgressProvider } from "@/contexts/CourseProgressContext";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { AnalyticsConsentBanner } from "@/components/AnalyticsConsentBanner";
+import { initAnalyticsIfConsented } from "@/lib/analytics";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Course from "./pages/Course";
@@ -23,6 +25,8 @@ import About from "./pages/About";
 import Auth from "./pages/Auth";
 import ResetPassword from "./pages/ResetPassword";
 import Account from "./pages/Account";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
 import removedSlugRedirects from "./data/removed-slug-redirects.json";
 
 const queryClient = new QueryClient();
@@ -50,6 +54,8 @@ const PageTitle = () => {
       if (pathname === "/auth") return `Sign In | ${base}`;
       if (pathname === "/reset-password") return `Reset Password | ${base}`;
       if (pathname === "/account") return `Account | ${base}`;
+      if (pathname === "/privacy") return `Privacy | ${base}`;
+      if (pathname === "/terms") return `Terms | ${base}`;
       return base;
     })();
     document.title = pageTitle;
@@ -58,13 +64,19 @@ const PageTitle = () => {
   return null;
 };
 
-const App = () => (
+const App = () => {
+  useEffect(() => {
+    initAnalyticsIfConsented();
+  }, []);
+
+  return (
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
       <CourseProgressProvider>
         <TooltipProvider>
           <Toaster />
           <Sonner />
+          <AnalyticsConsentBanner />
           <BrowserRouter>
             <PageTitle />
             <Routes>
@@ -87,6 +99,8 @@ const App = () => (
               <Route path="/auth" element={<Auth />} />
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/account" element={<Account />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/terms" element={<Terms />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
@@ -94,6 +108,7 @@ const App = () => (
       </CourseProgressProvider>
     </AuthProvider>
   </QueryClientProvider>
-);
+  );
+};
 
 export default App;

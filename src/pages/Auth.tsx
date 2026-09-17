@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,10 @@ import { z } from "zod";
 import { useAuth } from "@/contexts/AuthContext";
 import { Eye, EyeOff, ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { track } from "@/lib/analytics";
+import { consumePostAuthRedirect } from "@/lib/postAuthRedirect";
+import { Turnstile, isTurnstileEnabled } from "@/components/Turnstile";
+import { LegalModal, type LegalDoc } from "@/components/legal/LegalModal";
 
 const signUpSchema = z
   .object({
@@ -35,7 +39,8 @@ const signInSchema = z.object({
 });
 
 const Auth = () => {
-  const [isSignUp, setIsSignUp] = useState(false);
+  const [searchParams] = useSearchParams();
+  const [isSignUp, setIsSignUp] = useState(() => searchParams.get("mode") === "signup");
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,14 +49,45 @@ const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [captchaKey, setCaptchaKey] = useState(0);
+  const [legalDoc, setLegalDoc] = useState<LegalDoc | null>(null);
   const navigate = useNavigate();
   const { hasSession, login, signup, requestPasswordReset } = useAuth();
+  const signupStartedRef = useRef(false);
+
+  // Turnstile tokens are single-use and short-lived. After any auth call the
+  // token is spent, so re-mount the widget (new key) to mint a fresh one for
+  // the next attempt — otherwise a retry sends a stale/empty token and
+  // Supabase rejects it with "no captcha_token found".
+  const resetCaptcha = () => {
+    setCaptchaToken(null);
+    setCaptchaKey((k) => k + 1);
+  };
+
+  // A confirmed new account lands back here via the email link, whose hash
+  // carries type=signup. That is the only honest signal of a verified new
+  // account — signup_completed is never inferred from an error-free signUp().
+  useEffect(() => {
+    if (window.location.hash.includes("type=signup")) {
+      track({ name: "signup_completed" });
+    }
+  }, []);
 
   useEffect(() => {
     if (hasSession) {
-      navigate("/account");
+      const target = consumePostAuthRedirect();
+      navigate(target || "/account", { replace: true });
     }
   }, [hasSession, navigate]);
+
+  // Fire once per signup attempt on the first deliberate form interaction.
+  const markSignupStarted = () => {
+    if (isSignUp && !signupStartedRef.current) {
+      signupStartedRef.current = true;
+      track({ name: "signup_started" });
+    }
+  };
 
   const resetForm = () => {
     setEmail("");
@@ -78,10 +114,15 @@ const Auth = () => {
       return;
     }
 
+    if (isTurnstileEnabled() && !captchaToken) {
+      toast.error("Please complete the verification challenge.");
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const { session } = await signup(email, password, name);
+      const { session } = await signup(email, password, name, captchaToken ?? undefined);
 
       // With email confirmation enabled, Supabase intentionally returns the
       // same success response for both new signups and existing emails to avoid
@@ -106,6 +147,7 @@ const Auth = () => {
       }
     }
 
+    if (isTurnstileEnabled()) resetCaptcha();
     setLoading(false);
   };
 
@@ -118,13 +160,19 @@ const Auth = () => {
       return;
     }
 
+    if (isTurnstileEnabled() && !captchaToken) {
+      toast.error("Please complete the verification challenge.");
+      return;
+    }
+
     setLoading(true);
     try {
-      await requestPasswordReset(email);
+      await requestPasswordReset(email, captchaToken ?? undefined);
       toast.success("Reset link sent — check your inbox.");
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Couldn't send the reset link");
     }
+    if (isTurnstileEnabled()) resetCaptcha();
     setLoading(false);
   };
 
@@ -143,10 +191,15 @@ const Auth = () => {
       return;
     }
 
+    if (isTurnstileEnabled() && !captchaToken) {
+      toast.error("Please complete the verification challenge.");
+      return;
+    }
+
     setLoading(true);
 
     try {
-      await login(email, password);
+      await login(email, password, captchaToken ?? undefined);
       toast.success("Welcome back!");
     } catch (err) {
       const message = err instanceof Error ? err.message : "Something went wrong";
@@ -159,6 +212,7 @@ const Auth = () => {
       }
     }
 
+    if (isTurnstileEnabled()) resetCaptcha();
     setLoading(false);
   };
 
@@ -172,7 +226,7 @@ const Auth = () => {
     <button
       type="button"
       onClick={onClick}
-      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+      className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center justify-center h-11 w-11 text-muted-foreground hover:text-foreground transition-colors"
       aria-label={show ? "Hide password" : "Show password"}
     >
       {show ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -204,7 +258,7 @@ const Auth = () => {
                   id="email"
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => { markSignupStarted(); setEmail(e.target.value); }}
                   placeholder="you@example.com"
                   className={errors.email ? "border-red-500" : ""}
                 />
@@ -218,9 +272,9 @@ const Auth = () => {
                     id="password"
                     type={showPassword ? "text" : "password"}
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => { markSignupStarted(); setPassword(e.target.value); }}
                     placeholder="••••••••"
-                    className={errors.password ? "border-red-500 pr-10" : "pr-10"}
+                    className={errors.password ? "border-red-500 pr-11" : "pr-11"}
                   />
                   <PasswordToggle show={showPassword} onClick={() => setShowPassword(!showPassword)} />
                 </div>
@@ -245,9 +299,9 @@ const Auth = () => {
                         id="confirmPassword"
                         type={showConfirmPassword ? "text" : "password"}
                         value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        onChange={(e) => { markSignupStarted(); setConfirmPassword(e.target.value); }}
                         placeholder="••••••••"
-                        className={errors.confirmPassword ? "border-red-500 pr-10" : "pr-10"}
+                        className={errors.confirmPassword ? "border-red-500 pr-11" : "pr-11"}
                       />
                       <PasswordToggle
                         show={showConfirmPassword}
@@ -265,7 +319,7 @@ const Auth = () => {
                       id="name"
                       type="text"
                       value={name}
-                      onChange={(e) => setName(e.target.value)}
+                      onChange={(e) => { markSignupStarted(); setName(e.target.value); }}
                       placeholder="Your name"
                       maxLength={30}
                       className={errors.name ? "border-red-500" : ""}
@@ -275,10 +329,21 @@ const Auth = () => {
                 </>
               )}
 
+              {isTurnstileEnabled() && <Turnstile key={captchaKey} onToken={setCaptchaToken} />}
+
               <Button type="submit" className="w-full" disabled={loading}>
                 {loading ? "Loading..." : isSignUp ? "Create Account" : "Sign In"}
                 {!loading && <ArrowRight className="ml-2 h-4 w-4" />}
               </Button>
+
+              {isSignUp && (
+                <p className="text-xs text-muted-foreground text-center">
+                  By creating an account you agree to our{" "}
+                  <button type="button" onClick={() => setLegalDoc("terms")} className="text-primary hover:underline">Terms</button>{" "}
+                  and{" "}
+                  <button type="button" onClick={() => setLegalDoc("privacy")} className="text-primary hover:underline">Privacy Policy</button>.
+                </p>
+              )}
             </form>
 
             <div className="mt-6 text-center">
@@ -286,6 +351,7 @@ const Auth = () => {
                 onClick={() => {
                   setIsSignUp(!isSignUp);
                   setErrors({});
+                  signupStartedRef.current = false;
                 }}
                 className="text-primary hover:underline text-sm"
               >
@@ -297,6 +363,8 @@ const Auth = () => {
           </div>
         </div>
       </main>
+
+      <LegalModal doc={legalDoc} onOpenChange={(open) => { if (!open) setLegalDoc(null); }} />
     </div>
   );
 };
