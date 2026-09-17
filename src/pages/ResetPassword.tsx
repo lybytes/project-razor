@@ -26,10 +26,12 @@ const ResetPassword = () => {
   useEffect(() => {
     let mounted = true;
     const code = searchParams.get("code");
-    const type = searchParams.get("type");
 
-    // PKCE recovery flow: the email link lands with `?code=...&type=recovery`.
-    if (code && type === "recovery") {
+    // PKCE recovery flow: the email link lands with `?code=...` (usually with
+    // `&type=recovery`). Any code arriving on this page is a recovery code, so
+    // exchange it whenever one is present rather than depending on the exact
+    // `type` param, which some link/template variants omit.
+    if (code) {
       supabase.auth
         .exchangeCodeForSession(code)
         .then(({ error }) => {
@@ -107,7 +109,7 @@ const ResetPassword = () => {
               <div className="space-y-4">
                 <p className="text-foreground">This reset link is invalid or has expired.</p>
                 <p className="text-sm text-muted-foreground">
-                  If this keeps happening, ask your admin to add this site&apos;s reset URL to Supabase Auth redirect allowlist.
+                  Reset links can only be used once and expire after a short time. Request a new one and try again.
                 </p>
                 <Button asChild className="w-full">
                   <Link to="/auth">Request a new link</Link>

@@ -121,8 +121,8 @@ const lesson1_1: LessonData = {
     },
     {
       id: "w1-1c",
-      source: "CNN — BBC leaders resign amid Trump speech edit scandal (Nov 2025)",
-      context: "In November 2025, the BBC faced major controversy after a leaked memo revealed that a Panorama documentary had misleadingly spliced together parts of Trump's January 6th speech. BBC Director-General Tim Davie and news chief Deborah Turness both resigned.",
+      source: "Illustrative scenario — congressional hearing on data privacy",
+      context: "A senator publicly questions a technology company's CEO during a hearing about how the company collects and uses its users' personal data, arguing the practices are harmful and calling for tighter privacy rules.",
       platform: "Twitter/X",
       username: "@akira_says02",
       comment: "Senator Walsh grilling this CEO on user data collection is peak hypocrisy. Her campaign literally paid a data firm to micro-target voters using the exact same techniques she's condemning. She has zero credibility here.",
