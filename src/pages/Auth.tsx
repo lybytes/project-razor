@@ -52,6 +52,11 @@ const Auth = () => {
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [captchaKey, setCaptchaKey] = useState(0);
   const [legalDoc, setLegalDoc] = useState<LegalDoc | null>(null);
+  // A prominent in-card message after a signup attempt. The corner toast is
+  // easy to miss, and this is the one signal the user gets — signup always
+  // returns the same neutral message whether the email is new or already
+  // registered (anti-enumeration), so this must be clearly visible.
+  const [notice, setNotice] = useState<string | null>(null);
   const navigate = useNavigate();
   const { hasSession, login, signup, requestPasswordReset } = useAuth();
   const signupStartedRef = useRef(false);
@@ -131,8 +136,11 @@ const Auth = () => {
         // Email confirmation is disabled and a new account was created.
         await supabase.auth.signOut();
         toast.success("Account created — sign in to start training.");
+        setNotice("Account created — sign in below to start training.");
       } else {
-        toast.success("If this email isn't already registered, a confirmation link has been sent.");
+        const msg = "Check your inbox to confirm your account. If this email is already registered, sign in instead.";
+        toast.success(msg, { duration: 10000 });
+        setNotice(msg);
       }
 
       setIsSignUp(false);
@@ -168,7 +176,9 @@ const Auth = () => {
     setLoading(true);
     try {
       await requestPasswordReset(email, captchaToken ?? undefined);
-      toast.success("Reset link sent — check your inbox.");
+      const msg = "If an account exists for that email, a reset link has been sent. Check your inbox.";
+      toast.success(msg, { duration: 10000 });
+      setNotice(msg);
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Couldn't send the reset link");
     }
@@ -251,6 +261,14 @@ const Auth = () => {
           </div>
 
           <div className="bg-card border border-border rounded-lg p-5 sm:p-8 opacity-0 animate-fade-up" style={{ animationDelay: "100ms" }}>
+            {notice && (
+              <div
+                role="status"
+                className="mb-5 rounded-lg border border-primary/30 bg-primary/10 p-4 text-sm text-foreground"
+              >
+                {notice}
+              </div>
+            )}
             <form onSubmit={isSignUp ? handleSignUp : handleSignIn} className="space-y-4">
               <div>
                 <Label htmlFor="email">Email</Label>
@@ -258,7 +276,7 @@ const Auth = () => {
                   id="email"
                   type="email"
                   value={email}
-                  onChange={(e) => { markSignupStarted(); setEmail(e.target.value); }}
+                  onChange={(e) => { markSignupStarted(); setNotice(null); setEmail(e.target.value); }}
                   placeholder="you@example.com"
                   className={errors.email ? "border-red-500" : ""}
                 />
@@ -283,7 +301,8 @@ const Auth = () => {
                   <button
                     type="button"
                     onClick={handleForgotPassword}
-                    className="text-primary hover:underline text-sm mt-2"
+                    disabled={loading}
+                    className="text-primary hover:underline text-sm mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Forgot password?
                   </button>
@@ -351,6 +370,7 @@ const Auth = () => {
                 onClick={() => {
                   setIsSignUp(!isSignUp);
                   setErrors({});
+                  setNotice(null);
                   signupStartedRef.current = false;
                 }}
                 className="text-primary hover:underline text-sm"

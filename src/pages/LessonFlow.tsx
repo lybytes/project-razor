@@ -644,12 +644,11 @@ const SummaryView = ({ lesson, hasSession, drillScore, warzoneScore, wasAlreadyC
   }, [wallVisible, lesson.id]);
 
   const handleCreateAccount = () => {
-    // Send the learner straight into the signup form, and remember to continue
-    // to the next lesson once they've authenticated and their guest progress
-    // has migrated — rather than dropping them on the default /account page.
-    if (nextLessonId) {
-      setPostAuthRedirect(`/train/lesson/${nextLessonId}`);
-    }
+    // Send the learner straight into the signup form, and after they authenticate
+    // return them to the course page (not the default /account) — the course
+    // page then surfaces the next unlocked lesson so they choose to continue,
+    // rather than being dropped mid-flow into the next lesson automatically.
+    setPostAuthRedirect("/train");
     navigate("/auth?mode=signup");
   };
 
