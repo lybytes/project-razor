@@ -109,15 +109,16 @@ const Index = () => {
           <div className="relative z-10 w-full container mx-auto px-4">
            <div className="max-w-4xl">
             <motion.span
-              className="inline-block text-xs sm:text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-6"
+              className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.22em] text-primary mb-6"
               {...heroReveal}
               transition={{ ...heroReveal.transition, delay: 0 }}
             >
+              <span className="h-px w-8 bg-primary/60" />
               Critical Thinking Training
             </motion.span>
 
             <motion.h1
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-8 tracking-tighter leading-[1.05]"
+              className="font-display uppercase text-6xl sm:text-7xl md:text-8xl lg:text-9xl mb-8 tracking-tight leading-[0.92]"
               {...heroReveal}
               transition={{ ...heroReveal.transition, delay: 0.08 }}
             >
@@ -146,12 +147,12 @@ const Index = () => {
               {...heroReveal}
               transition={{ ...heroReveal.transition, delay: 0.28 }}
             >
-              <Button size="lg" asChild className="rounded-full px-8 h-12 text-base">
+              <Button size="lg" asChild className="rounded-sm px-8 h-12 text-sm font-mono uppercase tracking-wider">
                 <Link to="/train/lesson/1-1">
                   Start Lesson 1 <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" asChild className="rounded-full px-8 h-12 text-base">
+              <Button size="lg" variant="outline" asChild className="rounded-sm px-8 h-12 text-sm font-mono uppercase tracking-wider">
                 <Link to="/learn">Explore the Library</Link>
               </Button>
             </motion.div>
@@ -162,11 +163,11 @@ const Index = () => {
         {/* Problem Statement */}
         <section className="container mx-auto px-4 py-20 sm:py-28">
           <motion.div className="max-w-5xl" {...reveal}>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-12 tracking-tight">Why this matters</h2>
+            <h2 className="font-display uppercase text-4xl sm:text-5xl mb-12 tracking-tight">Why this matters</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-6">
               {stats.map((card, i) => (
                 <div key={i} className="pt-6 border-t border-border">
-                  <p className="text-3xl sm:text-4xl font-bold text-foreground mb-3">{card.stat}</p>
+                  <p className="font-display text-5xl sm:text-6xl text-primary mb-3">{card.stat}</p>
                   <p className="text-base text-muted-foreground leading-relaxed">{card.desc}</p>
                 </div>
               ))}
@@ -177,7 +178,7 @@ const Index = () => {
         {/* How It Works */}
         <section className="container mx-auto px-4 py-20 sm:py-28">
           <motion.div className="max-w-5xl" {...reveal}>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-16 tracking-tight">How Project Razor works</h2>
+            <h2 className="font-display uppercase text-4xl sm:text-5xl mb-16 tracking-tight">How Project Razor works</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 sm:gap-8">
               {steps.map((step, i) => (
                 <div key={i} className="relative">
@@ -197,7 +198,7 @@ const Index = () => {
         {/* What You'll Learn */}
         <section className="container mx-auto px-4 py-20 sm:py-28">
           <motion.div className="max-w-5xl" {...reveal}>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-12 tracking-tight">What you'll learn to detect</h2>
+            <h2 className="font-display uppercase text-4xl sm:text-5xl mb-12 tracking-tight">What you'll learn to detect</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {learnCards.map((card, i) => (
                 <Card

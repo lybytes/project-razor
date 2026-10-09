@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+/* Fonts loaded via <link> in index.html: Anton (display), Archivo (sans), JetBrains Mono. */
 
 @tailwind base;
 @tailwind components;
@@ -10,47 +10,55 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 240 10% 4%;
-    --foreground: 0 0% 98%;
+    /* Forensic Noir — near-black ground, cold off-white, one acid-lime signal. */
+    --background: 210 24% 5%;
+    --foreground: 150 8% 90%;
 
-    --card: 240 8% 8%;
-    --card-foreground: 0 0% 98%;
+    --card: 210 18% 8%;
+    --card-foreground: 150 8% 90%;
 
-    --popover: 240 7% 7%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 210 20% 7%;
+    --popover-foreground: 150 8% 90%;
 
-    --primary: 270 95% 65%;
-    --primary-foreground: 0 0% 100%;
+    /* Signal accent: acid lime. Dark text sits on it. */
+    --primary: 72 96% 55%;
+    --primary-foreground: 210 30% 6%;
 
-    --secondary: 240 6% 12%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 210 14% 13%;
+    --secondary-foreground: 150 8% 90%;
 
-    --muted: 240 6% 14%;
-    --muted-foreground: 240 5% 62%;
+    --muted: 210 12% 14%;
+    --muted-foreground: 210 8% 56%;
 
-    --accent: 280 90% 60%;
-    --accent-foreground: 0 0% 100%;
+    /* Neutral dark hover surface (signal stays on --primary). */
+    --accent: 210 14% 15%;
+    --accent-foreground: 150 8% 90%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
+    /* Functional signals: red = wrong, amber = gauntlet. */
+    --destructive: 4 84% 57%;
+    --destructive-foreground: 150 8% 96%;
 
-    --success: 142 76% 40%;
-    --success-foreground: 0 0% 98%;
+    --success: 78 85% 50%;
+    --success-foreground: 210 30% 6%;
 
-    --warning: 38 92% 55%;
-    --warning-foreground: 0 0% 98%;
+    --warning: 40 96% 55%;
+    --warning-foreground: 210 30% 6%;
 
-    --border: 240 6% 20%;
-    --input: 240 6% 15%;
-    --ring: 270 95% 65%;
+    --border: 210 12% 16%;
+    --input: 210 12% 13%;
+    --ring: 72 96% 55%;
 
-    --radius: 0.75rem;
+    /* Cold steel — atmospheric only (background glows), never UI. */
+    --steel: 190 80% 50%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(270 95% 65%), hsl(290 100% 70%));
-    --gradient-accent: linear-gradient(135deg, hsl(280 90% 60%), hsl(310 100% 65%));
-    --gradient-subtle: linear-gradient(180deg, hsl(240 8% 8%), hsl(240 10% 4%));
-    --shadow-glow: 0 0 40px hsla(270, 95%, 65%, 0.25);
-    --shadow-glow-sm: 0 0 20px hsla(270, 95%, 65%, 0.15);
+    /* Blade-sharp geometry. */
+    --radius: 0.2rem;
+
+    --gradient-primary: linear-gradient(135deg, hsl(72 96% 55%), hsl(90 90% 48%));
+    --gradient-accent: linear-gradient(135deg, hsl(188 80% 48%), hsl(200 75% 42%));
+    --gradient-subtle: linear-gradient(180deg, hsl(210 18% 8%), hsl(210 24% 5%));
+    --shadow-glow: 0 0 40px hsla(72, 96%, 55%, 0.22);
+    --shadow-glow-sm: 0 0 20px hsla(72, 96%, 55%, 0.14);
     --transition-smooth: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 
     /* Motion easing per emil-design-eng */
@@ -69,12 +77,29 @@ All colors MUST be HSL.
   }
 
   html {
-    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    font-family: 'Archivo', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
 
   body {
-    @apply bg-background text-foreground antialiased;
+    @apply text-foreground antialiased;
+    /* Depth: a faint cold wash from the top instead of a flat fill. */
+    background:
+      radial-gradient(120% 90% at 50% -10%, hsl(210 20% 8%) 0%, hsl(var(--background)) 55%);
+    background-color: hsl(var(--background));
+    background-attachment: fixed;
+  }
+
+  /* Film grain — clinical texture, never in front of interaction. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.045;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 120px 120px;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -91,6 +116,17 @@ All colors MUST be HSL.
 
   h3 {
     @apply text-xl md:text-2xl;
+  }
+}
+
+@layer utilities {
+  /* Forensic "evidence tag": letterspaced uppercase mono label. */
+  .tag {
+    font-family: theme('fontFamily.mono');
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 0.7rem;
+    font-weight: 500;
   }
 }
 
@@ -141,7 +177,7 @@ All colors MUST be HSL.
   width: 70vw;
   height: 70vw;
   border-radius: 9999px;
-  background: radial-gradient(circle, hsl(var(--accent) / 0.4) 0%, hsl(var(--accent) / 0.12) 35%, transparent 65%);
+  background: radial-gradient(circle, hsl(var(--steel) / 0.4) 0%, hsl(var(--steel) / 0.12) 35%, transparent 65%);
   filter: blur(100px);
   will-change: transform;
   animation: driftAccent 18s ease-in-out infinite;
@@ -152,7 +188,7 @@ All colors MUST be HSL.
   width: 45vw;
   height: 45vw;
   border-radius: 9999px;
-  background: radial-gradient(circle, hsl(var(--primary) / 0.25) 0%, hsl(var(--accent) / 0.1) 40%, transparent 70%);
+  background: radial-gradient(circle, hsl(var(--primary) / 0.25) 0%, hsl(var(--steel) / 0.1) 40%, transparent 70%);
   filter: blur(90px);
   will-change: transform;
   animation: driftCore 28s ease-in-out infinite;
@@ -208,7 +244,7 @@ All colors MUST be HSL.
   width: 45vw;
   height: 45vw;
   border-radius: 9999px;
-  background: radial-gradient(circle, hsl(var(--accent) / 0.25) 0%, hsl(var(--accent) / 0.07) 35%, transparent 65%);
+  background: radial-gradient(circle, hsl(var(--steel) / 0.25) 0%, hsl(var(--steel) / 0.07) 35%, transparent 65%);
   filter: blur(90px);
   will-change: transform;
   animation: driftAccent 22s ease-in-out infinite;
@@ -219,7 +255,7 @@ All colors MUST be HSL.
   width: 35vw;
   height: 35vw;
   border-radius: 9999px;
-  background: radial-gradient(circle, hsl(var(--primary) / 0.16) 0%, hsl(var(--accent) / 0.07) 40%, transparent 70%);
+  background: radial-gradient(circle, hsl(var(--primary) / 0.16) 0%, hsl(var(--steel) / 0.07) 40%, transparent 70%);
   filter: blur(80px);
   will-change: transform;
   animation: driftCore 34s ease-in-out infinite;

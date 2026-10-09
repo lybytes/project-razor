@@ -8,7 +8,7 @@ const NavItem = ({ to, icon: Icon, label, isActive }: { to: string; icon: React.
   <Link
     to={to}
     className={cn(
-      "flex items-center justify-center gap-2 min-h-11 min-w-11 px-2.5 py-2 sm:px-4 sm:min-w-0 rounded-full text-sm font-medium transition-all duration-300",
+      "flex items-center justify-center gap-2 min-h-11 min-w-11 px-2.5 py-2 sm:px-4 sm:min-w-0 rounded-sm font-mono text-[11px] uppercase tracking-wider transition-all duration-300",
       isActive
         ? "bg-primary/15 text-primary"
         : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
@@ -34,7 +34,7 @@ export const Navigation = () => {
         <div className="flex items-center justify-between h-16">
           <Logo />
           
-          <div className="flex items-center gap-0.5 sm:gap-1 bg-muted/30 rounded-full p-1 sm:p-1.5">
+          <div className="flex items-center gap-0.5 sm:gap-1 bg-muted/30 rounded-sm p-1 sm:p-1.5 border border-border/60">
             <NavItem to="/" icon={Home} label="Home" isActive={isActive("/")} />
             <NavItem to="/train" icon={Brain} label="Course" isActive={isActive("/train")} />
             <NavItem to="/learn" icon={BookOpen} label="Learn" isActive={isActive("/learn")} />
@@ -45,7 +45,7 @@ export const Navigation = () => {
               ) : (
                 <Link
                   to="/auth"
-                  className="flex items-center justify-center gap-2 min-h-11 min-w-11 px-2.5 py-2 sm:px-4 sm:min-w-0 rounded-full text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-300 ml-1"
+                  className="flex items-center justify-center gap-2 min-h-11 min-w-11 px-2.5 py-2 sm:px-4 sm:min-w-0 rounded-sm font-mono text-[11px] uppercase tracking-wider bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-300 ml-1"
                 >
                   <LogIn className="h-4 w-4" />
                   <span className="hidden sm:inline">Sign In</span>
