@@ -152,7 +152,7 @@ const SocialWarzone = () => {
               {/* Answer input in separate styled box */}
               <div className="bg-gradient-to-br from-primary/5 to-accent/5 border border-primary/20 rounded-xl p-6">
                 <p className="text-primary font-semibold mb-4 text-lg">
-                  What BFBA is being used here?
+                  What&apos;s the move here?
                 </p>
                 <Input
                   type="text"

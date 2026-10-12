@@ -23,6 +23,7 @@ The app code cannot send custom email bodies through Supabase Auth, so the HTML 
 3. **Paste the templates**
    - Copy `confirm-signup.html` into the **Confirm signup** template body.
    - Copy `recovery.html` into the **Reset password** template body.
+   - Re-paste `confirm-signup.html` whenever it changes here; the dashboard copy doesn't update itself.
 
 ## Template variables
 

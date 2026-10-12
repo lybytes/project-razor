@@ -6,14 +6,14 @@ const Train = () => {
   const modes = [
     {
       title: "Rapid Reasoning",
-      description: "Quick-fire scenarios to sharpen your detection skills. Identify the BFBA in under 30 seconds.",
+      description: "Quick-fire scenarios to sharpen your detection skills. Spot the move in under 30 seconds.",
       icon: Brain,
       color: "from-purple-600 to-purple-800",
       link: "/train/rapid-reasoning"
     },
     {
       title: "Social Warzone",
-      description: "Navigate the battlefield of social media. Identify BFBAs in tweets, posts, and comment threads.",
+      description: "Navigate the battlefield of social media. Spot the moves in tweets, posts and comment threads.",
       icon: MessageSquare,
       color: "from-indigo-600 to-indigo-800",
       link: "/train/social-warzone"

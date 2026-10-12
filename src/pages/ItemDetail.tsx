@@ -180,7 +180,7 @@ const ConceptDetail = ({
       { id: "overview", title: "Overview" },
       { id: "how-to-spot", title: "How to spot it" },
       { id: "examples", title: "Examples" },
-      { id: "refutation", title: "How to refute" },
+      { id: "refutation", title: "Ways to respond" },
     ];
     if (item.validUses?.length) {
       items.splice(1, 0, { id: "valid-uses", title: "When it's not a fallacy" });
@@ -318,7 +318,7 @@ const ConceptDetail = ({
                 <h2 className="text-2xl font-bold text-foreground mb-6">See it in action</h2>
                 <div className="space-y-4 sm:space-y-5">
                   {item.examples.map((example, idx) => (
-                    <ConceptExampleCard key={idx} example={example} index={idx} conceptName={item.name} />
+                    <ConceptExampleCard key={idx} example={example} index={idx} />
                   ))}
                 </div>
               </motion.section>
@@ -332,7 +332,7 @@ const ConceptDetail = ({
                 transition={reveal}
               >
                 <SectionLabel>Response</SectionLabel>
-                <h2 className="text-2xl font-bold text-foreground mb-6">How to refute</h2>
+                <h2 className="text-2xl font-bold text-foreground mb-6">Ways to respond</h2>
                 <div className="space-y-8">
                   {item.refutation.map((point, idx) => (
                     <motion.div

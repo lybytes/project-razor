@@ -4,12 +4,11 @@ import type { ConceptExample } from "@/data/concepts";
 interface ConceptExampleCardProps {
   example: ConceptExample;
   index: number;
-  conceptName: string;
 }
 
 /* Shared between the library detail pages and the course Learn cards so a
    concept's examples look identical in both places. */
-export const ConceptExampleCard = ({ example, index, conceptName }: ConceptExampleCardProps) => (
+export const ConceptExampleCard = ({ example, index }: ConceptExampleCardProps) => (
   <div className="rounded-xl border border-border bg-card/50 p-4 sm:p-5">
     <div className="border-l-2 border-primary pl-4">
       <div className="flex gap-3">
@@ -18,7 +17,7 @@ export const ConceptExampleCard = ({ example, index, conceptName }: ConceptExamp
       </div>
     </div>
     <div className="mt-4 pt-4 border-t border-border/60">
-      <p className="text-sm font-bold text-primary mb-1.5">Why it&apos;s {conceptName}:</p>
+      <p className="text-sm font-bold text-primary mb-1.5">Why:</p>
       <p className="text-base text-foreground leading-relaxed"><InlineMarkdown text={example.explanation} /></p>
     </div>
   </div>

@@ -17,6 +17,8 @@ export interface Concept {
   slug: string;
   category: "Logical Fallacy" | "Bad-Faith Tactic";
   aka: string[];
+  /** Formal (usually Latin) name, shown as a small "also known as" line under the plain name. */
+  formalName?: string;
   hook: string;
   oneLiner: string;
   deepDive: string;

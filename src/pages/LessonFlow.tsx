@@ -14,7 +14,7 @@ import { setPostAuthRedirect } from "@/lib/postAuthRedirect";
 
 const easeOut = [0.23, 1, 0.32, 1] as const;
 
-const STAGES = ["Learn", "Drill", "Warzone", "Summary"];
+const STAGES = ["Learn", "Practice", "In the Wild", "Summary"];
 const STAGE_ICONS = [BookOpen, Target, Swords, BarChart3];
 
 const LessonFlow = () => {
@@ -212,7 +212,7 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
                     You&apos;ve learned {concepts.length} new concept{concepts.length > 1 ? "s" : ""}. Time to test yourself.
                   </p>
                   <Button size="lg" onClick={() => advanceStage(1)} className="mt-4 sm:mt-6">
-                    Start Drill <ChevronRight className="w-4 h-4 ml-1" />
+                    Start Practice <ChevronRight className="w-4 h-4 ml-1" />
                   </Button>
                 </motion.div>
               ) : currentConcept && (
@@ -238,7 +238,10 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
                       <span className="inline-flex h-7 items-center px-4 rounded-full text-xs font-semibold bg-primary/15 text-primary mb-4 sm:mb-5">
                         {currentConcept.category}
                       </span>
-                      <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4 sm:mb-5 tracking-tight">{currentConcept.name}</h2>
+                      <h2 className={`text-3xl sm:text-4xl md:text-5xl font-bold text-foreground tracking-tight ${currentConcept.formalName ? "mb-2" : "mb-4 sm:mb-5"}`}>{currentConcept.name}</h2>
+                      {currentConcept.formalName && (
+                        <p className="text-sm text-muted-foreground mb-4 sm:mb-5">Also known as {currentConcept.formalName}</p>
+                      )}
                       <p className="text-base sm:text-lg md:text-xl text-foreground/80 max-w-md leading-relaxed"><InlineMarkdown text={currentConcept.oneLiner} /></p>
                     </div>
                   )}
@@ -263,7 +266,7 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
                       <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">Real-world examples</h3>
                       <div className="space-y-4">
                         {currentConcept.examples.map((example, i) => (
-                          <ConceptExampleCard key={i} example={example} index={i} conceptName={currentConcept.name} />
+                          <ConceptExampleCard key={i} example={example} index={i} />
                         ))}
                       </div>
                     </div>
@@ -271,7 +274,7 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
 
                   {currentCardType === 4 && (
                     <div className="flex-1">
-                      <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">How to Refute</h3>
+                      <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">Ways to Respond</h3>
                       <ul className="space-y-5 sm:space-y-6">
                         {currentConcept.refutation.map((strategy, i) => (
                           <li key={i} className="flex gap-3">
@@ -331,12 +334,12 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
                   transition={{ duration: 0.3, ease: easeOut }}
                   className="text-center py-10 sm:py-16 rounded-xl border border-border bg-card p-6 sm:p-10"
                 >
-                  <p className="text-xl sm:text-2xl font-bold text-foreground mb-3">Drill complete. Now apply what you&apos;ve learned in the real world.</p>
+                  <p className="text-xl sm:text-2xl font-bold text-foreground mb-3">Practice done. Now try it on real posts.</p>
                   <p className="text-lg text-muted-foreground mb-6">
                     {drillCorrect}/{lesson.drillQuestions.length} correct
                   </p>
                   <Button size="lg" onClick={() => advanceStage(2)}>
-                    Enter the Warzone <ChevronRight className="w-4 h-4 ml-1" />
+                    Go to In the Wild <ChevronRight className="w-4 h-4 ml-1" />
                   </Button>
                 </motion.div>
               ) : (
@@ -382,11 +385,11 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
                   transition={{ duration: 0.3, ease: easeOut }}
                   className="text-center py-10 sm:py-16 rounded-xl border border-border bg-card p-6 sm:p-10"
                 >
-                  <p className="text-xl sm:text-2xl font-bold text-foreground mb-3">Warzone complete!</p>
+                  <p className="text-xl sm:text-2xl font-bold text-foreground mb-3">In the Wild done.</p>
                   <p className="text-lg text-muted-foreground mb-2">
                     {warzoneCorrect}/{lesson.warzonePosts.length} correct
                   </p>
-                  <p className="text-muted-foreground mb-6">You&apos;ve proven you can apply these concepts to real-world scenarios.</p>
+                  <p className="text-muted-foreground mb-6">That&apos;s the lesson. Here&apos;s how you did.</p>
                   <Button size="lg" onClick={finishLesson}>
                     See Lesson Summary <ChevronRight className="w-4 h-4 ml-1" />
                   </Button>
@@ -466,7 +469,7 @@ const DrillView = ({ question, index, total, selectedOption, submitted, onSelect
         <p id={scenarioId} className="text-foreground font-medium text-sm sm:text-base leading-relaxed italic">&ldquo;<InlineMarkdown text={question.scenario} />&rdquo;</p>
       </div>
 
-      <p className="text-foreground text-base sm:text-lg font-semibold mb-3 sm:mb-4">What&apos;s happening in this argument?</p>
+      <p className="text-foreground text-base sm:text-lg font-semibold mb-3 sm:mb-4">What&apos;s the move here?</p>
 
       <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6" role="radiogroup" aria-labelledby={questionId}>
         {question.options.map((opt, i) => {
@@ -549,7 +552,7 @@ const WarzoneView = ({ post, index, total, selectedOption, submitted, onSelect, 
         <p className="text-foreground text-sm sm:text-base leading-relaxed italic">&ldquo;<InlineMarkdown text={post.comment} />&rdquo;</p>
       </div>
 
-      <p id={postQuestionId} className="text-foreground text-base sm:text-lg font-semibold mb-3 sm:mb-4">What BFBA is being used here?</p>
+      <p id={postQuestionId} className="text-foreground text-base sm:text-lg font-semibold mb-3 sm:mb-4">What&apos;s the move here?</p>
 
       <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6" role="radiogroup" aria-labelledby={postQuestionId}>
         {post.options.map((opt, i) => {
@@ -671,10 +674,10 @@ const SummaryView = ({ lesson, hasSession, drillScore, warzoneScore, wasAlreadyC
 
         <div className="border-t border-border/50 mt-4 pt-4 space-y-2">
           {drillScore && (
-            <p className="text-sm text-muted-foreground">Drill: <span className="text-foreground font-medium">{drillScore.correct}/{drillScore.total}</span></p>
+            <p className="text-sm text-muted-foreground">Practice: <span className="text-foreground font-medium">{drillScore.correct}/{drillScore.total}</span></p>
           )}
           {warzoneScore && (
-            <p className="text-sm text-muted-foreground">Warzone: <span className="text-foreground font-medium">{warzoneScore.correct}/{warzoneScore.total}</span></p>
+            <p className="text-sm text-muted-foreground">In the Wild: <span className="text-foreground font-medium">{warzoneScore.correct}/{warzoneScore.total}</span></p>
           )}
           {xpEarned > 0 && (
             <p className="text-sm text-primary font-medium">+{xpEarned} XP earned</p>
@@ -685,7 +688,7 @@ const SummaryView = ({ lesson, hasSession, drillScore, warzoneScore, wasAlreadyC
       {!hasSession && nextLessonId && (
         <div className="bg-primary/10 border border-primary/30 rounded-xl p-5 sm:p-6 mb-4 sm:mb-6 max-w-md mx-auto text-left">
           <p className="text-foreground font-semibold mb-1">
-            You just spotted {lesson.concepts.length} manipulation technique{lesson.concepts.length > 1 ? "s" : ""} in the wild.
+            You&apos;ve just learned {lesson.concepts.length} new tactic{lesson.concepts.length > 1 ? "s" : ""}.
           </p>
           <p className="text-sm text-muted-foreground mb-4">
             Create a free account to unlock the rest of the course — your progress and XP from this lesson carry over.
