@@ -478,6 +478,10 @@ export const getLessonData = (lessonId: string): LessonData | undefined => {
 export const LESSON_ORDER = ["1-1", "1-2", "1-3", "2-1", "2-2", "2-3"];
 export const FREE_LESSON_ID = LESSON_ORDER[0];
 
+// Rough time per lesson shown in the course header and free-lesson preview.
+// Figure from the round 1 feedback spec; not yet measured against real sessions.
+export const LESSON_MINUTES_ESTIMATE = 5;
+
 export const getLessonConcepts = (lesson: LessonData): Concept[] =>
   lesson.conceptSlugs.map(slug => {
     const concept = getConcept(slug);

@@ -2,18 +2,44 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
 import { useCourseProgress } from "@/contexts/CourseProgressContext";
-import { modules, getGauntletQuestions } from "@/data/courseData";
-import { Lock, ChevronDown, Check, Trophy, MessageSquare, Zap, Play, ChevronRight } from "lucide-react";
+import { modules, getGauntletQuestions, LESSON_MINUTES_ESTIMATE } from "@/data/courseData";
+import { Lock, ChevronDown, Check, Trophy, MessageSquare, Zap, Play, ChevronRight, X } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { motion, AnimatePresence } from "motion/react";
 import { PageShell } from "@/components/PageShell";
 
 const easeOut = [0.23, 1, 0.32, 1] as const;
 
+const INTRO_DISMISSED_KEY = "razor.courseIntroDismissed";
+
+const readIntroDismissed = () => {
+  try {
+    return localStorage.getItem(INTRO_DISMISSED_KEY) === "1";
+  } catch {
+    return false;
+  }
+};
+
+const firstModule = modules[0];
+const firstModuleTacticCount = new Set(firstModule.lessons.flatMap(l => l.concepts)).size;
+
 const Course = () => {
   const { progress, getLessonsComplete, isLessonUnlocked, isModuleUnlocked } = useCourseProgress();
   const { hasSession } = useAuth();
   const [expandedModule, setExpandedModule] = useState<number | null>(1);
+  const [introDismissed, setIntroDismissed] = useState(readIntroDismissed);
+
+  // First-visit header: shown until dismissed, and never once a lesson is done.
+  const showIntro = !introDismissed && Object.keys(progress.lessonComplete).length === 0;
+
+  const dismissIntro = () => {
+    setIntroDismissed(true);
+    try {
+      localStorage.setItem(INTRO_DISMISSED_KEY, "1");
+    } catch {
+      // Storage unavailable: the header just comes back next visit.
+    }
+  };
 
   const getModuleStatus = (mod: typeof modules[0]) => {
     if (mod.locked || !isModuleUnlocked(mod.id)) return "locked";
@@ -49,6 +75,35 @@ const Course = () => {
             Master critical thinking, one lesson at a time.
           </p>
         </motion.div>
+
+        {/* First-visit header */}
+        <AnimatePresence initial={false}>
+          {showIntro && (
+            <motion.div
+              key="course-intro"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, height: 0, marginBottom: 0 }}
+              transition={{ duration: 0.3, ease: easeOut }}
+              className="mb-6 overflow-hidden"
+            >
+              <div className="relative rounded-xl border border-primary/30 bg-primary/10 p-4 sm:p-5 pr-14">
+                <p className="text-foreground font-semibold mb-1">Start here.</p>
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                  Module {firstModule.id} covers {firstModuleTacticCount} of the most common tactics over {firstModule.lessons.length} lessons, about {LESSON_MINUTES_ESTIMATE} minutes each. Lesson 1 is free.
+                </p>
+                <button
+                  type="button"
+                  onClick={dismissIntro}
+                  aria-label="Dismiss"
+                  className="absolute top-1.5 right-1.5 w-11 h-11 flex items-center justify-center rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/40 transition-colors"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Module Map */}
         <div className="space-y-4 mb-12">
