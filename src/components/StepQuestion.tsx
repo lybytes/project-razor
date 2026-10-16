@@ -9,7 +9,7 @@ interface StepQuestionProps {
   /** Shown under the Correct / Not quite header once answered. */
   result: ReactNode;
   onAnswered: (correct: boolean) => void;
-  /** Scroll this step into view when it appears (steps 2 and 3). */
+  /** Bring this step into view when it replaces the previous one (steps 2 and 3). */
   scrollOnMount?: boolean;
 }
 
@@ -24,7 +24,7 @@ export const StepQuestion = ({ prompt, options, correctIndex, result, onAnswered
   useEffect(() => {
     if (!scrollOnMount || !rootRef.current) return;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    rootRef.current.scrollIntoView({ block: "start", behavior: reduced ? "auto" : "smooth" });
+    rootRef.current.scrollIntoView({ block: "nearest", behavior: reduced ? "auto" : "smooth" });
   }, [scrollOnMount]);
 
   const isCorrect = submitted && selected === correctIndex;

@@ -18,60 +18,84 @@ interface CardStepsProps {
   onNext: () => void;
 }
 
-/* Plays a card's steps in order: name the move, then (if the card has a
-   verdict) judge it, then (for "check"/"fair" with whatToCheck) say what to
-   check. A wrong answer never ends the card early. Remount per card (key). */
+/* Plays a card's steps one at a time in the same spot: name the move, then
+   (if the card has a verdict) judge it, then (for "check"/"fair" with
+   whatToCheck) say what to check. After each answer the learner taps Continue
+   and the next step replaces the last; the scenario above stays put. A wrong
+   answer never ends the card early. Remount per card (key). */
 export const CardSteps = ({ card, moveResult, after, nextLabel = "Next", onResult, onNext }: CardStepsProps) => {
-  const [answered, setAnswered] = useState<Partial<Record<StepKind, boolean>>>({});
-
   const hasVerdict = !!card.verdict;
   const hasCheck = hasVerdict && card.verdict !== "dodge" && !!card.whatToCheck;
-  const lastStep: StepKind = hasCheck ? "check" : hasVerdict ? "verdict" : "move";
-  const done = answered[lastStep] !== undefined;
+  const steps: StepKind[] = ["move", ...(hasVerdict ? ["verdict" as const] : []), ...(hasCheck ? ["check" as const] : [])];
 
-  const answer = (step: StepKind) => (correct: boolean) => {
-    setAnswered(prev => ({ ...prev, [step]: correct }));
+  const [stepIndex, setStepIndex] = useState(0);
+  const [answered, setAnswered] = useState(false);
+  const step = steps[stepIndex];
+  const isLast = stepIndex === steps.length - 1;
+
+  const handleAnswered = (correct: boolean) => {
+    setAnswered(true);
     onResult(step, correct);
   };
 
-  return (
-    <div className="space-y-6">
-      <StepQuestion
-        prompt="What's the move here?"
-        options={card.options}
-        correctIndex={card.correctIndex}
-        result={moveResult}
-        onAnswered={answer("move")}
-      />
+  const goOn = () => {
+    setStepIndex(i => i + 1);
+    setAnswered(false);
+  };
 
-      {hasVerdict && answered.move !== undefined && (
+  return (
+    <div className="space-y-4">
+      {steps.length > 1 && (
+        <p className="text-xs font-medium text-muted-foreground">Step {stepIndex + 1} of {steps.length}</p>
+      )}
+
+      {step === "move" && (
         <StepQuestion
+          key="move"
+          prompt="What's the move here?"
+          options={card.options}
+          correctIndex={card.correctIndex}
+          result={moveResult}
+          onAnswered={handleAnswered}
+        />
+      )}
+
+      {step === "verdict" && (
+        <StepQuestion
+          key="verdict"
           prompt="Does it hold up?"
           options={VERDICT_OPTIONS.map(v => v.label)}
           correctIndex={VERDICT_OPTIONS.findIndex(v => v.value === card.verdict)}
           result={card.verdictWhy ? <p><InlineMarkdown text={card.verdictWhy} /></p> : null}
-          onAnswered={answer("verdict")}
+          onAnswered={handleAnswered}
           scrollOnMount
         />
       )}
 
-      {hasCheck && card.whatToCheck && answered.verdict !== undefined && (
+      {step === "check" && card.whatToCheck && (
         <StepQuestion
+          key="check"
           prompt="So what would you actually check?"
           options={card.whatToCheck.options}
           correctIndex={card.whatToCheck.correctIndex}
           result={<p><InlineMarkdown text={card.whatToCheck.feedback} /></p>}
-          onAnswered={answer("check")}
+          onAnswered={handleAnswered}
           scrollOnMount
         />
       )}
 
-      {done && (
+      {answered && (
         <div className="space-y-4 animate-fade-up">
-          {after}
-          <Button onClick={onNext} className="w-full">
-            {nextLabel} <ChevronRight className="w-4 h-4 ml-1" />
-          </Button>
+          {isLast && after}
+          {isLast ? (
+            <Button onClick={onNext} className="w-full">
+              {nextLabel} <ChevronRight className="w-4 h-4 ml-1" />
+            </Button>
+          ) : (
+            <Button onClick={goOn} className="w-full">
+              Continue <ChevronRight className="w-4 h-4 ml-1" />
+            </Button>
+          )}
         </div>
       )}
     </div>
