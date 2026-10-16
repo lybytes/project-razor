@@ -152,7 +152,7 @@ const Index = () => {
                     Start Course <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
-                <p className="text-sm text-muted-foreground text-center">Lesson 1 is free. No sign-up, no card.</p>
+                <p className="text-sm text-muted-foreground text-center">Try lesson 1 now, no sign-up required.</p>
               </div>
               <Button size="lg" variant="outline" asChild className="rounded-full px-8 h-12 text-base">
                 <Link to="/learn">Browse the Library</Link>
@@ -242,7 +242,7 @@ const Index = () => {
             <Button size="lg" asChild className="rounded-full px-8 h-12 text-base">
               <Link to="/train/lesson/1-1">Start Course</Link>
             </Button>
-            <p className="text-sm text-muted-foreground mt-3">Lesson 1 is free. No sign-up, no card.</p>
+            <p className="text-sm text-muted-foreground mt-3">Try lesson 1 now, no sign-up required.</p>
           </motion.div>
         </section>
 

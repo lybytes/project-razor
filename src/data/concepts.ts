@@ -1,8 +1,16 @@
 import fallacies from "@/data/fallacies.json";
 import badFaith from "@/data/bad-faith.json";
 
+export interface DialogueLine {
+  speaker: string;
+  line: string;
+}
+
 export interface ConceptExample {
+  /** Flat form of the example; used for search and wherever `dialogue` is absent. */
   text: string;
+  /** Optional structured exchange, rendered one speaker per line. */
+  dialogue?: DialogueLine[];
   explanation: string;
 }
 

@@ -114,8 +114,8 @@ const Gauntlet = () => {
           <div className="text-center py-16 animate-fade-up">
             <Trophy className="w-16 h-16 text-warning mx-auto mb-6" />
             <h1 className="text-3xl font-bold text-foreground mb-3">Module {moduleNum} Gauntlet</h1>
-            <p className="text-lg text-muted-foreground mb-2">{questions.length} questions. All Module {moduleNum} concepts. Your hardest challenge yet.</p>
-            <p className="text-sm text-warning/80 mb-8">These examples are more ambiguous than the lessons. Think carefully.</p>
+            <p className="text-lg text-muted-foreground mb-2">{questions.length} posts, mixing every tactic from Module {moduleNum}.</p>
+            <p className="text-sm text-warning/80 mb-8">They&apos;re messier than the lessons, so read the context first. Pass or fail, finishing it unlocks the next module.</p>
             <Button size="lg" onClick={() => setStarted(true)}>
               Begin Gauntlet <ChevronRight className="w-4 h-4 ml-1" />
             </Button>

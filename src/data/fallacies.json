@@ -10,7 +10,7 @@
     ],
     "hook": "Why are we listening to Dr Patel on climate policy? She's been divorced twice. Clearly she can't make good decisions.",
     "oneLiner": "Going after who's talking instead of what they said.",
-    "deepDive": "\"You would say that, you're a landlord\" doesn't tell you whether their point is right. Spot it when the reply is about the person's character, job, past or motives, and never touches the actual claim. But sometimes it's fair. Going after the person is only a dodge when the point stands on its own. If someone leans on \"trust me, I'm an expert\", or a study was paid for by the people selling the product, then who they are is fair game.",
+    "deepDive": "Attacking the person is when someone goes after who's talking instead of what they said. It's the go-to move when you haven't got an answer to the point: make the speaker look like someone not worth listening to, and hope the point goes away with them.\n\nYou'll spot it when the reply is all about someone's character, job, past or motives, and the actual claim never gets a look in. \"Why would I take advice from someone with that haircut?\" says nothing about the advice.\n\nBut it's not always a dodge. If someone says \"trust me, I'm an expert\", or a study was paid for by the company selling the product, then who they are really does matter. The question to ask is simple: does this personal stuff actually bear on the claim?",
     "howToSpot": [
       "The reply is about who they are, not what they said",
       "Their character, job, past or looks get dragged in when they have nothing to do with the point",
@@ -19,14 +19,44 @@
     "examples": [
       {
         "text": "\"We should listen to scientists on climate change.\" \"Why should we listen to you? You failed science at school.\"",
+        "dialogue": [
+          {
+            "speaker": "Person A",
+            "line": "We should listen to scientists on climate change."
+          },
+          {
+            "speaker": "Person B",
+            "line": "Why should we listen to you? You failed science at school."
+          }
+        ],
         "explanation": "They only said to trust the scientists. Their old grades don't tell you anything about the science."
       },
       {
         "text": "\"Here's my plan for cutting NHS waiting times.\" \"You're not even a doctor.\"",
+        "dialogue": [
+          {
+            "speaker": "Person A",
+            "line": "Here's my plan for cutting NHS waiting times."
+          },
+          {
+            "speaker": "Person B",
+            "line": "You're not even a doctor."
+          }
+        ],
         "explanation": "You don't need to be a doctor to have a good plan. The plan works or it doesn't, whoever wrote it."
       },
       {
         "text": "\"I think the new bus timetable is worse.\" \"Says the person who's late to everything.\"",
+        "dialogue": [
+          {
+            "speaker": "Person A",
+            "line": "I think the new bus timetable is worse."
+          },
+          {
+            "speaker": "Person B",
+            "line": "Says the person who's late to everything."
+          }
+        ],
         "explanation": "Being late a lot doesn't change whether the timetable got worse."
       }
     ],
@@ -63,7 +93,7 @@
     ],
     "hook": "So you want stricter gun laws? So you basically want to leave every family defenceless.",
     "oneLiner": "Misrepresenting someone's argument to make it easier to attack.",
-    "deepDive": "A straw man swaps your real position for a distorted, exaggerated version, then knocks that down — so it feels like a rebuttal while ignoring what you actually said. The caricature is always easier to attack than the real claim. The fix: refuse to defend a position you never held.",
+    "deepDive": "A straw man is when someone twists your argument into something more extreme, then attacks that instead. A scarecrow is much easier to knock over than a real person, which is where the name comes from.\n\nYou'll spot it when your point comes back to you bigger and bolder than you said it, often after a \"so you're saying...\" or \"basically you want...\". Notice they never quote what you actually said.\n\nThe fix is simple: don't defend a position you never held. Say what you actually meant and ask them to deal with that.",
     "howToSpot": [
       "Your position gets restated in a more extreme or absolute form than you meant",
       "Phrases like 'so you're saying...', 'basically you want...', 'you just hate...' precede the distortion",
@@ -72,14 +102,44 @@
     "examples": [
       {
         "text": "\"We need stricter firearm regulations.\" — \"So you want to take everyone's guns and leave us defenceless?\"",
+        "dialogue": [
+          {
+            "speaker": "Person A",
+            "line": "We need stricter firearm regulations."
+          },
+          {
+            "speaker": "Person B",
+            "line": "So you want to take everyone's guns and leave us defenceless?"
+          }
+        ],
         "explanation": "Regulation isn't confiscation; the reply attacks a position the speaker never took."
       },
       {
         "text": "\"We should invest more in public transport.\" — \"You just hate cars and want to force everyone onto buses.\"",
+        "dialogue": [
+          {
+            "speaker": "Person A",
+            "line": "We should invest more in public transport."
+          },
+          {
+            "speaker": "Person B",
+            "line": "You just hate cars and want to force everyone onto buses."
+          }
+        ],
         "explanation": "Investing in one option isn't banning another — the real, moderate claim is swapped for an extreme one."
       },
       {
         "text": "\"I think the essay needs a stronger conclusion.\" — \"Oh, so the whole thing is garbage to you?\"",
+        "dialogue": [
+          {
+            "speaker": "Person A",
+            "line": "I think the essay needs a stronger conclusion."
+          },
+          {
+            "speaker": "Person B",
+            "line": "Oh, so the whole thing is garbage to you?"
+          }
+        ],
         "explanation": "A targeted critique of one section is inflated into a sweeping condemnation of the whole."
       }
     ],
@@ -118,7 +178,7 @@
     ],
     "hook": "You're telling me to stop smoking? You smoked for ten years!",
     "oneLiner": "Answering a point by saying the other person is a hypocrite.",
-    "deepDive": "\"You're lecturing me about saving money? You just bought a new phone.\" Whether they're a hypocrite doesn't make their point wrong. It can still be worth checking what their hypocrisy points at, but it doesn't settle the argument. It's whataboutism aimed at the person who made the point.",
+    "deepDive": "You do it too is when someone answers a criticism by pointing out that the critic does the same thing. \"You're lecturing me about saving money? You just bought a new phone.\"\n\nHere's the catch: someone being a hypocrite doesn't make their point wrong. Saving money is still good advice, whoever's giving it. You'll spot it when a reply starts with \"but you...\" and the original point gets left hanging.\n\nSometimes the hypocrisy is worth a closer look, because it can point at something real. It just never settles the argument on its own.",
     "howToSpot": [
       "The reply starts with \"but you...\" or \"what about when you...\"",
       "It's about what the critic does, not whether the criticism is right",
@@ -127,14 +187,44 @@
     "examples": [
       {
         "text": "\"You shouldn't eat so much junk food.\" \"You had McDonald's twice last week, so don't lecture me.\"",
+        "dialogue": [
+          {
+            "speaker": "Person A",
+            "line": "You shouldn't eat so much junk food."
+          },
+          {
+            "speaker": "Person B",
+            "line": "You had McDonald's twice last week, so don't lecture me."
+          }
+        ],
         "explanation": "Their McDonald's habit doesn't make the advice wrong. Junk food is still junk food."
       },
       {
         "text": "\"We need to cut carbon emissions.\" \"You drive to work every day, hypocrite.\"",
+        "dialogue": [
+          {
+            "speaker": "Person A",
+            "line": "We need to cut carbon emissions."
+          },
+          {
+            "speaker": "Person B",
+            "line": "You drive to work every day, hypocrite."
+          }
+        ],
         "explanation": "Their driving doesn't change the science on emissions. The point stands or falls on its own."
       },
       {
         "text": "\"You really should apologise to her.\" \"You never apologise for anything!\"",
+        "dialogue": [
+          {
+            "speaker": "Person A",
+            "line": "You really should apologise to her."
+          },
+          {
+            "speaker": "Person B",
+            "line": "You never apologise for anything!"
+          }
+        ],
         "explanation": "Even if that's true, it doesn't tell you whether an apology is owed here."
       }
     ],
@@ -171,7 +261,7 @@
     ],
     "hook": "You're worried about the missed deadline? Do you know how stressful my week has been?",
     "oneLiner": "Introducing an irrelevant topic to divert attention from the real issue.",
-    "deepDive": "A red herring drags in a fresh, unrelated topic — usually a more vivid or sympathetic one — so the original question quietly gets lost. Unlike a straw man it doesn't distort your point; it simply changes the subject while still sounding like a reply.",
+    "deepDive": "A red herring is when someone changes the subject to something that only sounds related, so the original question quietly gets dropped.\n\nThe new topic is usually juicier than the original, often more dramatic or more sympathetic. It still feels like a reply, which is why it works. Unlike a straw man, it doesn't twist your point. It just walks away from it.\n\nYou'll spot it when you reach the end of the reply and realise your question never got answered.",
     "howToSpot": [
       "The reply changes the subject to something that only feels related",
       "The new topic is often more emotional or dramatic than the original question",
@@ -180,14 +270,44 @@
     "examples": [
       {
         "text": "\"Why was the budget report late again?\" — \"Do you have any idea how much pressure the whole team is under right now?\"",
+        "dialogue": [
+          {
+            "speaker": "Person A",
+            "line": "Why was the budget report late again?"
+          },
+          {
+            "speaker": "Person B",
+            "line": "Do you have any idea how much pressure the whole team is under right now?"
+          }
+        ],
         "explanation": "Team stress may be real, but it doesn't answer the specific question about the late report."
       },
       {
         "text": "\"The new policy raises costs for tenants.\" — \"But think about how much landlords have suffered this decade.\"",
+        "dialogue": [
+          {
+            "speaker": "Person A",
+            "line": "The new policy raises costs for tenants."
+          },
+          {
+            "speaker": "Person B",
+            "line": "But think about how much landlords have suffered this decade."
+          }
+        ],
         "explanation": "Landlord hardship is a different topic; it sidesteps the actual claim about tenant costs."
       },
       {
         "text": "\"You promised to fix the bug by Friday.\" — \"Well, the whole codebase is a mess anyway, whose fault is that?\"",
+        "dialogue": [
+          {
+            "speaker": "Person A",
+            "line": "You promised to fix the bug by Friday."
+          },
+          {
+            "speaker": "Person B",
+            "line": "Well, the whole codebase is a mess anyway, whose fault is that?"
+          }
+        ],
         "explanation": "The state of the codebase distracts from the unmet, specific commitment."
       }
     ],
@@ -225,7 +345,7 @@
     ],
     "hook": "Either we cut the entire arts budget, or the whole city goes bankrupt. Pick one.",
     "oneLiner": "Presenting only two options when more actually exist.",
-    "deepDive": "A false dichotomy squeezes a whole spectrum into just two options — usually one nobody wants and one the speaker prefers — so their choice looks inevitable. It hides the middle ground and third options entirely. Name one missing option and the forced choice collapses.",
+    "deepDive": "A false dichotomy (or false dilemma) is when someone gives you only two options when there are actually more. Usually one is awful and the other is the one they want, so their choice looks like the only sensible one.\n\nYou'll spot it in \"either X or Y\" framing that treats those two as the only choices going. All the middle ground and the third options just vanish.\n\nThe quickest way out: name one option they left off. Once there's a third choice, the trap falls apart.",
     "howToSpot": [
       "Only two options are offered, framed as exhaustive ('either X or Y')",
       "One option is obviously bad, making the other look inevitable",
@@ -278,7 +398,7 @@
     ],
     "hook": "If we let students redo one exam, next they'll expect to redo everything, and soon grades will mean nothing.",
     "oneLiner": "Claiming one small step will inevitably lead to an extreme outcome, without justifying the chain.",
-    "deepDive": "A slippery slope claims one small step leads inevitably to disaster, but never justifies the links — each 'and then' is asserted, not shown. The scary ending does the persuading. It's only valid if you can actually demonstrate that each step forces the next.",
+    "deepDive": "A slippery slope is when someone claims one small step will inevitably lead to disaster, without showing why each step has to lead to the next.\n\nYou'll spot it in a chain of \"and then... and then...\" where every link is just assumed. The scary ending does all the persuading.\n\nNot every chain of consequences is a fallacy, though. If someone can actually show that each step forces the next, that's a real argument. The fallacy is skipping that part.",
     "howToSpot": [
       "A modest proposal is said to lead 'inevitably' to an extreme result",
       "The chain of steps is asserted but never actually justified",
@@ -436,7 +556,7 @@
     ],
     "hook": "If you really cared about children, you wouldn't even ask about the cost.",
     "oneLiner": "Using feelings — fear, pity, anger — in place of evidence to win an argument.",
-    "deepDive": "An appeal to emotion moves you to a conclusion by stirring a feeling — fear, pity, guilt, outrage — instead of giving a reason. Emotions aren't irrelevant, but here they *replace* the argument rather than support it. Strip the emotional language away and nothing's left underneath.",
+    "deepDive": "An appeal to emotion is when someone tries to win you over by making you feel something, like fear, guilt or anger, instead of giving you a reason.\n\nFeelings aren't the problem. Plenty of good arguments are moving. The problem is when the feeling replaces the argument instead of backing it up.\n\nYou'll spot it when you're made to feel heartless or scared for even asking a question. Quick test: strip out the emotional language and see if any actual reason is left.",
     "howToSpot": [
       "Vivid emotional language stands in for evidence or reasoning",
       "You're made to feel guilty, afraid, or heartless for even questioning the claim",
@@ -542,7 +662,7 @@
     ],
     "hook": "We've always done onboarding this way, so there's no reason to change it.",
     "oneLiner": "Claiming something is right or best simply because it's how things have always been done.",
-    "deepDive": "This treats age as proof of merit — 'we've always done it this way' becomes a reason not to change. But longevity says nothing about whether something works; plenty of old practices were long-standing mistakes. Ask why it works, not how old it is.",
+    "deepDive": "An appeal to tradition is when someone says something is right just because it's how things have always been done.\n\nBut being old doesn't make something good. Plenty of long-standing habits turned out to be long-standing mistakes.\n\nYou'll spot it when \"we've always done it this way\" is the whole argument, and nobody explains why the old way actually works better. Ask why it works, not how old it is.",
     "howToSpot": [
       "Age or 'the way it's always been' is offered as the reason something is right",
       "Change is resisted purely because the current way is established",
@@ -595,7 +715,7 @@
     ],
     "hook": "Everyone's investing in this coin — you're crazy not to be in.",
     "oneLiner": "Claiming something is true or good because lots of people believe it or do it.",
-    "deepDive": "The bandwagon fallacy treats popularity as evidence: if enough people believe it, it must be true. But numbers are independent of truth — majorities are often wrong, and popularity is usually driven by hype or social pressure rather than by evidence.",
+    "deepDive": "The bandwagon fallacy is when someone says something must be true or good because loads of people believe it or do it.\n\nPopularity isn't evidence. Crowds can be wrong, and things often get popular through hype or people copying each other, not because anyone checked.\n\nYou'll spot it when \"everyone's doing it\" or a big number is offered instead of an actual reason. That pressure to fit in is doing the arguing.",
     "howToSpot": [
       "'Everyone believes/does it' is offered as the reason it's correct",
       "Social proof or headcounts replace evidence",
@@ -1126,7 +1246,7 @@
     ],
     "hook": "That audit can't be right. Do you know how many people lose their jobs if it is?",
     "oneLiner": "Deciding whether a claim is true based on how desirable its consequences would be.",
-    "deepDive": "This judges whether a claim is true by how much you'd like the consequences of it being true. But reality doesn't negotiate — a fact isn't falsified by being inconvenient. Consequences are legitimate reasons to choose an action, never evidence about what's actually the case.",
+    "deepDive": "An appeal to consequences is when someone decides whether a claim is true based on whether they'd like it to be true.\n\n\"That can't be right, think what it would mean!\" But facts don't care how inconvenient they are. A bad outcome is a good reason to choose differently. It's never a reason to believe something isn't so.\n\nYou'll spot it when someone argues against a claim by describing how bad it would be if it were true, and never actually touches the evidence.",
     "howToSpot": [
       "The reason offered against a claim is that its being true would be bad, not that the evidence is weak",
       "'If that were true, then…' followed by an unacceptable outcome rather than a flaw in the reasoning",
@@ -1185,7 +1305,7 @@
     ],
     "hook": "A four-day week? Sure, and let's all work from a hammock and get paid in crystals 😂",
     "oneLiner": "Dismissing an argument by mocking it instead of showing what's wrong with it.",
-    "deepDive": "Ridicule substitutes mockery for refutation: laugh at a position hard enough and it looks defeated without anyone showing why it's wrong. Sarcasm does the work an argument should. The test — strip the tone out and check whether any actual objection remains underneath.",
+    "deepDive": "An appeal to ridicule is when someone dismisses an argument by mocking it instead of saying what's wrong with it.\n\nLaugh at an idea hard enough and it can look beaten, even though nobody has shown a single flaw. Sarcasm and silly exaggerated versions of the idea do the job an argument should.\n\nYou'll spot it with one simple test: take out the tone and see if there's an actual objection underneath. Often there isn't.",
     "howToSpot": [
       "Sarcasm, emoji, or an absurd restatement stands in for a stated objection",
       "The position is declared self-evidently ridiculous without any reason being given",
@@ -1243,7 +1363,7 @@
     ],
     "hook": "It's a natural remedy, so it can't have side effects.",
     "oneLiner": "Treating something as good or safe because it's natural, and bad because it's synthetic.",
-    "deepDive": "This treats 'natural' as a synonym for good, safe, or healthy, and 'synthetic' as the opposite. But origin tells you nothing about effect — hemlock is natural, insulin is synthesised. Safety comes from dose, mechanism, and evidence, not from where a substance came from.",
+    "deepDive": "An appeal to nature is when someone says something is good or safe because it's natural, or bad because it's man-made.\n\nWhere something comes from tells you nothing about what it does. Hemlock is natural and poisonous. Insulin is made in a lab and keeps people alive.\n\nYou'll spot it when words like \"natural\" or \"chemical-free\" are doing the job of evidence. What actually matters is the dose, how it works and what the studies say.",
     "howToSpot": [
       "'Natural', 'chemical-free', or 'made in a lab' are doing the work of an evidence claim",
       "Origin is offered as the reason something is safe or effective",

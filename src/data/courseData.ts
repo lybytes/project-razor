@@ -104,7 +104,7 @@ const lesson1_1: LessonData = {
       comment: "lol ofc reeves wants to tax homeowners, she's a career economist who's literally never built anything in her life. ppl like her have no idea what it takes to save up for a house. Easy to play with other people's money when you've never had skin in the game, get her out",
       options: ["You Do It Too", "Valid credibility challenge", "Attacking the Person", "Strawman"],
       correctIndex: 2,
-      explanation: "Attacking the person. The comment is all about Reeves' career and never touches the tax. Whether the tax is fair has nothing to do with her CV.",
+      explanation: "The comment is all about Reeves' career and never once touches the tax. Whether the tax is fair has nothing to do with her CV.",
       counter: "Whether or not she's owned a house doesn't tell us if this tax is well designed. What's your problem with the policy itself?",
     },
     {
@@ -128,7 +128,7 @@ const lesson1_1: LessonData = {
       comment: "Senator Walsh grilling this CEO on user data collection is peak hypocrisy. Her campaign literally paid a data firm to micro-target voters using the exact same techniques she's condemning. She has zero credibility here.",
       options: ["Attacking the Person", "Valid credibility challenge", "Strawman", "You Do It Too"],
       correctIndex: 3,
-      explanation: "You do it too. Even if Walsh is a hypocrite, that doesn't make her wrong about how the company collects data.",
+      explanation: "Even if Walsh is a hypocrite, that doesn't make her wrong about how the company collects data.",
       counter: "Whether she's used the same tricks doesn't change whether this company's data collection is harmful. Can we talk about that?",
     },
   ],
@@ -477,6 +477,10 @@ export const getLessonData = (lessonId: string): LessonData | undefined => {
 // Lessons unlock in this order; the first one is playable without an account.
 export const LESSON_ORDER = ["1-1", "1-2", "1-3", "2-1", "2-2", "2-3"];
 export const FREE_LESSON_ID = LESSON_ORDER[0];
+
+// Rough time per lesson shown in the course header and free-lesson preview.
+// Figure from the round 1 feedback spec; not yet measured against real sessions.
+export const LESSON_MINUTES_ESTIMATE = 5;
 
 export const getLessonConcepts = (lesson: LessonData): Concept[] =>
   lesson.conceptSlugs.map(slug => {

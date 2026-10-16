@@ -259,9 +259,13 @@ const ConceptDetail = ({
                 <p className="text-lg text-foreground/90 leading-relaxed mb-6 max-w-[65ch]">
                   <InlineMarkdown text={item.oneLiner} />
                 </p>
-                <p className="text-base text-foreground/80 leading-relaxed max-w-[65ch]">
-                  <InlineMarkdown text={item.deepDive} />
-                </p>
+                <div className="space-y-4 max-w-[65ch]">
+                  {item.deepDive.split("\n\n").map((para, i) => (
+                    <p key={i} className="text-base text-foreground/80 leading-relaxed">
+                      <InlineMarkdown text={para} />
+                    </p>
+                  ))}
+                </div>
               </motion.section>
 
               {item.validUses?.length ? (

@@ -3,11 +3,11 @@ import { useParams, useNavigate, Link, Navigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Navigation } from "@/components/Navigation";
 import { useCourseProgress } from "@/contexts/CourseProgressContext";
-import { getLessonData, getLessonConcepts, getNextLessonId, getModuleIdFromLesson, getGauntletQuestions, modules, type DrillQuestion, type WarzonePost } from "@/data/courseData";
+import { getLessonData, getLessonConcepts, getNextLessonId, getModuleIdFromLesson, getGauntletQuestions, modules, FREE_LESSON_ID, LESSON_MINUTES_ESTIMATE, type DrillQuestion, type WarzonePost } from "@/data/courseData";
 import { Button } from "@/components/ui/button";
 import { ConceptExampleCard } from "@/components/ConceptExampleCard";
 import { InlineMarkdown } from "@/components/InlineMarkdown";
-import { Check, X, ChevronRight, ChevronLeft, BookOpen, Target, Swords, BarChart3, Trophy } from "lucide-react";
+import { Check, X, ChevronRight, ChevronLeft, BookOpen, Target, Swords, BarChart3, Trophy, Clock } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { track } from "@/lib/analytics";
 import { setPostAuthRedirect } from "@/lib/postAuthRedirect";
@@ -16,12 +16,15 @@ const easeOut = [0.23, 1, 0.32, 1] as const;
 
 const STAGES = ["Learn", "Practice", "In the Wild", "Summary"];
 const STAGE_ICONS = [BookOpen, Target, Swords, BarChart3];
+const LEARN_CARD_KINDS = ["hook", "name", "examples", "spot", "respond"] as const;
+const NUMBER_WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
+const numberWord = (n: number) => NUMBER_WORDS[n] ?? String(n);
 
 const LessonFlow = () => {
   const { lessonId } = useParams<{ lessonId: string }>();
   const navigate = useNavigate();
   const { progress, completeLesson, setLessonStage, saveDrillScore, saveWarzoneScore, isLessonUnlocked, getFurthestUnlockedLesson } = useCourseProgress();
-  const { hasSession } = useAuth();
+  const { hasSession, loading: authLoading } = useAuth();
 
   const lesson = getLessonData(lessonId || "");
 
@@ -40,13 +43,14 @@ const LessonFlow = () => {
     );
   }
 
-  return <LessonFlowInner key={lesson.id} lesson={lesson} navigate={navigate} hasSession={hasSession} progress={progress} completeLesson={completeLesson} setLessonStage={setLessonStage} saveDrillScore={saveDrillScore} saveWarzoneScore={saveWarzoneScore} />;
+  return <LessonFlowInner key={lesson.id} lesson={lesson} navigate={navigate} hasSession={hasSession} authLoading={authLoading} progress={progress} completeLesson={completeLesson} setLessonStage={setLessonStage} saveDrillScore={saveDrillScore} saveWarzoneScore={saveWarzoneScore} />;
 };
 
 interface InnerProps {
   lesson: NonNullable<ReturnType<typeof getLessonData>>;
   navigate: ReturnType<typeof useNavigate>;
   hasSession: boolean;
+  authLoading: boolean;
   progress: ReturnType<typeof useCourseProgress>["progress"];
   completeLesson: ReturnType<typeof useCourseProgress>["completeLesson"];
   setLessonStage: ReturnType<typeof useCourseProgress>["setLessonStage"];
@@ -54,7 +58,7 @@ interface InnerProps {
   saveWarzoneScore: ReturnType<typeof useCourseProgress>["saveWarzoneScore"];
 }
 
-const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesson, setLessonStage: setStageProgress, saveDrillScore, saveWarzoneScore }: InnerProps) => {
+const LessonFlowInner = ({ lesson, navigate, hasSession, authLoading, progress, completeLesson, setLessonStage: setStageProgress, saveDrillScore, saveWarzoneScore }: InnerProps) => {
   const [stage, setStage] = useState(0);
   const [wasAlreadyComplete] = useState(() => !!progress.lessonComplete[lesson.id]);
   const [learnCardIndex, setLearnCardIndex] = useState(0);
@@ -65,27 +69,47 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [learnDirection, setLearnDirection] = useState(1);
+  const [previewDone, setPreviewDone] = useState(false);
   const contentRef = useRef<HTMLElement>(null);
+  const lessonStartTracked = useRef(false);
+
+  // Every lesson opens with one intro card (welcome, the tactics it covers,
+  // rough time). It's the only introductory screen inside Learn. We wait for
+  // auth to resolve so guest-only copy doesn't flash for signed-in users.
+  const showPreview = !previewDone;
+  const lessonBegun = !authLoading && previewDone;
+  const isFreeLessonForGuest = lesson.id === FREE_LESSON_ID && !hasSession;
 
   // A lesson begins once per mount (the key on LessonFlowInner is the lesson
-  // id, so navigating to a different lesson remounts and fires again).
+  // id, so navigating to a different lesson remounts and fires again): when
+  // the learner leaves the intro card, not when it first renders.
   useEffect(() => {
+    if (!lessonBegun || lessonStartTracked.current) return;
+    lessonStartTracked.current = true;
     track({ name: "lesson_started", props: { lesson_id: lesson.id } });
-  }, [lesson.id]);
+  }, [lessonBegun, lesson.id]);
 
   useEffect(() => {
     if (!contentRef.current) return;
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     contentRef.current.scrollIntoView({ block: "start", behavior: prefersReducedMotion ? "auto" : "smooth" });
-  }, [stage, learnCardIndex, drillIndex, warzoneIndex]);
+  }, [stage, learnCardIndex, drillIndex, warzoneIndex, previewDone]);
 
-  // Learn stage: 5 cards per concept, then transition
-  const CARDS_PER_CONCEPT = 5;
+  // Learn stage: each concept leads with examples before the explanation.
+  // After the last card comes the transition into Practice.
   const concepts = getLessonConcepts(lesson);
-  const currentConceptIndex = Math.floor(learnCardIndex / CARDS_PER_CONCEPT);
-  const currentCardType = learnCardIndex % CARDS_PER_CONCEPT;
-  const isTransitionCard = learnCardIndex >= concepts.length * CARDS_PER_CONCEPT;
-  const currentConcept = !isTransitionCard ? concepts[currentConceptIndex] : null;
+  const learnCards = concepts.flatMap((_, conceptIndex) =>
+    LEARN_CARD_KINDS.map(kind => ({ conceptIndex, kind })),
+  );
+  const isTransitionCard = learnCardIndex >= learnCards.length;
+  const currentCard = !isTransitionCard ? learnCards[learnCardIndex] : null;
+  const currentConceptIndex = currentCard?.conceptIndex ?? concepts.length - 1;
+  const currentCardKind = currentCard?.kind;
+  const currentConcept = currentCard ? concepts[currentCard.conceptIndex] : null;
+  const allFallacies = concepts.every(c => c.category === "Logical Fallacy");
+  const conceptNoun = concepts.length === 1
+    ? (allFallacies ? "logical fallacy" : "tactic")
+    : (allFallacies ? "logical fallacies" : "tactics");
 
   const advanceStage = useCallback((newStage: number) => {
     setStage(newStage);
@@ -189,8 +213,51 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
         </div>
 
         <AnimatePresence mode="wait">
+        {/* LESSON INTRO */}
+        {showPreview && !authLoading && (
+          <motion.div
+            key="preview"
+            initial={{ opacity: 0, y: 24, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -24, scale: 0.98 }}
+            transition={{ duration: 0.35, ease: easeOut }}
+            className="rounded-xl border border-border bg-card p-6 sm:p-10"
+          >
+            <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-2">
+              Lesson {lesson.id.replace("-", ".")} · {lesson.title}
+            </p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 tracking-tight">
+              {lesson.id === FREE_LESSON_ID ? "Welcome to your first lesson!" : "Welcome back!"}
+            </h1>
+            <p className="text-base sm:text-lg text-foreground/80 leading-relaxed mb-5">
+              {lesson.id === FREE_LESSON_ID
+                ? `In this lesson you'll learn ${numberWord(concepts.length)} common ${conceptNoun}. Here's what's coming up:`
+                : `In this lesson you'll pick up ${numberWord(concepts.length)} new ${conceptNoun}. Here's what's coming up:`}
+            </p>
+            <ul className="space-y-3 mb-6">
+              {concepts.map(c => (
+                <li key={c.slug} className="flex gap-3">
+                  <Check className="w-4 h-4 text-primary mt-1 shrink-0" />
+                  <span className="text-base text-foreground/90 leading-relaxed">
+                    <span className="font-semibold text-foreground">{c.name}.</span> <InlineMarkdown text={c.oneLiner} />
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <p className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
+              <Clock className="w-4 h-4" /> About {LESSON_MINUTES_ESTIMATE} minutes
+            </p>
+            {isFreeLessonForGuest && (
+              <p className="text-sm text-muted-foreground">No sign-up required.</p>
+            )}
+            <Button size="lg" className="w-full sm:w-auto mt-6 sm:mt-8" onClick={() => setPreviewDone(true)}>
+              Let&apos;s go <ChevronRight className="w-4 h-4 ml-1" />
+            </Button>
+          </motion.div>
+        )}
+
         {/* STAGE 0: LEARN */}
-        {stage === 0 && (
+        {lessonBegun && stage === 0 && (
           <motion.div
             key="learn"
             initial={{ opacity: 0, y: 24, scale: 0.98 }}
@@ -208,10 +275,12 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
                   transition={{ duration: 0.3, ease: easeOut }}
                   className="text-center py-10 sm:py-16 rounded-xl border border-border bg-card p-6 sm:p-10"
                 >
-                  <p className="text-xl sm:text-2xl font-bold text-foreground mb-3">
-                    You&apos;ve learned {concepts.length} new concept{concepts.length > 1 ? "s" : ""}. Time to test yourself.
+                  <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-3">Up next</p>
+                  <p className="text-xl sm:text-2xl font-bold text-foreground mb-3">Practice</p>
+                  <p className="text-base sm:text-lg text-muted-foreground max-w-md mx-auto">
+                    Spot the move in a few quick scenarios. You&apos;ll see why after each one.
                   </p>
-                  <Button size="lg" onClick={() => advanceStage(1)} className="mt-4 sm:mt-6">
+                  <Button size="lg" onClick={() => advanceStage(1)} className="mt-6 sm:mt-8">
                     Start Practice <ChevronRight className="w-4 h-4 ml-1" />
                   </Button>
                 </motion.div>
@@ -224,7 +293,7 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
                   transition={{ duration: 0.3, ease: easeOut }}
                   className="min-h-[360px] sm:min-h-[420px] flex flex-col rounded-xl border border-border bg-card p-5 sm:p-8"
                 >
-                  {currentCardType === 0 && (
+                  {currentCardKind === "hook" && (
                     <div className="flex-1 flex flex-col items-center justify-center text-center px-2 sm:px-4">
                       <p className="text-xl sm:text-2xl md:text-3xl text-foreground font-medium italic leading-relaxed max-w-lg">
                         &ldquo;{currentConcept.hook}&rdquo;
@@ -233,7 +302,7 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
                     </div>
                   )}
 
-                  {currentCardType === 1 && (
+                  {currentCardKind === "name" && (
                     <div className="flex-1 flex flex-col items-center justify-center text-center px-2 sm:px-4">
                       <span className="inline-flex h-7 items-center px-4 rounded-full text-xs font-semibold bg-primary/15 text-primary mb-4 sm:mb-5">
                         {currentConcept.category}
@@ -246,33 +315,29 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
                     </div>
                   )}
 
-                  {currentCardType === 2 && (
+                  {currentCardKind === "spot" && (
                     <div className="flex-1">
                       <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">How to spot it</h3>
-                      <p className="text-base text-foreground/80 leading-relaxed mb-6"><InlineMarkdown text={currentConcept.deepDive} /></p>
-                      <ul className="space-y-3 sm:space-y-5">
-                        {currentConcept.howToSpot.map((point, i) => (
-                          <li key={i} className="flex gap-3">
-                            <span className="text-primary mt-0.5 text-lg">•</span>
-                            <span className="text-base text-foreground/90 leading-relaxed"><InlineMarkdown text={point} /></span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
-                  {currentCardType === 3 && (
-                    <div className="flex-1">
-                      <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">Real-world examples</h3>
                       <div className="space-y-4">
-                        {currentConcept.examples.map((example, i) => (
-                          <ConceptExampleCard key={i} example={example} index={i} />
+                        {currentConcept.deepDive.split("\n\n").map((para, i) => (
+                          <p key={i} className="text-base sm:text-lg text-foreground/85 leading-relaxed"><InlineMarkdown text={para} /></p>
                         ))}
                       </div>
                     </div>
                   )}
 
-                  {currentCardType === 4 && (
+                  {currentCardKind === "examples" && (
+                    <div className="flex-1">
+                      <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">Examples</h3>
+                      <div className="space-y-4">
+                        {currentConcept.examples.map((example, i) => (
+                          <ConceptExampleCard key={i} example={example} index={i} collapsible />
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {currentCardKind === "respond" && (
                     <div className="flex-1">
                       <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">Ways to Respond</h3>
                       <ul className="space-y-5 sm:space-y-6">
@@ -316,7 +381,7 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
         )}
 
         {/* STAGE 1: DRILL */}
-        {stage === 1 && (
+        {lessonBegun && stage === 1 && (
           <motion.div
             key="drill"
             initial={{ opacity: 0, y: 24, scale: 0.98 }}
@@ -334,9 +399,13 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
                   transition={{ duration: 0.3, ease: easeOut }}
                   className="text-center py-10 sm:py-16 rounded-xl border border-border bg-card p-6 sm:p-10"
                 >
-                  <p className="text-xl sm:text-2xl font-bold text-foreground mb-3">Practice done. Now try it on real posts.</p>
-                  <p className="text-lg text-muted-foreground mb-6">
-                    {drillCorrect}/{lesson.drillQuestions.length} correct
+                  <p className="text-sm text-muted-foreground mb-6">
+                    Practice: {drillCorrect}/{lesson.drillQuestions.length} correct
+                  </p>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-3">Up next</p>
+                  <p className="text-xl sm:text-2xl font-bold text-foreground mb-3">In the Wild</p>
+                  <p className="text-base sm:text-lg text-muted-foreground max-w-md mx-auto mb-6 sm:mb-8">
+                    Posts like the ones you&apos;d see online. They&apos;re messier than Practice, so read the context first, then name the move.
                   </p>
                   <Button size="lg" onClick={() => advanceStage(2)}>
                     Go to In the Wild <ChevronRight className="w-4 h-4 ml-1" />
@@ -367,7 +436,7 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
         )}
 
         {/* STAGE 2: WARZONE */}
-        {stage === 2 && (
+        {lessonBegun && stage === 2 && (
           <motion.div
             key="warzone"
             initial={{ opacity: 0, y: 24, scale: 0.98 }}
@@ -419,7 +488,7 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, progress, completeLesso
         )}
 
         {/* STAGE 3: SUMMARY */}
-        {stage === 3 && (
+        {lessonBegun && stage === 3 && (
           <motion.div
             key="summary"
             initial={{ opacity: 0, y: 24, scale: 0.98 }}
