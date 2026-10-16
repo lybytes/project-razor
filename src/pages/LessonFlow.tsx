@@ -17,6 +17,8 @@ const easeOut = [0.23, 1, 0.32, 1] as const;
 const STAGES = ["Learn", "Practice", "In the Wild", "Summary"];
 const STAGE_ICONS = [BookOpen, Target, Swords, BarChart3];
 const LEARN_CARD_KINDS = ["hook", "name", "examples", "spot", "respond"] as const;
+const NUMBER_WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
+const numberWord = (n: number) => NUMBER_WORDS[n] ?? String(n);
 
 const LessonFlow = () => {
   const { lessonId } = useParams<{ lessonId: string }>();
@@ -71,17 +73,16 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, authLoading, progress, 
   const contentRef = useRef<HTMLElement>(null);
   const lessonStartTracked = useRef(false);
 
-  // Guests opening the free lesson for the first time see a preview (title,
-  // tactics, rough time, "free") before Learn. Signed-in users and replays
-  // skip it. While auth is still resolving we don't yet know which applies.
-  const needsPreview = lesson.id === FREE_LESSON_ID && !wasAlreadyComplete && !hasSession;
-  const showPreview = needsPreview && !previewDone;
-  const lessonBegun = !authLoading && !showPreview;
+  // Every lesson opens with one intro card (welcome, the tactics it covers,
+  // rough time). It's the only introductory screen inside Learn. We wait for
+  // auth to resolve so guest-only copy doesn't flash for signed-in users.
+  const showPreview = !previewDone;
+  const lessonBegun = !authLoading && previewDone;
+  const isFreeLessonForGuest = lesson.id === FREE_LESSON_ID && !hasSession;
 
   // A lesson begins once per mount (the key on LessonFlowInner is the lesson
-  // id, so navigating to a different lesson remounts and fires again). When a
-  // preview is shown, the lesson begins when the learner leaves it, not when
-  // the preview first renders.
+  // id, so navigating to a different lesson remounts and fires again): when
+  // the learner leaves the intro card, not when it first renders.
   useEffect(() => {
     if (!lessonBegun || lessonStartTracked.current) return;
     lessonStartTracked.current = true;
@@ -94,19 +95,21 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, authLoading, progress, 
     contentRef.current.scrollIntoView({ block: "start", behavior: prefersReducedMotion ? "auto" : "smooth" });
   }, [stage, learnCardIndex, drillIndex, warzoneIndex, previewDone]);
 
-  // Learn stage: every concept after the first opens with a one-screen intro,
-  // then each concept leads with examples before the explanation. After the
-  // last card comes the transition into Practice.
+  // Learn stage: each concept leads with examples before the explanation.
+  // After the last card comes the transition into Practice.
   const concepts = getLessonConcepts(lesson);
-  const learnCards = concepts.flatMap((_, conceptIndex) => [
-    ...(conceptIndex > 0 ? [{ conceptIndex, kind: "intro" as const }] : []),
-    ...LEARN_CARD_KINDS.map(kind => ({ conceptIndex, kind })),
-  ]);
+  const learnCards = concepts.flatMap((_, conceptIndex) =>
+    LEARN_CARD_KINDS.map(kind => ({ conceptIndex, kind })),
+  );
   const isTransitionCard = learnCardIndex >= learnCards.length;
   const currentCard = !isTransitionCard ? learnCards[learnCardIndex] : null;
   const currentConceptIndex = currentCard?.conceptIndex ?? concepts.length - 1;
   const currentCardKind = currentCard?.kind;
   const currentConcept = currentCard ? concepts[currentCard.conceptIndex] : null;
+  const allFallacies = concepts.every(c => c.category === "Logical Fallacy");
+  const conceptNoun = concepts.length === 1
+    ? (allFallacies ? "logical fallacy" : "tactic")
+    : (allFallacies ? "logical fallacies" : "tactics");
 
   const advanceStage = useCallback((newStage: number) => {
     setStage(newStage);
@@ -210,7 +213,7 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, authLoading, progress, 
         </div>
 
         <AnimatePresence mode="wait">
-        {/* FREE-LESSON PREVIEW */}
+        {/* LESSON INTRO */}
         {showPreview && !authLoading && (
           <motion.div
             key="preview"
@@ -220,10 +223,16 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, authLoading, progress, 
             transition={{ duration: 0.35, ease: easeOut }}
             className="rounded-xl border border-border bg-card p-6 sm:p-10"
           >
-            <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-2">Lesson {lesson.id.replace("-", ".")}</p>
-            <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 tracking-tight">{lesson.title}</h1>
-            <p className="text-base text-muted-foreground mb-3">
-              You&apos;ll learn {concepts.length === 1 ? "one tactic" : `${concepts.length} tactics`}:
+            <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-2">
+              Lesson {lesson.id.replace("-", ".")} · {lesson.title}
+            </p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 tracking-tight">
+              {lesson.id === FREE_LESSON_ID ? "Welcome to your first lesson!" : "Welcome back!"}
+            </h1>
+            <p className="text-base sm:text-lg text-foreground/80 leading-relaxed mb-5">
+              {lesson.id === FREE_LESSON_ID
+                ? `In this lesson you'll learn ${numberWord(concepts.length)} common ${conceptNoun}. Here's what's coming up:`
+                : `In this lesson you'll pick up ${numberWord(concepts.length)} new ${conceptNoun}. Here's what's coming up:`}
             </p>
             <ul className="space-y-3 mb-6">
               {concepts.map(c => (
@@ -238,9 +247,11 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, authLoading, progress, 
             <p className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
               <Clock className="w-4 h-4" /> About {LESSON_MINUTES_ESTIMATE} minutes
             </p>
-            <p className="text-sm text-muted-foreground mb-6 sm:mb-8">Free, no sign-up, no card.</p>
-            <Button size="lg" className="w-full sm:w-auto" onClick={() => setPreviewDone(true)}>
-              Start Lesson <ChevronRight className="w-4 h-4 ml-1" />
+            {isFreeLessonForGuest && (
+              <p className="text-sm text-muted-foreground">No sign-up required.</p>
+            )}
+            <Button size="lg" className="w-full sm:w-auto mt-6 sm:mt-8" onClick={() => setPreviewDone(true)}>
+              Let&apos;s go <ChevronRight className="w-4 h-4 ml-1" />
             </Button>
           </motion.div>
         )}
@@ -282,14 +293,6 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, authLoading, progress, 
                   transition={{ duration: 0.3, ease: easeOut }}
                   className="min-h-[360px] sm:min-h-[420px] flex flex-col rounded-xl border border-border bg-card p-5 sm:p-8"
                 >
-                  {currentCardKind === "intro" && (
-                    <div className="flex-1 flex flex-col items-center justify-center text-center px-2 sm:px-4">
-                      <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-4">Next tactic</p>
-                      <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4 sm:mb-5 tracking-tight">{currentConcept.name}</h2>
-                      <p className="text-base sm:text-lg text-foreground/80 max-w-md leading-relaxed"><InlineMarkdown text={currentConcept.oneLiner} /></p>
-                    </div>
-                  )}
-
                   {currentCardKind === "hook" && (
                     <div className="flex-1 flex flex-col items-center justify-center text-center px-2 sm:px-4">
                       <p className="text-xl sm:text-2xl md:text-3xl text-foreground font-medium italic leading-relaxed max-w-lg">
@@ -315,15 +318,11 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, authLoading, progress, 
                   {currentCardKind === "spot" && (
                     <div className="flex-1">
                       <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">How to spot it</h3>
-                      <p className="text-base text-foreground/80 leading-relaxed mb-6"><InlineMarkdown text={currentConcept.deepDive} /></p>
-                      <ul className="space-y-3 sm:space-y-5">
-                        {currentConcept.howToSpot.map((point, i) => (
-                          <li key={i} className="flex gap-3">
-                            <span className="text-primary mt-0.5 text-lg">•</span>
-                            <span className="text-base text-foreground/90 leading-relaxed"><InlineMarkdown text={point} /></span>
-                          </li>
+                      <div className="space-y-4">
+                        {currentConcept.deepDive.split("\n\n").map((para, i) => (
+                          <p key={i} className="text-base sm:text-lg text-foreground/85 leading-relaxed"><InlineMarkdown text={para} /></p>
                         ))}
-                      </ul>
+                      </div>
                     </div>
                   )}
 

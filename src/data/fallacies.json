@@ -10,7 +10,7 @@
     ],
     "hook": "Why are we listening to Dr Patel on climate policy? She's been divorced twice. Clearly she can't make good decisions.",
     "oneLiner": "Going after who's talking instead of what they said.",
-    "deepDive": "\"You would say that, you're a landlord\" doesn't tell you whether their point is right. Spot it when the reply is about the person's character, job, past or motives, and never touches the actual claim. But sometimes it's fair. Going after the person is only a dodge when the point stands on its own. If someone leans on \"trust me, I'm an expert\", or a study was paid for by the people selling the product, then who they are is fair game.",
+    "deepDive": "Attacking the person is when someone goes after who's talking instead of what they said. It's the go-to move when you haven't got an answer to the point: make the speaker look like someone not worth listening to, and hope the point goes away with them.\n\nYou'll spot it when the reply is all about someone's character, job, past or motives, and the actual claim never gets a look in. \"Why would I take advice from someone with that haircut?\" says nothing about the advice.\n\nBut it's not always a dodge. If someone says \"trust me, I'm an expert\", or a study was paid for by the company selling the product, then who they are really does matter. The question to ask is simple: does this personal stuff actually bear on the claim?",
     "howToSpot": [
       "The reply is about who they are, not what they said",
       "Their character, job, past or looks get dragged in when they have nothing to do with the point",
@@ -19,14 +19,44 @@
     "examples": [
       {
         "text": "\"We should listen to scientists on climate change.\" \"Why should we listen to you? You failed science at school.\"",
+        "dialogue": [
+          {
+            "speaker": "Person A",
+            "line": "We should listen to scientists on climate change."
+          },
+          {
+            "speaker": "Person B",
+            "line": "Why should we listen to you? You failed science at school."
+          }
+        ],
         "explanation": "They only said to trust the scientists. Their old grades don't tell you anything about the science."
       },
       {
         "text": "\"Here's my plan for cutting NHS waiting times.\" \"You're not even a doctor.\"",
+        "dialogue": [
+          {
+            "speaker": "Person A",
+            "line": "Here's my plan for cutting NHS waiting times."
+          },
+          {
+            "speaker": "Person B",
+            "line": "You're not even a doctor."
+          }
+        ],
         "explanation": "You don't need to be a doctor to have a good plan. The plan works or it doesn't, whoever wrote it."
       },
       {
         "text": "\"I think the new bus timetable is worse.\" \"Says the person who's late to everything.\"",
+        "dialogue": [
+          {
+            "speaker": "Person A",
+            "line": "I think the new bus timetable is worse."
+          },
+          {
+            "speaker": "Person B",
+            "line": "Says the person who's late to everything."
+          }
+        ],
         "explanation": "Being late a lot doesn't change whether the timetable got worse."
       }
     ],
@@ -118,7 +148,7 @@
     ],
     "hook": "You're telling me to stop smoking? You smoked for ten years!",
     "oneLiner": "Answering a point by saying the other person is a hypocrite.",
-    "deepDive": "\"You're lecturing me about saving money? You just bought a new phone.\" Whether they're a hypocrite doesn't make their point wrong. It can still be worth checking what their hypocrisy points at, but it doesn't settle the argument. It's whataboutism aimed at the person who made the point.",
+    "deepDive": "You do it too is when someone answers a criticism by pointing out that the critic does the same thing. \"You're lecturing me about saving money? You just bought a new phone.\"\n\nHere's the catch: someone being a hypocrite doesn't make their point wrong. Saving money is still good advice, whoever's giving it. You'll spot it when a reply starts with \"but you...\" and the original point gets left hanging.\n\nSometimes the hypocrisy is worth a closer look, because it can point at something real. It just never settles the argument on its own.",
     "howToSpot": [
       "The reply starts with \"but you...\" or \"what about when you...\"",
       "It's about what the critic does, not whether the criticism is right",
@@ -127,14 +157,44 @@
     "examples": [
       {
         "text": "\"You shouldn't eat so much junk food.\" \"You had McDonald's twice last week, so don't lecture me.\"",
+        "dialogue": [
+          {
+            "speaker": "Person A",
+            "line": "You shouldn't eat so much junk food."
+          },
+          {
+            "speaker": "Person B",
+            "line": "You had McDonald's twice last week, so don't lecture me."
+          }
+        ],
         "explanation": "Their McDonald's habit doesn't make the advice wrong. Junk food is still junk food."
       },
       {
         "text": "\"We need to cut carbon emissions.\" \"You drive to work every day, hypocrite.\"",
+        "dialogue": [
+          {
+            "speaker": "Person A",
+            "line": "We need to cut carbon emissions."
+          },
+          {
+            "speaker": "Person B",
+            "line": "You drive to work every day, hypocrite."
+          }
+        ],
         "explanation": "Their driving doesn't change the science on emissions. The point stands or falls on its own."
       },
       {
         "text": "\"You really should apologise to her.\" \"You never apologise for anything!\"",
+        "dialogue": [
+          {
+            "speaker": "Person A",
+            "line": "You really should apologise to her."
+          },
+          {
+            "speaker": "Person B",
+            "line": "You never apologise for anything!"
+          }
+        ],
         "explanation": "Even if that's true, it doesn't tell you whether an apology is owed here."
       }
     ],
