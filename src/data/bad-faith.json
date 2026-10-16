@@ -153,7 +153,7 @@
     ],
     "hook": "You're criticising our record on this? What about what the other side did five years ago?",
     "oneLiner": "Deflecting criticism by pointing at someone else's unrelated wrongdoing.",
-    "deepDive": "Whataboutism answers a criticism by pointing at someone else's unrelated wrong — 'but what about them?' — implying you must be flawless to have a point. But two things can both be bad; another's wrongdoing doesn't cancel the one actually being discussed.",
+    "deepDive": "Whataboutism is when someone answers a criticism by pointing at something bad that somebody else did. \"Yeah, but what about them?\"\n\nIt quietly suggests you have to be spotless before you can criticise anything. But two things can both be bad. Someone else's mess doesn't cancel out the one you're actually talking about.\n\nYou'll spot it when a \"what about...\" brings up a different wrong and the original issue never gets dealt with. It's a close cousin of You Do It Too, which points the finger back at the critic instead of at someone else.",
     "howToSpot": [
       "Criticism is met with 'but what about...' pointing to a different wrong",
       "The original issue is never actually addressed",
@@ -162,14 +162,44 @@
     "examples": [
       {
         "text": "\"Your team missed the deadline.\" — \"What about the other team's project last quarter?\"",
+        "dialogue": [
+          {
+            "speaker": "Person A",
+            "line": "Your team missed the deadline."
+          },
+          {
+            "speaker": "Person B",
+            "line": "What about the other team's project last quarter?"
+          }
+        ],
         "explanation": "Another team's failure doesn't address whether this deadline was missed."
       },
       {
         "text": "\"This policy harms tenants.\" — \"What about all the harm the previous government did?\"",
+        "dialogue": [
+          {
+            "speaker": "Person A",
+            "line": "This policy harms tenants."
+          },
+          {
+            "speaker": "Person B",
+            "line": "What about all the harm the previous government did?"
+          }
+        ],
         "explanation": "Past harm elsewhere doesn't answer whether the current policy harms tenants now."
       },
       {
         "text": "\"You broke the agreement.\" — \"Well, what about the time you were late to everything?\"",
+        "dialogue": [
+          {
+            "speaker": "Person A",
+            "line": "You broke the agreement."
+          },
+          {
+            "speaker": "Person B",
+            "line": "Well, what about the time you were late to everything?"
+          }
+        ],
         "explanation": "An unrelated grievance is raised to avoid addressing the broken agreement."
       }
     ],
@@ -441,7 +471,7 @@
     ],
     "hook": "I'd take your point more seriously if you weren't so emotional about it. Let's keep this civil.",
     "oneLiner": "Using politeness and 'tone' as a weapon to dismiss substance and control the conversation.",
-    "deepDive": "Tone policing shifts scrutiny from what you said to how you said it, making a calmer delivery the price of being heard at all. The argument goes unanswered while the tone-policer looks like the reasonable one. It hinges on dismissal: engagement withheld, not merely requested.",
+    "deepDive": "Tone policing is when someone ignores what you said and focuses on how you said it instead.\n\n\"Calm down and maybe I'll listen.\" Being polite becomes the price of being heard, so your point never gets answered and they get to look like the reasonable one.\n\nYou'll spot it when engagement is held back until you change your tone. Asking someone to keep things civil is fine. Refusing to deal with their point until they do is the move.",
     "howToSpot": [
       "The focus shifts to your tone or emotion instead of your point",
       "Politeness or 'civility' is demanded as a precondition for engaging the substance",

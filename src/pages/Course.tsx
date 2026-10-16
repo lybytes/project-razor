@@ -90,7 +90,7 @@ const Course = () => {
               <div className="relative rounded-xl border border-primary/30 bg-primary/10 p-4 sm:p-5 pr-14">
                 <p className="text-foreground font-semibold mb-1">Start here.</p>
                 <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                  Module {firstModule.id} covers {firstModuleTacticCount} of the most common tactics over {firstModule.lessons.length} lessons, about {LESSON_MINUTES_ESTIMATE} minutes each. Try out lesson 1 for free, no sign-up required.
+                  Module {firstModule.id} covers {firstModuleTacticCount} of the most common tactics over {firstModule.lessons.length} lessons, about {LESSON_MINUTES_ESTIMATE} minutes each. Try lesson 1 now, no sign-up required.
                 </p>
                 <button
                   type="button"
