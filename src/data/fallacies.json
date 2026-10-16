@@ -1,55 +1,56 @@
 [
   {
-    "name": "Ad Hominem",
+    "name": "Attacking the Person",
     "slug": "ad-hominem",
+    "formalName": "ad hominem",
     "category": "Logical Fallacy",
     "aka": [
-      "Ad Hominem Attack",
-      "Attacking the Person"
+      "Ad Hominem",
+      "Ad Hominem Attack"
     ],
-    "hook": "Why are we listening to Dr. Patel on climate policy? She got divorced twice — clearly can't make sound judgements.",
-    "oneLiner": "Attacking the person making an argument rather than the argument itself.",
-    "deepDive": "Ad hominem swaps the debate's target from the claim to the claimant — discredit the person, and their argument gets dismissed by association. But a claim's truth doesn't depend on who raised it. The exception: attacking credibility is fair only when reliability is *directly* the issue.",
+    "hook": "Why are we listening to Dr Patel on climate policy? She's been divorced twice. Clearly she can't make good decisions.",
+    "oneLiner": "Going after who's talking instead of what they said.",
+    "deepDive": "\"You would say that, you're a landlord\" doesn't tell you whether their point is right. Spot it when the reply is about the person's character, job, past or motives, and never touches the actual claim. But sometimes it's fair. Going after the person is only a dodge when the point stands on its own. If someone leans on \"trust me, I'm an expert\", or a study was paid for by the people selling the product, then who they are is fair game.",
     "howToSpot": [
-      "The reply targets the person's character, background, or lifestyle instead of their point",
-      "Irrelevant personal history is dragged in — divorces, old failures, appearance, group membership",
-      "The actual claim is never engaged with; 'winning' means discrediting the speaker"
+      "The reply is about who they are, not what they said",
+      "Their character, job, past or looks get dragged in when they have nothing to do with the point",
+      "Nobody ever answers the actual claim"
     ],
     "examples": [
       {
-        "text": "\"We should listen to scientists on global warming.\" — \"Why should we listen to you? You failed science in school.\"",
-        "explanation": "The speaker's past grades have no bearing on whether the scientific consensus is correct."
+        "text": "\"We should listen to scientists on climate change.\" \"Why should we listen to you? You failed science at school.\"",
+        "explanation": "They only said to trust the scientists. Their old grades don't tell you anything about the science."
       },
       {
-        "text": "\"Here's my proposal for healthcare reform.\" — \"We shouldn't listen to you, you're not even a doctor.\"",
-        "explanation": "Not being a doctor doesn't automatically make a policy proposal wrong — the proposal's merits are untouched."
+        "text": "\"Here's my plan for cutting NHS waiting times.\" \"You're not even a doctor.\"",
+        "explanation": "You don't need to be a doctor to have a good plan. The plan works or it doesn't, whoever wrote it."
       },
       {
-        "text": "\"This property tax could ease housing inequality.\" — \"Of course she'd say that, she's a career economist who's never built anything.\"",
-        "explanation": "Her biography is used to dismiss the policy without addressing whether the tax is actually well-designed."
+        "text": "\"I think the new bus timetable is worse.\" \"Says the person who's late to everything.\"",
+        "explanation": "Being late a lot doesn't change whether the timetable got worse."
       }
     ],
     "refutation": [
       {
-        "title": "Name the move",
-        "text": "Point out that the attack is aimed at the person, not the point.",
-        "comeback": "That's about me, not the argument. What specifically is wrong with the evidence?"
+        "title": "Bring it back to the point",
+        "text": "Say it's about you, then ask about the claim.",
+        "comeback": "That's about me, not about the point. Even if you're right about me, is the claim true or not?"
       },
       {
-        "title": "Redirect to the claim",
-        "text": "Steer straight back to the original point and ask for a substantive response.",
-        "comeback": "Set my background aside — can you give me a reason the policy itself doesn't work?"
+        "title": "Ask for a real reason",
+        "text": "Put the question back on what you actually said.",
+        "comeback": "Leave my background out of it. What's wrong with the plan itself?"
       },
       {
-        "title": "Separate credibility from truth",
-        "text": "If they raise a relevant credibility concern, grant it but note it doesn't settle the claim.",
-        "comeback": "Even if you're right about me, that doesn't make the data false. Let's look at the data."
+        "title": "Grant the fair bit",
+        "text": "If they've raised something that really matters, say so. It still doesn't settle the claim on its own.",
+        "comeback": "Fair, that's worth knowing. It doesn't make the data wrong though, so let's look at the data."
       }
     ],
     "avoidance": [
-      "Attack arguments, never people — critique the reasoning, not the reasoner",
-      "Before dismissing a source, ask whether the personal fact is actually relevant to the claim",
-      "Notice when you're tempted to bring up someone's history instead of their point"
+      "Argue with what people say, not who they are",
+      "Before you dismiss a source, ask whether the personal detail actually bears on the claim",
+      "Notice when you reach for someone's history because you haven't got an answer to their point"
     ]
   },
   {
@@ -106,56 +107,58 @@
     ]
   },
   {
-    "name": "Tu Quoque (You Too)",
+    "name": "You Do It Too",
     "slug": "tu-quoque",
+    "formalName": "tu quoque",
     "category": "Logical Fallacy",
     "aka": [
+      "Tu Quoque",
       "Appeal to Hypocrisy",
       "Whataboutism (personal form)"
     ],
     "hook": "You're telling me to stop smoking? You smoked for ten years!",
-    "oneLiner": "Deflecting criticism by pointing to the critic's own hypocrisy instead of answering it.",
-    "deepDive": "Tu quoque ('you too') dodges a claim by accusing the speaker of hypocrisy — as if a hypocrite must be wrong. But a claim's truth is independent of whether the speaker practises it. It's whataboutism aimed specifically at the speaker's own consistency.",
+    "oneLiner": "Answering a point by saying the other person is a hypocrite.",
+    "deepDive": "\"You're lecturing me about saving money? You just bought a new phone.\" Whether they're a hypocrite doesn't make their point wrong. It can still be worth checking what their hypocrisy points at, but it doesn't settle the argument. It's whataboutism aimed at the person who made the point.",
     "howToSpot": [
-      "The reply opens with 'but you...' or 'what about when you did...'",
-      "It points at the critic's behaviour instead of the substance of the criticism",
-      "The original claim is left completely unaddressed"
+      "The reply starts with \"but you...\" or \"what about when you...\"",
+      "It's about what the critic does, not whether the criticism is right",
+      "The original point gets left hanging"
     ],
     "examples": [
       {
-        "text": "\"You shouldn't eat so much junk food.\" — \"You had McDonald's twice last week, so don't lecture me.\"",
-        "explanation": "Whether the adviser is consistent has no bearing on whether the advice is correct."
+        "text": "\"You shouldn't eat so much junk food.\" \"You had McDonald's twice last week, so don't lecture me.\"",
+        "explanation": "Their McDonald's habit doesn't make the advice wrong. Junk food is still junk food."
       },
       {
-        "text": "\"We need to cut carbon emissions.\" — \"You drive a car every day — you're a hypocrite.\"",
-        "explanation": "The speaker's car use doesn't change the science on emissions; the claim stands or falls on its own."
+        "text": "\"We need to cut carbon emissions.\" \"You drive to work every day, hypocrite.\"",
+        "explanation": "Their driving doesn't change the science on emissions. The point stands or falls on its own."
       },
       {
-        "text": "\"You really should apologise to her.\" — \"You never apologise for anything!\"",
-        "explanation": "Even if true, the critic's own failings don't determine whether an apology is warranted here."
+        "text": "\"You really should apologise to her.\" \"You never apologise for anything!\"",
+        "explanation": "Even if that's true, it doesn't tell you whether an apology is owed here."
       }
     ],
     "refutation": [
       {
-        "title": "Separate the messenger from the message",
-        "text": "Grant the inconsistency but point out it doesn't touch the claim.",
-        "comeback": "Even if I'm inconsistent, does that make what I said wrong?"
+        "title": "Own it, then move on",
+        "text": "Admit the hypocrisy if it's true. It doesn't change your point.",
+        "comeback": "Maybe I'm a hypocrite. That still doesn't tell us whether what I said is right."
       },
       {
-        "title": "Redirect to the point",
-        "text": "Bring the conversation back to the actual argument.",
-        "comeback": "My behaviour is a separate issue. Let's focus on whether the point itself holds."
+        "title": "Bring it back to the point",
+        "text": "Steer back to what you were actually talking about.",
+        "comeback": "We can talk about me another time. Is the point right or not?"
       },
       {
-        "title": "Concede and continue",
-        "text": "Acknowledge the hypocrisy openly, then refuse to let it end the discussion.",
-        "comeback": "You're right that I should change too — but that doesn't address whether the argument is sound."
+        "title": "Agree you should change too",
+        "text": "Take the hit, and don't let it end the conversation.",
+        "comeback": "You're right, I should do better too. That doesn't make the advice wrong."
       }
     ],
     "avoidance": [
-      "Judge an argument on its merits, not on the arguer's consistency",
-      "If you spot hypocrisy, raise it as a separate point rather than a rebuttal",
-      "Don't let 'but you do it too' stop you from engaging the actual claim"
+      "Judge the point, not whether the person lives up to it",
+      "If you spot hypocrisy, raise it separately instead of using it as your answer",
+      "Don't let \"but you do it too\" stop you answering what they actually said"
     ]
   },
   {
@@ -1117,7 +1120,10 @@
     "name": "Appeal to Consequences",
     "slug": "appeal-to-consequences",
     "category": "Logical Fallacy",
-    "aka": ["Argumentum ad Consequentiam", "Wishful Thinking"],
+    "aka": [
+      "Argumentum ad Consequentiam",
+      "Wishful Thinking"
+    ],
     "hook": "That audit can't be right. Do you know how many people lose their jobs if it is?",
     "oneLiner": "Deciding whether a claim is true based on how desirable its consequences would be.",
     "deepDive": "This judges whether a claim is true by how much you'd like the consequences of it being true. But reality doesn't negotiate — a fact isn't falsified by being inconvenient. Consequences are legitimate reasons to choose an action, never evidence about what's actually the case.",
@@ -1172,7 +1178,11 @@
     "name": "Appeal to Ridicule",
     "slug": "appeal-to-ridicule",
     "category": "Logical Fallacy",
-    "aka": ["Argumentum ad Ridiculum", "Appeal to Mockery", "Appeal to the Stone"],
+    "aka": [
+      "Argumentum ad Ridiculum",
+      "Appeal to Mockery",
+      "Appeal to the Stone"
+    ],
     "hook": "A four-day week? Sure, and let's all work from a hammock and get paid in crystals 😂",
     "oneLiner": "Dismissing an argument by mocking it instead of showing what's wrong with it.",
     "deepDive": "Ridicule substitutes mockery for refutation: laugh at a position hard enough and it looks defeated without anyone showing why it's wrong. Sarcasm does the work an argument should. The test — strip the tone out and check whether any actual objection remains underneath.",
@@ -1227,7 +1237,10 @@
     "name": "Appeal to Nature",
     "slug": "appeal-to-nature",
     "category": "Logical Fallacy",
-    "aka": ["Naturalistic Appeal", "Natural-Is-Better Fallacy"],
+    "aka": [
+      "Naturalistic Appeal",
+      "Natural-Is-Better Fallacy"
+    ],
     "hook": "It's a natural remedy, so it can't have side effects.",
     "oneLiner": "Treating something as good or safe because it's natural, and bad because it's synthetic.",
     "deepDive": "This treats 'natural' as a synonym for good, safe, or healthy, and 'synthetic' as the opposite. But origin tells you nothing about effect — hemlock is natural, insulin is synthesised. Safety comes from dose, mechanism, and evidence, not from where a substance came from.",

@@ -40,7 +40,7 @@ const steps = [
   {
     num: "01",
     title: "Learn the tactics",
-    desc: "Each lesson introduces 2–3 real logical fallacies,from strawmanning to slippery slopes, with clear explanations and real-world examples.",
+    desc: "Each lesson introduces 2–3 real logical fallacies, from strawmanning to slippery slopes, with clear explanations and real-world examples.",
   },
   {
     num: "02",
@@ -57,7 +57,7 @@ const steps = [
 const learnCards = [
   {
     title: "Logical Fallacies",
-    desc: "Flawed arguments disguised as sound reasoning. Ad hominem attacks, strawmen, false dilemmas, slippery slopes. These are the tricks used to win arguments dishonestly.",
+    desc: "Flawed arguments disguised as sound reasoning. Personal attacks, strawmen, false dilemmas, slippery slopes. These are the tricks used to win arguments dishonestly.",
     link: "/learn/logical-fallacies",
     linkText: "Explore Fallacies",
   },
@@ -69,7 +69,7 @@ const learnCards = [
   },
   {
     title: "Bad-Faith Tactics",
-    desc: "Deliberate manipulation techniques used in arguments and debate. Gaslighting, moving the goalposts, whataboutism. These areused every day in politics and online discourse.",
+    desc: "Deliberate manipulation techniques used in arguments and debate. Gaslighting, moving the goalposts, whataboutism. These are used every day in politics and online discourse.",
     link: "/learn/bad-faith-arguments",
     linkText: "Explore Tactics",
   },
@@ -142,17 +142,20 @@ const Index = () => {
             </motion.p>
 
             <motion.div
-              className="flex flex-col sm:flex-row gap-4"
+              className="flex flex-col sm:flex-row sm:items-start gap-4"
               {...heroReveal}
               transition={{ ...heroReveal.transition, delay: 0.28 }}
             >
-              <Button size="lg" asChild className="rounded-full px-8 h-12 text-base">
-                <Link to="/train/lesson/1-1">
-                  Start Lesson 1 <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
+              <div className="flex flex-col gap-2">
+                <Button size="lg" asChild className="rounded-full px-8 h-12 text-base">
+                  <Link to="/train/lesson/1-1">
+                    Start Course <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+                <p className="text-sm text-muted-foreground text-center">Lesson 1 is free. No sign-up, no card.</p>
+              </div>
               <Button size="lg" variant="outline" asChild className="rounded-full px-8 h-12 text-base">
-                <Link to="/learn">Explore the Library</Link>
+                <Link to="/learn">Browse the Library</Link>
               </Button>
             </motion.div>
            </div>
@@ -194,10 +197,10 @@ const Index = () => {
           </motion.div>
         </section>
 
-        {/* What You'll Learn */}
+        {/* Knowledge Library */}
         <section className="container mx-auto px-4 py-20 sm:py-28">
           <motion.div className="max-w-5xl" {...reveal}>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-12 tracking-tight">What you'll learn to detect</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-12 tracking-tight">Knowledge Library</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {learnCards.map((card, i) => (
                 <Card
@@ -237,8 +240,9 @@ const Index = () => {
               Project Razor trains you to tell the difference.
             </p>
             <Button size="lg" asChild className="rounded-full px-8 h-12 text-base">
-              <Link to="/train/lesson/1-1">Start Lesson 1. It&apos;s Free</Link>
+              <Link to="/train/lesson/1-1">Start Course</Link>
             </Button>
+            <p className="text-sm text-muted-foreground mt-3">Lesson 1 is free. No sign-up, no card.</p>
           </motion.div>
         </section>
 

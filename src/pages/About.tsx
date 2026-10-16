@@ -38,17 +38,14 @@ const pillars = [
 
 const framework = [
   {
-    initial: "B",
     label: "Biases",
     text: "Systematic patterns of deviation from rationality in judgment. These are unconscious mental shortcuts that can lead us astray.",
   },
   {
-    initial: "F",
     label: "Fallacies",
     text: "Errors in reasoning that undermine the logic of an argument. These are flaws in the structure of arguments themselves.",
   },
   {
-    initial: "BA",
     label: "Bad-Faith Arguments",
     text: "Manipulative tactics used to win arguments dishonestly. These are deliberate strategies to avoid genuine discussion.",
   },
@@ -108,7 +105,7 @@ const About = () => {
 
           <motion.section className="mb-20 sm:mb-24" {...reveal}>
             <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-8 tracking-tight">
-              The BFBA Framework
+              What Razor covers
             </h2>
             <div className="space-y-4">
               {framework.map((item, index) => (
@@ -116,11 +113,7 @@ const About = () => {
                   key={item.label}
                   className="rounded-xl border border-border bg-card p-5 sm:p-6 hover:border-primary/40 transition-colors"
                 >
-                  <h3 className="text-xl font-bold text-foreground mb-2">
-                    <span className="text-primary">{item.initial}</span>
-                    <span className="text-muted-foreground font-medium mx-2">—</span>
-                    {item.label}
-                  </h3>
+                  <h3 className="text-xl font-bold text-foreground mb-2">{item.label}</h3>
                   <p className="text-muted-foreground leading-relaxed">{item.text}</p>
                 </div>
               ))}
@@ -167,7 +160,7 @@ const About = () => {
               The first lesson is free. No sign-up required until you want to save your progress.
             </p>
             <Button size="lg" asChild className="rounded-full px-8 h-12 text-base">
-              <Link to="/train/lesson/1-1">Start Lesson 1</Link>
+              <Link to="/train/lesson/1-1">Start Course</Link>
             </Button>
           </motion.section>
         </div>

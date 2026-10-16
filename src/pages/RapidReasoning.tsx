@@ -106,7 +106,7 @@ const RapidReasoning = () => {
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">
-                    What BFBA is being used here?
+                    What&apos;s the move here?
                   </label>
                   <Input
                     type="text"

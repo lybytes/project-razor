@@ -152,7 +152,7 @@ const Gauntlet = () => {
               <p className="text-foreground text-sm leading-relaxed italic">"{post.comment}"</p>
             </div>
 
-            <p className="text-foreground font-semibold mb-4">What BFBA is being used here?</p>
+            <p className="text-foreground font-semibold mb-4">What&apos;s the move here?</p>
 
             <div className="space-y-3 mb-6">
               {post.options.map((opt, i) => {

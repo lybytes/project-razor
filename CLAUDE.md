@@ -82,7 +82,7 @@ Default buttons/inputs are 40px; nav links and the password-visibility toggle la
 - **Spam protection:** Cloudflare **Turnstile** via Supabase's supported CAPTCHA integration (site key public, secret in Supabase server-side config). A frontend-only honeypot doesn't protect direct calls to the public signup endpoint. Test expired/missing tokens and normal sign-in/password-reset.
 - **Validation:** build on the existing Zod schema; verify Supabase rejects bad email/password through the real backend path before adding any separate endpoint.
 - **Legal pages:** Privacy + Terms routes, linked in footer and at signup. Draft from real operating facts (operator name + contact, providers = Supabase/Resend/PostHog, retention/deletion process, audience, chosen analytics behaviour). Keep drafts reviewable before publishing. Agreeing to Terms / acknowledging Privacy ≠ consent to optional analytics.
-- **CTA:** primary marketing action = "Start Lesson 1" → `/train/lesson/1-1`. Sign-in and library navigation secondary. Preserve the wall after 1.1.
+- **CTA:** primary marketing action = "Start Course" → `/train/lesson/1-1`, with "Lesson 1 is free. No sign-up, no card." underneath (renamed from "Start Lesson 1" in the round 1 feedback, phase 1). Sign-in and library navigation secondary. Preserve the wall after 1.1.
 
 ### Later / conditional
 Tier 3 (batched later): favicon, custom 404, broken-link sweep, meta titles/descriptions on indexable pages, page-load/Lighthouse pass, image compression. HTTPS is handled by Vercel — just keep the www redirect clean. Tier 4 (conditional): cookie consent is folded into task 3 above; sitemap/robots, alt text, colour contrast are deferred, not launch-gating.
@@ -100,6 +100,16 @@ Check for existing credentials/integrations in the repo/env before requesting ne
 ## How Billy works
 
 Casual and concise; prefers speed once direction is agreed. Short directional notes, expects you to interpret and execute. Flags logical inconsistencies directly and expects you to surface and correct your own errors. External-facing copy: prose, no bullet points, no puffery. Implementation handoffs like this one: structured with explicit definitions of done and non-goals is fine.
+
+## Content voice (applies to every explanation, feedback line and Learn body)
+
+From the round 1 feedback spec, section G. British spelling.
+
+- Second person, contractions, short sentences. "They're dodging", not "the interlocutor deflects from the substantive claim".
+- Lead with the verdict, then one sentence of why. One idea per explanation.
+- Banned: "moreover", "furthermore", "it's worth noting", "the substance of the argument", stacked em dashes, and three-part lists added for rhythm.
+- Plain names first. User-facing stage names are Learn → Practice → In the Wild → Gauntlet; tactic titles are plain ("Attacking the Person", "You Do It Too") with the Latin in a small "also known as" line (`formalName` on the concept). No in-house acronyms (e.g. "BFBA") in user-facing text.
+- Internal identifiers (`drillQuestions`, `warzonePosts`, `drillScores`, `warzoneScores`, the `social-warzone` route) keep their old names on purpose: they are persisted in `localStorage` and guest migration, so renaming them would break saved progress.
 
 ## Repo entry points (quick map)
 

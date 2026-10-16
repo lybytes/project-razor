@@ -138,7 +138,7 @@ const Auth = () => {
         toast.success("Account created — sign in to start training.");
         setNotice("Account created — sign in below to start training.");
       } else {
-        const msg = "Check your inbox to confirm your account. If this email is already registered, sign in instead.";
+        const msg = "Check your inbox to confirm your account. Can't find the email? Check your spam or junk folder. If this email is already registered, sign in instead.";
         toast.success(msg, { duration: 10000 });
         setNotice(msg);
       }
@@ -176,7 +176,7 @@ const Auth = () => {
     setLoading(true);
     try {
       await requestPasswordReset(email, captchaToken ?? undefined);
-      const msg = "If an account exists for that email, a reset link has been sent. Check your inbox.";
+      const msg = "If an account exists for that email, a reset link has been sent. Check your inbox, and your spam or junk folder if it isn't there.";
       toast.success(msg, { duration: 10000 });
       setNotice(msg);
     } catch (err) {
