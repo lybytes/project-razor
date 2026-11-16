@@ -103,9 +103,12 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, authLoading, progress, 
   // Learn stage: each concept leads with examples before the explanation.
   // After the last card comes the transition into Practice.
   const concepts = getLessonConcepts(lesson);
-  const learnCards = concepts.flatMap((_, conceptIndex) =>
-    LEARN_CARD_KINDS.map(kind => ({ conceptIndex, kind })),
-  );
+  // A concept with an exception ends on a "But!" card, after Ways to Respond,
+  // so the fair cases come only once the learner has the normal pattern.
+  const learnCards = concepts.flatMap((concept, conceptIndex) => [
+    ...LEARN_CARD_KINDS.map(kind => ({ conceptIndex, kind })),
+    ...(concept.exception ? [{ conceptIndex, kind: "exception" as const }] : []),
+  ]);
   const isTransitionCard = learnCardIndex >= learnCards.length;
   const currentCard = !isTransitionCard ? learnCards[learnCardIndex] : null;
   const currentConceptIndex = currentCard?.conceptIndex ?? concepts.length - 1;
@@ -316,7 +319,18 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, authLoading, progress, 
                       <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">How to spot it</h3>
                       <div className="space-y-4">
                         {currentConcept.deepDive.split("\n\n").map((para, i) => (
-                          <p key={i} className="text-base sm:text-lg text-foreground/85 leading-relaxed"><InlineMarkdown text={para} /></p>
+                          <p key={i} className="text-base sm:text-lg text-foreground/85 leading-relaxed [&_strong]:text-primary"><InlineMarkdown text={para} /></p>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {currentCardKind === "exception" && currentConcept.exception && (
+                    <div className="flex-1">
+                      <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">But!</h3>
+                      <div className="space-y-4">
+                        {currentConcept.exception.split("\n\n").map((para, i) => (
+                          <p key={i} className="text-base sm:text-lg text-foreground/85 leading-relaxed [&_strong]:text-primary"><InlineMarkdown text={para} /></p>
                         ))}
                       </div>
                     </div>
@@ -396,7 +410,7 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, authLoading, progress, 
                   className="text-center py-10 sm:py-16 rounded-xl border border-border bg-card p-6 sm:p-10"
                 >
                   <p className="text-sm text-muted-foreground mb-6">
-                    Practice: {drillCorrect}/{lesson.drillQuestions.length} correct
+                    Practice: {drillCorrect}/{lesson.drillQuestions.length} moves spotted
                   </p>
                   <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-3">Up next</p>
                   <p className="text-xl sm:text-2xl font-bold text-foreground mb-3">In the Wild</p>
@@ -449,7 +463,7 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, authLoading, progress, 
                 >
                   <p className="text-xl sm:text-2xl font-bold text-foreground mb-3">In the Wild done.</p>
                   <p className="text-lg text-muted-foreground mb-2">
-                    {warzoneCorrect}/{lesson.warzonePosts.length} correct
+                    {warzoneCorrect}/{lesson.warzonePosts.length} moves spotted
                   </p>
                   <p className="text-muted-foreground mb-6">That&apos;s the lesson. Here&apos;s how you did.</p>
                   <Button size="lg" onClick={finishLesson}>
@@ -636,10 +650,10 @@ const SummaryView = ({ lesson, hasSession, drillScore, warzoneScore, judged, was
             <p className="text-sm text-foreground font-medium mb-3">{describeTallies(totalCorrect, totalQuestions, judged)}</p>
           )}
           {drillScore && (
-            <p className="text-sm text-muted-foreground">Practice: <span className="text-foreground font-medium">{drillScore.correct}/{drillScore.total}</span></p>
+            <p className="text-sm text-muted-foreground">Practice: <span className="text-foreground font-medium">{drillScore.correct}/{drillScore.total}</span> moves spotted</p>
           )}
           {warzoneScore && (
-            <p className="text-sm text-muted-foreground">In the Wild: <span className="text-foreground font-medium">{warzoneScore.correct}/{warzoneScore.total}</span></p>
+            <p className="text-sm text-muted-foreground">In the Wild: <span className="text-foreground font-medium">{warzoneScore.correct}/{warzoneScore.total}</span> moves spotted</p>
           )}
           {xpEarned > 0 && (
             <p className="text-sm text-primary font-medium">+{xpEarned} XP earned</p>

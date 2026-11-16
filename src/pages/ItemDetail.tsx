@@ -182,14 +182,14 @@ const ConceptDetail = ({
       { id: "examples", title: "Examples" },
       { id: "refutation", title: "Ways to respond" },
     ];
-    if (item.validUses?.length) {
+    if (item.validUses?.length || item.exception) {
       items.splice(1, 0, { id: "valid-uses", title: "When it's not a fallacy" });
     }
     if (item.avoidance?.length) {
       items.push({ id: "avoidance", title: "How to avoid it" });
     }
     return items;
-  }, [item.avoidance?.length, item.validUses?.length]);
+  }, [item.avoidance?.length, item.validUses?.length, item.exception]);
 
   const activeId = useActiveSection(tocItems);
 
@@ -268,7 +268,7 @@ const ConceptDetail = ({
                 </div>
               </motion.section>
 
-              {item.validUses?.length ? (
+              {item.validUses?.length || item.exception ? (
                 <motion.section
                   id="valid-uses"
                   className="mb-14 scroll-mt-28"
@@ -279,6 +279,16 @@ const ConceptDetail = ({
                 >
                   <SectionLabel>Boundaries</SectionLabel>
                   <h2 className="text-2xl font-bold text-foreground mb-4">When it's not a fallacy</h2>
+                  {item.exception && (
+                    <div className="space-y-4 max-w-[65ch] mb-4">
+                      {item.exception.split("\n\n").map((para, idx) => (
+                        <p key={idx} className="text-base text-foreground/80 leading-relaxed">
+                          <InlineMarkdown text={para} />
+                        </p>
+                      ))}
+                    </div>
+                  )}
+                  {item.validUses?.length ? (
                   <ul className="space-y-3 max-w-[65ch]">
                     {item.validUses.map((point, idx) => (
                       <li key={idx} className="flex gap-3 text-base text-foreground/90 leading-relaxed">
@@ -287,6 +297,7 @@ const ConceptDetail = ({
                       </li>
                     ))}
                   </ul>
+                  ) : null}
                 </motion.section>
               ) : null}
 
