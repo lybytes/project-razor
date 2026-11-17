@@ -130,7 +130,7 @@ const Index = () => {
               {...heroReveal}
               transition={{ ...heroReveal.transition, delay: 0.16 }}
             >
-              Someone makes a fair point online. The top reply: &ldquo;Says the guy who flies abroad every summer.&rdquo; Hundreds of likes, and nobody actually answers the point.
+              Nobody likes finding out they&apos;ve been played. And the arguments that get you usually aren&apos;t the obviously wrong ones.
             </motion.p>
 
             <motion.p
@@ -138,8 +138,7 @@ const Index = () => {
               {...heroReveal}
               transition={{ ...heroReveal.transition, delay: 0.2 }}
             >
-              The most dangerous arguments aren&apos;t the obviously wrong ones. They&apos;re the ones that sound{" "}
-              <span className="text-primary">almost right</span>. Razor trains you to catch the move, name it, and answer it.
+              They&apos;re the ones that sound <span className="text-primary">almost right</span>. Razor trains you to catch the move, name it and answer it, before it works on you.
             </motion.p>
 
             <motion.div
