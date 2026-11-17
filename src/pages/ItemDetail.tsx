@@ -7,6 +7,7 @@ import biases from "@/data/biases.json";
 import badFaith from "@/data/bad-faith.json";
 import type { Concept } from "@/data/concepts";
 import { ConceptExampleCard } from "@/components/ConceptExampleCard";
+import { PracticeThisLink } from "@/components/PracticeThisLink";
 import { InlineMarkdown } from "@/components/InlineMarkdown";
 import { PageShell } from "@/components/PageShell";
 import { ArrowLeft, BookOpen } from "lucide-react";
@@ -398,12 +399,7 @@ const ConceptDetail = ({
                 viewport={{ once: true, margin: "-40px" }}
                 transition={reveal}
               >
-                <Button asChild className="rounded-full h-11 px-6">
-                  <Link to="/train">
-                    <BookOpen className="w-4 h-4 mr-2" />
-                    Practice in a lesson
-                  </Link>
-                </Button>
+                <PracticeThisLink slug={item.slug} />
               </motion.div>
             </article>
 
@@ -563,12 +559,7 @@ const BiasDetail = ({
                 viewport={{ once: true, margin: "-40px" }}
                 transition={reveal}
               >
-                <Button asChild className="rounded-full h-11 px-6">
-                  <Link to="/train">
-                    <BookOpen className="w-4 h-4 mr-2" />
-                    Practice in a lesson
-                  </Link>
-                </Button>
+                <PracticeThisLink slug={bias.slug} />
               </motion.div>
             </article>
 

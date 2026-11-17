@@ -130,7 +130,7 @@ const Index = () => {
               {...heroReveal}
               transition={{ ...heroReveal.transition, delay: 0.16 }}
             >
-              Every day, someone online is trying to win you over with an argument that&apos;s quietly broken. A dodge, a strawman, a fake either/or.
+              Someone makes a fair point online. The top reply: &ldquo;Says the guy who flies abroad every summer.&rdquo; Hundreds of likes, and nobody actually answers the point.
             </motion.p>
 
             <motion.p
@@ -138,7 +138,8 @@ const Index = () => {
               {...heroReveal}
               transition={{ ...heroReveal.transition, delay: 0.2 }}
             >
-              Razor trains you to catch the move, name it, and shut it down.
+              The most dangerous arguments aren&apos;t the obviously wrong ones. They&apos;re the ones that sound{" "}
+              <span className="text-primary">almost right</span>. Razor trains you to catch the move, name it, and answer it.
             </motion.p>
 
             <motion.div
@@ -230,14 +231,11 @@ const Index = () => {
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.6, ease: easeOut }}
           >
-            <blockquote>
-              <p className="text-2xl sm:text-3xl md:text-4xl font-medium italic text-foreground leading-snug mb-6 tracking-tight">
-                The most dangerous arguments aren&apos;t the ones that are obviously wrong. They&apos;re the ones that sound{" "}
-                <span className="text-primary not-italic">almost right</span>.
-              </p>
-            </blockquote>
-            <p className="text-lg text-muted-foreground mb-8">
-              Project Razor trains you to tell the difference.
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground leading-snug mb-4 tracking-tight">
+              Try the first lesson
+            </h2>
+            <p className="text-lg text-muted-foreground mb-8 max-w-2xl">
+              Two tactics, a few quick scenarios, then some posts like the ones you&apos;d see online to test yourself on.
             </p>
             <Button size="lg" asChild className="rounded-full px-8 h-12 text-base">
               <Link to="/train/lesson/1-1">Start Course</Link>
