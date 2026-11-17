@@ -33,6 +33,9 @@ export interface Concept {
   howToSpot: string[];
   examples: ConceptExample[];
   validUses?: string[];
+  /** When the move is actually fair, with an example. Paragraphs split on blank lines.
+      Shown as a "But!" card at the end of the concept in the course. */
+  exception?: string;
   refutation: ConceptRefutation[];
   avoidance?: string[];
 }

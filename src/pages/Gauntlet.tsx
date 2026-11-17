@@ -6,7 +6,11 @@ import { useCourseProgress } from "@/contexts/CourseProgressContext";
 import { getGauntletQuestions, modules, getNextLessonId, type WarzonePost } from "@/data/courseData";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "motion/react";
-import { Check, X, ChevronRight, Trophy, Shield, RotateCcw, Target } from "lucide-react";
+import { ChevronRight, Trophy, Shield, RotateCcw, Target, X } from "lucide-react";
+import { InlineMarkdown } from "@/components/InlineMarkdown";
+import { CardSteps, type StepKind } from "@/components/CardSteps";
+import { PostHeader, PostCounter } from "@/components/PostCard";
+import { EMPTY_TALLY, addToTally, describeTallies, type JudgedTally } from "@/lib/judgement";
 
 const Gauntlet = () => {
   const { moduleId: moduleIdParam } = useParams<{ moduleId: string }>();
@@ -18,11 +22,10 @@ const Gauntlet = () => {
 
   const [started, setStarted] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedOption, setSelectedOption] = useState<number | null>(null);
-  const [submitted, setSubmitted] = useState(false);
   const [correctCount, setCorrectCount] = useState(0);
   const [finished, setFinished] = useState(false);
   const [missedConcepts, setMissedConcepts] = useState<string[]>([]);
+  const [judged, setJudged] = useState<JudgedTally>(EMPTY_TALLY);
   const contentRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -69,19 +72,20 @@ const Gauntlet = () => {
     setStarted(true);
     setFinished(false);
     setCurrentIndex(0);
-    setSelectedOption(null);
-    setSubmitted(false);
     setCorrectCount(0);
     setMissedConcepts([]);
+    setJudged(EMPTY_TALLY);
   };
 
-  const handleSubmit = () => {
-    if (selectedOption === null) return;
+  // Pass/fail and XP stay keyed to step 1 (naming the move); steps 2 and 3
+  // only feed the results summary.
+  const handleResult = (step: StepKind, correct: boolean) => {
     const post = questions[currentIndex];
-    setSubmitted(true);
-    const isCorrect = selectedOption === post.correctIndex;
-    if (isCorrect) setCorrectCount(prev => prev + 1);
-    else {
+    if (step !== "move") {
+      setJudged(prev => addToTally(prev, step, correct));
+    } else if (correct) {
+      setCorrectCount(prev => prev + 1);
+    } else {
       const correctAnswer = post.options[post.correctIndex];
       setMissedConcepts(prev => [...new Set([...prev, correctAnswer])]);
     }
@@ -92,8 +96,6 @@ const Gauntlet = () => {
   const handleNext = () => {
     if (currentIndex + 1 < questions.length) {
       setCurrentIndex(currentIndex + 1);
-      setSelectedOption(null);
-      setSubmitted(false);
     } else {
       completeGauntlet(moduleId, correctCount);
       setFinished(true);
@@ -134,73 +136,18 @@ const Gauntlet = () => {
                 exit={{ opacity: 0, y: -20, scale: 0.98 }}
                 transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
               >
-                <div className="rounded-lg bg-muted border border-border/50 p-5 mb-4">
-              <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2 font-medium">Context</p>
-              <p className="text-foreground/90 text-sm leading-relaxed">{post.context}</p>
-            </div>
-
-            <div className="rounded-lg bg-card border border-border p-5 mb-6">
-              <div className="flex items-center gap-2 mb-3">
-                <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-                  <span className="text-xs font-bold text-primary">{post.username[0]}</span>
+                <div className="rounded-xl border border-border bg-card p-5 sm:p-8">
+                  <PostHeader post={post} />
+                  <CardSteps
+                    key={post.id}
+                    card={post}
+                    moveResult={<p><InlineMarkdown text={post.explanation} /></p>}
+                    after={<PostCounter counter={post.counter} />}
+                    nextLabel={currentIndex + 1 < questions.length ? "Next" : "See Results"}
+                    onResult={handleResult}
+                    onNext={handleNext}
+                  />
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-foreground">{post.username}</p>
-                  <p className="text-xs text-muted-foreground">{post.platform}</p>
-                </div>
-              </div>
-              <p className="text-foreground text-sm leading-relaxed italic">"{post.comment}"</p>
-            </div>
-
-            <p className="text-foreground font-semibold mb-4">What&apos;s the move here?</p>
-
-            <div className="space-y-3 mb-6">
-              {post.options.map((opt, i) => {
-                let classes = "w-full text-left p-4 rounded-lg border transition-all duration-200 text-sm font-medium ";
-                if (submitted) {
-                  if (i === post.correctIndex) classes += "border-success bg-success/10 text-success";
-                  else if (i === selectedOption && i !== post.correctIndex) classes += "border-destructive bg-destructive/10 text-destructive";
-                  else classes += "border-border/50 bg-card/50 text-muted-foreground";
-                } else if (i === selectedOption) classes += "border-primary bg-primary/10 text-primary";
-                else classes += "border-border bg-card text-foreground hover:border-primary/50";
-                return (
-                  <button key={i} onClick={() => !submitted && setSelectedOption(i)} disabled={submitted} className={classes}>
-                    {opt}
-                  </button>
-                );
-              })}
-            </div>
-
-            {submitted && (
-              <div className="space-y-4 mb-6 animate-fade-up">
-                <div className={`rounded-lg p-4 ${selectedOption === post.correctIndex ? "bg-success/10 border border-success/30" : "bg-destructive/10 border border-destructive/30"}`}>
-                  <div className="flex items-center gap-2 mb-2">
-                    {selectedOption === post.correctIndex ? <Check className="w-4 h-4 text-success" /> : <X className="w-4 h-4 text-destructive" />}
-                    <span className={`font-semibold text-sm ${selectedOption === post.correctIndex ? "text-success" : "text-destructive"}`}>
-                      {selectedOption === post.correctIndex ? "Correct!" : "Incorrect"} — {post.options[post.correctIndex]}
-                    </span>
-                  </div>
-                  <p className="text-foreground text-sm">{post.explanation}</p>
-                </div>
-
-                {post.counter && (
-                  <div className="border-l-2 border-primary/50 pl-4 py-2">
-                    <p className="text-xs text-primary/70 font-medium uppercase tracking-wider mb-1">Counter:</p>
-                    <p className="text-foreground/80 italic text-sm">"{post.counter}"</p>
-                  </div>
-                )}
-
-                <Button onClick={handleNext} className="w-full">
-                  {currentIndex + 1 < questions.length ? "Next" : "See Results"} <ChevronRight className="w-4 h-4 ml-1" />
-                </Button>
-              </div>
-            )}
-
-            {!submitted && (
-              <Button onClick={handleSubmit} disabled={selectedOption === null} className="w-full">
-                Submit Answer
-              </Button>
-            )}
               </motion.div>
             </AnimatePresence>
           </div>
@@ -234,7 +181,7 @@ const Gauntlet = () => {
                   {moduleData?.title}
                 </h2>
                 <p className="text-lg text-muted-foreground mb-8 max-w-md mx-auto leading-relaxed">
-                  You passed the gauntlet — {correctCount}/{totalQuestions} correct — and earned <span className="text-foreground font-medium">+500 XP</span>.
+                  You passed the gauntlet and earned <span className="text-foreground font-medium">+500 XP</span>. {describeTallies(correctCount, totalQuestions, judged)}
                 </p>
 
                 {missedConcepts.length > 0 && (
@@ -276,7 +223,7 @@ const Gauntlet = () => {
                 </div>
                 <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-3 tracking-tight">Keep going</h2>
                 <p className="text-lg text-muted-foreground mb-2">
-                  You scored {correctCount}/{totalQuestions}.
+                  {describeTallies(correctCount, totalQuestions, judged)}
                 </p>
                 <p className="text-muted-foreground mb-8">
                   You need 6/{totalQuestions} to pass. Review the missed concepts and try again.

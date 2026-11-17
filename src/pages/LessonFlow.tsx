@@ -7,16 +7,19 @@ import { getLessonData, getLessonConcepts, getNextLessonId, getModuleIdFromLesso
 import { Button } from "@/components/ui/button";
 import { ConceptExampleCard } from "@/components/ConceptExampleCard";
 import { InlineMarkdown } from "@/components/InlineMarkdown";
-import { Check, X, ChevronRight, ChevronLeft, BookOpen, Target, Swords, BarChart3, Trophy, Clock } from "lucide-react";
+import { Check, ChevronRight, ChevronLeft, BookOpen, Target, Swords, BarChart3, Trophy, Clock } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { track } from "@/lib/analytics";
 import { setPostAuthRedirect } from "@/lib/postAuthRedirect";
+import { CardSteps, type StepKind } from "@/components/CardSteps";
+import { PostHeader, PostCounter } from "@/components/PostCard";
+import { EMPTY_TALLY, addToTally, describeTallies, type JudgedTally } from "@/lib/judgement";
 
 const easeOut = [0.23, 1, 0.32, 1] as const;
 
 const STAGES = ["Learn", "Practice", "In the Wild", "Summary"];
 const STAGE_ICONS = [BookOpen, Target, Swords, BarChart3];
-const LEARN_CARD_KINDS = ["hook", "name", "examples", "spot", "respond"] as const;
+const LEARN_CARD_KINDS = ["hook", "name", "spot", "examples", "respond"] as const;
 const NUMBER_WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
 const numberWord = (n: number) => NUMBER_WORDS[n] ?? String(n);
 
@@ -66,8 +69,10 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, authLoading, progress, 
   const [drillCorrect, setDrillCorrect] = useState(0);
   const [warzoneIndex, setWarzoneIndex] = useState(0);
   const [warzoneCorrect, setWarzoneCorrect] = useState(0);
-  const [selectedOption, setSelectedOption] = useState<number | null>(null);
-  const [submitted, setSubmitted] = useState(false);
+  // Step 2 and 3 tallies across Practice and In the Wild. Kept in memory only:
+  // XP and saved scores stay keyed to step 1, so progress storage and guest
+  // migration are untouched.
+  const [judged, setJudged] = useState<JudgedTally>(EMPTY_TALLY);
   const [learnDirection, setLearnDirection] = useState(1);
   const [previewDone, setPreviewDone] = useState(false);
   const contentRef = useRef<HTMLElement>(null);
@@ -95,12 +100,15 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, authLoading, progress, 
     contentRef.current.scrollIntoView({ block: "start", behavior: prefersReducedMotion ? "auto" : "smooth" });
   }, [stage, learnCardIndex, drillIndex, warzoneIndex, previewDone]);
 
-  // Learn stage: each concept leads with examples before the explanation.
+  // Learn stage: each concept explains how to spot it, then shows examples.
   // After the last card comes the transition into Practice.
   const concepts = getLessonConcepts(lesson);
-  const learnCards = concepts.flatMap((_, conceptIndex) =>
-    LEARN_CARD_KINDS.map(kind => ({ conceptIndex, kind })),
-  );
+  // A concept with an exception ends on a "But!" card, after Ways to Respond,
+  // so the fair cases come only once the learner has the normal pattern.
+  const learnCards = concepts.flatMap((concept, conceptIndex) => [
+    ...LEARN_CARD_KINDS.map(kind => ({ conceptIndex, kind })),
+    ...(concept.exception ? [{ conceptIndex, kind: "exception" as const }] : []),
+  ]);
   const isTransitionCard = learnCardIndex >= learnCards.length;
   const currentCard = !isTransitionCard ? learnCards[learnCardIndex] : null;
   const currentConceptIndex = currentCard?.conceptIndex ?? concepts.length - 1;
@@ -114,47 +122,38 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, authLoading, progress, 
   const advanceStage = useCallback((newStage: number) => {
     setStage(newStage);
     setStageProgress(lesson.id, newStage);
-    setSelectedOption(null);
-    setSubmitted(false);
   }, [lesson.id, setStageProgress]);
 
-  const handleDrillSubmit = () => {
-    if (selectedOption === null) return;
-    setSubmitted(true);
-    const isCorrect = selectedOption === lesson.drillQuestions[drillIndex].correctIndex;
-    if (isCorrect) setDrillCorrect(prev => prev + 1);
+  const recordJudgement = (step: StepKind, correct: boolean) => {
+    if (step === "move") return;
+    setJudged(prev => addToTally(prev, step, correct));
+  };
+
+  const handleDrillResult = (step: StepKind, correct: boolean) => {
+    if (step === "move" && correct) setDrillCorrect(prev => prev + 1);
+    recordJudgement(step, correct);
   };
 
   const handleDrillNext = () => {
     if (drillIndex + 1 < lesson.drillQuestions.length) {
       setDrillIndex(drillIndex + 1);
-      setSelectedOption(null);
-      setSubmitted(false);
     } else {
       saveDrillScore(lesson.id, drillCorrect, lesson.drillQuestions.length);
       setDrillIndex(-1);
-      setSelectedOption(null);
-      setSubmitted(false);
     }
   };
 
-  const handleWarzoneSubmit = () => {
-    if (selectedOption === null) return;
-    setSubmitted(true);
-    const isCorrect = selectedOption === lesson.warzonePosts[warzoneIndex].correctIndex;
-    if (isCorrect) setWarzoneCorrect(prev => prev + 1);
+  const handleWarzoneResult = (step: StepKind, correct: boolean) => {
+    if (step === "move" && correct) setWarzoneCorrect(prev => prev + 1);
+    recordJudgement(step, correct);
   };
 
   const handleWarzoneNext = () => {
     if (warzoneIndex + 1 < lesson.warzonePosts.length) {
       setWarzoneIndex(warzoneIndex + 1);
-      setSelectedOption(null);
-      setSubmitted(false);
     } else {
       saveWarzoneScore(lesson.id, warzoneCorrect, lesson.warzonePosts.length);
       setWarzoneIndex(-1); // transition
-      setSelectedOption(null);
-      setSubmitted(false);
     }
   };
 
@@ -320,7 +319,18 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, authLoading, progress, 
                       <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">How to spot it</h3>
                       <div className="space-y-4">
                         {currentConcept.deepDive.split("\n\n").map((para, i) => (
-                          <p key={i} className="text-base sm:text-lg text-foreground/85 leading-relaxed"><InlineMarkdown text={para} /></p>
+                          <p key={i} className="text-base sm:text-lg text-foreground/85 leading-relaxed [&_strong]:text-primary"><InlineMarkdown text={para} /></p>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {currentCardKind === "exception" && currentConcept.exception && (
+                    <div className="flex-1">
+                      <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">But!</h3>
+                      <div className="space-y-4">
+                        {currentConcept.exception.split("\n\n").map((para, i) => (
+                          <p key={i} className="text-base sm:text-lg text-foreground/85 leading-relaxed [&_strong]:text-primary"><InlineMarkdown text={para} /></p>
                         ))}
                       </div>
                     </div>
@@ -400,7 +410,7 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, authLoading, progress, 
                   className="text-center py-10 sm:py-16 rounded-xl border border-border bg-card p-6 sm:p-10"
                 >
                   <p className="text-sm text-muted-foreground mb-6">
-                    Practice: {drillCorrect}/{lesson.drillQuestions.length} correct
+                    Practice: {drillCorrect}/{lesson.drillQuestions.length} moves spotted
                   </p>
                   <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-3">Up next</p>
                   <p className="text-xl sm:text-2xl font-bold text-foreground mb-3">In the Wild</p>
@@ -423,10 +433,7 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, authLoading, progress, 
                     question={lesson.drillQuestions[drillIndex]}
                     index={drillIndex}
                     total={lesson.drillQuestions.length}
-                    selectedOption={selectedOption}
-                    submitted={submitted}
-                    onSelect={setSelectedOption}
-                    onSubmit={handleDrillSubmit}
+                    onResult={handleDrillResult}
                     onNext={handleDrillNext}
                   />
                 </motion.div>
@@ -456,7 +463,7 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, authLoading, progress, 
                 >
                   <p className="text-xl sm:text-2xl font-bold text-foreground mb-3">In the Wild done.</p>
                   <p className="text-lg text-muted-foreground mb-2">
-                    {warzoneCorrect}/{lesson.warzonePosts.length} correct
+                    {warzoneCorrect}/{lesson.warzonePosts.length} moves spotted
                   </p>
                   <p className="text-muted-foreground mb-6">That&apos;s the lesson. Here&apos;s how you did.</p>
                   <Button size="lg" onClick={finishLesson}>
@@ -475,10 +482,7 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, authLoading, progress, 
                     post={lesson.warzonePosts[warzoneIndex]}
                     index={warzoneIndex}
                     total={lesson.warzonePosts.length}
-                    selectedOption={selectedOption}
-                    submitted={submitted}
-                    onSelect={setSelectedOption}
-                    onSubmit={handleWarzoneSubmit}
+                    onResult={handleWarzoneResult}
                     onNext={handleWarzoneNext}
                   />
                 </motion.div>
@@ -501,6 +505,7 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, authLoading, progress, 
               hasSession={hasSession}
               drillScore={progress.drillScores[lesson.id]}
               warzoneScore={progress.warzoneScores[lesson.id]}
+              judged={judged}
               wasAlreadyComplete={wasAlreadyComplete}
               navigate={navigate}
             />
@@ -514,180 +519,79 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, authLoading, progress, 
 
 // ===== DRILL COMPONENT =====
 
-const DrillView = ({ question, index, total, selectedOption, submitted, onSelect, onSubmit, onNext }: {
+const DrillView = ({ question, index, total, onResult, onNext }: {
   question: DrillQuestion;
   index: number;
   total: number;
-  selectedOption: number | null;
-  submitted: boolean;
-  onSelect: (i: number) => void;
-  onSubmit: () => void;
+  onResult: (step: StepKind, correct: boolean) => void;
   onNext: () => void;
 }) => {
   const scenarioId = `drill-scenario-${index}`;
-  const questionId = `drill-question-${index}`;
   return (
     <div className="rounded-xl border border-border bg-card p-5 sm:p-8">
-      <p id={questionId} className="text-sm text-muted-foreground mb-6">Question {index + 1} of {total}</p>
+      <p className="text-sm text-muted-foreground mb-6">Question {index + 1} of {total}</p>
 
       <div
         role="region"
         aria-labelledby={scenarioId}
         className="rounded-xl bg-muted/30 border border-border p-4 sm:p-6 mb-4 sm:mb-6"
       >
-        <p id={scenarioId} className="text-foreground font-medium text-sm sm:text-base leading-relaxed italic">&ldquo;<InlineMarkdown text={question.scenario} />&rdquo;</p>
-      </div>
-
-      <p className="text-foreground text-base sm:text-lg font-semibold mb-3 sm:mb-4">What&apos;s the move here?</p>
-
-      <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6" role="radiogroup" aria-labelledby={questionId}>
-        {question.options.map((opt, i) => {
-          let classes = "w-full text-left p-3 sm:p-4 rounded-xl border transition-all duration-200 text-sm font-medium ";
-          if (submitted) {
-            if (i === question.correctIndex) {
-              classes += "border-success bg-success/10 text-success";
-            } else if (i === selectedOption && i !== question.correctIndex) {
-              classes += "border-destructive bg-destructive/10 text-destructive";
-            } else {
-              classes += "border-border/50 bg-card/50 text-muted-foreground";
-            }
-          } else if (i === selectedOption) {
-            classes += "border-primary bg-primary/10 text-primary";
-          } else {
-            classes += "border-border bg-card text-foreground hover:border-primary/50";
-          }
-          return (
-            <button key={i} onClick={() => !submitted && onSelect(i)} disabled={submitted} className={classes} role="radio" aria-checked={selectedOption === i}>
-              {opt}
-            </button>
-          );
-        })}
-      </div>
-
-      {submitted && (
-        <div className="space-y-4 mb-4 animate-fade-up">
-          <div className="rounded-xl bg-muted/20 border border-border p-4">
-            <p className="text-foreground text-base leading-relaxed"><InlineMarkdown text={question.feedback} /></p>
+        {question.dialogue?.length ? (
+          <div id={scenarioId} className="space-y-2">
+            {question.dialogue.map((d, i) => (
+              <p key={i} className="text-foreground text-sm sm:text-base leading-relaxed">
+                <span className="font-semibold text-muted-foreground">{d.speaker}:</span>{" "}
+                <InlineMarkdown text={d.line} />
+              </p>
+            ))}
           </div>
-          <Button onClick={onNext} className="w-full">
-            Next <ChevronRight className="w-4 h-4 ml-1" />
-          </Button>
-        </div>
-      )}
+        ) : (
+          <p id={scenarioId} className="text-foreground font-medium text-sm sm:text-base leading-relaxed italic">&ldquo;<InlineMarkdown text={question.scenario} />&rdquo;</p>
+        )}
+      </div>
 
-      {!submitted && (
-        <Button onClick={onSubmit} disabled={selectedOption === null} className="w-full">
-          Submit Answer
-        </Button>
-      )}
+      <CardSteps
+        key={question.id}
+        card={question}
+        moveResult={<p><InlineMarkdown text={question.feedback} /></p>}
+        onResult={onResult}
+        onNext={onNext}
+      />
     </div>
   );
 };
 
 // ===== WARZONE COMPONENT =====
 
-const WarzoneView = ({ post, index, total, selectedOption, submitted, onSelect, onSubmit, onNext }: {
+const WarzoneView = ({ post, index, total, onResult, onNext }: {
   post: WarzonePost;
   index: number;
   total: number;
-  selectedOption: number | null;
-  submitted: boolean;
-  onSelect: (i: number) => void;
-  onSubmit: () => void;
+  onResult: (step: StepKind, correct: boolean) => void;
   onNext: () => void;
-}) => {
-  const postQuestionId = `warzone-question-${index}`;
-  return (
-    <div className="rounded-xl border border-border bg-card p-5 sm:p-8">
-      <p className="text-sm text-muted-foreground mb-6">Post {index + 1} of {total}</p>
-
-      <p className="text-xs text-muted-foreground italic mb-3 sm:mb-4">Source: {post.source}</p>
-
-      <div className="rounded-xl bg-muted/30 border border-border p-4 sm:p-6 mb-3 sm:mb-4">
-        <p className="text-xs text-muted-foreground uppercase tracking-wider mb-2 font-medium">Context</p>
-        <p className="text-foreground/90 text-sm sm:text-base leading-relaxed"><InlineMarkdown text={post.context} /></p>
-      </div>
-
-      <div className="rounded-xl bg-card border border-border p-4 sm:p-6 mb-4 sm:mb-6">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-9 h-9 rounded-full bg-primary/15 flex items-center justify-center">
-            <span className="text-xs font-bold text-primary">{post.username[0]}</span>
-          </div>
-          <div>
-            <p className="text-sm font-medium text-foreground">{post.username}</p>
-            <p className="text-xs text-muted-foreground">{post.platform}</p>
-          </div>
-        </div>
-        <p className="text-foreground text-sm sm:text-base leading-relaxed italic">&ldquo;<InlineMarkdown text={post.comment} />&rdquo;</p>
-      </div>
-
-      <p id={postQuestionId} className="text-foreground text-base sm:text-lg font-semibold mb-3 sm:mb-4">What&apos;s the move here?</p>
-
-      <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6" role="radiogroup" aria-labelledby={postQuestionId}>
-        {post.options.map((opt, i) => {
-          let classes = "w-full text-left p-3 sm:p-4 rounded-xl border transition-all duration-200 text-sm font-medium ";
-          if (submitted) {
-            if (i === post.correctIndex) {
-              classes += "border-success bg-success/10 text-success";
-            } else if (i === selectedOption && i !== post.correctIndex) {
-              classes += "border-destructive bg-destructive/10 text-destructive";
-            } else {
-              classes += "border-border/50 bg-card/50 text-muted-foreground";
-            }
-          } else if (i === selectedOption) {
-            classes += "border-primary bg-primary/10 text-primary";
-          } else {
-            classes += "border-border bg-card text-foreground hover:border-primary/50";
-          }
-          return (
-            <button key={i} onClick={() => !submitted && onSelect(i)} disabled={submitted} className={classes} role="radio" aria-checked={selectedOption === i}>
-              {opt}
-            </button>
-          );
-        })}
-      </div>
-
-      {submitted && (
-        <div className="space-y-4 mb-6 animate-fade-up">
-          <div className={`rounded-xl p-4 ${selectedOption === post.correctIndex ? "bg-success/10 border border-success/30" : "bg-destructive/10 border border-destructive/30"}`}>
-            <div className="flex items-center gap-2 mb-2">
-              {selectedOption === post.correctIndex ? <Check className="w-4 h-4 text-success" /> : <X className="w-4 h-4 text-destructive" />}
-              <span className={`font-semibold text-sm ${selectedOption === post.correctIndex ? "text-success" : "text-destructive"}`}>
-                {selectedOption === post.correctIndex ? "Correct!" : "Incorrect"} — {post.options[post.correctIndex]}
-              </span>
-            </div>
-            <p className="text-foreground text-base leading-relaxed"><InlineMarkdown text={post.explanation} /></p>
-          </div>
-
-          {post.counter && (
-            <div className="border-l-2 border-primary/50 bg-primary/5 rounded-r px-4 py-3">
-              <p className="text-xs text-primary/70 font-medium uppercase tracking-wider mb-1">Counter:</p>
-              <p className="text-foreground/80 italic text-base leading-relaxed">&ldquo;<InlineMarkdown text={post.counter} />&rdquo;</p>
-            </div>
-          )}
-
-          <Button onClick={onNext} className="w-full">
-            Next <ChevronRight className="w-4 h-4 ml-1" />
-          </Button>
-        </div>
-      )}
-
-      {!submitted && (
-        <Button onClick={onSubmit} disabled={selectedOption === null} className="w-full">
-          Submit Answer
-        </Button>
-      )}
-    </div>
-  );
-};
+}) => (
+  <div className="rounded-xl border border-border bg-card p-5 sm:p-8">
+    <p className="text-sm text-muted-foreground mb-6">Post {index + 1} of {total}</p>
+    <PostHeader post={post} />
+    <CardSteps
+      key={post.id}
+      card={post}
+      moveResult={<p><InlineMarkdown text={post.explanation} /></p>}
+      after={<PostCounter counter={post.counter} />}
+      onResult={onResult}
+      onNext={onNext}
+    />
+  </div>
+);
 
 // ===== SUMMARY =====
 
-const SummaryView = ({ lesson, hasSession, drillScore, warzoneScore, wasAlreadyComplete, navigate }: {
+const SummaryView = ({ lesson, hasSession, drillScore, warzoneScore, judged, wasAlreadyComplete, navigate }: {
   lesson: NonNullable<ReturnType<typeof getLessonData>>;
   hasSession: boolean;
   drillScore?: { correct: number; total: number };
   warzoneScore?: { correct: number; total: number };
+  judged: JudgedTally;
   wasAlreadyComplete: boolean;
   navigate: ReturnType<typeof useNavigate>;
 }) => {
@@ -742,11 +646,14 @@ const SummaryView = ({ lesson, hasSession, drillScore, warzoneScore, wasAlreadyC
         </ul>
 
         <div className="border-t border-border/50 mt-4 pt-4 space-y-2">
+          {totalQuestions > 0 && (
+            <p className="text-sm text-foreground font-medium mb-3">{describeTallies(totalCorrect, totalQuestions, judged)}</p>
+          )}
           {drillScore && (
-            <p className="text-sm text-muted-foreground">Practice: <span className="text-foreground font-medium">{drillScore.correct}/{drillScore.total}</span></p>
+            <p className="text-sm text-muted-foreground">Practice: <span className="text-foreground font-medium">{drillScore.correct}/{drillScore.total}</span> moves spotted</p>
           )}
           {warzoneScore && (
-            <p className="text-sm text-muted-foreground">In the Wild: <span className="text-foreground font-medium">{warzoneScore.correct}/{warzoneScore.total}</span></p>
+            <p className="text-sm text-muted-foreground">In the Wild: <span className="text-foreground font-medium">{warzoneScore.correct}/{warzoneScore.total}</span> moves spotted</p>
           )}
           {xpEarned > 0 && (
             <p className="text-sm text-primary font-medium">+{xpEarned} XP earned</p>
