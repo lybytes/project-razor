@@ -113,7 +113,7 @@ const Index = () => {
               {...heroReveal}
               transition={{ ...heroReveal.transition, delay: 0 }}
             >
-              Critical Thinking Training
+              Intellectual Self-Defence
             </motion.span>
 
             <motion.h1
@@ -121,8 +121,8 @@ const Index = () => {
               {...heroReveal}
               transition={{ ...heroReveal.transition, delay: 0.08 }}
             >
-              Stop getting{" "}
-              <span className="text-primary">played</span>.
+              You&apos;re easier to{" "}
+              <span className="text-primary">fool</span> than you think.
             </motion.h1>
 
             <motion.p
@@ -130,7 +130,7 @@ const Index = () => {
               {...heroReveal}
               transition={{ ...heroReveal.transition, delay: 0.16 }}
             >
-              Nobody likes finding out they&apos;ve been played. And the arguments that get you usually aren&apos;t the obviously wrong ones.
+              From straw men to ad hominem attacks, flawed arguments are everywhere. Unfortunately, most people don&apos;t recognise them when they appear. Don&apos;t be one of them.
             </motion.p>
 
             <motion.p
@@ -138,7 +138,7 @@ const Index = () => {
               {...heroReveal}
               transition={{ ...heroReveal.transition, delay: 0.2 }}
             >
-              They&apos;re the ones that sound <span className="text-primary">almost right</span>. Razor trains you to catch the move, name it and answer it, before it works on you.
+              Razor trains you to spot the tricks, understand the tactics and never fall for the same arguments twice.
             </motion.p>
 
             <motion.div
