@@ -19,7 +19,7 @@ const easeOut = [0.23, 1, 0.32, 1] as const;
 
 const STAGES = ["Learn", "Practice", "In the Wild", "Summary"];
 const STAGE_ICONS = [BookOpen, Target, Swords, BarChart3];
-const LEARN_CARD_KINDS = ["hook", "name", "examples", "spot", "respond"] as const;
+const LEARN_CARD_KINDS = ["hook", "name", "spot", "examples", "respond"] as const;
 const NUMBER_WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
 const numberWord = (n: number) => NUMBER_WORDS[n] ?? String(n);
 
@@ -100,7 +100,7 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, authLoading, progress, 
     contentRef.current.scrollIntoView({ block: "start", behavior: prefersReducedMotion ? "auto" : "smooth" });
   }, [stage, learnCardIndex, drillIndex, warzoneIndex, previewDone]);
 
-  // Learn stage: each concept leads with examples before the explanation.
+  // Learn stage: each concept explains how to spot it, then shows examples.
   // After the last card comes the transition into Practice.
   const concepts = getLessonConcepts(lesson);
   // A concept with an exception ends on a "But!" card, after Ways to Respond,
