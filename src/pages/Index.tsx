@@ -107,6 +107,7 @@ const Index = () => {
         >
           <HeroBackground mouseX={mouseX} mouseY={mouseY} />
           <div className="relative z-10 w-full container mx-auto px-4">
+           <div className="max-w-5xl mx-auto">
            <div className="max-w-4xl">
             <motion.span
               className="inline-block text-xs sm:text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-6"
@@ -138,7 +139,7 @@ const Index = () => {
               {...heroReveal}
               transition={{ ...heroReveal.transition, delay: 0.2 }}
             >
-              Razor trains you to spot the tricks, understand the tactics and never fall for the same arguments twice.
+              Razor is training for intellectual self-defence, so you never fall for the same trick twice.
             </motion.p>
 
             <motion.div
@@ -159,12 +160,13 @@ const Index = () => {
               </Button>
             </motion.div>
            </div>
+           </div>
           </div>
         </section>
 
         {/* Problem Statement */}
         <section className="container mx-auto px-4 py-20 sm:py-28">
-          <motion.div className="max-w-5xl" {...reveal}>
+          <motion.div className="max-w-5xl mx-auto" {...reveal}>
             <h2 className="text-3xl sm:text-4xl font-bold mb-12 tracking-tight">Why this matters</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-6">
               {stats.map((card, i) => (
@@ -179,7 +181,7 @@ const Index = () => {
 
         {/* How It Works */}
         <section className="container mx-auto px-4 py-20 sm:py-28">
-          <motion.div className="max-w-5xl" {...reveal}>
+          <motion.div className="max-w-5xl mx-auto" {...reveal}>
             <h2 className="text-3xl sm:text-4xl font-bold mb-16 tracking-tight">How Project Razor works</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 sm:gap-8">
               {steps.map((step, i) => (
@@ -199,7 +201,7 @@ const Index = () => {
 
         {/* Knowledge Library */}
         <section className="container mx-auto px-4 py-20 sm:py-28">
-          <motion.div className="max-w-5xl" {...reveal}>
+          <motion.div className="max-w-5xl mx-auto" {...reveal}>
             <h2 className="text-3xl sm:text-4xl font-bold mb-12 tracking-tight">Knowledge Library</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {learnCards.map((card, i) => (
@@ -224,7 +226,7 @@ const Index = () => {
         {/* Motivational Banner */}
         <section className="py-20 sm:py-28 border-y border-border/50 bg-gradient-to-br from-primary/[0.04] to-transparent">
           <motion.div
-            className="container mx-auto px-4 max-w-4xl"
+            className="mx-auto px-4 max-w-[66rem]"
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
