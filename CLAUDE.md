@@ -126,7 +126,9 @@ From the round 1 feedback spec, section G. British spelling.
 4. Every factual claim in `context`, `explanation` or `counter` must be checkable. Label invented posts "Illustrative scenario"; don't attribute made-up details to real people or real policies.
 5. Step 3 distractors must be clearly worse checks, not reasonable alternatives.
 
-Card data shape: `DrillQuestion` / `WarzonePost` in `src/data/courseData.ts` (`verdict`, `verdictWhy`, `whatToCheck`, optional `dialogue` on Practice cards). Cards without a verdict play step 1 only.
+Card data shape: `DrillQuestion` / `WarzonePost` in `src/data/courseData.ts` (`verdict`, `verdictWhy`, `whatToCheck`, optional `dialogue` on Practice cards). Cards without a verdict play step 1 only. "No tactic, straight argument" cards never get a verdict in any stage: there's no move to judge, so they end after step 1.
+
+**Same argument, same verdict.** If two cards make essentially the same argument (e.g. "it's lasted 700 years"), they get the same verdict, or the scenarios must differ in the detail that justifies a different one, and the `verdictWhy` must name that detail.
 
 ## Repo entry points (quick map)
 
