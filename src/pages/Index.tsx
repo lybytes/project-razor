@@ -28,11 +28,11 @@ const stats = [
   },
   {
     stat: "Seconds",
-    desc: "That's how quickly a bad argument can sink. Learn to recognise the trick before you're fooled.",
+    desc: "That's how quickly a bad argument can sink in. Learn to recognise the trick before you're fooled.",
   },
   {
     stat: "Rarely taught",
-    desc: "Most people are never taught how arguments work or how easily they can be manipulated. Don't let yourself become them.",
+    desc: "Most people are never taught how arguments work or how easily they can be manipulated. Don't be one of them.",
   },
 ];
 
@@ -69,7 +69,7 @@ const learnCards = [
   },
   {
     title: "Bad-Faith Tactics",
-    desc: "When truth is no longer the goal: it's winning. Recognise tactics commonly used to derail discussion, distort reality, and avoid accountability, from gaslighting and whataboutism to moving the goalposts.",
+    desc: "When the goal is winning, not the truth. Recognise tactics commonly used to derail discussion, distort reality, and avoid accountability, from gaslighting and whataboutism to moving the goalposts.",
     link: "/learn/bad-faith-arguments",
     linkText: "Explore Tactics",
   },
