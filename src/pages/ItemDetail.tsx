@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { Navigation } from "@/components/Navigation";
-import { Button } from "@/components/ui/button";
 import fallacies from "@/data/fallacies.json";
 import biases from "@/data/biases.json";
 import badFaith from "@/data/bad-faith.json";
@@ -10,7 +9,7 @@ import { ConceptExampleCard } from "@/components/ConceptExampleCard";
 import { PracticeThisLink } from "@/components/PracticeThisLink";
 import { InlineMarkdown } from "@/components/InlineMarkdown";
 import { PageShell } from "@/components/PageShell";
-import { ArrowLeft, BookOpen } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { motion, useScroll, useSpring } from "motion/react";
 
 const easeOut = [0.23, 1, 0.32, 1] as const;
@@ -332,7 +331,7 @@ const ConceptDetail = ({
               >
                 <SectionLabel>Examples</SectionLabel>
                 <h2 className="text-2xl font-bold text-foreground mb-6">See it in action</h2>
-                <div className="space-y-4 sm:space-y-5">
+                <div className="rounded-xl border border-border bg-card/50 p-5 sm:p-6 divide-y divide-border/60">
                   {item.examples.map((example, idx) => (
                     <ConceptExampleCard key={idx} example={example} index={idx} />
                   ))}
@@ -358,8 +357,14 @@ const ConceptDetail = ({
                       viewport={{ once: true, margin: "-60px" }}
                       transition={{ ...reveal, delay: idx * 0.08 }}
                     >
-                      <h3 className="text-lg font-semibold text-foreground mb-2">{point.title}</h3>
-                      <p className="text-base text-foreground/80 leading-relaxed mb-4"><InlineMarkdown text={point.text} /></p>
+                      {point.title ? (
+                        <>
+                          <h3 className="text-lg font-semibold text-foreground mb-2">{point.title}</h3>
+                          <p className="text-base text-foreground/80 leading-relaxed mb-4"><InlineMarkdown text={point.text} /></p>
+                        </>
+                      ) : (
+                        <h3 className="text-lg font-semibold text-foreground mb-3"><InlineMarkdown text={point.text} /></h3>
+                      )}
                       <blockquote className="border-l-2 border-primary/70 bg-primary/[0.03] rounded-r-lg pl-5 pr-4 py-3">
                         <p className="text-base italic text-foreground/90">
                           &ldquo;<InlineMarkdown text={point.comeback} />&rdquo;

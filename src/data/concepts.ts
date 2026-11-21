@@ -15,7 +15,8 @@ export interface ConceptExample {
 }
 
 export interface ConceptRefutation {
-  title: string;
+  /** Older library entries have a short title; course entries are a single line in `text`. */
+  title?: string;
   text: string;
   comeback: string;
 }
