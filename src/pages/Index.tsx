@@ -23,16 +23,16 @@ const heroReveal = {
 
 const stats = [
   {
-    stat: "~50 tactics",
-    desc: "logical fallacies and manipulation tricks are reused constantly by advertisers, politicians, and state actors. Most people can't name five.",
+    stat: "50+ tactics",
+    desc: "A playbook of logical fallacies, cognitive biases and manipulation tactics used to influence conversations, opinions, and decisions.",
   },
   {
     stat: "Seconds",
-    desc: "is how long it takes a bad argument to work. You feel something's off but can't name why before the moment's gone",
+    desc: "That's how quickly a bad argument can sink in. Learn to recognise the trick before you're fooled.",
   },
   {
-    stat: "Almost never taught",
-    desc: "most people will never learn how an argument is actually built, and more importantly how it's rigged.",
+    stat: "Rarely taught",
+    desc: "Most people are never taught how arguments work or how easily they can be manipulated. Don't be one of them.",
   },
 ];
 
@@ -40,36 +40,36 @@ const steps = [
   {
     num: "01",
     title: "Learn the tactics",
-    desc: "Each lesson introduces 2–3 real logical fallacies, from strawmanning to slippery slopes, with clear explanations and real-world examples.",
+    desc: "In our course, each lesson is bite-size and introduces 2–3 logical fallacies or manipulation tactics with clear explanations, memorable examples, and practical ways to call them out.",
   },
   {
     num: "02",
-    title: "Train on real content",
-    desc: "Practice spotting fallacies in the real world, from comment sections to ads and political discourse.",
+    title: "Train on real arguments",
+    desc: "Put your knowledge to the test by practicing spotting flawed reasoning in real-world examples, from social media posts and comment sections to advertisements and political debates. We'll train you for the real world.",
   },
   {
     num: "03",
     title: "Build the reflex",
-    desc: "Daily practice and rising difficulty turn recognition into instinct. After a while you'll spot the moves in real time.",
+    desc: "By introducing progressively harder exercises, we'll help turn conscious analysis into instinct. We firmly believe that the more you practice, the faster you'll be able to recognise these fallacies and tactics.",
   },
 ];
 
 const learnCards = [
   {
     title: "Logical Fallacies",
-    desc: "Flawed arguments disguised as sound reasoning. Personal attacks, strawmen, false dilemmas, slippery slopes. These are the tricks used to win arguments dishonestly.",
+    desc: "Flawed reasoning disguised as sound argument. From straw men and false dilemmas to slippery slopes and personal attacks, explore the reasoning errors that make bad arguments seem convincing.",
     link: "/learn/logical-fallacies",
     linkText: "Explore Fallacies",
   },
   {
     title: "Cognitive Biases",
-    desc: "The mental shortcuts your brain takes that make you vulnerable to manipulation. Confirmation bias, availability heuristic, anchoring.",
+    desc: "The mental shortcuts that shape how you and those around you think. Your brain relies on shortcuts that can distort judgment and make you vulnerable to manipulation. Explore confirmation bias, anchoring, availability bias, and more.",
     link: "/learn/cognitive-biases",
     linkText: "Explore Biases",
   },
   {
     title: "Bad-Faith Tactics",
-    desc: "Deliberate manipulation techniques used in arguments and debate. Gaslighting, moving the goalposts, whataboutism. These are used every day in politics and online discourse.",
+    desc: "When the goal is winning, not the truth. Recognise tactics commonly used to derail discussion, distort reality, and avoid accountability, from gaslighting and whataboutism to moving the goalposts.",
     link: "/learn/bad-faith-arguments",
     linkText: "Explore Tactics",
   },
@@ -182,7 +182,7 @@ const Index = () => {
         {/* How It Works */}
         <section className="container mx-auto px-4 py-20 sm:py-28">
           <motion.div className="max-w-5xl mx-auto" {...reveal}>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-16 tracking-tight">How Project Razor works</h2>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-16 tracking-tight">How Razor works</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 sm:gap-8">
               {steps.map((step, i) => (
                 <div key={i} className="relative">
