@@ -21,6 +21,8 @@ export const lesson2_1: LessonData = {
       options: ["Appeal to Consequences", "Appeal to Emotion", "No tactic, straight argument", "Strawman"],
       correctIndex: 1,
       feedback: "Guilt is doing the work here. Nothing has been said about whether the leave request is actually unreasonable.",
+      verdict: "dodge",
+      verdictWhy: "Caring about the team doesn't decide whether the leave request is reasonable. The guilt is standing in for a reason.",
     },
     {
       id: "d2-1-2",
@@ -28,6 +30,17 @@ export const lesson2_1: LessonData = {
       options: ["Appeal to Emotion", "No tactic, straight argument", "Appeal to Consequences", "Red Herring"],
       correctIndex: 2,
       feedback: "The shortfall is either there or it isn't. What it would mean for people's retirement plans is a consequence of the number, not a reason the number is wrong.",
+      verdict: "check",
+      verdictWhy: "Wanting the number to be wrong isn't a reason it is. But a shortfall that big is worth double-checking, as long as you check the figures rather than the fallout.",
+      whatToCheck: {
+        options: [
+          "Recheck the fund's figures and the assumptions behind them",
+          "Ask how many staff would be upset",
+          "Wait and see who retires late",
+        ],
+        correctIndex: 0,
+        feedback: "Check the numbers themselves. How bad the result would be doesn't tell you whether they're right.",
+      },
     },
     {
       id: "d2-1-3",
@@ -63,6 +76,8 @@ export const lesson2_1: LessonData = {
       correctIndex: 1,
       explanation: "Parenting under these conditions is genuinely hard, and that's a real reason to want a policy that works — which is exactly why the compliance rate matters. The comment ends by dismissing it. How difficult a problem is tells you nothing about whether a particular solution is working.",
       counter: "It is hard, and that's the reason the enforcement figure matters rather than a reason to ignore it. If eight in ten are still getting through, is this the thing that helps?",
+      verdict: "dodge",
+      verdictWhy: "How hard parenting is right now doesn't tell you whether this ban is working. The feeling is used to wave the figures away.",
     },
 
     {
@@ -76,6 +91,8 @@ export const lesson2_1: LessonData = {
       correctIndex: 1,
       explanation: "Every objection raised is about how unacceptable the implications would be — not about sample sizes, confounders, or methodology. The size of a conclusion's consequences has no bearing on whether the evidence supports it.",
       counter: "Those implications would be enormous, agreed. But that's a reason to check the studies carefully, not a reason they're wrong. What's the actual methodological problem?",
+      verdict: "check",
+      verdictWhy: "How big the implications are isn't evidence against the research. But whether UPF research is really settled is a fair question, as long as you answer it by looking at the studies.",
     },
     {
       id: "w2-1c",
@@ -88,6 +105,8 @@ export const lesson2_1: LessonData = {
       correctIndex: 1,
       explanation: "Attachment to a place is genuine and worth taking seriously — but it isn't an argument about whether the proposals are well-designed. Feeling something and having an objection are different things, and only one of them can be answered.",
       counter: "That connection to the place is real and worth protecting. So which part of the proposal actually threatens it — and is there a version of it that wouldn't?",
+      verdict: "check",
+      verdictWhy: "The feelings don't tell you whether the plans are good. But they point at something real, what the place is like to live in, and it's fair to check the proposals against that.",
     },
   ],
 };
@@ -113,6 +132,8 @@ export const lesson2_2: LessonData = {
       options: ["Appeal to Ridicule", "No tactic, straight argument", "Tone Policing", "Attacking the Person"],
       correctIndex: 2,
       feedback: "The point is conceded to possibly exist, then dismissed entirely on delivery. Tone becomes the price of being heard.",
+      verdict: "dodge",
+      verdictWhy: "How someone says it doesn't change whether they have a point. Refusing to engage means the point never gets answered.",
     },
     {
       id: "d2-2-3",
@@ -127,6 +148,8 @@ export const lesson2_2: LessonData = {
       options: ["Appeal to Ridicule", "Tone Policing", "No tactic, straight argument", "Appeal to Emotion"],
       correctIndex: 0,
       feedback: "Sarcasm doing the work of a rebuttal. No flaw in the analysis is ever named.",
+      verdict: "dodge",
+      verdictWhy: "Sarcasm about spreadsheets doesn't name anything wrong with the maths. If the numbers are off, say which ones.",
     },
     {
       id: "d2-2-5",
@@ -148,6 +171,8 @@ export const lesson2_2: LessonData = {
       correctIndex: 1,
       explanation: "There's a real argument available here about whether enforcement is feasible — but this comment doesn't make it. It performs contempt instead. Strip the mockery and there's no stated objection left to answer.",
       counter: "If the point is that age verification is technically defeatable, that's worth arguing. What's the actual claim — that it can't work, or that it isn't worth the cost?",
+      verdict: "check",
+      verdictWhy: "The mockery isn't an argument. But it points at a real question, whether age checks can actually be enforced, and the enforcement figures make that worth checking.",
     },
       {
       id: "w2-2b",
@@ -160,6 +185,8 @@ export const lesson2_2: LessonData = {
       correctIndex: 2,
       explanation: "The error is conceded outright, and then the argument is set aside entirely because of how people are expressing it. Anger about a breach of editorial standards isn't evidence there was no breach — and the live question, whether this was a one-off or a pattern, never gets touched.",
       counter: "The anger isn't the question. Was this an isolated error or a pattern, and are two resignations a proportionate response? Both of those are answerable.",
+      verdict: "dodge",
+      verdictWhy: "The anger in the replies doesn't tell you whether this was a one-off or a pattern. Refusing to engage leaves that question unanswered.",
     },
 
     {
@@ -173,6 +200,8 @@ export const lesson2_2: LessonData = {
       correctIndex: 0,
       explanation: "Aimed at the sceptic rather than at the policy, but the move is identical: mockery replaces a reason. Asking for trial evidence is a normal request, and 'look outside' is not an answer to it.",
       counter: "Mocking the request doesn't answer it. What's the evidence that the specific processing markers in this bill are what's causing harm?",
+      verdict: "dodge",
+      verdictWhy: "Mocking a request for evidence doesn't supply any. 'Look outside' isn't data.",
     },
   ],
 };
@@ -198,6 +227,8 @@ export const lesson2_3: LessonData = {
       options: ["Appeal to Tradition", "Appeal to Nature", "Bandwagon Fallacy", "Appeal to Consequences"],
       correctIndex: 2,
       feedback: "Widespread adoption is the only reason given. Nothing is offered about whether the tools actually deliver.",
+      verdict: "dodge",
+      verdictWhy: "Lots of companies doing it tells you nothing about whether it works for you. No reason is given beyond the crowd.",
     },
     {
       id: "d2-3-3",
@@ -219,6 +250,8 @@ export const lesson2_3: LessonData = {
       options: ["Bandwagon Fallacy", "Appeal to Nature", "No tactic, straight argument", "Appeal to Tradition"],
       correctIndex: 1,
       feedback: "Naturalness is treated as cancelling any concern about dose. Plenty of natural compounds are perfectly safe in a cup and harmful in a litre.",
+      verdict: "dodge",
+      verdictWhy: "Natural doesn't mean safe in any amount. How much you drink matters whatever it's made from.",
     },
   ],
   warzonePosts: [
@@ -233,6 +266,8 @@ export const lesson2_3: LessonData = {
       correctIndex: 1,
       explanation: "Longevity is the whole argument. The comment gestures at there being a reason the Lords survived but never says what it is — which is precisely the gap. A defence of tradition becomes an argument the moment it names the function being preserved.",
       counter: "Seven hundred years isn't the case for it — what specifically does the chamber do well that a reformed one wouldn't? That's a defence I could actually weigh.",
+      verdict: "check",
+      verdictWhy: "Seven hundred years isn't a case on its own. But something that's lasted that long might be doing a useful job, so it's fair to ask what that job is before changing it.",
     },
     {
       id: "w2-3b",
@@ -245,6 +280,8 @@ export const lesson2_3: LessonData = {
       correctIndex: 1,
       explanation: "Adoption is the entire argument, and 'I don't need a case study' says the quiet part out loud. The context makes it sharper: 79% are adopting, 23% have scaled anything, and a projected 40%-plus of projects will be cancelled. Lots of people doing something is not evidence it works.",
       counter: "79% starting isn't 79% succeeding — only 23% have scaled anything. What's the evidence on outcomes rather than on adoption?",
+      verdict: "dodge",
+      verdictWhy: "Lots of companies starting something tells you about hype, not results. The context shows how far apart adoption and success are.",
     },
     {
       id: "w2-3c",
@@ -257,6 +294,8 @@ export const lesson2_3: LessonData = {
       correctIndex: 2,
       explanation: "Stated as a rule, this classifies hemlock as safe and insulin as unsafe. Origin isn't a safety property — dose, mechanism, and evidence are. There may well be a good case against specific additives, but 'it came from a factory' isn't it.",
       counter: "By that rule hemlock's fine and insulin isn't. Which specific additives, doing what, at what dose? That's an argument I can check.",
+      verdict: "dodge",
+      verdictWhy: "Where something comes from doesn't make it safe or unsafe. By this rule hemlock is safe and insulin isn't.",
     },
   ],
 };
@@ -276,6 +315,17 @@ export const gauntlet2Questions: WarzonePost[] = [
     correctIndex: 1,
     explanation: "The reasoning runs backwards from an unacceptable outcome to a defect in the research, without identifying the defect. 'A conclusion nobody can accept' describes how we'd feel about a finding, not whether it's supported.",
     counter: "If the implications are that serious, that's a reason to scrutinise the method closely rather than assume it's flawed. Which part of it doesn't hold up?",
+    verdict: "check",
+    verdictWhy: "How unwelcome a finding would be isn't evidence that it's wrong. But questioning a study's method is fair, as long as you actually look at the method.",
+    whatToCheck: {
+      options: [
+        "How did the regulator measure whether teens were still getting on?",
+        "How many countries are copying the ban?",
+        "How long did parliament spend on the law?",
+      ],
+      correctIndex: 0,
+      feedback: "If you doubt a finding, check how it was measured. How bad it would be if true doesn't come into it.",
+    },
   },
   {
     id: "g2-2",
@@ -288,6 +338,8 @@ export const gauntlet2Questions: WarzonePost[] = [
     correctIndex: 1,
     explanation: "The accuracy of the numbers is explicitly granted and then set aside entirely because of delivery. Note the difference from asking someone to stop the insults: here engagement is withheld altogether, which means the argument never has to be answered.",
     counter: "Fair on the insults, and I'll drop them. The compliance numbers are still on the table though — do you dispute them or not?",
+    verdict: "dodge",
+    verdictWhy: "The numbers are granted, then ignored because of how they were argued. Calling out the insults is fair; refusing to deal with the figures isn't.",
   },
   {
     id: "g2-3",
@@ -312,6 +364,17 @@ export const gauntlet2Questions: WarzonePost[] = [
     correctIndex: 1,
     explanation: "The experience is real and it's on-topic, so this isn't a red herring. What makes it the fallacy is the final line, which puts the image in place of an argument and says so outright — no claim is made about what any specific policy would change.",
     counter: "That's a real cost and it's exactly why this matters. So which part of the reform would change it, and by how much?",
+    verdict: "check",
+    verdictWhy: "The image is doing the arguing, and she says so herself. But the experience is real and on topic, so it's fair to check what the reforms would actually change for people in her position.",
+    whatToCheck: {
+      options: [
+        "Would the planning reforms actually make renting cheaper for people like her?",
+        "How long did she live as a guardian?",
+        "Is the building she lived in still empty?",
+      ],
+      correctIndex: 0,
+      feedback: "Her story shows what's at stake. Whether a specific policy fixes it is the part you can check.",
+    },
   },
   {
     id: "g2-5",
@@ -324,6 +387,17 @@ export const gauntlet2Questions: WarzonePost[] = [
     correctIndex: 1,
     explanation: "Harder than it looks, because sector convergence can be weak evidence. But 'convergence IS the due diligence' explicitly substitutes adoption for outcome data — and with a projected 40%-plus cancellation rate, banks adopting simultaneously is at least as consistent with shared hype as with shared verification.",
     counter: "Regulated sectors have converged on things that didn't work before. What are the actual outcomes in those compliance workflows?",
+    verdict: "check",
+    verdictWhy: "Banks moving together isn't proof the technology works, and the context points to a lot of hype. But it's fair to check what those compliance teams actually found, because that would settle it.",
+    whatToCheck: {
+      options: [
+        "What results have the banks reported from those compliance workflows?",
+        "How many banks are in the sector?",
+        "Are these banks well known?",
+      ],
+      correctIndex: 0,
+      feedback: "Adoption tells you what they bought. Outcomes tell you whether it worked.",
+    },
   },
   {
     id: "g2-6",
@@ -348,6 +422,17 @@ export const gauntlet2Questions: WarzonePost[] = [
     correctIndex: 1,
     explanation: "There is a serious argument that platform regulation is poorly matched to fast-moving disinformation. This isn't it — it's contempt with nothing underneath. Remove the emoji and sarcasm and no objection survives, which is the test.",
     counter: "If the claim is that the Act's mechanisms are too slow for something like this, say that and we can look at the timelines. What's the actual objection?",
+    verdict: "check",
+    verdictWhy: "Mocking the Act isn't an argument. But under the jokes is a real claim, that regulation is too slow for a fast-moving crisis, and that's fair to check.",
+    whatToCheck: {
+      options: [
+        "How quickly can the Act's rules act on false posts during a crisis?",
+        "Who wrote the Online Safety Act?",
+        "How many arrests followed the riots?",
+      ],
+      correctIndex: 0,
+      feedback: "The joke hides a real question: is the Act fast enough? That's checkable. The mockery isn't.",
+    },
   },
   {
     id: "g2-8",
@@ -360,6 +445,8 @@ export const gauntlet2Questions: WarzonePost[] = [
     correctIndex: 1,
     explanation: "There's a trace of Appeal to Tradition in the great-grandmother framing, but the load-bearing claim is natural-equals-good, synthetic-equals-harmful, stated as a general rule. 'If it needs a chemical name' is a claim about naming conventions, not about biology — water has one.",
     counter: "Every substance has a chemical name, including water. Which of these additives does what, and at what dose? That's the version of this I could actually check.",
+    verdict: "dodge",
+    verdictWhy: "'Natural' and 'has a chemical name' say nothing about what a substance does in your body. Water has a chemical name too.",
   },
   {
     id: "g2-9",
@@ -372,6 +459,17 @@ export const gauntlet2Questions: WarzonePost[] = [
     correctIndex: 0,
     explanation: "Age and survival carry the whole weight. 'Not accidents' hints there's a function worth preserving but never names it — and a defence of a long-standing arrangement only becomes an argument once it says what the arrangement actually achieves.",
     counter: "What does unlimited amendment specifically protect that a time-limited version wouldn't? If there's a real function there, name it and I'll take it seriously.",
+    verdict: "check",
+    verdictWhy: "Lasting since 1911 isn't a reason on its own. But a rule that's held that long may be doing a job, so it's fair to ask what that job is before changing it.",
+    whatToCheck: {
+      options: [
+        "What does unlimited amendment protect against that a time limit wouldn't?",
+        "Who signed the 1911 settlement?",
+        "How long has the commenter followed politics?",
+      ],
+      correctIndex: 0,
+      feedback: "Ask what the arrangement actually achieves. If he can name it, there's an argument to weigh.",
+    },
   },
   {
     id: "g2-10",
@@ -384,5 +482,7 @@ export const gauntlet2Questions: WarzonePost[] = [
     correctIndex: 2,
     explanation: "Module 1 callback. A right to request with a justification requirement is restated as employees unilaterally declaring their terms — a position nobody proposed. The closing line adds a personal attack, but the primary move is attacking a distorted version of the bill.",
     counter: "The bill requires employers to justify refusal, not to accept every request. Do you object to the justification requirement itself?",
+    verdict: "dodge",
+    verdictWhy: "A right to ask, with employers needing a reason to refuse, isn't employees declaring their own terms. The comment argues against a bill nobody proposed.",
   },
 ];

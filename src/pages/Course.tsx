@@ -292,7 +292,7 @@ const Course = () => {
                                   <div className="min-w-0 flex-1">
                                     <p className="text-sm sm:text-base font-semibold text-foreground">Module {mod.id} Gauntlet</p>
                                     <p className="text-xs sm:text-sm text-muted-foreground">
-                                      {moduleLessonsComplete ? "10 mixed questions — your hardest challenge" : "Complete all lessons to unlock"}
+                                      {moduleLessonsComplete ? `${getGauntletQuestions(mod.id).length} posts, mixing every tactic in the module` : "Complete all lessons to unlock"}
                                     </p>
                                   </div>
                                   {moduleLessonsComplete ? (
@@ -300,7 +300,11 @@ const Course = () => {
                                       to={`/train/gauntlet/${mod.id}`}
                                       className={`shrink-0 inline-flex items-center h-8 px-3 rounded-md text-xs font-medium transition-colors ${progress.gauntletComplete[String(mod.id)] ? "border border-border bg-background text-foreground" : "bg-amber-500 text-amber-950"}`}
                                     >
-                                      {progress.gauntletComplete[String(mod.id)] ? `Score: ${progress.gauntletScore[String(mod.id)]}/10` : "Start"}
+                                      {progress.gauntletComplete[String(mod.id)]
+                                        ? typeof progress.gauntletScore[String(mod.id)] === "number"
+                                          ? `Score: ${progress.gauntletScore[String(mod.id)]}/${getGauntletQuestions(mod.id).length}`
+                                          : "Completed"
+                                        : "Start"}
                                     </Link>
                                   ) : (
                                     <Lock className="w-4 h-4 text-muted-foreground shrink-0" />
