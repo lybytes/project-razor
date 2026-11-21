@@ -74,6 +74,9 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, authLoading, progress, 
   // migration are untouched.
   const [judged, setJudged] = useState<JudgedTally>(EMPTY_TALLY);
   const [learnDirection, setLearnDirection] = useState(1);
+  // Only one example explanation open at a time; closed again on each new card.
+  const [openExample, setOpenExample] = useState<number | null>(null);
+  useEffect(() => setOpenExample(null), [learnCardIndex]);
   const [previewDone, setPreviewDone] = useState(false);
   const contentRef = useRef<HTMLElement>(null);
   const lessonStartTracked = useRef(false);
@@ -339,9 +342,16 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, authLoading, progress, 
                   {currentCardKind === "examples" && (
                     <div className="flex-1">
                       <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">Examples</h3>
-                      <div className="space-y-4">
+                      <div className="divide-y divide-border/60">
                         {currentConcept.examples.map((example, i) => (
-                          <ConceptExampleCard key={i} example={example} index={i} collapsible />
+                          <ConceptExampleCard
+                            key={i}
+                            example={example}
+                            index={i}
+                            collapsible
+                            open={openExample === i}
+                            onToggle={() => setOpenExample(prev => (prev === i ? null : i))}
+                          />
                         ))}
                       </div>
                     </div>
@@ -350,22 +360,21 @@ const LessonFlowInner = ({ lesson, navigate, hasSession, authLoading, progress, 
                   {currentCardKind === "respond" && (
                     <div className="flex-1">
                       <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">Ways to Respond</h3>
-                      <ul className="space-y-5 sm:space-y-6">
+                      <ol className="space-y-6">
                         {currentConcept.refutation.map((strategy, i) => (
                           <li key={i} className="flex gap-3">
-                            <span className="text-success mt-0.5 text-base font-bold">{i + 1}.</span>
-                            <div className="flex-1">
-                              <p className="text-base text-foreground/90 leading-relaxed">
-                                <span className="font-bold text-foreground">{strategy.title}: </span>
+                            <span className="text-sm font-bold text-primary w-5 shrink-0 pt-1">{i + 1}</span>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-base sm:text-lg font-semibold text-foreground leading-relaxed">
                                 <InlineMarkdown text={strategy.text} />
                               </p>
-                              <div className="border-l-2 border-primary/50 bg-primary/5 rounded-r px-4 py-2 mt-2">
-                                <p className="text-base text-foreground/80 italic leading-relaxed">&ldquo;<InlineMarkdown text={strategy.comeback} />&rdquo;</p>
-                              </div>
+                              <p className="mt-2 border-l-2 border-primary/50 pl-4 text-base text-foreground/80 italic leading-relaxed">
+                                &ldquo;<InlineMarkdown text={strategy.comeback} />&rdquo;
+                              </p>
                             </div>
                           </li>
                         ))}
-                      </ul>
+                      </ol>
                     </div>
                   )}
 

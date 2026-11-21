@@ -4,7 +4,7 @@
 
 ## What this is
 
-Project Razor is a gamified critical-thinking trainer — "Duolingo for spotting bad arguments." It teaches users to identify logical fallacies, cognitive biases, and bad-faith rhetorical tactics using real-world examples. Core learning loop: **Learn → Drill → Warzone → Gauntlet**. Solo founder (Billy) drives product; you handle implementation.
+Project Razor is a gamified critical-thinking trainer — "Duolingo for spotting bad arguments." It teaches users to identify logical fallacies, cognitive biases, and bad-faith rhetorical tactics using real-world examples. Core learning loop: **Learn → Practice → In the Wild → Gauntlet**. Solo founder (Billy) drives product; you handle implementation.
 
 **One hard brand constraint:** intellectual honesty. The product teaches people to detect puffery and unverified claims, so its own copy must contain none. This matters most for legal pages and any user-facing text — draft from real facts, never invent. If a fact isn't available, ask; don't fill the gap.
 
@@ -76,7 +76,7 @@ Migration reference: `supabase/migrations/20250101000000_initial_schema.sql`.
 
 ### 5. Mobile
 Default buttons/inputs are 40px; nav links and the password-visibility toggle lack a padded target — below the 44px minimum. Fix shared controls + nav + password toggle.
-**Done when:** Learn → Drill → Warzone → completion wall → signup → confirmation/return is fully usable at 375px (touch): no horizontal scroll, tap targets ≥44px, legible without zoom. Include keyboard-open layout, long-answer wrapping, disabled/submitted states, scrolling, progress retention. Re-run after CAPTCHA + legal links land.
+**Done when:** Learn → Practice → In the Wild → completion wall → signup → confirmation/return is fully usable at 375px (touch): no horizontal scroll, tap targets ≥44px, legible without zoom. Include keyboard-open layout, long-answer wrapping, disabled/submitted states, scrolling, progress retention. Re-run after CAPTCHA + legal links land.
 
 ### 6. Tier 2
 - **Spam protection:** Cloudflare **Turnstile** via Supabase's supported CAPTCHA integration (site key public, secret in Supabase server-side config). A frontend-only honeypot doesn't protect direct calls to the public signup endpoint. Test expired/missing tokens and normal sign-in/password-reset.
@@ -110,6 +110,23 @@ From the round 1 feedback spec, section G. British spelling.
 - Banned: "moreover", "furthermore", "it's worth noting", "the substance of the argument", stacked em dashes, and three-part lists added for rhythm.
 - Plain names first. User-facing stage names are Learn → Practice → In the Wild → Gauntlet; tactic titles are plain ("Attacking the Person", "You Do It Too") with the Latin in a small "also known as" line (`formalName` on the concept). No in-house acronyms (e.g. "BFBA") in user-facing text.
 - Internal identifiers (`drillQuestions`, `warzonePosts`, `drillScores`, `warzoneScores`, the `social-warzone` route) keep their old names on purpose: they are persisted in `localStorage` and guest migration, so renaming them would break saved progress.
+
+## Content rules for course cards (round 1 spec, B6 and B7)
+
+**Stage difficulty is a contract.** Every card goes in the stage that matches how hard it is to judge:
+- **Learn:** definitions, how to spot it, examples, ways to respond, and the "when it's fair" framing (a "But!" card via `exception` where a tactic has one).
+- **Practice:** clear, pattern-teaching cases with mostly obvious verdicts. Every card has step 1; about a third add step 2, chosen to teach the line. Every fair-attack card and every contrast pair must include step 2.
+- **In the Wild:** messier posts where context decides. Every card has steps 1 and 2.
+- **Gauntlet:** an adversarial mix. Every card has steps 1 and 2, plus step 3 on "check" and "fair" verdicts, including traps where the tactic is real but the verdict is "fair".
+
+**Steelman the wrong answer before a card ships.** For each card:
+1. Write the strongest case for each wrong step-1 option. If one is genuinely defensible, rewrite the scenario or options until it isn't, or move the card to In the Wild or the Gauntlet.
+2. Write the strongest case for the other two verdicts. If "dodge" vs "check" (or "check" vs "fair") is a real judgement call, the card needs step 2 and a `verdictWhy` that names the deciding detail.
+3. The `verdictWhy` and feedback may only rely on what the card itself shows. If the explanation needs context (who said what first, what the bill covers), put it in the scenario or `context`.
+4. Every factual claim in `context`, `explanation` or `counter` must be checkable. Label invented posts "Illustrative scenario"; don't attribute made-up details to real people or real policies.
+5. Step 3 distractors must be clearly worse checks, not reasonable alternatives.
+
+Card data shape: `DrillQuestion` / `WarzonePost` in `src/data/courseData.ts` (`verdict`, `verdictWhy`, `whatToCheck`, optional `dialogue` on Practice cards). Cards without a verdict play step 1 only.
 
 ## Repo entry points (quick map)
 

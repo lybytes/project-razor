@@ -107,13 +107,14 @@ const Index = () => {
         >
           <HeroBackground mouseX={mouseX} mouseY={mouseY} />
           <div className="relative z-10 w-full container mx-auto px-4">
+           <div className="max-w-5xl mx-auto">
            <div className="max-w-4xl">
             <motion.span
               className="inline-block text-xs sm:text-sm font-semibold uppercase tracking-widest text-muted-foreground mb-6"
               {...heroReveal}
               transition={{ ...heroReveal.transition, delay: 0 }}
             >
-              Critical Thinking Training
+              Intellectual Self-Defence
             </motion.span>
 
             <motion.h1
@@ -121,8 +122,8 @@ const Index = () => {
               {...heroReveal}
               transition={{ ...heroReveal.transition, delay: 0.08 }}
             >
-              Stop getting{" "}
-              <span className="text-primary">played</span>.
+              You&apos;re easier to{" "}
+              <span className="text-primary">fool</span> than you think.
             </motion.h1>
 
             <motion.p
@@ -130,7 +131,7 @@ const Index = () => {
               {...heroReveal}
               transition={{ ...heroReveal.transition, delay: 0.16 }}
             >
-              Every day, someone online is trying to win you over with an argument that&apos;s quietly broken. A dodge, a strawman, a fake either/or.
+              From straw men to ad hominem attacks, flawed arguments are everywhere. Unfortunately, most people don&apos;t recognise them when they appear. Don&apos;t be one of them.
             </motion.p>
 
             <motion.p
@@ -138,7 +139,7 @@ const Index = () => {
               {...heroReveal}
               transition={{ ...heroReveal.transition, delay: 0.2 }}
             >
-              Razor trains you to catch the move, name it, and shut it down.
+              Razor is training for intellectual self-defence, so you never fall for the same trick twice.
             </motion.p>
 
             <motion.div
@@ -159,12 +160,13 @@ const Index = () => {
               </Button>
             </motion.div>
            </div>
+           </div>
           </div>
         </section>
 
         {/* Problem Statement */}
         <section className="container mx-auto px-4 py-20 sm:py-28">
-          <motion.div className="max-w-5xl" {...reveal}>
+          <motion.div className="max-w-5xl mx-auto" {...reveal}>
             <h2 className="text-3xl sm:text-4xl font-bold mb-12 tracking-tight">Why this matters</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-6">
               {stats.map((card, i) => (
@@ -179,7 +181,7 @@ const Index = () => {
 
         {/* How It Works */}
         <section className="container mx-auto px-4 py-20 sm:py-28">
-          <motion.div className="max-w-5xl" {...reveal}>
+          <motion.div className="max-w-5xl mx-auto" {...reveal}>
             <h2 className="text-3xl sm:text-4xl font-bold mb-16 tracking-tight">How Project Razor works</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 sm:gap-8">
               {steps.map((step, i) => (
@@ -199,7 +201,7 @@ const Index = () => {
 
         {/* Knowledge Library */}
         <section className="container mx-auto px-4 py-20 sm:py-28">
-          <motion.div className="max-w-5xl" {...reveal}>
+          <motion.div className="max-w-5xl mx-auto" {...reveal}>
             <h2 className="text-3xl sm:text-4xl font-bold mb-12 tracking-tight">Knowledge Library</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {learnCards.map((card, i) => (
@@ -224,20 +226,17 @@ const Index = () => {
         {/* Motivational Banner */}
         <section className="py-20 sm:py-28 border-y border-border/50 bg-gradient-to-br from-primary/[0.04] to-transparent">
           <motion.div
-            className="container mx-auto px-4 max-w-4xl"
+            className="mx-auto px-4 max-w-[66rem]"
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.6, ease: easeOut }}
           >
-            <blockquote>
-              <p className="text-2xl sm:text-3xl md:text-4xl font-medium italic text-foreground leading-snug mb-6 tracking-tight">
-                The most dangerous arguments aren&apos;t the ones that are obviously wrong. They&apos;re the ones that sound{" "}
-                <span className="text-primary not-italic">almost right</span>.
-              </p>
-            </blockquote>
-            <p className="text-lg text-muted-foreground mb-8">
-              Project Razor trains you to tell the difference.
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground leading-snug mb-4 tracking-tight">
+              Try the first lesson
+            </h2>
+            <p className="text-lg text-muted-foreground mb-8 max-w-2xl">
+              Two tactics, a few quick scenarios, then some posts like the ones you&apos;d see online to test yourself on.
             </p>
             <Button size="lg" asChild className="rounded-full px-8 h-12 text-base">
               <Link to="/train/lesson/1-1">Start Course</Link>

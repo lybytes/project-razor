@@ -92,6 +92,13 @@ const Course = () => {
                 <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                   Module {firstModule.id} covers {firstModuleTacticCount} of the most common tactics over {firstModule.lessons.length} lessons, about {LESSON_MINUTES_ESTIMATE} minutes each. Try lesson 1 now, no sign-up required.
                 </p>
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mt-2">
+                  Rather browse first?{" "}
+                  <Link to="/learn" className="font-medium text-primary hover:text-primary/80 underline-offset-4 hover:underline">
+                    Every tactic is in the Library
+                  </Link>
+                  .
+                </p>
                 <button
                   type="button"
                   onClick={dismissIntro}

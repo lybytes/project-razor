@@ -63,18 +63,11 @@
     ],
     "refutation": [
       {
-        "title": "Bring it back to the point",
-        "text": "Say it's about you, then ask about the claim.",
+        "text": "Bring it back to the point.",
         "comeback": "That's about me, not about the point. Even if you're right about me, is the claim true or not?"
       },
       {
-        "title": "Ask for a real reason",
-        "text": "Put the question back on what you actually said.",
-        "comeback": "Leave my background out of it. What's wrong with the plan itself?"
-      },
-      {
-        "title": "Grant the fair bit",
-        "text": "If they've raised something that really matters, say so. It still doesn't settle the claim on its own.",
+        "text": "If they've raised something fair, grant it, then go back to the claim.",
         "comeback": "Fair, that's worth knowing. It doesn't make the data wrong though, so let's look at the data."
       }
     ],
@@ -146,19 +139,12 @@
     ],
     "refutation": [
       {
-        "title": "Restate your actual position",
-        "text": "Calmly correct the distortion and put your real claim back on the table.",
-        "comeback": "That's not what I said. My actual point was narrower — let me restate it clearly."
+        "text": "Say what you actually said.",
+        "comeback": "That's not what I said. My point was narrower than that, so let me put it again."
       },
       {
-        "title": "Name the misrepresentation",
-        "text": "Point out that they're arguing against a version you don't hold.",
-        "comeback": "You're attacking a position I never took. Can you respond to what I actually argued?"
-      },
-      {
-        "title": "Ask them to engage the real claim",
-        "text": "Put the burden back on them to address your genuine point.",
-        "comeback": "Set the exaggerated version aside — what's your objection to the specific thing I proposed?"
+        "text": "Ask them to answer the real version.",
+        "comeback": "Leave the exaggerated version aside. What's your problem with what I actually proposed?"
       }
     ],
     "avoidance": [
@@ -232,18 +218,11 @@
     ],
     "refutation": [
       {
-        "title": "Own it, then move on",
-        "text": "Admit the hypocrisy if it's true. It doesn't change your point.",
+        "text": "Own the hypocrisy, then bring it back to the point.",
         "comeback": "Maybe I'm a hypocrite. That still doesn't tell us whether what I said is right."
       },
       {
-        "title": "Bring it back to the point",
-        "text": "Steer back to what you were actually talking about.",
-        "comeback": "We can talk about me another time. Is the point right or not?"
-      },
-      {
-        "title": "Agree you should change too",
-        "text": "Take the hit, and don't let it end the conversation.",
+        "text": "Agree you should do better, without dropping the point.",
         "comeback": "You're right, I should do better too. That doesn't make the advice wrong."
       }
     ],
@@ -315,19 +294,12 @@
     ],
     "refutation": [
       {
-        "title": "Flag the detour",
-        "text": "Note that the topic has shifted and the original point is still open.",
-        "comeback": "That's a separate issue. I still want to come back to the original question."
+        "text": "Point out the detour and bring it back.",
+        "comeback": "That's a separate issue. I still want an answer to the original question."
       },
       {
-        "title": "Park it, don't chase it",
-        "text": "Offer to discuss the new topic later, but hold the line now.",
-        "comeback": "Happy to talk about that afterwards — but first, can we resolve the point I raised?"
-      },
-      {
-        "title": "Repeat the question",
-        "text": "Simply restate the original question, unmoved by the diversion.",
-        "comeback": "I hear you, but the question was specifically about the deadline. What happened there?"
+        "text": "Park the new topic for later.",
+        "comeback": "Happy to talk about that afterwards. But first, can we settle the point I raised?"
       }
     ],
     "avoidance": [
@@ -369,19 +341,12 @@
     ],
     "refutation": [
       {
-        "title": "Name the third option",
-        "text": "Point out at least one possibility the framing left out.",
-        "comeback": "Those aren't the only two choices — there's a middle path here, for example…"
+        "text": "Name an option they left out.",
+        "comeback": "Those aren't the only two choices. There's a middle ground here too."
       },
       {
-        "title": "Reject the forced choice",
-        "text": "Refuse the binary and ask why the options were limited to two.",
+        "text": "Ask why it has to be one or the other.",
         "comeback": "Why do these have to be the only options? I don't accept that framing."
-      },
-      {
-        "title": "Show the spectrum",
-        "text": "Reframe the issue as a range rather than a switch.",
-        "comeback": "This isn't all-or-nothing — it's a question of how much, and where we draw the line."
       }
     ],
     "avoidance": [
@@ -422,19 +387,12 @@
     ],
     "refutation": [
       {
-        "title": "Ask for the mechanism",
-        "text": "Request evidence for each link in the chain, not just the ending.",
-        "comeback": "What actually makes step one lead to step two? Walk me through the connection."
+        "text": "Ask what makes each step lead to the next.",
+        "comeback": "What actually makes step one lead to step two? Walk me through it."
       },
       {
-        "title": "Break the chain",
-        "text": "Point out where a step could easily not follow.",
-        "comeback": "That first step doesn't force the next — we can allow this and still stop there."
-      },
-      {
-        "title": "Distinguish risk from inevitability",
-        "text": "Grant a real risk but reject the claim of certainty.",
-        "comeback": "There's a risk worth managing, sure — but 'possible' isn't 'inevitable.'"
+        "text": "Show where the chain can stop.",
+        "comeback": "That first step doesn't force the next. We can allow this and still stop there."
       }
     ],
     "avoidance": [
@@ -580,19 +538,12 @@
     ],
     "refutation": [
       {
-        "title": "Acknowledge the feeling",
-        "text": "Validate the emotion, then separate it from the claim.",
-        "comeback": "I do care about this — and precisely because I do, I want to check it actually works."
+        "text": "Share the feeling, then ask for the reason.",
+        "comeback": "I do care about this, which is exactly why I want to know it actually works."
       },
       {
-        "title": "Ask for the evidence",
-        "text": "Request the reasoning underneath the emotional appeal.",
-        "comeback": "Setting the feelings aside for a second, what's the actual case for this?"
-      },
-      {
-        "title": "Name the pressure",
-        "text": "Point out that emotion is being used to avoid scrutiny.",
-        "comeback": "Making me feel guilty doesn't answer whether the proposal is sound."
+        "text": "Point out the pressure.",
+        "comeback": "Making me feel guilty doesn't tell me whether the proposal is any good."
       }
     ],
     "avoidance": [
@@ -686,19 +637,12 @@
     ],
     "refutation": [
       {
-        "title": "Ask why, not how long",
-        "text": "Redirect from the age of the practice to its justification.",
-        "comeback": "How long we've done it isn't the point — what makes it the right approach today?"
+        "text": "Ask why it works, not how old it is.",
+        "comeback": "How long we've done it isn't the point. What makes it the right approach today?"
       },
       {
-        "title": "Separate wisdom from habit",
-        "text": "Grant tradition may hold value, then ask what that value is.",
-        "comeback": "There may be good reasons behind this — can we name them, rather than just its age?"
-      },
-      {
-        "title": "Test against the goal",
-        "text": "Ask whether the tradition still serves its purpose.",
-        "comeback": "Does it still achieve what we actually want, or are we just repeating it?"
+        "text": "Ask whether it still does its job.",
+        "comeback": "Does it still get us what we actually want, or are we just repeating it?"
       }
     ],
     "avoidance": [
@@ -739,19 +683,12 @@
     ],
     "refutation": [
       {
-        "title": "Separate popular from true",
-        "text": "Point out that agreement isn't evidence.",
-        "comeback": "Lots of people believing it doesn't make it true — what's the actual reason?"
+        "text": "Ask for the reason behind the crowd.",
+        "comeback": "Lots of people believing it doesn't make it true. What's the actual reason?"
       },
       {
-        "title": "Ask what the crowd knows",
-        "text": "Probe whether the majority's belief rests on evidence.",
-        "comeback": "Are they basing that on evidence, or just on each other?"
-      },
-      {
-        "title": "Cite counter-examples",
-        "text": "Recall that majorities have often been wrong.",
-        "comeback": "Plenty of popular beliefs have turned out false — popularity isn't a guarantee."
+        "text": "Ask whether the crowd checked.",
+        "comeback": "Are they going on evidence, or just on each other?"
       }
     ],
     "avoidance": [
@@ -1275,19 +1212,12 @@
     ],
     "refutation": [
       {
-        "title": "Separate true from convenient",
-        "text": "Point out that the cost of a fact says nothing about whether it's a fact.",
+        "text": "Separate what's true from what's convenient.",
         "comeback": "That's a reason we'd hate it to be true. It isn't a reason it isn't true."
       },
       {
-        "title": "Ask about the evidence instead",
-        "text": "Redirect to the actual basis for the claim.",
-        "comeback": "Set the fallout aside for a second — what's actually wrong with the analysis?"
-      },
-      {
-        "title": "Split the two questions",
-        "text": "Agree to handle 'is it true' and 'what do we do' separately.",
-        "comeback": "Let's settle whether it's accurate first, then argue about what we do about it."
+        "text": "Settle whether it's true first, then what to do about it.",
+        "comeback": "Let's work out whether it's accurate first, then argue about what we do about it."
       }
     ],
     "avoidance": [
@@ -1334,19 +1264,12 @@
     ],
     "refutation": [
       {
-        "title": "Ask for the objection",
-        "text": "Request the actual criticism the mockery is standing in for.",
+        "text": "Ask for the actual objection.",
         "comeback": "That's funny, but what's the actual objection? Which part is wrong?"
       },
       {
-        "title": "Restate your position accurately",
-        "text": "Put your real claim back, stripped of the caricature.",
-        "comeback": "The version you're laughing at isn't the one I argued. Here's the actual claim."
-      },
-      {
-        "title": "Name the substitution",
-        "text": "Point out that tone has replaced content.",
-        "comeback": "Mockery isn't a rebuttal. Take the tone out and there's nothing there to respond to."
+        "text": "Put your real claim back, without the caricature.",
+        "comeback": "The version you're laughing at isn't the one I argued. Here's what I actually said."
       }
     ],
     "avoidance": [
@@ -1392,19 +1315,12 @@
     ],
     "refutation": [
       {
-        "title": "Break the natural–safe link",
-        "text": "Give a counter-example that separates origin from safety.",
-        "comeback": "Hemlock's natural and insulin's synthesised. Where something comes from doesn't tell us what it does."
+        "text": "Give a counter-example.",
+        "comeback": "Hemlock's natural and insulin's made in a lab. Where something comes from doesn't tell you what it does."
       },
       {
-        "title": "Ask for the mechanism",
-        "text": "Request the actual reason this substance has this effect.",
-        "comeback": "What specifically does it do in the body, and at what dose? 'Natural' doesn't answer that."
-      },
-      {
-        "title": "Query the definition",
-        "text": "Point out that 'natural' is rarely defined and often unregulated.",
-        "comeback": "What counts as natural here? On most labels the word has no fixed meaning."
+        "text": "Ask what it actually does.",
+        "comeback": "What does it do in the body, and at what dose? 'Natural' doesn't answer that."
       }
     ],
     "avoidance": [

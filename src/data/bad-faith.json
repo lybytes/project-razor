@@ -205,19 +205,12 @@
     ],
     "refutation": [
       {
-        "title": "Acknowledge, then redirect",
-        "text": "Grant the other issue may matter, but hold the line.",
-        "comeback": "That may be worth discussing separately — but it doesn't answer the point I raised."
+        "text": "Grant it might matter, then bring it back.",
+        "comeback": "That may be worth discussing separately. It doesn't answer the point I raised."
       },
       {
-        "title": "Reject 'both or neither'",
-        "text": "Point out that two things can both be true.",
-        "comeback": "Both can be problems. One doesn't cancel the other. Let's stay on this one."
-      },
-      {
-        "title": "Return to the topic",
-        "text": "Restate the original criticism plainly.",
-        "comeback": "I'm still asking about the specific issue here. Can we address that?"
+        "text": "Point out that both can be wrong.",
+        "comeback": "Both can be problems. One doesn't cancel the other, so let's stay on this one."
       }
     ]
   },
@@ -498,19 +491,12 @@
     ],
     "refutation": [
       {
-        "title": "Decline the tone debate",
-        "text": "Refuse to let delivery replace substance.",
-        "comeback": "My tone isn't the issue — the argument is. Let's deal with what I actually said."
+        "text": "Bring it back from tone to the point.",
+        "comeback": "My tone isn't the issue, the argument is. Let's deal with what I actually said."
       },
       {
-        "title": "Separate manner from merit",
-        "text": "Grant you can be blunt and still be right.",
-        "comeback": "I can be frustrated and correct at the same time. Address the point, not the mood."
-      },
-      {
-        "title": "Name the deflection",
-        "text": "Call out tone-policing as avoidance.",
-        "comeback": "Focusing on how I said it, instead of what I said, is a way of not answering it."
+        "text": "Point out you can be frustrated and right.",
+        "comeback": "I can be frustrated and correct at the same time. Answer the point, not the mood."
       }
     ]
   },

@@ -659,6 +659,15 @@ export const FREE_LESSON_ID = LESSON_ORDER[0];
 // Figure from the round 1 feedback spec; not yet measured against real sessions.
 export const LESSON_MINUTES_ESTIMATE = 5;
 
+/** The lesson that teaches a library concept, if any course lesson does. */
+export const getLessonForConcept = (slug: string): LessonData | undefined => {
+  for (const mod of modules) {
+    const lesson = mod.lessons.find(l => l.conceptSlugs.includes(slug));
+    if (lesson) return lesson;
+  }
+  return undefined;
+};
+
 export const getLessonConcepts = (lesson: LessonData): Concept[] =>
   lesson.conceptSlugs.map(slug => {
     const concept = getConcept(slug);
